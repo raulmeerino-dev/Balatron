@@ -2178,6 +2178,13 @@ function create_UIBox_round_evaluation()
 return t
 end
 
+-- Pack captions need their content height, not the desktop panel's 30-tile tail.
+local function portrait_pack_container(nodes)
+  local box = UIBox_dyn_container(nodes)
+  if G.F_PORTRAIT then box.nodes[1].nodes[1].config.minh = 0 end
+  return box
+end
+
 function create_UIBox_arcana_pack()
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
@@ -2200,7 +2207,7 @@ function create_UIBox_arcana_pack()
       {n=G.UIT.R, config={align = "tm"}, nodes={
         {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},
         {n=G.UIT.C,config={align = "tm", padding = 0.05}, nodes={
-        UIBox_dyn_container({
+        portrait_pack_container({
           {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 4}, nodes={
             {n=G.UIT.R,config={align = "bm", padding = 0.05}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = localize('k_arcana_pack'), colours = {G.C.WHITE},shadow = true, rotate = true, bump = true, spacing =2, scale = 0.7, maxw = 4, pop_in = 0.5})}}
@@ -2246,7 +2253,7 @@ function create_UIBox_spectral_pack()
       {n=G.UIT.R, config={align = "tm"}, nodes={
         {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},
         {n=G.UIT.C,config={align = "tm", padding = 0.05}, nodes={
-        UIBox_dyn_container({
+        portrait_pack_container({
           {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 4}, nodes={
             {n=G.UIT.R,config={align = "bm", padding = 0.05}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = localize('k_spectral_pack'), colours = {G.C.WHITE},shadow = true, rotate = true, bump = true, spacing =2, scale = 0.7, maxw = 4, pop_in = 0.5})}}
@@ -2292,7 +2299,7 @@ function create_UIBox_standard_pack()
       {n=G.UIT.R, config={align = "tm"}, nodes={
         {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},
         {n=G.UIT.C,config={align = "tm", padding = 0.05}, nodes={
-        UIBox_dyn_container({
+        portrait_pack_container({
           {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 4}, nodes={
             {n=G.UIT.R,config={align = "bm", padding = 0.05}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = localize('k_standard_pack'), colours = {G.C.WHITE},shadow = true, rotate = true, bump = true, spacing =2, scale = 0.7, maxw = 4, pop_in = 0.5})}}
@@ -2338,7 +2345,7 @@ function create_UIBox_buffoon_pack()
       {n=G.UIT.R, config={align = "tm"}, nodes={
         {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},
         {n=G.UIT.C,config={align = "tm", padding = 0.05}, nodes={
-        UIBox_dyn_container({
+        portrait_pack_container({
           {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 4}, nodes={
             {n=G.UIT.R,config={align = "bm", padding = 0.05}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = localize('k_buffoon_pack'), colours = {G.C.WHITE},shadow = true, rotate = true, bump = true, spacing =2, scale = 0.7, maxw = 4, pop_in = 0.5})}}
@@ -2384,7 +2391,7 @@ function create_UIBox_celestial_pack()
       {n=G.UIT.R, config={align = "tm"}, nodes={
         {n=G.UIT.C,config={align = "tm", padding = 0.05, minw = 2.4}, nodes={}},
         {n=G.UIT.C,config={align = "tm", padding = 0.05}, nodes={
-        UIBox_dyn_container({
+        portrait_pack_container({
           {n=G.UIT.C, config={align = "cm", padding = 0.05, minw = 4}, nodes={
             {n=G.UIT.R,config={align = "bm", padding = 0.05}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = localize('k_celestial_pack'), colours = {G.C.WHITE},shadow = true, rotate = true, bump = true, spacing =2, scale = 0.7, maxw = 4, pop_in = 0.5})}}
@@ -2519,6 +2526,7 @@ function create_option_cycle(args)
   args.ref_value = args.ref_value or nil
   args.w = (args.w or 2.5)*args.scale
   args.h = (args.h or 0.8)*args.scale
+  args.h = portrait_touch_height(args.h)
   args.text_scale = (args.text_scale or 0.5)*args.scale
   args.l = '<'
   args.r = '>'
@@ -2860,11 +2868,24 @@ end
 
 function G.UIDEF.portrait_diagnostics()
   local rows = {}
+  local lines = {}
   for line in string.gmatch(portrait_diagnostics_report(), "[^\n]+") do
+    lines[#lines + 1] = line
+  end
+  local size = PORTRAIT_CONFIG.diagnostics_page_size or 15
+  local pages = math.max(1, math.ceil(#lines/size))
+  G.portrait_diagnostics_page = math.min(pages, math.max(1, G.portrait_diagnostics_page or 1))
+  local page = G.portrait_diagnostics_page
+  for i = (page - 1)*size + 1, math.min(page*size, #lines) do
+    local line = lines[i]
     rows[#rows + 1] = {n = G.UIT.R, config = {align = "cl", padding = 0.03}, nodes = {
       {n = G.UIT.T, config = {text = line, scale = 0.33, colour = G.C.UI.TEXT_LIGHT}}
     }}
   end
+  rows[#rows + 1] = {n = G.UIT.R, config = {align = 'cm', padding = 0.1}, nodes = {
+    UIBox_button{label = {'< ' .. page .. '/' .. pages}, button = 'previous_portrait_diagnostics', minw = 2, minh = 0.9, scale = 0.4},
+    UIBox_button{label = {'>'}, button = 'next_portrait_diagnostics', minw = 2, minh = 0.9, scale = 0.4}
+  }}
   rows[#rows + 1] = {n = G.UIT.R, config = {align = "cm", padding = 0.15}, nodes = {
     UIBox_button{label = {'Copy to clipboard'}, button = 'copy_portrait_diagnostics', colour = G.C.BLUE, minw = 4.5, minh = 0.7, scale = 0.4}
   }}
@@ -3062,7 +3083,7 @@ end
 
 function create_UIBox_usage(args)
   args = args or {}
-  _type, _set = args[1], args[2]
+  local _type, _set = args[1], args[2]
   local used_cards = {}
   local max_amt = 0
   for k, v in pairs(G.PROFILES[G.SETTINGS.profile][_type]) do
@@ -7323,7 +7344,7 @@ function create_UIBox_generic_options(args)
         {n=G.UIT.R, config={align = "cm",padding = args.padding or 0.2, minw = args.minw or 7}, nodes=
           contents
         },
-        not args.no_back and {n=G.UIT.R, config={id = args.back_id or 'overlay_menu_back_button', align = "cm", minw = 2.5, button_delay = args.back_delay, padding =0.1, r = 0.1, hover = true, colour = args.back_colour or G.C.ORANGE, button = back_func, shadow = true, focus_args = {nav = 'wide', button = 'b', snap_to = args.snap_back}}, nodes={
+        not args.no_back and {n=G.UIT.R, config={id = args.back_id or 'overlay_menu_back_button', align = "cm", minw = 2.5, minh = portrait_touch_height(0), button_delay = args.back_delay, padding =0.1, r = 0.1, hover = true, colour = args.back_colour or G.C.ORANGE, button = back_func, shadow = true, focus_args = {nav = 'wide', button = 'b', snap_to = args.snap_back}}, nodes={
           {n=G.UIT.R, config={align = "cm", padding = 0, no_fill = true}, nodes={
             {n=G.UIT.T, config={id = args.back_id or nil, text = args.back_label or localize('b_back'), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true, func = not args.no_pip and 'set_button_pip' or nil, focus_args =  not args.no_pip and {button = args.back_button or 'b'} or nil}}
           }}
@@ -7372,6 +7393,10 @@ function UIBox_button(args)
   args.maxw = args.maxw or (args.minw - 0.2)
   if args.minw < args.maxw then args.maxw = args.minw - 0.2 end
   args.minh = args.minh or 0.9
+  if args.button == 'options' or args.button == 'copy_portrait_diagnostics' or
+      args.button == 'previous_portrait_diagnostics' or args.button == 'next_portrait_diagnostics' then
+    args.minh = portrait_touch_height(args.minh)
+  end
   args.scale = args.scale or 0.5
   args.focus_args = args.focus_args or nil
   args.text_colour = args.text_colour or G.C.UI.TEXT_LIGHT

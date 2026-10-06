@@ -342,13 +342,17 @@ function Controller:update(dt)
 
     --Cursor is currently down
     if not self.cursor_down.handled then 
-        if self.cursor_down.target.states.drag.can then
+        local touch_distance = self.HID.touch and self.cursor_down.T and
+            Vector_Dist(self.cursor_down.T, G.CURSOR.T) * G.TILESCALE * G.TILESIZE or math.huge
+        local drag_ready = touch_distance >= (PORTRAIT_CONFIG.touch_drag_threshold or 9)
+        if self.cursor_down.target.states.drag.can and drag_ready and self.is_cursor_down then
             self.cursor_down.target.states.drag.is = true
             self.cursor_down.target:set_offset(self.cursor_down.T, 'Click')
             self.dragging.target = self.cursor_down.target
             self.dragging.handled = false
         end
-        self.cursor_down.handled = true
+        self.cursor_down.handled = drag_ready or not self.is_cursor_down or
+            not self.cursor_down.target.states.drag.can
     end
 
     if not self.cursor_up.handled then 
@@ -1078,6 +1082,10 @@ function Controller:L_cursor_press(x, y)
 
     if self.cursor_down.target == nil then 
         self.cursor_down.target = G.ROOM
+    end
+    if self.gesture_start then
+        local card = self.cursor_down.target
+        self.gesture_start.selected_card = card and card.area == G.hand and card.highlighted or false
     end
 end
 

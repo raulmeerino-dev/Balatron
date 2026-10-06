@@ -46,6 +46,7 @@ require "engine/object"
 require "bit"
 require "engine/string_packer"
 require "portrait_config"
+local portrait_ios = require "portrait_ios"
 require "engine/controller"
 require "back"
 require "tag"
@@ -82,6 +83,7 @@ function love.run()
 	local dt = 0
 	local dt_smooth = 1/100
 	local run_time = 0
+	local active_touch_id
 
 	return function()
 		run_time = love.timer.getTime()
@@ -97,22 +99,31 @@ function love.run()
 				end
 				if name == 'touchpressed' then
 					native_touch_mouse_events.mousepressed = true
+					if active_touch_id == nil then
+					active_touch_id = a
 					local tx, ty = _normalize_touch_coords(b, c)
 					input_events[#input_events + 1] = {'mousepressed', tx, ty, 1, true, nil, nil, true}
 					_logcat("BALATRO_INPUT", string.format("TOUCH: raw=(%s,%s) final=(%s,%s)", tostring(b), tostring(c), tostring(tx), tostring(ty)))
+					end
 				elseif name == 'touchreleased' then
 					native_touch_mouse_events.mousereleased = true
+					if active_touch_id == a then
+					active_touch_id = nil
 					local tx, ty = _normalize_touch_coords(b, c)
 					input_events[#input_events + 1] = {'mousereleased', tx, ty, 1, true, nil, nil, true}
+					end
 				elseif name == 'touchmoved' then
 					native_touch_mouse_events.mousemoved = true
+					if active_touch_id == a then
 					local tx, ty, tdx, tdy = _normalize_touch_coords(b, c, d, e)
 					input_events[#input_events + 1] = {'mousemoved', tx, ty, tdx or 0, tdy or 0, true, nil, true}
+					end
 				elseif name == 'mousepressed' then
 					input_events[#input_events + 1] = {name,a,b,c,d,e,f}
 				elseif name == 'mousereleased' or name == 'mousemoved' then
 					input_events[#input_events + 1] = {name,a,b,c,d,e,f}
 				else
+					if (name == 'focus' or name == 'visible') and not a then active_touch_id = nil end
 					love.handlers[name](a,b,c,d,e,f)
 				end
 			end
@@ -143,6 +154,8 @@ function love.run()
 			if cap == 'auto' then
 				local ok, _, _, flags = pcall(love.window.getMode)
 				cap = (ok and flags and flags.refreshrate and flags.refreshrate > 0) and flags.refreshrate or 60
+                local native = portrait_ios.info()
+                if type(native.max_fps) == 'number' and native.max_fps > 0 then cap = native.max_fps end
 			end
 			G.FPS_CAP = cap
 		end
@@ -291,6 +304,7 @@ function love.load()
 end
 
 function love.quit()
+    if love.system.getOS() == 'iOS' then love.visible(false) end
 	if G.SOUND_MANAGER then G.SOUND_MANAGER.channel:push({type = 'stop'}) end
 	if G.STEAM then G.STEAM:shutdown() end
 end
@@ -299,11 +313,41 @@ G._needs_canvas_refresh = false
 
 function love.visible(v)
     if not v and G and G.SAVE_MANAGER and G.STAGE == G.STAGES.RUN then
-        pcall(function() G:save_progress() end)
+        G:save_progress()
+        G.SAVE_MANAGER.channel:push({type = 'save_progress', save_progress = G.ARGS.save_progress})
+        -- Flush only the game's last stable checkpoint, never serialize an
+        -- animation midway through scoring or drawing cards.
+        if G.FILE_HANDLER and G.FILE_HANDLER.run and G.ARGS.save_run then
+            G.SAVE_MANAGER.channel:push({type = 'save_run', save_table = G.ARGS.save_run,
+                profile_num = G.SETTINGS.profile})
+        end
+        local barrier = love.thread.getChannel('portrait_save_complete')
+        barrier:clear()
+        G.SAVE_MANAGER.channel:push({type = 'portrait_flush'})
+        barrier:demand(0.25)
     end
     if v then
         G._needs_canvas_refresh = true
+        G.FPS_CAP = nil
+        portrait_ios.info(true)
+    elseif G and G.CONTROLLER then
+        -- Never carry a half-finished gesture across the lock screen.
+        G.CONTROLLER.gesture_start = nil
+        G.CONTROLLER.L_cursor_queue = nil
+        G.CONTROLLER.is_cursor_down = false
+        G.CONTROLLER.cursor_down.handled = true
+        G.CONTROLLER.cursor_up.handled = true
+        if G.CONTROLLER.touch_position then G.CONTROLLER.touch_position.active = false end
+        if G.CONTROLLER.dragging.target then
+            G.CONTROLLER.dragging.target:stop_drag()
+            G.CONTROLLER.dragging.target.states.drag.is = false
+            G.CONTROLLER.dragging.target = nil
+        end
     end
+end
+
+function love.focus(focused)
+    love.visible(focused)
 end
 
 function love.update( dt )
@@ -464,12 +508,15 @@ local function _check_swipe_gesture(x, y)
     if not gs then return end
     if not (G.STATE == G.STATES.SELECTING_HAND and G.hand and #G.hand.highlighted > 0) then return end
     if G.OVERLAY_MENU or G.TAROT_INTERRUPT or G.SETTINGS.paused then return end
+    if G.CONTROLLER.locked or G.CONTROLLER.locks.frame or G.screenwipe then return end
+    if G.GAME and G.GAME.STOP_USE and G.GAME.STOP_USE > 0 then return end
     if G.play and G.play.cards[1] then return end
 
     -- If the gesture started on a hand card, it must be one of the selected
     -- cards — flicking an unselected card must not throw the selection.
     local pressed = G.CONTROLLER.cursor_down and G.CONTROLLER.cursor_down.target
     local pressed_selected = pressed and pressed.area == G.hand and pressed.highlighted
+    if gz.require_selected_card and not (pressed_selected and gs.selected_card) then return end
     if pressed and pressed.area == G.hand and not pressed_selected then return end
 
     -- Fast flicks work from anywhere in the lower half. A slow vertical
@@ -477,6 +524,7 @@ local function _check_swipe_gesture(x, y)
     -- selected card — matching the group-follow animation where the whole
     -- selection visibly moves with the finger.
     if not pressed_selected and love.timer.getTime() - gs.t > (gz.max_time or 0.45) then return end
+    if pressed_selected and love.timer.getTime() - gs.t > (gz.max_selected_time or 1.2) then return end
 
     local unit = (G.TILESCALE or 1) * (G.TILESIZE or 20)
     if unit <= 0 then return end

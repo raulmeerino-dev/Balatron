@@ -15,18 +15,9 @@ function Game:start_up()
     if settings then 
         local settings_file = STR_UNPACK(settings)
         if version_gte(G.VERSION, '1.0.0') and ((not settings_file.version) or version_lt(settings_file.version, '1.0.0')) then 
-            for i = 1, 3 do
-                love.filesystem.remove(i..'/'..'profile.jkr')
-                love.filesystem.remove(i..'/'..'save.jkr')
-                love.filesystem.remove(i..'/'..'meta.jkr')
-                love.filesystem.remove(i..'/'..'unlock_notify.jkr')
-                love.filesystem.remove(i..'')
-            end
-            for k, v in pairs(settings_file) do
-                self.SETTINGS[k] = v
-            end
-            self.SETTINGS.profile = 1
-            self.SETTINGS.tutorial_progress = nil
+            -- Preserve incompatible profiles rather than applying vanilla's
+            -- destructive pre-1.0 migration to an imported mobile save.
+            error('Legacy save needs manual migration. Existing files were preserved. Back up game/ in Files before importing a Balatro 1.0+ save.')
         else 
             if version_lt(G.VERSION, '1.0.0') then 
                 settings_ver = settings_file.version

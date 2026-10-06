@@ -73,6 +73,8 @@ CHANNEL = love.thread.getChannel("save_request")
             end
 
         --Saves the run
+        elseif request.type == 'portrait_flush' then
+            love.thread.getChannel('portrait_save_complete'):push(true)
         elseif request.type == 'save_run' then 
             local prefix_profile = (request.profile_num or 1)..''
             if not love.filesystem.getInfo(prefix_profile) then love.filesystem.createDirectory( prefix_profile ) end

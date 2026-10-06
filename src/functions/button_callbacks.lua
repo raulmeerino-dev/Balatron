@@ -1995,11 +1995,23 @@ G.FUNCS.copy_seed = function(e)
 end
 
 G.FUNCS.open_portrait_diagnostics = function(e)
+  G.portrait_diagnostics_page = 1
+  G.FUNCS.overlay_menu{definition = G.UIDEF.portrait_diagnostics()}
+end
+
+G.FUNCS.previous_portrait_diagnostics = function()
+  G.portrait_diagnostics_page = math.max(1, (G.portrait_diagnostics_page or 1) - 1)
+  G.FUNCS.overlay_menu{definition = G.UIDEF.portrait_diagnostics()}
+end
+
+G.FUNCS.next_portrait_diagnostics = function()
+  G.portrait_diagnostics_page = (G.portrait_diagnostics_page or 1) + 1
   G.FUNCS.overlay_menu{definition = G.UIDEF.portrait_diagnostics()}
 end
 
 G.FUNCS.copy_portrait_diagnostics = function(e)
   local report = portrait_diagnostics_report()
+  love.filesystem.write('portrait-diagnostics.txt', report)
   if G.F_LOCAL_CLIPBOARD then
     G.CLIPBOARD = report
   else

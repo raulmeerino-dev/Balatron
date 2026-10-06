@@ -32,6 +32,10 @@ PORTRAIT_CONFIG = {
     challenge_page_size_landscape = 10,
     jokers_y = 11,
     anti_jitter_threshold = 3.5,
+    touch_drag_threshold = 9, -- logical points travelled since press, not per event
+    touch_target_points = 44,
+    diagnostics_page_size = 15,
+    build_revision = "ios-portrait-1",
     fps_cap = 'auto', -- 'auto' = match display refresh rate (90/120 Hz), or a number like 60
     disable_touch_tilt = true, -- kill the cursor-lean tilt on touch (root fix for sheared-card warp)
     score_text_mult = 1.3, -- portrait multiplier for floating score/attention popups
@@ -41,6 +45,8 @@ PORTRAIT_CONFIG = {
         min_swipe = 1.4, -- min vertical travel in game units to count as a flick
         max_dx_ratio = 0.6, -- horizontal drift allowed relative to vertical travel
         max_time = 0.45, -- max press-to-release seconds for a flick
+        max_selected_time = 1.2,
+        require_selected_card = true,
         group_follow = true, -- selected cards visually follow a vertical drag together
     },
     swipe_only = {
@@ -267,6 +273,13 @@ function get_portrait_scale(w, h)
     return s
 end
 
+function portrait_touch_height(height)
+    if not (G and G.F_PORTRAIT and G.TILESCALE and G.TILESIZE) then return height end
+    local unit = G.TILESCALE * G.TILESIZE
+    if unit <= 0 then return height end
+    return math.max(height or 0, PORTRAIT_CONFIG.touch_target_points/unit)
+end
+
 -- Top inset (in room tiles) that keeps the HUD clear of a notch / Dynamic Island
 -- / display cutout. Off-mobile it is 0. On Android it returns the tuned static
 -- value unchanged. On iOS it converts the device's *real* top safe-area inset
@@ -412,6 +425,7 @@ function portrait_diagnostics_report()
     local function fmt(n) return type(n) == "number" and string.format("%.2f", n) or "?" end
 
     add("Portrait mod", PORTRAIT_CONFIG and PORTRAIT_CONFIG.version)
+    add("Build revision", PORTRAIT_CONFIG and PORTRAIT_CONFIG.build_revision)
     add("Game version", G and G.VERSION)
     local os_name = love.system and love.system.getOS and love.system.getOS()
     add("OS", os_name)
@@ -426,16 +440,34 @@ function portrait_diagnostics_report()
     -- disagreeing is the difference between "the panel is 60" and "we are
     -- capping ourselves at 60", which is not something a frame counter alone
     -- can tell apart (#45).
-    local ok_mode, _mw, _mh, mode_flags = pcall(love.window.getMode)
+    local ok_mode, _mw, _mh, mode_flags = pcall(function() return love.window.getMode() end)
     add("Refresh rate", ok_mode and mode_flags and mode_flags.refreshrate or "?")
     add("FPS cap", (G and G.FPS_CAP) or (PORTRAIT_CONFIG and PORTRAIT_CONFIG.fps_cap) or "?")
     if love.window and love.window.getDPIScale then
         add("DPI scale", love.window.getDPIScale())
     end
+    if love.graphics and love.graphics.getPixelDimensions then
+        local pw, ph = love.graphics.getPixelDimensions()
+        add("Drawable pixels", pw .. "x" .. ph)
+    end
+    if love.graphics and love.graphics.getDimensions then
+        local w, h = love.graphics.getDimensions()
+        add("Orientation", h > w and 'portrait' or 'landscape')
+    end
+    add("High DPI requested", ok_mode and mode_flags and tostring(mode_flags.highdpi) or '?')
+    if os_name == 'iOS' then
+        local native = require('portrait_ios').info()
+        add("iOS version", native.version)
+        add("Native scale", native.native_scale)
+        add("UIKit scale", native.scale)
+        add("Panel maximum Hz", native.max_fps)
+        if native.error then add("Native probe", native.error) end
+    end
     if love.window and love.window.getSafeArea then
         local ok, sx, sy, sw, sh = pcall(love.window.getSafeArea)
         if ok and type(sy) == "number" then
-            add("Safe area px", "x=" .. sx .. " y=" .. sy .. " w=" .. sw .. " h=" .. sh)
+            add("Safe area (logical)", "x=" .. sx .. " y=" .. sy .. " w=" .. sw .. " h=" .. sh)
+            add("Safe bottom (logical)", love.graphics.getHeight() - sy - sh)
         end
     end
     if G then
@@ -445,6 +477,16 @@ function portrait_diagnostics_report()
         end
         add("Portrait", G.F_PORTRAIT and "yes" or "no")
         add("Swipe only", G.F_SWIPE_ONLY and "yes" or "no")
+        for _, key in ipairs({'hand', 'jokers', 'consumeables', 'play', 'HUD', 'buttons', 'shop'}) do
+            local area = G[key] and G[key].T
+            if area then
+                add(key, fmt(area.x) .. ',' .. fmt(area.y) .. ' ' .. fmt(area.w) .. 'x' .. fmt(area.h))
+            end
+        end
+        if G.CANVAS and G.CANVAS.getPixelDimensions then
+            local pw, ph = G.CANVAS:getPixelDimensions()
+            add("Canvas pixels", pw .. 'x' .. ph)
+        end
     end
     local top_ok, top = pcall(get_mobile_safe_area_top, os_name)
     add("Safe top (tiles)", top_ok and fmt(top) or "?")
@@ -898,6 +940,18 @@ function get_portrait_room_fit_delta(box, opts)
     local top = padding
     local right = math.max(left, room_w - padding)
     local bottom = math.max(top, room_h - padding)
+    -- The room deliberately retains Android's bottom overshoot. Popups must
+    -- instead clamp to the actual iOS safe rectangle, in room coordinates.
+    if love.system.getOS() == 'iOS' and love.window.getSafeArea then
+        local ok, sx, sy, sw, sh = pcall(love.window.getSafeArea)
+        local unit = (G.TILESCALE or 0) * (G.TILESIZE or 0)
+        if ok and unit > 0 and type(sh) == 'number' and sh > 0 then
+            left = math.max(left, sx/unit - (G.ROOM.T.x or 0) + padding)
+            top = math.max(top, sy/unit - (G.ROOM.T.y or 0) + padding)
+            right = math.min(right, (sx + sw)/unit - (G.ROOM.T.x or 0) - padding)
+            bottom = math.min(bottom, (sy + sh)/unit - (G.ROOM.T.y or 0) - padding)
+        end
+    end
     local min_x = box.T.x
     local min_y = box.T.y
     local max_x = box.T.x + box.T.w
