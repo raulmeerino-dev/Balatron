@@ -1,5 +1,9 @@
 # Balatro Portrait Mobile
 
+**Personal iOS build:** see [README-IOS-LOCAL.md](README-IOS-LOCAL.md) for the
+tested local build command, app identity and [validation report](INFORME-PRUEBAS.md).
+This checkout is based on upstream 2.8.0; the sections below describe upstream.
+
 [![CI](https://github.com/ShaggyLorean/balatro-portrait-mobile/actions/workflows/ci.yml/badge.svg)](https://github.com/ShaggyLorean/balatro-portrait-mobile/actions/workflows/ci.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20the%20mod-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/loreanxavier)
 

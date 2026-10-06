@@ -1,5 +1,10 @@
 # iOS Build (EXPERIMENTAL)
 
+This personal fork builds **Balatro Portrait** with bundle identifier
+`com.rulo3.balatro.portrait`. See [local instructions](../README-IOS-LOCAL.md)
+and [test evidence](../INFORME-PRUEBAS.md). The upstream device limitations below
+still apply. On this Windows checkout, run `BUILD-IOS.ps1` from the project root.
+
 > **Status: experimental and untested by the maintainer** (no iOS device available).
 > The build pipeline is sound, it mirrors how
 > [balatro-mobile-maker](https://github.com/blake502/balatro-mobile-maker) builds
@@ -37,7 +42,7 @@ Apple ID at install time.
 ## Building
 
 ```
-python build.py --ios
+python build.py --ios --skip-apk --keep-crt --no-readabletro --balatro "../Balatro/Balatro.exe"
 ```
 
 Or answer **yes** to "Build iOS .ipa?" during the interactive build.
@@ -52,9 +57,9 @@ them (#45).
 
 Put mods where the
 [Steamodded mobile guide](https://docs.smods.dev/Installation/Installing%20Steamodded%20mobile/)
-says: open the **Files** app, go to **On My iPhone → Balatro → game → Mods**
-and drop `smods` in there. The bundle id is unchanged, so this installs over an
-earlier build and keeps its saves.
+says: open the **Files** app, go to **On My iPhone → Balatro Portrait → game → Mods**
+and drop `smods` in there. This fork uses a separate bundle ID. It starts with
+its own sandbox; updates must keep that ID and signing identity to retain saves.
 
 Portrait keeps the vanilla lines that Steamodded's patches anchor on, which is
 what makes the two work together on Android; the same source is what goes into

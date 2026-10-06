@@ -2,6 +2,33 @@
 
 All notable changes to Balatro Portrait Mobile.
 
+## Personal iOS build — ios-portrait-1 — 2026-10-06
+
+- Separate Balatro Portrait identity (`com.rulo3.balatro.portrait`) for both iOS
+  shells, portrait-only orientations, Files access and ProMotion opt-in.
+- Pin the Lovely shell SHA-256; deterministic ZIP ordering, timestamps and
+  permissions; strip obsolete signing metadata and duplicate game archives.
+  Preserve shell icons instead of downloading Balatro artwork from another IPA.
+- Require swipes to start on selected cards, reject long holds, locked states
+  and background swipes; track a single touch and cancel gestures on suspension.
+- Start touch drags after cumulative movement instead of immediately on press.
+- Clamp popups to the measured iOS safe rectangle, including the home indicator.
+  Enlarge Back, option cycles and selected frequent controls to 44 logical points.
+- Size portrait booster captions to their content instead of extending a desktop
+  background panel below the screen.
+- Fix Statistics overwriting the type helper used by Blind Selection (reproduced
+  by opening Usage and starting a new run).
+- Paginate Diagnostics and add drawable/canvas pixel dimensions, native UIKit
+  scale, iOS version, panel maximum refresh and layout rectangles.
+- Refresh cached display information on resume; derive the frame cap from the
+  reported panel capability when UIKit is available. Actual ProMotion presentation
+  is still a device test, not established by an FPS counter.
+- Flush the last stable checkpoint on suspension; preserve incompatible legacy
+  save files instead of automatically deleting them.
+- Add local build wrapper, IPA/provenance validator, Lua checks, gesture and safe
+  area tests, and isolated desktop rendering/interaction scenarios.
+
+
 ## [v2.8.0](https://github.com/ShaggyLorean/balatro-portrait-mobile/releases/tag/v2.8.0) - 2026-09-15
 
 **The title screen corner buttons stay clear of the menu on narrow phones** (#48).
