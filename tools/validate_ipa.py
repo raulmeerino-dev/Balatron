@@ -49,6 +49,20 @@ def validate(ipa, original, shell):
         base_plist = plistlib.loads(base.read(base_app+'/Info.plist'))
         check(code == base.read(base_app+'/'+base_plist['CFBundleExecutable']), 'Native executable unchanged from pinned open-source shell')
         check(b'lovely' in code and b'Mods' in code, 'Lovely and Mods markers in native executable')
+        offset, dylibs, encrypted = 32, [], False
+        for _ in range(struct.unpack_from('<I', code, 16)[0]):
+            command, size = struct.unpack_from('<II', code, offset)
+            if size < 8 or offset+size > len(code):
+                raise AssertionError('Invalid Mach-O load command')
+            if command in (0x21, 0x2c):
+                encrypted |= struct.unpack_from('<I', code, offset+16)[0] != 0
+            if command in (0xc, 0x80000018, 0x8000001f):
+                start = offset+struct.unpack_from('<I', code, offset+8)[0]
+                dylibs.append(code[start:code.index(b'\0', start)].decode())
+            offset += size
+        check(not encrypted, 'Native shell is not FairPlay encrypted')
+        check(all(n.startswith(('/System/Library/', '/usr/lib/')) for n in dylibs), 'All native dynamic dependencies are system libraries')
+        report['native_dependencies'] = dylibs
         check(not any('/_CodeSignature/' in n or n.endswith('embedded.mobileprovision') for n in names), 'No obsolete bundle signatures/provisioning')
         # A Mach-O ad-hoc signature may remain; the installation tool must re-sign.
         data = z.read(app+'/game.love')
@@ -60,9 +74,9 @@ def validate(ipa, original, shell):
             check(all(n in game.namelist() for n in required), 'Required Lua entry points')
             check(game.read('version.jkr') == local.read('version.jkr'), 'Balatro version matches local copy')
             asset_names = [n for n in local.namelist() if n.startswith(('resources/', 'localization/')) and not n.endswith('/')]
+            check(all(n in game.namelist() for n in asset_names), 'All local assets present')
             changed = []
             for n in asset_names:
-                check(n in game.namelist(), 'Local asset present: '+n) if n not in game.namelist() else None
                 if game.read(n) != local.read(n): changed.append(n)
             check(set(changed) <= {'resources/shaders/CRT.fs', 'resources/shaders/flame.fs'}, 'All assets/localizations from local copy; only known rendering shader patches')
             sounds = [n for n in asset_names if n.startswith('resources/sounds/')]
@@ -72,14 +86,37 @@ def validate(ipa, original, shell):
             check(b"t.window.highdpi = (love._os == 'iOS')" in game.read('conf.lua'), 'iOS high-DPI window requested')
             check(b't.window.usedpiscale = true' in game.read('conf.lua'), 'Logical DPI coordinates enabled')
             missing = []
+            crlf_sources = []
             for n in game.namelist():
                 if not n.endswith('.lua') or n.startswith('localization/'): continue
                 source = game.read(n).decode('utf-8-sig')
-                check('\r\n' not in source, 'LF Lua source: '+n) if '\r\n' in source else None
+                if '\r\n' in source: crlf_sources.append(n)
                 for module in re.findall(r'\brequire\s*(?:\(\s*)?[\'\"]([^\'\"]+)', source):
                     if module.startswith(('engine/', 'functions/', 'portrait_')) and module != 'portrait_shaders':
                         if module+'.lua' not in game.namelist(): missing.append((n, module))
             check(not missing, 'Internal Lua module references resolve')
+            check(not crlf_sources, 'All packaged Lua uses LF for Lovely patch compatibility')
+            literal_assets = set()
+            for n in game.namelist():
+                if n.endswith('.lua') and not n.startswith('localization/'):
+                    literal_assets.update(re.findall(r'[\'\"](resources/[^\'\"]+\.(?:ttf|ogg|png|fs))[\'\"]', game.read(n).decode('utf-8-sig')))
+            # The error handler tries Readabletro under pcall, then falls back
+            # to the bundled original font. This optional font is not shipped.
+            optional_assets = {'resources/fonts/TypoQuik-Bold.ttf'}
+            report['optional_assets_absent'] = sorted(optional_assets - set(game.namelist()))
+            check(all(n in game.namelist() for n in literal_assets - optional_assets), 'Required literal font, shader, sound and image paths exist')
+            core_functions = {
+                'functions/misc_functions.lua': ['pseudorandom_element', 'pseudoseed', 'pseudorandom',
+                    'evaluate_poker_hand', 'get_flush', 'get_straight', 'get_X_same'],
+                'card.lua': ['Card:calculate_joker', 'Card:calculate_seal', 'Card:get_chip_bonus', 'Card:use_consumeable'],
+            }
+            for filename, functions in core_functions.items():
+                vanilla = local.read(filename).decode('utf-8-sig').replace('\r\n', '\n')
+                portrait = game.read(filename).decode('utf-8-sig')
+                for name in functions:
+                    pattern = r'^function '+re.escape(name)+r'\(.*?(?=^function |\Z)'
+                    a, b = re.search(pattern, vanilla, re.M|re.S), re.search(pattern, portrait, re.M|re.S)
+                    check(a and b and a.group().strip() == b.group().strip(), 'Original gameplay function: '+name)
             report['game_files'] = len(game.namelist())
             report['local_assets'] = len(asset_names)
             report['changed_assets'] = changed

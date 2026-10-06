@@ -799,7 +799,7 @@ def build_game_love(apply_crt=False, apply_readabletro=False, force=False, impor
                     continue
                 fp = os.path.join(root, fn)
                 arc = os.path.relpath(fp, src_dir)
-                if fn.endswith(".lua"):
+                if fn.endswith(".lua") or arc == "version.jkr":
                     with open(fp, "rb") as f:
                         data = f.read()
                     if b"\r\n" in data:

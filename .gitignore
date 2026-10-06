@@ -1,4 +1,6 @@
 # Build output
+qa/
+validation-output/
 *.apk
 *.ipa
 *.love
