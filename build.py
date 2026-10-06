@@ -125,16 +125,16 @@ IOS_BASE_URL = "https://github.com/blake502/balatro-apk-maker/releases/download/
 # The same service that provides the Lovely base APK also publishes an iOS shell
 # with lovely-injector linked into the LOVE binary, which is what Lovely Mobile
 # Maker builds its own apps from. Using it as the base is how the iOS build gets
-# the mod loader the Android build has had all along (#45): without it the IPA
-# has nothing to load Steamodded with. Rebuilt upstream, so no hash pin, same as
-# the APK above.
+# the mod loader the Android build has had all along (#45). This build pins
+# the downloaded shell hash; keep the cached shell for reproducible rebuilds.
 IOS_LOVELY_BASE_URL = "https://lmm.shorty.systems/base.ipa"
 
-# Bundle id of the vanilla shell, reused for the lovely build so an update lands
-# on the same app and keeps its saves.
-IOS_BUNDLE_ID = "org.htf65jud.balatro"
+# Separate from official Balatro and earlier third-party builds. Keep stable
+# between updates to preserve this app's save container.
+IOS_BUNDLE_ID = "com.rulo3.balatro.portrait"
 
 TOOL_SHA256 = {
+    IOS_LOVELY_BASE_URL: "14d4c378d19c6f190af163d32fdd27b34932628b5fd5a6816e8c5db578ef5fde",
     JDK_URL:      JDK_SHA256,
     APKTOOL_URL:  "7956eb04194300ce0d0a84ad18771eebc94b89fb8d1ddcce8ea4c056818646f4",
     SIGNER_URL:   "e1299fd6fcf4da527dd53735b56127e8ea922a321128123b9c32d619bba1d835",
@@ -740,6 +740,15 @@ def _resolve_steamodded(flag_value, interactive):
     return ("Steamodded", files)
 
 
+def _zip_write(archive, name, data, mode=0o100644):
+    """Stable timestamps, ordering and Unix modes make rebuilds byte-identical."""
+    info = zipfile.ZipInfo(name.replace(os.sep, "/"), (2026, 1, 1, 0, 0, 0))
+    info.create_system = 3
+    info.external_attr = mode << 16
+    info.compress_type = zipfile.ZIP_DEFLATED
+    archive.writestr(info, data)
+
+
 def build_game_love(apply_crt=False, apply_readabletro=False, force=False, import_saves=None, import_mods=None):
     """Package src/ into Game.love."""
     src_dir     = "src"
@@ -784,8 +793,8 @@ def build_game_love(apply_crt=False, apply_readabletro=False, force=False, impor
     count = 0
     with zipfile.ZipFile(output_file, "w", zipfile.ZIP_DEFLATED) as zf:
         for root, dirs, files in os.walk(src_dir):
-            dirs[:] = [d for d in dirs if not _skip(os.path.join(root, d))]
-            for fn in files:
+            dirs[:] = sorted(d for d in dirs if not _skip(os.path.join(root, d)))
+            for fn in sorted(files):
                 if _skip(fn):
                     continue
                 fp = os.path.join(root, fn)
@@ -795,23 +804,24 @@ def build_game_love(apply_crt=False, apply_readabletro=False, force=False, impor
                         data = f.read()
                     if b"\r\n" in data:
                         data = data.replace(b"\r\n", b"\n")
-                    zf.writestr(arc.replace(os.sep, "/"), data)
+                    _zip_write(zf, arc, data)
                 else:
-                    zf.write(fp, arc)
+                    with open(fp, "rb") as f:
+                        _zip_write(zf, arc, f.read())
                 count += 1
 
         if import_saves:
-            for slot, kinds in import_saves.items():
-                for kind, data in kinds.items():
+            for slot, kinds in sorted(import_saves.items()):
+                for kind, data in sorted(kinds.items()):
                     if kind == "save":
                         continue
-                    zf.writestr(f"import_save/{slot}/{kind}.jkr", data)
+                    _zip_write(zf, f"import_save/{slot}/{kind}.jkr", data)
                     count += 1
 
         if import_mods:
-            for modname, mfiles in import_mods.items():
-                for relpath, data in mfiles.items():
-                    zf.writestr(f"install_mods/{modname}/{relpath}", data)
+            for modname, mfiles in sorted(import_mods.items()):
+                for relpath, data in sorted(mfiles.items()):
+                    _zip_write(zf, f"install_mods/{modname}/{relpath}", data)
                     count += 1
 
     if apply_crt:
@@ -1222,21 +1232,8 @@ def build_ipa(profiler=None, lovely=True):
     plist_arc = app_dir + "/Info.plist"
     love_arc  = app_dir + "/game.love"
 
-    # The lovely shell carries its own app icon, which is not the one anybody
-    # installing Balatro wants on their home screen (#45). Both shells use
-    # LOVE's stock icon filenames, so the plain one's icons are lifted across.
-    icons = {}
-    if lovely:
-        icon_src = os.path.join(WORKDIR, "balatro-base.ipa")
-        with p.step("Download iOS icons"):
-            _download(IOS_BASE_URL, icon_src)
-        with zipfile.ZipFile(icon_src, "r") as zicon:
-            for name in zicon.namelist():
-                base = name.rsplit("/", 1)[-1]
-                if base.startswith("iOS AppIcon") and base.endswith(".png"):
-                    icons[base] = zicon.read(name)
-        if icons:
-            print(f"  Icons: taking {len(icons)} from the Balatro shell.")
+    # Keep the open-source shell's icons. Game artwork comes only from the
+    # user's local installation, never from another prebuilt Balatro package.
 
     with p.step("Pack IPA"):
         print("  Packing IPA (portrait-locked Info.plist + game.love) ...")
@@ -1244,13 +1241,14 @@ def build_ipa(profiler=None, lovely=True):
             os.remove(out_ipa)
         with zipfile.ZipFile(base_ipa, "r") as zin, \
              zipfile.ZipFile(out_ipa, "w", zipfile.ZIP_DEFLATED) as zout:
-            for item in zin.infolist():
-                if item.filename in (plist_arc, love_arc):
+            for item in sorted(zin.infolist(), key=lambda entry: entry.filename):
+                if (item.filename.lower() in (plist_arc.lower(), love_arc.lower())
+                        or "/_CodeSignature/" in item.filename
+                        or item.filename.endswith("/embedded.mobileprovision")):
                     continue
-                # passing the original ZipInfo preserves unix permissions on
-                # the Balatro executable inside the .app bundle
-                icon = icons.get(item.filename.rsplit("/", 1)[-1])
-                zout.writestr(item, icon if icon is not None else zin.read(item.filename))
+                # Preserve executable permissions while normalizing timestamps.
+                _zip_write(zout, item.filename, zin.read(item.filename),
+                           item.external_attr >> 16)
 
             plist = plistlib.loads(zin.read(plist_arc))
             plist["UISupportedInterfaceOrientations"] = ["UIInterfaceOrientationPortrait"]
@@ -1262,18 +1260,16 @@ def build_ipa(profiler=None, lovely=True):
             # its loop at 120 while the panel showed every other frame (#45).
             # iOS 15+ key, ignored by everything older and by 60 Hz devices.
             plist["CADisableMinimumFrameDurationOnPhone"] = True
-            if lovely:
-                # The lovely shell ships under its own name and bundle id. The
-                # id has to match what the vanilla shell used or iOS treats the
-                # build as a different app and the save container is left
-                # behind, so anyone updating from an earlier IPA loses their
-                # runs.
-                plist["CFBundleDisplayName"] = "Balatro"
-                plist["CFBundleName"] = "Balatro"
-                plist["CFBundleIdentifier"] = IOS_BUNDLE_ID
-            zout.writestr(plist_arc, plistlib.dumps(plist))
+            plist["CFBundleDisplayName"] = "Balatro Portrait"
+            plist["CFBundleName"] = "Balatro Portrait"
+            plist["CFBundleIdentifier"] = IOS_BUNDLE_ID
+            plist["UIFileSharingEnabled"] = True
+            plist["LSSupportsOpeningDocumentsInPlace"] = True
+            plist["UIRequiresFullScreen"] = True
+            _zip_write(zout, plist_arc, plistlib.dumps(plist))
 
-            zout.write(game_love_src, love_arc)
+            with open(game_love_src, "rb") as game:
+                _zip_write(zout, love_arc, game.read())
 
     p.report()
     size_mb = os.path.getsize(out_ipa) / 1_048_576
@@ -1284,7 +1280,7 @@ def build_ipa(profiler=None, lovely=True):
     print(f"{'=' * 60}")
     print()
     print("  Sideload with Sideloadly or AltStore (signs with your Apple ID).")
-    print("  Lovely mod support is Android-only; the IPA is always vanilla.")
+    print("  App: Balatro Portrait (separate sandbox; keep its bundle ID for updates).")
     print("  See docs/IOS.md for instructions - and please report results!")
 
 
@@ -1438,7 +1434,7 @@ def main():
             print("  3. iOS Build (EXPERIMENTAL)")
             print("     Also produces balatro-portrait.ipa for sideloading with")
             print("     Sideloadly or AltStore. Untested by the maintainer -")
-            print("     feedback welcome. Lovely is not available on iOS.")
+            print("     feedback welcome. Lovely is included unless --ios-vanilla is set.")
             config["ios"] = _ask("     Build iOS .ipa?", default=DEFAULT_BUILD_CONFIG["ios"])
             print()
             with open(CONFIG_FILE, "w") as f:
