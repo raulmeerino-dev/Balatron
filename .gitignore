@@ -1,0 +1,44 @@
+# Local game installation and secondary checkout
+/Balatro/
+/portrait/
+
+# Releases are published separately from source
+*.ipa
+*.apk
+*.love
+*.love.part
+*.zip
+*.keystore
+*.p12
+*.mobileprovision
+
+# Generated output, isolated saves, and downloaded build tools
+**/qa/
+**/validation-output/
+**/balatro-mobile-maker/
+**/game_original_files/
+**/__pycache__/
+*.pyc
+*.log
+*.tmp
+**/.build_cache.json
+**/.buildconfig.json
+/balatron/src/resources/
+/balatron/src/localization/
+/.github-transfer/
+
+# Local credentials and editor settings
+.env
+.env.*
+!.env.example
+**/.codex/
+**/.agents/
+**/.claude/
+**/.vscode/
+**/.idea/
+.DS_Store
+Thumbs.db
+*.dll
+*.exe
+*.pdb
+*.ppdb
