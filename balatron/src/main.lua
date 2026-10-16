@@ -1,0 +1,932 @@
+if (love.system.getOS() == 'OS X' ) and (jit.arch == 'arm64' or jit.arch == 'arm') then jit.off() end
+
+local function _force_android_portrait_hints()
+    if not (love and love.system and love.system.getOS and love.system.getOS() == 'Android') then return end
+    if not (love and love.window and love.window.setMode) then return end
+
+    pcall(function()
+        if love.window.setHint then
+            love.window.setHint("screenorientation", "portrait")
+            love.window.setHint("screenorientation", "fixed")
+        end
+    end)
+
+    pcall(function()
+        local w, h, flags = love.window.getMode()
+        flags = flags or {}
+        flags.resizable = false
+        love.window.setMode(w, h, flags)
+    end)
+end
+
+local function _logcat(tag, msg)
+    if _RELEASE_MODE then return end
+    tag = tag or "BALATRO"
+    msg = tostring(msg or "")
+    print(tag .. ": " .. msg)
+    if love and love.system and love.system.getOS and love.system.getOS() == 'Android' then
+        pcall(function()
+            local p = io.popen('log -t "'..tag..'" "'..msg:gsub('"', '\\"')..'"', 'w')
+            if p then p:close() end
+        end)
+    end
+end
+
+local function _normalize_touch_coords(x, y, dx, dy)
+    local tx, ty, tdx, tdy = x, y, dx, dy
+    if type(tx) == 'number' and type(ty) == 'number' and tx >= 0 and tx <= 1 and ty >= 0 and ty <= 1 then
+        local w, h = love.graphics.getDimensions()
+        tx, ty = tx * w, ty * h
+        if type(tdx) == 'number' then tdx = tdx * w end
+        if type(tdy) == 'number' then tdy = tdy * h end
+    end
+    return tx, ty, tdx, tdy
+end
+require "engine/object"
+require "bit"
+require "engine/string_packer"
+require "portrait_config"
+local portrait_ios = require "portrait_ios"
+require "engine/controller"
+require "back"
+require "tag"
+require "engine/event"
+require "engine/node"
+require "engine/moveable"
+require "engine/sprite"
+require "engine/animatedsprite"
+require "functions/misc_functions"
+require "game"
+require "globals"
+require "engine/ui"
+require "functions/UI_definitions"
+require "functions/state_events"
+require "functions/common_events"
+require "functions/button_callbacks"
+require "functions/misc_functions"
+require "functions/test_functions"
+require "card"
+require "cardarea"
+require "blind"
+require "card_character"
+require "engine/particles"
+require "engine/text"
+require "challenges"
+
+math.randomseed( G.SEED )
+
+function love.run()
+	if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
+
+	if love.timer then love.timer.step() end
+
+	local dt = 0
+	local dt_smooth = 1/100
+	local run_time = 0
+	local active_touch_id
+
+	return function()
+		run_time = love.timer.getTime()
+		if love.event and G and G.CONTROLLER then
+			love.event.pump()
+			local input_events = {}
+			local native_touch_mouse_events = {}
+			for name, a,b,c,d,e,f in love.event.poll() do
+				if name == "quit" then
+					if not love.quit or not love.quit() then
+						return a or 0
+					end
+				end
+				if name == 'touchpressed' then
+					native_touch_mouse_events.mousepressed = true
+					if active_touch_id == nil then
+					active_touch_id = a
+					local tx, ty = _normalize_touch_coords(b, c)
+					input_events[#input_events + 1] = {'mousepressed', tx, ty, 1, true, nil, nil, true}
+					_logcat("BALATRO_INPUT", string.format("TOUCH: raw=(%s,%s) final=(%s,%s)", tostring(b), tostring(c), tostring(tx), tostring(ty)))
+					end
+				elseif name == 'touchreleased' then
+					native_touch_mouse_events.mousereleased = true
+					if active_touch_id == a then
+					active_touch_id = nil
+					local tx, ty = _normalize_touch_coords(b, c)
+					input_events[#input_events + 1] = {'mousereleased', tx, ty, 1, true, nil, nil, true}
+					end
+				elseif name == 'touchmoved' then
+					native_touch_mouse_events.mousemoved = true
+					if active_touch_id == a then
+					local tx, ty, tdx, tdy = _normalize_touch_coords(b, c, d, e)
+					input_events[#input_events + 1] = {'mousemoved', tx, ty, tdx or 0, tdy or 0, true, nil, true}
+					end
+				elseif name == 'mousepressed' then
+					input_events[#input_events + 1] = {name,a,b,c,d,e,f}
+				elseif name == 'mousereleased' or name == 'mousemoved' then
+					input_events[#input_events + 1] = {name,a,b,c,d,e,f}
+				else
+					if (name == 'focus' or name == 'visible') and not a then active_touch_id = nil end
+					love.handlers[name](a,b,c,d,e,f)
+				end
+			end
+			for _, ev in ipairs(input_events) do
+				local name = ev[1]
+				local from_touch_mouse = (name == 'mousemoved' and ev[6] == true) or ((name == 'mousepressed' or name == 'mousereleased') and ev[5] == true)
+				if not (native_touch_mouse_events[name] and from_touch_mouse and not ev[8]) then
+					love.handlers[name](ev[2], ev[3], ev[4], ev[5], ev[6], ev[7])
+				end
+			end
+		end
+
+		if love.timer then dt = love.timer.step() end
+		dt_smooth = math.min(0.8*dt_smooth + 0.2*dt, 0.1)
+		if love.update then love.update(dt_smooth) end
+
+		if love.graphics and love.graphics.isActive() then
+			if love.draw then love.draw() end
+			love.graphics.present()
+		end
+
+		run_time = math.min(love.timer.getTime() - run_time, 0.1)
+		
+		local os_name = (love and love.system and love.system.getOS) and love.system.getOS() or 'Windows'
+		local is_mobile = (os_name == 'Android' or os_name == 'iOS')
+		if not G.FPS_CAP then
+			local cap = is_mobile and (PORTRAIT_CONFIG and PORTRAIT_CONFIG.fps_cap or 60) or 500
+			if cap == 'auto' then
+				local ok, _, _, flags = pcall(love.window.getMode)
+				cap = (ok and flags and flags.refreshrate and flags.refreshrate > 0) and flags.refreshrate or 60
+                local native = portrait_ios.info()
+                if type(native.max_fps) == 'number' and native.max_fps > 0 then cap = native.max_fps end
+			end
+			G.FPS_CAP = cap
+		end
+		
+		if run_time < 1./G.FPS_CAP then love.timer.sleep(1./G.FPS_CAP - run_time) end
+	end
+end
+
+function love.load()
+	local w, h = love.graphics.getDimensions()
+	G.F_PORTRAIT = (h > w)
+
+	local os_name = love.system.getOS()
+	if os_name == 'Android' or os_name == 'iOS' then
+		love.graphics.setBackgroundColor(0.1, 0.2, 0.1, 1)
+		G.F_PORTRAIT = true
+
+		pcall(function()
+			love.window.setFullscreen(true, 'desktop')
+		end)
+
+		pcall(function()
+			if love.window.setDisplaySleepEnabled then
+				love.window.setDisplaySleepEnabled(false)
+			end
+		end)
+	end
+
+	_force_android_portrait_hints()
+
+	-- One-time restore of a save baked in at build time (build.py --import-save).
+	-- Only fills an empty profile slot; never overwrites an existing save.
+	pcall(function()
+		if not love.filesystem.getInfo("import_save") then return end
+		for _, slot in ipairs(love.filesystem.getDirectoryItems("import_save")) do
+			local src = "import_save/" .. slot
+			if love.filesystem.getInfo(src, "directory")
+				and not love.filesystem.getInfo(slot .. "/profile.jkr") then
+				love.filesystem.createDirectory(slot)
+				for _, fn in ipairs(love.filesystem.getDirectoryItems(src)) do
+					local data = love.filesystem.read(src .. "/" .. fn)
+					if data then love.filesystem.write(slot .. "/" .. fn, data) end
+				end
+			end
+		end
+	end)
+
+	-- Same idea for a bundled mod (build.py --steamodded): copy it into the mod
+	-- folder on first launch, and again whenever the build carries a different
+	-- one. It used to skip the copy whenever the folder already existed, so a
+	-- rebuild with another Steamodded version never reached the phone and the
+	-- first one installed stayed forever (#47). What was installed is recorded
+	-- beside it, and the copy is redone when that no longer matches.
+	pcall(function()
+		if not love.filesystem.getInfo("install_mods") then return end
+		local STAMP = "/.portrait_bundle"
+
+		local function copy_dir(src, dst)
+			love.filesystem.createDirectory(dst)
+			for _, item in ipairs(love.filesystem.getDirectoryItems(src)) do
+				local sp, dp = src .. "/" .. item, dst .. "/" .. item
+				if love.filesystem.getInfo(sp, "directory") then
+					copy_dir(sp, dp)
+				else
+					local data = love.filesystem.read(sp)
+					if data then love.filesystem.write(dp, data) end
+				end
+			end
+		end
+
+		local function remove_dir(path)
+			for _, item in ipairs(love.filesystem.getDirectoryItems(path)) do
+				local p = path .. "/" .. item
+				if love.filesystem.getInfo(p, "directory") then
+					remove_dir(p)
+				else
+					love.filesystem.remove(p)
+				end
+			end
+			love.filesystem.remove(path)
+		end
+
+		-- File count and total size: two builds of the same mod at different
+		-- versions do not land on both.
+		local function stamp_of(path)
+			local count, bytes = 0, 0
+			local function walk(p)
+				for _, item in ipairs(love.filesystem.getDirectoryItems(p)) do
+					local sp = p .. "/" .. item
+					local info = love.filesystem.getInfo(sp)
+					if info and info.type == "directory" then
+						walk(sp)
+					elseif info then
+						count = count + 1
+						bytes = bytes + (info.size or 0)
+					end
+				end
+			end
+			walk(path)
+			return count .. ":" .. bytes
+		end
+
+		for _, mod in ipairs(love.filesystem.getDirectoryItems("install_mods")) do
+			local src = "install_mods/" .. mod
+			if love.filesystem.getInfo(src, "directory") then
+				local dst = "Mods/" .. mod
+				local stamp = stamp_of(src)
+				local installed = love.filesystem.getInfo(dst, "directory")
+					and love.filesystem.read(dst .. STAMP) or nil
+				if installed ~= stamp then
+					if love.filesystem.getInfo(dst, "directory") then remove_dir(dst) end
+					copy_dir(src, dst)
+					love.filesystem.write(dst .. STAMP, stamp)
+				end
+			end
+		end
+	end)
+
+	G:start_up()
+	local desktop_os = love.system.getOS()
+	if desktop_os == 'OS X' or desktop_os == 'Windows' then
+		local st = nil
+		if desktop_os == 'OS X' then
+			local dir = love.filesystem.getSourceBaseDirectory()
+			local old_cpath = package.cpath
+			package.cpath = package.cpath .. ';' .. dir .. '/?.so'
+			st = require 'luasteam'
+			package.cpath = old_cpath
+		else
+			st = require 'luasteam'
+		end
+
+		st.send_control = {
+			last_sent_time = -200,
+			last_sent_stage = -1,
+			force = false,
+		}
+		if not (st.init and st:init()) then
+			love.event.quit()
+		end
+		G.STEAM = st
+	else
+	end
+
+	love.mouse.setVisible(false)
+end
+
+function love.quit()
+    if love.system.getOS() == 'iOS' then love.visible(false) end
+	if G.SOUND_MANAGER then G.SOUND_MANAGER.channel:push({type = 'stop'}) end
+	if G.STEAM then G.STEAM:shutdown() end
+end
+
+G._needs_canvas_refresh = false
+
+function love.visible(v)
+    if not v and G and G.SAVE_MANAGER and G.STAGE == G.STAGES.RUN then
+        G:save_progress()
+        G.SAVE_MANAGER.channel:push({type = 'save_progress', save_progress = G.ARGS.save_progress})
+        -- Flush only the game's last stable checkpoint, never serialize an
+        -- animation midway through scoring or drawing cards.
+        if G.FILE_HANDLER and G.FILE_HANDLER.run and G.ARGS.save_run then
+            G.SAVE_MANAGER.channel:push({type = 'save_run', save_table = G.ARGS.save_run,
+                profile_num = G.SETTINGS.profile})
+        end
+        local barrier = love.thread.getChannel('portrait_save_complete')
+        barrier:clear()
+        G.SAVE_MANAGER.channel:push({type = 'portrait_flush'})
+        barrier:demand(0.25)
+    end
+    if v then
+        G._needs_canvas_refresh = true
+        G.FPS_CAP = nil
+        portrait_ios.info(true)
+    elseif G and G.CONTROLLER then
+        -- Never carry a half-finished gesture across the lock screen.
+        G.CONTROLLER.gesture_start = nil
+        G.CONTROLLER.L_cursor_queue = nil
+        G.CONTROLLER.is_cursor_down = false
+        G.CONTROLLER.cursor_down.handled = true
+        G.CONTROLLER.cursor_up.handled = true
+        if G.CONTROLLER.touch_position then G.CONTROLLER.touch_position.active = false end
+        if G.CONTROLLER.dragging.target then
+            G.CONTROLLER.dragging.target:stop_drag()
+            G.CONTROLLER.dragging.target.states.drag.is = false
+            G.CONTROLLER.dragging.target = nil
+        end
+    end
+end
+
+function love.focus(focused)
+    love.visible(focused)
+end
+
+function love.update( dt )
+    timer_checkpoint(nil, 'update', true)
+    if G._needs_canvas_refresh then
+        G._needs_canvas_refresh = false
+        local os_name = love.system.getOS()
+        if (os_name == 'Android' or os_name == 'iOS') and G and G.ROOM then
+            local w, h = love.graphics.getDimensions()
+            if w > 0 and h > 0 and G.TILESCALE and h > w then
+                love.graphics.setScissor()
+                love.graphics.origin()
+                love.graphics.clear(0, 0, 0, 1)
+                if G.CANVAS then
+                    G.CANVAS:release()
+                    G.CANVAS = nil
+                end
+                love.resize(w, h)
+            end
+        end
+    end
+    G:update(dt)
+end
+
+function love.draw()
+    timer_checkpoint(nil, 'draw', true)
+    local os_name = love.system.getOS()
+    if (os_name == 'Android' or os_name == 'iOS') and G and G.CANVAS then
+        local screen_w = love.graphics.getWidth()
+        local screen_h = love.graphics.getHeight()
+        local canvas_w = G.CANVAS:getWidth() / (G.CANV_SCALE or 1)
+        local canvas_h = G.CANVAS:getHeight() / (G.CANV_SCALE or 1)
+        if math.abs(screen_w - canvas_w) > 2 or math.abs(screen_h - canvas_h) > 2 then
+            love.resize(screen_w, screen_h)
+        end
+    end
+	G:draw()
+end
+
+function love.keypressed(key)
+	local os_name = (love and love.system and love.system.getOS) and love.system.getOS() or nil
+	if G and G.CONTROLLER and G.CONTROLLER.text_input_hook and (os_name == 'Android' or os_name == 'iOS') then
+		local allow_key = key == 'backspace' or key == 'delete' or key == 'left' or key == 'right' or key == 'return' or key == 'enter' or key == 'escape'
+		if not allow_key then
+			return
+		end
+	end
+
+	if key == 'back' or (key == 'escape' and love.system.getOS() == 'Android') then
+		if G.OVERLAY_MENU then
+			G.FUNCS.exit_overlay_menu()
+		elseif G.STAGE == G.STAGES.RUN and G.STATE ~= G.STATES.GAME_OVER then
+			G.FUNCS.options()
+		end
+		return
+	end
+	if not _RELEASE_MODE and G.keybind_mapping[key] then love.gamepadpressed(G.CONTROLLER.keyboard_controller, G.keybind_mapping[key])
+	else
+		G.CONTROLLER:set_HID_flags('mouse')
+		G.CONTROLLER:key_press(key)
+	end
+end
+
+function love.keyreleased(key)
+	if not _RELEASE_MODE and G.keybind_mapping[key] then love.gamepadreleased(G.CONTROLLER.keyboard_controller, G.keybind_mapping[key])
+	else
+		G.CONTROLLER:set_HID_flags('mouse')
+		G.CONTROLLER:key_release(key)
+	end
+end
+
+function love.textinput(text)
+    if not (G and G.CONTROLLER and G.CONTROLLER.text_input_hook and text and text ~= '') then
+        return
+    end
+
+    if utf8 and utf8.codes and utf8.char then
+        for _, codepoint in utf8.codes(text) do
+            G.CONTROLLER:key_press_update(utf8.char(codepoint))
+        end
+    else
+        for i = 1, #text do
+            G.CONTROLLER:key_press_update(text:sub(i, i))
+        end
+    end
+end
+
+function love.gamepadpressed(joystick, button)
+	button = G.button_mapping[button] or button
+	G.CONTROLLER:set_gamepad(joystick)
+    G.CONTROLLER:set_HID_flags('button', button)
+    G.CONTROLLER:button_press(button)
+end
+
+function love.gamepadreleased(joystick, button)
+	button = G.button_mapping[button] or button
+    G.CONTROLLER:set_gamepad(joystick)
+    G.CONTROLLER:set_HID_flags('button', button)
+    G.CONTROLLER:button_release(button)
+end
+
+--Mobile: Android/iOS occasionally emit synthetic (non-touch) mouse events at
+--launch with a phantom position. If one slips through before any real touch,
+--it flips the controller back into mouse mode and hover-selects whatever sits
+--under the phantom cursor (the rare "pre-clicked card on launch" bug). Ignore
+--all mouse-flavored events until a real touch has been seen.
+local _MOBILE_OS = love.system.getOS() == 'Android' or love.system.getOS() == 'iOS'
+local function _ignore_phantom_mouse(touch_flag)
+    if touch_flag or not _MOBILE_OS then return false end
+    return not (G and G.CONTROLLER and G.CONTROLLER.touch_position and G.CONTROLLER.touch_position.seen)
+end
+
+function love.mousepressed(x, y, button, touch)
+    if _ignore_phantom_mouse(touch) then return end
+    _logcat("BALATRO_INPUT", string.format("MOUSEPRESSED: x=%s y=%s button=%s touch=%s", tostring(x), tostring(y), tostring(button), tostring(touch)))
+    if not (G and G.CONTROLLER) then return end
+
+    if touch and G.CONTROLLER.cursor_position then
+        G.CONTROLLER.touch_position = G.CONTROLLER.touch_position or {x = 0, y = 0, active = false, seen = false}
+        G.CONTROLLER.touch_position.x = x
+        G.CONTROLLER.touch_position.y = y
+        G.CONTROLLER.touch_position.active = true
+        G.CONTROLLER.touch_position.seen = true
+        G.CONTROLLER.gesture_start = {x = x, y = y, t = love.timer.getTime()}
+        G.CONTROLLER.cursor_position.x = x
+        G.CONTROLLER.cursor_position.y = y
+        if G.CURSOR and G.CURSOR.T then
+            G.CURSOR.T.x = x/(G.TILESCALE*G.TILESIZE)
+            G.CURSOR.T.y = y/(G.TILESCALE*G.TILESIZE)
+        end
+    end
+
+    if G and G.CONTROLLER and G.CONTROLLER.cursor_position then
+        _logcat("BALATRO_INPUT", string.format("  CONTROLLER cursor_pos=(%s,%s)", tostring(G.CONTROLLER.cursor_position.x), tostring(G.CONTROLLER.cursor_position.y)))
+    end
+
+    G.CONTROLLER:set_HID_flags(touch and 'touch' or 'mouse')
+    if button == 1 then
+		G.CONTROLLER:queue_L_cursor_press(x, y)
+	end
+	if button == 2 then
+		G.CONTROLLER:queue_R_cursor_press(x, y)
+	end
+end
+
+
+--Portrait swipe gestures: a quick vertical flick on selected cards plays
+--(swipe up) or discards (swipe down) the highlighted hand. Uses the same
+--guards as the Play/Discard buttons (can_play/can_discard).
+local function _check_swipe_gesture(x, y)
+    local gz = PORTRAIT_CONFIG and PORTRAIT_CONFIG.gestures
+    -- Swipe Only mode has no Play/Discard buttons, so gestures stay on there
+    -- regardless of the gestures.enabled config.
+    local gestures_on = gz and (gz.enabled or G.F_SWIPE_ONLY)
+    if not (gestures_on and G.F_PORTRAIT) then return end
+    local gs = G.CONTROLLER and G.CONTROLLER.gesture_start
+    if G.CONTROLLER then G.CONTROLLER.gesture_start = nil end
+    if not gs then return end
+    if not (G.STATE == G.STATES.SELECTING_HAND and G.hand and #G.hand.highlighted > 0) then return end
+    if G.OVERLAY_MENU or G.TAROT_INTERRUPT or G.SETTINGS.paused then return end
+    if G.CONTROLLER.locked or G.CONTROLLER.locks.frame or G.screenwipe then return end
+    if G.GAME and G.GAME.STOP_USE and G.GAME.STOP_USE > 0 then return end
+    if G.play and G.play.cards[1] then return end
+
+    -- If the gesture started on a hand card, it must be one of the selected
+    -- cards — flicking an unselected card must not throw the selection.
+    local pressed = G.CONTROLLER.cursor_down and G.CONTROLLER.cursor_down.target
+    local pressed_selected = pressed and pressed.area == G.hand and pressed.highlighted
+    if gz.require_selected_card and not (pressed_selected and gs.selected_card) then return end
+    if pressed and pressed.area == G.hand and not pressed_selected then return end
+
+    -- Fast flicks work from anywhere in the lower half. A slow vertical
+    -- "carry and release" also triggers, but only when the drag started on a
+    -- selected card — matching the group-follow animation where the whole
+    -- selection visibly moves with the finger.
+    if not pressed_selected and love.timer.getTime() - gs.t > (gz.max_time or 0.45) then return end
+    if pressed_selected and love.timer.getTime() - gs.t > (gz.max_selected_time or 1.2) then return end
+
+    local unit = (G.TILESCALE or 1) * (G.TILESIZE or 20)
+    if unit <= 0 then return end
+    local dx, dy = (x - gs.x)/unit, (y - gs.y)/unit
+    if math.abs(dy) < (gz.min_swipe or 1.4) then return end
+    if math.abs(dx) > math.abs(dy) * (gz.max_dx_ratio or 0.6) then return end
+    if gs.y < 0.5 * love.graphics.getHeight() then return end
+
+    -- Lift the whole selection together so the gesture reads as "throw the
+    -- selected hand", not "throw one card".
+    for _, card in ipairs(G.hand.highlighted) do
+        if card.juice_up then card:juice_up(0.25, 0.1) end
+    end
+
+    if dy < 0 then
+        if G.GAME and G.GAME.blind and not G.GAME.blind.block_play and #G.hand.highlighted <= 5 then
+            G.FUNCS.play_cards_from_highlighted()
+        end
+    else
+        if G.GAME and G.GAME.current_round and G.GAME.current_round.discards_left > 0 then
+            G.FUNCS.discard_cards_from_highlighted()
+        end
+    end
+end
+
+function love.mousereleased(x, y, button, touch)
+    if _ignore_phantom_mouse(touch) then return end
+    if not (G and G.CONTROLLER) then return end
+    if touch and G.CONTROLLER.touch_position then
+        G.CONTROLLER.touch_position.x = x
+        G.CONTROLLER.touch_position.y = y
+        G.CONTROLLER.touch_position.active = false
+        G.CONTROLLER.touch_position.seen = true
+        G.CONTROLLER.cursor_position.x = x
+        G.CONTROLLER.cursor_position.y = y
+    end
+    G.CONTROLLER:set_HID_flags(touch and 'touch' or 'mouse')
+    if button == 1 then
+        G.CONTROLLER:L_cursor_release(x, y)
+        if touch then _check_swipe_gesture(x, y) end
+    end
+end
+
+function love.mousemoved(x, y, dx, dy, istouch)
+    if _ignore_phantom_mouse(istouch) then return end
+    if not (G and G.CONTROLLER) then return end
+    dx = dx or 0
+    dy = dy or 0
+	G.CONTROLLER.last_touch_time = G.CONTROLLER.last_touch_time or -1
+
+    if istouch then
+        G.CONTROLLER.touch_position = G.CONTROLLER.touch_position or {x = 0, y = 0, active = false, seen = false}
+        G.CONTROLLER.touch_position.x = x
+        G.CONTROLLER.touch_position.y = y
+        G.CONTROLLER.touch_position.active = true
+        G.CONTROLLER.touch_position.seen = true
+        G.CONTROLLER.last_touch_time = G.TIMERS.UPTIME
+        G.CONTROLLER:set_HID_flags('touch')
+    end
+
+	if istouch and math.abs(dx) < PORTRAIT_CONFIG.anti_jitter_threshold and math.abs(dy) < PORTRAIT_CONFIG.anti_jitter_threshold then
+		return
+	end
+
+	if next(love.touch.getTouches()) ~= nil then
+		G.CONTROLLER.last_touch_time = G.TIMERS.UPTIME
+	end
+    G.CONTROLLER:set_HID_flags(G.CONTROLLER.last_touch_time > G.TIMERS.UPTIME - 0.2 and 'touch' or 'mouse')
+end
+
+-- Second guard for the accelerometer, in case a device still lists it after
+-- conf.lua turns the option off. Its axes never mean a controller is in use.
+local function _is_accelerometer(joystick)
+    if not (joystick and joystick.getName) then return false end
+    local ok, name = pcall(joystick.getName, joystick)
+    if not ok or type(name) ~= 'string' then return false end
+    return string.find(string.lower(name), 'accelerometer', 1, true) ~= nil
+end
+
+function love.joystickaxis( joystick, axis, value )
+    if math.abs(value) > 0.2 and joystick:isGamepad() and not _is_accelerometer(joystick) then
+		G.CONTROLLER:set_gamepad(joystick)
+        G.CONTROLLER:set_HID_flags('axis')
+    end
+end
+
+function love.errhand(msg)
+	if G.F_NO_ERROR_HAND then return end
+	msg = tostring(msg)
+
+	local full_trace = debug.traceback()
+	local crash_text = msg .. "\n\n" .. full_trace
+
+	pcall(function()
+		local file = love.filesystem.newFile("crash_log.txt")
+		file:open("w")
+		file:write("Balatro Portrait Mobile - Crash Log\n")
+		file:write("Version: " .. tostring(G.VERSION or "unknown") .. "\n")
+		file:write("OS: " .. love.system.getOS() .. "\n")
+		file:write("Time: " .. os.date("!%Y-%m-%dT%H:%M:%SZ") .. "\n")
+		file:write("\n" .. crash_text .. "\n")
+		file:close()
+	end)
+
+	pcall(function()
+		if love.system and love.system.setClipboardText then
+			love.system.setClipboardText(crash_text)
+		end
+	end)
+
+	if G.SETTINGS.crashreports and _RELEASE_MODE and G.F_CRASH_REPORTS then
+		local http_thread = love.thread.newThread([[
+			local https = require('https')
+			CHANNEL = love.thread.getChannel("http_channel")
+
+			while true do
+				local request = CHANNEL:demand()
+				if request then
+					https.request(request)
+				end
+			end
+		]])
+		local http_channel = love.thread.getChannel('http_channel')
+		http_thread:start()
+		local httpencode = function(str)
+			local char_to_hex = function(c)
+				return string.format("%%%02X", string.byte(c))
+			end
+			str = str:gsub("\n", "\r\n"):gsub("([^%w _%%%-%.~])", char_to_hex):gsub(" ", "+")
+			return str
+		end
+
+		local error = msg
+		local file = string.sub(msg, 0,  string.find(msg, ':'))
+		local function_line = string.sub(msg, string.len(file)+1)
+		function_line = string.sub(function_line, 0, string.find(function_line, ':')-1)
+		file = string.sub(file, 0, string.len(file)-1)
+		local trace = debug.traceback()
+		local boot_found, func_found = false, false
+		for l in string.gmatch(trace, "(.-)\n") do
+			if string.match(l, "boot.lua") then
+				boot_found = true
+			elseif boot_found and not func_found then
+				func_found = true
+				trace = ''
+				function_line = string.sub(l, string.find(l, 'in function')+12)..' line:'..function_line
+			end
+
+			if boot_found and func_found then
+				trace = trace..l..'\n'
+			end
+		end
+
+		http_channel:push('https://958ha8ong3.execute-api.us-east-2.amazonaws.com/?error='..httpencode(error)..'&file='..httpencode(file)..'&function_line='..httpencode(function_line)..'&trace='..httpencode(trace)..'&version='..(G.VERSION))
+	end
+
+	if not love.window or not love.graphics or not love.event then
+		return
+	end
+
+	if not love.graphics.isCreated() or not love.window.isOpen() then
+		local success, status = pcall(love.window.setMode, 800, 600)
+		if not success or not status then
+			return
+		end
+	end
+
+	if love.mouse then
+		love.mouse.setVisible(true)
+		love.mouse.setGrabbed(false)
+		love.mouse.setRelativeMode(false)
+	end
+	if love.joystick then
+		for i,v in ipairs(love.joystick.getJoysticks()) do
+			v:setVibration()
+		end
+	end
+	if love.audio then love.audio.stop() end
+	love.graphics.reset()
+
+	local font = nil
+	pcall(function()
+		font = love.graphics.setNewFont("resources/fonts/TypoQuik-Bold.ttf", 18)
+	end)
+	if not font then
+		pcall(function()
+			font = love.graphics.setNewFont("resources/fonts/m6x11plus.ttf", 18)
+		end)
+	end
+	if not font then
+		font = love.graphics.newFont(18)
+	end
+
+	love.graphics.clear(0, 0, 0, 1)
+	love.graphics.origin()
+
+	local clipboard_ok = false
+	pcall(function()
+		clipboard_ok = love.system.getClipboardText() == crash_text
+	end)
+
+	local header = "=== CRASH ===\n"
+	header = header .. "Log saved to crash_log.txt\n"
+	if clipboard_ok then
+		header = header .. "Log copied to clipboard!\n"
+	end
+	header = header .. "\nPress BACK button or ESC to exit.\n"
+	header = header .. "Touch to scroll. Do NOT close app to read log.\n\n"
+
+	local p = header .. msg .. '\n\n' .. (not _RELEASE_MODE and full_trace or '')
+
+	local scroll_y = 0
+
+	local function draw()
+		local pos = love.window.toPixels(20)
+		local w = love.graphics.getWidth()
+		love.graphics.push()
+		love.graphics.clear(0.15, 0, 0, 1)
+		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.printf(p, font, pos, pos + scroll_y, w - pos * 2)
+		love.graphics.pop()
+		love.graphics.present()
+	end
+
+	while true do
+		love.event.pump()
+
+		for e, a, b, c in love.event.poll() do
+			if e == "quit" then
+				return
+			elseif e == "keypressed" and (a == "escape" or a == "back") then
+				return
+			elseif e == "touchpressed" then
+				scroll_y = 0
+			elseif e == "mousepressed" then
+				scroll_y = 0
+			elseif e == "wheelmoved" then
+				scroll_y = scroll_y + (b or 0) * 30
+				scroll_y = math.min(scroll_y, 0)
+			end
+		end
+
+		draw()
+
+		if love.timer then
+			love.timer.sleep(0.1)
+		end
+	end
+
+end
+
+function love.resize(w, h)
+	if not G or not G.ROOM then
+		return
+	end
+
+	love.graphics.setScissor()
+	love.graphics.origin()
+	love.graphics.clear(0, 0, 0, 1)
+
+	_force_android_portrait_hints()
+
+	local os_name = love.system.getOS()
+	if (os_name == 'Android' or os_name == 'iOS') then
+		if w > h then
+			if not G.window_prev or not G.CANV_SCALE then return end
+			if G.CANVAS then G.CANVAS:release() end
+			G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, {type = '2d', readable = true})
+			if G.CANVAS then G.CANVAS:setFilter('linear', 'linear') end
+			if G.CANVAS then G.CANVAS:setWrap('clampzero') end
+			return
+		end
+		G.F_PORTRAIT = true
+	else
+		G.F_PORTRAIT = (h > w)
+	end
+
+	if not G.window_prev then
+		return
+	end
+
+	if G.F_PORTRAIT then
+		local portrait_scale_factor = get_portrait_scale(w, h)
+		G.TILESCALE = w / (G.TILE_W * portrait_scale_factor * G.TILESIZE)
+
+		if G.ROOM then
+			local safe_top = get_mobile_safe_area_top(os_name)
+			G.ROOM.T.w = w / (G.TILESCALE * G.TILESIZE)
+			-- Full height minus the iOS bottom trim: shifting the room down by
+			-- the top inset pushes its bottom edge (and everything anchored to
+			-- it, like the title-screen buttons) below the physical screen once
+			-- the inset outgrows the Android-tuned floor (#35).
+			G.ROOM.T.h = h / (G.TILESCALE * G.TILESIZE) - get_mobile_room_bottom_trim(os_name, safe_top)
+			G.ROOM.T.x = 0
+			G.ROOM.T.y = safe_top
+
+			G.ROOM_ATTACH.T.w = G.ROOM.T.w
+			G.ROOM_ATTACH.T.h = G.ROOM.T.h
+			G.ROOM_ATTACH.T.x = G.ROOM.T.x
+			G.ROOM_ATTACH.T.y = G.ROOM.T.y
+
+			G.ROOM_ORIG = {
+				x = G.ROOM.T.x,
+				y = G.ROOM.T.y,
+				r = G.ROOM.T.r
+			}
+
+			if G.buttons then G.buttons:recalculate() end
+			if G.HUD then G.HUD:recalculate() end
+
+			set_screen_positions()
+
+			-- Boot loading card: its spawn position goes stale when Android
+			-- fires follow-up resizes while the window settles — re-center it.
+			if G.boot_loading_card and not G.boot_loading_card.REMOVED then
+				G.boot_loading_card.T.x = G.ROOM.T.w/2 - G.boot_loading_card.T.w/2
+				G.boot_loading_card.T.y = G.ROOM.T.h/2 - G.boot_loading_card.T.h/2
+				if G.boot_loading_card.hard_set_VT then G.boot_loading_card:hard_set_VT() end
+			end
+		end
+	else
+		if w/h < 1 then
+			h = w/1
+		end
+
+		if w/h < G.window_prev.orig_ratio then
+			G.TILESCALE = G.window_prev.orig_scale*w/G.window_prev.w
+		else
+			G.TILESCALE = G.window_prev.orig_scale*h/G.window_prev.h
+		end
+
+		if G.ROOM then
+			G.ROOM.T.w = G.TILE_W
+			G.ROOM.T.h = G.TILE_H
+			G.ROOM_ATTACH.T.w = G.TILE_W
+			G.ROOM_ATTACH.T.h = G.TILE_H
+
+			if w/h < G.window_prev.orig_ratio then
+				G.ROOM.T.x = G.ROOM_PADDING_W
+				G.ROOM.T.y = (h/(G.TILESIZE*G.TILESCALE) - (G.ROOM.T.h+G.ROOM_PADDING_H))/2 + G.ROOM_PADDING_H/2
+			else
+				G.ROOM.T.y = G.ROOM_PADDING_H
+				G.ROOM.T.x = (w/(G.TILESIZE*G.TILESCALE) - (G.ROOM.T.w+G.ROOM_PADDING_W))/2 + G.ROOM_PADDING_W/2
+			end
+
+			G.ROOM_ORIG = {
+				x = G.ROOM.T.x,
+				y = G.ROOM.T.y,
+				r = G.ROOM.T.r
+			}
+
+			if G.buttons then G.buttons:recalculate() end
+			if G.HUD then G.HUD:recalculate() end
+		end
+	end
+
+	G.WINDOWTRANS = {
+		x = 0, y = 0,
+		w = G.TILE_W+2*G.ROOM_PADDING_W,
+		h = G.TILE_H+2*G.ROOM_PADDING_H,
+		real_window_w = w,
+		real_window_h = h
+	}
+
+	G.CANV_SCALE = 1
+
+	if love.system.getOS() == 'Windows' and false then
+		local render_w, render_h = love.window.getDesktopDimensions(G.SETTINGS.WINDOW.selcted_display)
+		local unscaled_dims = love.window.getFullscreenModes(G.SETTINGS.WINDOW.selcted_display)[1]
+
+		local DPI_scale = math.floor((0.5*unscaled_dims.width/render_w + 0.5*unscaled_dims.height/render_h)*500 + 0.5)/500
+
+		if DPI_scale > 1.1 then
+			G.CANV_SCALE = 1.5
+
+			G.AA_CANVAS = love.graphics.newCanvas(G.WINDOWTRANS.real_window_w*G.CANV_SCALE, G.WINDOWTRANS.real_window_h*G.CANV_SCALE, {type = '2d', readable = true})
+			G.AA_CANVAS:setFilter('linear', 'linear')
+		else
+			G.AA_CANVAS = nil
+		end
+	end
+
+	if G.CANVAS then G.CANVAS:release() end
+	G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, {type = '2d', readable = true})
+	G.CANVAS:setFilter('linear', 'linear')
+	G.CANVAS:setWrap('clampzero')
+	
+	love.graphics.setScissor()
+	love.graphics.origin()
+	
+	if G.OVERLAY_MENU then
+		local menu_config = G.OVERLAY_MENU.config or {}
+		local is_game_over = (G.STATE == G.STATES.GAME_OVER)
+		
+		G.OVERLAY_MENU:remove()
+		G.OVERLAY_MENU = nil
+		
+		if is_game_over then
+			G.FUNCS.overlay_menu{
+				definition = create_UIBox_game_over(),
+				config = {no_esc = true}
+			}
+		end
+	end
+end

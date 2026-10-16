@@ -1,0 +1,41 @@
+# Build output
+qa/
+validation-output/
+*.apk
+*.ipa
+*.love
+*.love.part
+*.keystore
+
+# Python
+__pycache__/
+*.pyc
+
+# Build artifacts and downloaded tools
+balatro-mobile-maker/
+*.tmp
+
+# Build cache / saved config
+.build_cache.json
+.buildconfig.json
+
+# Extracted game files — generated locally from your Balatro copy, never committed
+game_original_files/
+src/resources/
+src/localization/
+
+# Editor / tools
+.vscode/
+.idea/
+.DS_Store
+.claude/
+
+# Logs
+logcat*.txt
+*.log
+
+# Windows
+*.dll
+*.exe
+*.pdb
+*.ppdb
