@@ -62,7 +62,7 @@ choose_yes_no() {
 }
 
 ui_print ""
-ui_print "Balatro Portrait Zygisk options"
+ui_print "Balatrón Zygisk options"
 ui_print ""
 
 if choose_yes_no "Apply Readabletro font/textures?" "yes"; then

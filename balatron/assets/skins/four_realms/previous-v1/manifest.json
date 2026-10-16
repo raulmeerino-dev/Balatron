@@ -1,0 +1,129 @@
+{
+  "tool": "built-in image_gen",
+  "cell": [
+    71,
+    95
+  ],
+  "dpi": 2,
+  "ranks": [
+    "A",
+    "J",
+    "Q",
+    "K"
+  ],
+  "fallback": "native default 2\u201310; native paper, enhancements and run back",
+  "cards": {
+    "hearts_J": {
+      "cell": [
+        9,
+        0
+      ],
+      "source_sha256": "f66228662b04f29edaf486e9daedab0e33bc0543451e560fc62f35f63a52a7f4"
+    },
+    "hearts_Q": {
+      "cell": [
+        10,
+        0
+      ],
+      "source_sha256": "b9443cb271604716e61e290519fc0a27595ea9928bed940716c04aede70bb6d6"
+    },
+    "hearts_K": {
+      "cell": [
+        11,
+        0
+      ],
+      "source_sha256": "cc409e7599be13c05b9653a6c763bb2745c06f923080928ed11fd80ca116c45c"
+    },
+    "hearts_A": {
+      "cell": [
+        12,
+        0
+      ],
+      "source_sha256": "c8cf73b5068bb9dfe2d8162c9d4a4062dbd5ffc212246c8fd95a2a9ae4b8109f"
+    },
+    "clubs_J": {
+      "cell": [
+        9,
+        1
+      ],
+      "source_sha256": "40dd8c3bc27dd2d7d049683745a0244a363498d1cedd33b658e683e479a3e221"
+    },
+    "clubs_Q": {
+      "cell": [
+        10,
+        1
+      ],
+      "source_sha256": "2fcf152003467dcff5876f0d00c69efef2e677106fbbdea8debcc2e5f1c90562"
+    },
+    "clubs_K": {
+      "cell": [
+        11,
+        1
+      ],
+      "source_sha256": "0aaedb37ec908b2ed6bea22a90d55ad41d359bf5b842223403c3ef3ab15c6caf"
+    },
+    "clubs_A": {
+      "cell": [
+        12,
+        1
+      ],
+      "source_sha256": "f5eb6c46b5d87febf828ced5fee23ce08cb08a3d0328f7dfe4ba8bcb7d0dcd92"
+    },
+    "diamonds_J": {
+      "cell": [
+        9,
+        2
+      ],
+      "source_sha256": "8728d6aa55afa19e076e614f66e4b5e8c61435b0adddeef9dd059e87c2e97d97"
+    },
+    "diamonds_Q": {
+      "cell": [
+        10,
+        2
+      ],
+      "source_sha256": "30458815f0f62f1c824ef5d901f99498e49809b18be5829fe0148f39d2bf4920"
+    },
+    "diamonds_K": {
+      "cell": [
+        11,
+        2
+      ],
+      "source_sha256": "942b04077ae4194c1469bb254307c47dfbcf5d334febfadfa649ae90b9284b3c"
+    },
+    "diamonds_A": {
+      "cell": [
+        12,
+        2
+      ],
+      "source_sha256": "b682f986e98a3a54e7a499abb61a9650cb437314fe523bb690fb82a170d5686b"
+    },
+    "spades_J": {
+      "cell": [
+        9,
+        3
+      ],
+      "source_sha256": "39d3549f91089c62a3a6d4e75ec7f02e0c0d732fd77216ba0f9bca6c2af8b566"
+    },
+    "spades_Q": {
+      "cell": [
+        10,
+        3
+      ],
+      "source_sha256": "99549ef205c0313cec67dd514dbd9994687041554188787e84344be63677e2f6"
+    },
+    "spades_K": {
+      "cell": [
+        11,
+        3
+      ],
+      "source_sha256": "40e39d3b5e7bcf4eb43734ed75021f75ccd31f56950f72ddb603ac7d160211cb"
+    },
+    "spades_A": {
+      "cell": [
+        12,
+        3
+      ],
+      "source_sha256": "576bee4e16e3010bc50094bdca8ea056b0612422bd957cb59b0cbfbe51d59faa"
+    }
+  }
+}

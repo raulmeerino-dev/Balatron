@@ -1,0 +1,17 @@
+{
+  "id": "deck_mutations",
+  "name": "Deck Mutations",
+  "display_name": "Deck Mutations",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Optional run gameplay. Generation switches apply to the next run.",
+  "prefix": "dm",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 130,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay"
+  ]
+}

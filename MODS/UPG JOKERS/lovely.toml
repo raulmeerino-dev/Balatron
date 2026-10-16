@@ -1,0 +1,20 @@
+[manifest]
+version = "1.0.0"
+priority = 30
+dump_lua = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME = saveTable and saveTable.GAME or self:init_game_object()"
+position = "after"
+match_indent = true
+payload = "if UPGJokers then UPGJokers.registry.begin_run(saveTable ~= nil) end"
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "center = pseudorandom_element(_pool, pseudoseed(_pool_key))"
+position = "at"
+match_indent = true
+payload = "center = UPGJokers and UPGJokers.registry.pick(_pool, pseudoseed(_pool_key)) or pseudorandom_element(_pool, pseudoseed(_pool_key))"

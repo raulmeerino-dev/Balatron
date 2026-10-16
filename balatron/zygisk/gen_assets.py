@@ -28,7 +28,7 @@ def _truth(value):
 
 def _parse_args():
     parser = argparse.ArgumentParser(
-        description="Embed Balatro portrait Lua and optional Zygisk resources."
+        description="Embed Balatrón Lua and optional Zygisk resources."
     )
     parser.add_argument(
         "--readabletro",

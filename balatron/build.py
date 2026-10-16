@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Balatro Portrait Mobile - Unified Build Script
+Balatrón - Unified Build Script
 
 Handles everything: resource extraction, Game.love creation, and APK packaging.
 Runs on Windows, macOS, Linux, and Termux on Android. On Termux, use
@@ -47,6 +47,8 @@ import tarfile
 import time
 import urllib.request
 import zipfile
+
+from tools.ios_icons import load_icons, old_icon_stems, apply_icon_plist
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Constants
@@ -132,6 +134,7 @@ IOS_LOVELY_BASE_URL = "https://lmm.shorty.systems/base.ipa"
 # Separate from official Balatro and earlier third-party builds. Keep stable
 # between updates to preserve this app's save container.
 IOS_BUNDLE_ID = "com.rulo3.balatro.portrait"
+IOS_DISPLAY_NAME = "BALATRÓN"
 
 TOOL_SHA256 = {
     IOS_LOVELY_BASE_URL: "14d4c378d19c6f190af163d32fdd27b34932628b5fd5a6816e8c5db578ef5fde",
@@ -632,6 +635,91 @@ def _apply_readabletro(src_dir, apply):
 
 
 STEAMODDED_REPO = "Steamodded/smods"
+
+
+def _bundled_mods():
+    """Pinned loader and local Joker, installed before main.lua on first boot."""
+    root = os.path.dirname(os.path.abspath(__file__))
+    folders = {'Steamodded': os.path.join(root, 'mods', 'Steamodded'),
+               'incremental_joker': os.path.join(root, '..', 'MODS', 'Compound Interest'),
+               'upgraded_jokers': os.path.join(root, '..', 'MODS', 'UPG JOKERS'),
+               'risk_jokers': os.path.join(root, '..', 'MODS', 'RISK JOKERS'),
+               'portrait_gameplay': os.path.join(root, '..', 'MODS', 'Gameplay Core'),
+               'deck_mutations': os.path.join(root, '..', 'MODS', 'Deck Mutations'),
+               'contracts': os.path.join(root, '..', 'MODS', 'Contracts'),
+               'joker_fusion': os.path.join(root, '..', 'MODS', 'Joker Fusion'),
+               'portrait_events': os.path.join(root, '..', 'MODS', 'Events'),
+               'portrait_horizons': os.path.join(root, '..', 'MODS', 'Horizons')}
+    result = {}
+    for name, folder in folders.items():
+        if not os.path.isfile(os.path.join(folder, 'version.lua' if name=='Steamodded' else 'mod.json')):
+            raise RuntimeError('Missing bundled mod: '+name)
+        files = {}
+        for directory, dirs, names in os.walk(folder):
+            dirs[:] = sorted(d for d in dirs if not d.startswith('.') and d not in ('tests', '__pycache__'))
+            if name == 'upgraded_jokers' and directory == folder:
+                dirs[:] = [d for d in dirs if d not in ('METAMORPHOSIS', 'BOTTOMLESS', 'PAPER')] # Original supplied art, not runtime sprites.
+            if name == 'risk_jokers' and directory == folder:
+                dirs[:] = [d for d in dirs if d in ('assets', 'core', 'jokers', 'localization')]
+            if name == 'joker_fusion' and directory == folder:
+                dirs[:] = [d for d in dirs if d != 'source']
+            if name == 'contracts' and directory == folder:
+                dirs[:] = [d for d in dirs if d != 'NEW CONTRACTS SPRITES']
+            if name == 'incremental_joker' and directory == folder:
+                dirs[:] = [d for d in dirs if d != 'art-source']
+            if name == 'deck_mutations' and directory == folder:
+                dirs[:] = [d for d in dirs if d != 'art-source']
+            for filename in sorted(names):
+                # Source illustrations beside the mod are not runtime assets.
+                if name == 'incremental_joker' and directory == folder and filename.lower().endswith(('.png','.jpg','.jpeg','.webp')):
+                    continue
+                if filename.startswith('.') or filename.endswith(('.md', '.py')) or filename in ('arte_original.png', 'art-manifest.json', 'mutations-source.png', 'expansion-art-prompts.json', 'reward-plan.json') or filename.startswith('Joker pixelado'):
+                    continue
+                path=os.path.join(directory,filename)
+                with open(path,'rb') as fh: data=fh.read()
+                if filename.endswith(('.lua','.toml','.json')): data=data.replace(b'\r\n',b'\n')
+                if filename.endswith('.toml'):
+                    data = re.sub(rb'dump_lua\s*=\s*true', b'dump_lua = false', data)
+                files[os.path.relpath(path,folder).replace('\\','/')]=data
+        if name == 'Steamodded':
+            # Lovely 0.10 writes diagnostic JSON under Mods/lovely. This older
+            # pinned loader predates those files; they are not mod metadata.
+            loader = files['src/loader.lua']
+            anchor = b'local function processDirectory(directory, depth)'
+            assert loader.count(anchor) == 1
+            files['src/loader.lua'] = loader.replace(anchor, anchor +
+                b"\n        if depth == 2 and directory == modsDirectory..'/lovely' then return end")
+            # Older installs may retain these two design documents. They are
+            # not mod manifests; ignore them without touching user files.
+            metadata = b"elseif filename:lower():match('%.json') and depth > 1 then"
+            assert files['src/loader.lua'].count(metadata) == 1
+            files['src/loader.lua'] = files['src/loader.lua'].replace(metadata,
+                b"elseif filename:lower():match('%.json') and depth > 1 and not "
+                b"(directory == modsDirectory..'/contracts' and "
+                b"(filename == 'expansion-art-prompts.json' or filename == 'reward-plan.json')) then")
+            # Use the app's existing artwork during loading. The upstream cat
+            # sits left of the progress bar and is clipped on portrait phones.
+            with open(os.path.join(root, 'ios', 'icon-master.png'), 'rb') as icon:
+                files['assets/cat.png'] = icon.read()
+            boot_draw = b"    if catimg then love.graphics.draw(catimg, realw/2 - 264, realh/2 - 27, 0, 1, 1); love.graphics.rectangle('line', realw/2 - 264, realh/2 - 27, 96, 96, 5) end"
+            assert files['src/loader.lua'].count(boot_draw) == 1
+            files['src/loader.lua'] = files['src/loader.lua'].replace(boot_draw, b"""    if catimg then
+        local size = math.min(realw * 0.46, realh * 0.24, 220)
+        local scale = size / math.max(catimg:getWidth(), catimg:getHeight())
+        catimg:setFilter('linear', 'linear')
+        love.graphics.draw(catimg, (realw - catimg:getWidth() * scale) / 2,
+            realh / 2 - 39 - catimg:getHeight() * scale, 0, scale, scale)
+    end""")
+            # These desktop UI replacements collide with the existing portrait
+            # HUD and full-deck selector. Keep upstream sources vendored; only
+            # omit these UI patch sets from the mobile bundle.
+            for patch in ('deck_skins', 'blind_ui'):
+                files['lovely/'+patch+'.toml'] = b'patches = []\n[manifest]\nversion = "1.0.0"\npriority = -10\n# Replaced by portrait_smods.lua for this portrait build.\n'
+        digest=hashlib.sha256()
+        for path,data in sorted(files.items()): digest.update(path.encode()+b'\0'+data)
+        files['.portrait_bundle']=digest.hexdigest().encode()
+        result[name]=files
+    return result
 
 
 def _patch_lovely_mod_dir(apk_out):
@@ -1210,7 +1298,7 @@ def build_ipa(profiler=None, lovely=True):
     unsigned by design — Sideloadly/AltStore re-sign it at install time.
 
     With lovely=True the shell is the one that has lovely-injector linked in, so
-    Steamodded can load; the app is renamed back to Balatro on the way past.
+    Steamodded can load; the app keeps its independent Balatrón identity.
     """
     game_love_src = os.path.abspath("Game.love")
     if not os.path.exists(game_love_src):
@@ -1222,7 +1310,7 @@ def build_ipa(profiler=None, lovely=True):
 
     base_url  = IOS_LOVELY_BASE_URL if lovely else IOS_BASE_URL
     base_ipa  = os.path.join(WORKDIR, "lovely-base.ipa" if lovely else "balatro-base.ipa")
-    out_ipa   = "balatro-portrait.ipa"
+    out_ipa   = "balatron.ipa"
 
     with p.step("Download iOS base"):
         _download(base_url, base_ipa)
@@ -1232,17 +1320,22 @@ def build_ipa(profiler=None, lovely=True):
     plist_arc = app_dir + "/Info.plist"
     love_arc  = app_dir + "/game.love"
 
-    # Keep the open-source shell's icons. Game artwork comes only from the
-    # user's local installation, never from another prebuilt Balatro package.
+    icons, icon_idioms = load_icons()
 
     with p.step("Pack IPA"):
-        print("  Packing IPA (portrait-locked Info.plist + game.love) ...")
+        print("  Packing IPA (portrait Info.plist + jester icons + game.love) ...")
         if os.path.exists(out_ipa):
             os.remove(out_ipa)
         with zipfile.ZipFile(base_ipa, "r") as zin, \
              zipfile.ZipFile(out_ipa, "w", zipfile.ZIP_DEFLATED) as zout:
+            plist = plistlib.loads(zin.read(plist_arc))
+            old_icons = old_icon_stems(plist)
             for item in sorted(zin.infolist(), key=lambda entry: entry.filename):
+                relative = item.filename.removeprefix(app_dir + "/")
+                icon_stem = re.split(r'@|~', relative.removesuffix('.png'))[0]
                 if (item.filename.lower() in (plist_arc.lower(), love_arc.lower())
+                        or relative in icons
+                        or (relative.endswith('.png') and icon_stem in old_icons)
                         or "/_CodeSignature/" in item.filename
                         or item.filename.endswith("/embedded.mobileprovision")):
                     continue
@@ -1250,7 +1343,6 @@ def build_ipa(profiler=None, lovely=True):
                 _zip_write(zout, item.filename, zin.read(item.filename),
                            item.external_attr >> 16)
 
-            plist = plistlib.loads(zin.read(plist_arc))
             plist["UISupportedInterfaceOrientations"] = ["UIInterfaceOrientationPortrait"]
             plist["UISupportedInterfaceOrientations~ipad"] = ["UIInterfaceOrientationPortrait"]
             plist["CFBundleShortVersionString"] = MOD_VERSION
@@ -1260,13 +1352,17 @@ def build_ipa(profiler=None, lovely=True):
             # its loop at 120 while the panel showed every other frame (#45).
             # iOS 15+ key, ignored by everything older and by 60 Hz devices.
             plist["CADisableMinimumFrameDurationOnPhone"] = True
-            plist["CFBundleDisplayName"] = "Balatro Portrait"
-            plist["CFBundleName"] = "Balatro Portrait"
+            plist["CFBundleDisplayName"] = IOS_DISPLAY_NAME
+            plist["CFBundleName"] = IOS_DISPLAY_NAME
             plist["CFBundleIdentifier"] = IOS_BUNDLE_ID
             plist["UIFileSharingEnabled"] = True
             plist["LSSupportsOpeningDocumentsInPlace"] = True
             plist["UIRequiresFullScreen"] = True
+            apply_icon_plist(plist, icon_idioms)
             _zip_write(zout, plist_arc, plistlib.dumps(plist))
+
+            for name, data in sorted(icons.items()):
+                _zip_write(zout, app_dir + "/" + name, data)
 
             with open(game_love_src, "rb") as game:
                 _zip_write(zout, love_arc, game.read())
@@ -1280,7 +1376,7 @@ def build_ipa(profiler=None, lovely=True):
     print(f"{'=' * 60}")
     print()
     print("  Sideload with Sideloadly or AltStore (signs with your Apple ID).")
-    print("  App: Balatro Portrait (separate sandbox; keep its bundle ID for updates).")
+    print(f"  App: {IOS_DISPLAY_NAME} (separate sandbox; keep its bundle ID for updates).")
     print("  See docs/IOS.md for instructions - and please report results!")
 
 
@@ -1291,7 +1387,7 @@ def build_ipa(profiler=None, lovely=True):
 def _parse_args():
     parser = argparse.ArgumentParser(
         prog="build.py",
-        description="Balatro Portrait Mobile - unified build script "
+        description="Balatrón - unified build script "
                     "(resource extraction, Game.love creation, APK packaging).",
     )
     # The flag polarity used to be a trap: "--crt" DISABLED the CRT shader.
@@ -1390,7 +1486,7 @@ def _resolve_import_save(flag_path, interactive):
 
 def main():
     print("=" * 60)
-    print("  BALATRO PORTRAIT MOBILE - BUILD")
+    print("  Balatrón - BUILD")
     print("=" * 60)
 
     cli = _parse_args()
@@ -1432,7 +1528,7 @@ def main():
             config["readabletro"] = _ask("     Apply Readabletro?", default=DEFAULT_BUILD_CONFIG["readabletro"])
             print()
             print("  3. iOS Build (EXPERIMENTAL)")
-            print("     Also produces balatro-portrait.ipa for sideloading with")
+            print("     Also produces balatron.ipa for sideloading with")
             print("     Sideloadly or AltStore. Untested by the maintainer -")
             print("     feedback welcome. Lovely is included unless --ios-vanilla is set.")
             config["ios"] = _ask("     Build iOS .ipa?", default=DEFAULT_BUILD_CONFIG["ios"])
@@ -1454,7 +1550,9 @@ def main():
         cli.get("steamodded"),
         interactive=("steamodded" not in cli and not all_cli_set),
     )
-    import_mods       = dict([steamodded]) if steamodded else None
+    import_mods       = _bundled_mods()
+    if steamodded:
+        raise RuntimeError('This iOS project pins Steamodded locally; omit --steamodded.')
 
     total = 4 if build_ios else 3
 

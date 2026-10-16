@@ -1,0 +1,39 @@
+{
+  "tool": "built-in image_gen",
+  "frame": [
+    71,
+    95
+  ],
+  "order": [
+    "A",
+    "B",
+    "neutral"
+  ],
+  "sampling": "complete opaque card; nearest; exact 2x doubling",
+  "family_frame": "Options perimeter; opaque white corners; inner safe area 4,4,67,91",
+  "prompts": "prompts.json",
+  "cards": {
+    "color_call": {
+      "sources": {
+        "a": "96d9b5012ddbd8387b90ded5916af04e638c6275fc285129577cc94f9b0bc630",
+        "b": "c9e1fcfc5275d5a79ba9caecc21f3eaacb9fbe0a21af84ea72fae6f3b8636612",
+        "base": "86b8184212d8aaec2866cfff08422e978be87e51165339e8a7ed3e2e18060ffe"
+      },
+      "sprites": {
+        "1": "f61075b89603d08be4d332c46b578b47a93a4509dce5ef6f65d00d5530b20435",
+        "2": "228082f1efb9092b08bc312aafa7bd86c015a056024c9c548df3fdf9dd68383b"
+      }
+    },
+    "double_entry": {
+      "sources": {
+        "a": "ad7c1d6aa565134539a7d7feb599e8948a1ef23769e514a57b8f0c1f46c09365",
+        "b": "da3b9d1879aa6c1dd36ffeb0e31ef8b042bd09f59fe1839d97feee2cc1269b03",
+        "base": "77a7ddbd58806e0a1a98240c2d16093aec1eb642f4628b59061c9bf787b19c3b"
+      },
+      "sprites": {
+        "1": "1a9f9f68aae70e7c61418101590fcde91adb17c449bf76bd72e0c23595d35d01",
+        "2": "1ea3afad1b1786cfa8fb7c6b3a9f1af8f544d4a5572e700f7aedba1e19e66e27"
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "id": "M13",
+      "key": "stay_of_execution",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: A small ivory contract clause with three black short ink lines and a large red wax seal stamped with the pause symbol of two ivory vertical bars. One unmistakable pause seal over a paper clause.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-d0acac76-2756-4d60-97b6-360c76926c1e.png"
+    },
+    {
+      "id": "M14",
+      "key": "escrow",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: A squat graphite grey casino safe with a small brass wheel and TWO folded ivory receipts tucked safely inside its slightly open door. Large simple readable silhouette.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-8934386c-72f6-456a-ab6a-dc2d08fe1aa9.png"
+    },
+    {
+      "id": "M15",
+      "key": "spare_parts",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: A brass cogwheel with one large tooth section missing and a bright ivory universal puzzle component neatly fitted in its place. A dark turquoise accent on the replacement part.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-7a81afcd-6a01-4641-be5b-2514e78bf778.png"
+    },
+    {
+      "id": "M16",
+      "key": "tithe",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: One bright gold coin entering a small red-and-black casino blind score counter, with a short white pointer indicating the conversion from coin to counter. No numbers.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-232496c8-d406-4d05-a014-5aa05485fbf3.png"
+    },
+    {
+      "id": "M17",
+      "key": "counterpoint",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: Two small ivory music manuscripts crossing diagonally, one showing three blue angular note glyphs and the other three red angular note glyphs. Clear intertwined counterpoint, no readable text.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-0241125a-415e-4ccd-a42e-3dfe5f63b500.png"
+    },
+    {
+      "id": "M18",
+      "key": "left_luggage",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: An elegant compact dark-green casino locker with THREE ivory luggage tags hanging from three small brass hooks, one red seal detail. Strong simple squared locker silhouette, no typography.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-13365c37-ea31-4f69-9047-64f7ae14beae.png"
+    },
+    {
+      "id": "M19",
+      "key": "molting",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: An empty split amber insect shell on the left and a fresh luminous turquoise mutation emblem emerging on the right. Renewal from an old shell. The new emblem is a simple four-point star, not a face.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-8b74cba0-93e1-4a1e-a8e8-a163e1044160.png"
+    },
+    {
+      "id": "M20",
+      "key": "takeaway",
+      "prompt": "Use case: stylized-concept. Asset type: one 64-by-64 logical pixel-art Mutation icon for Balatro Portrait, exported at a large square resolution for downstream nearest-neighbor downsampling. Match the reference's sharp limited-palette pixel clusters, ivory/gold/red highlights, dark 1-pixel outlines and subtle offset pixel shadow. TRANSPARENT BACKGROUND. This is a square floating item icon, NOT a playing card: no rectangular card border, no typography, no letters, no captions, no numbers. No gradient, no blur, no antialiasing, no 3D render. Central subject occupies about 82% of the image and stays entirely inside generous transparent margins. Strong silhouette readable at 64px. Reference image is style reference only; make a distinct icon. Subject: A closed kraft-paper takeaway bag tied shut with a red cord and a small sealed ivory booster envelope peeking from its top. One gold casino diamond on the bag, no typography.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-e9043a8a-1dcc-4432-a137-9eaa36b4e78e.png"
+    }
+  ]
+}

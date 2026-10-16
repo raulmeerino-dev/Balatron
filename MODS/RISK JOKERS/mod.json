@@ -1,0 +1,16 @@
+{
+  "id": "risk_jokers",
+  "name": "Risk Jokers",
+  "display_name": "Risk Jokers",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "High rewards with a price. Generation switches apply to the next run.",
+  "prefix": "risk",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 115,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)"
+  ]
+}

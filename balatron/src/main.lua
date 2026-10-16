@@ -46,6 +46,8 @@ require "engine/object"
 require "bit"
 require "engine/string_packer"
 require "portrait_config"
+require "portrait_qol"
+require "card_skins"
 local portrait_ios = require "portrait_ios"
 require "engine/controller"
 require "back"
@@ -72,6 +74,7 @@ require "card_character"
 require "engine/particles"
 require "engine/text"
 require "challenges"
+require('portrait_smods').capture()
 
 math.randomseed( G.SEED )
 
@@ -210,7 +213,7 @@ function love.load()
 	-- first one installed stayed forever (#47). What was installed is recorded
 	-- beside it, and the copy is redone when that no longer matches.
 	pcall(function()
-		if not love.filesystem.getInfo("install_mods") then return end
+		if PORTRAIT_MODS_READY or not love.filesystem.getInfo("install_mods") then return end
 		local STAMP = "/.portrait_bundle"
 
 		local function copy_dir(src, dst)
@@ -332,17 +335,7 @@ function love.visible(v)
         portrait_ios.info(true)
     elseif G and G.CONTROLLER then
         -- Never carry a half-finished gesture across the lock screen.
-        G.CONTROLLER.gesture_start = nil
-        G.CONTROLLER.L_cursor_queue = nil
-        G.CONTROLLER.is_cursor_down = false
-        G.CONTROLLER.cursor_down.handled = true
-        G.CONTROLLER.cursor_up.handled = true
-        if G.CONTROLLER.touch_position then G.CONTROLLER.touch_position.active = false end
-        if G.CONTROLLER.dragging.target then
-            G.CONTROLLER.dragging.target:stop_drag()
-            G.CONTROLLER.dragging.target.states.drag.is = false
-            G.CONTROLLER.dragging.target = nil
-        end
+        G.CONTROLLER:cancel_pointer_interaction()
     end
 end
 
@@ -621,7 +614,7 @@ function love.errhand(msg)
 	pcall(function()
 		local file = love.filesystem.newFile("crash_log.txt")
 		file:open("w")
-		file:write("Balatro Portrait Mobile - Crash Log\n")
+		file:write("Balatrón - Crash Log\n")
 		file:write("Version: " .. tostring(G.VERSION or "unknown") .. "\n")
 		file:write("OS: " .. love.system.getOS() .. "\n")
 		file:write("Time: " .. os.date("!%Y-%m-%dT%H:%M:%SZ") .. "\n")
@@ -792,7 +785,7 @@ function love.resize(w, h)
 		if w > h then
 			if not G.window_prev or not G.CANV_SCALE then return end
 			if G.CANVAS then G.CANVAS:release() end
-			G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, {type = '2d', readable = true})
+			G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, portrait_canvas_settings())
 			if G.CANVAS then G.CANVAS:setFilter('linear', 'linear') end
 			if G.CANVAS then G.CANVAS:setWrap('clampzero') end
 			return
@@ -908,7 +901,7 @@ function love.resize(w, h)
 	end
 
 	if G.CANVAS then G.CANVAS:release() end
-	G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, {type = '2d', readable = true})
+	G.CANVAS = love.graphics.newCanvas(w*G.CANV_SCALE, h*G.CANV_SCALE, portrait_canvas_settings())
 	G.CANVAS:setFilter('linear', 'linear')
 	G.CANVAS:setWrap('clampzero')
 	

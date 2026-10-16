@@ -1,0 +1,56 @@
+{
+  "generator": "built-in image_gen",
+  "logical_size": [
+    34,
+    34
+  ],
+  "final_sizes": [
+    [
+      34,
+      34
+    ],
+    [
+      68,
+      68
+    ]
+  ],
+  "items": [
+    {
+      "key": "broom",
+      "prompt": "Create ONE original pixel-art Boss Blind icon for Balatro. A perfectly circular, OPAQUE IVORY-WHITE casino token with a DARK FOREST GREEN BROOM emblem centered inside, dark green thin outer outline and light gray rim. One pale ivory flat solid disc; all interior pixels are opaque white/ivory. The broom silhouette is vertical: a straight handle above a broad fan of bristles. Strict 34x34 logical pixels enlarged nearest-neighbor; exactly four flat colors, hard geometric pixel edges, no gradients, no texture, no shadows, no shine, no holes. Entire token visible, occupies 94% of square. Transparent canvas OUTSIDE the circle. No text, no numbers. Flat, iconic native Balatro Blind chip.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-dd0debc7-2995-4a12-b9a0-a65f067e291e.png",
+      "discarded_first_prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: sage green (#65877B). Emblem: A single diagonal sweeping broom silhouette, pale ivory bristles and dark charcoal handle. Only one broom.",
+      "workspace_source": "sources/broom-final.png"
+    },
+    {
+      "key": "comb",
+      "prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: slate blue (#506D91). Emblem: A single comb silhouette with five stepped teeth increasing from short to tall left to right, pale blue and dark navy details. Clearly a comb.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-bb161a3b-0e95-4253-b1ad-2a343a00df95.png",
+      "workspace_source": "sources/comb.png"
+    },
+    {
+      "key": "mute",
+      "prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: dusty mauve (#785475). Emblem: A single dark bell silhouette crossed by one pale diagonal mute slash. Clear flat emblem.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-82fcb076-6c61-4cef-b149-209575c902b4.png",
+      "workspace_source": "sources/mute.png"
+    },
+    {
+      "key": "lacquer",
+      "prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: muted cream (#B09C81). Emblem: A simple deep violet lacquer droplet, split by one sharp pale crack. Flat graphic emblem.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-80f5cc63-867b-42bb-b594-48ac02f90027.png",
+      "workspace_source": "sources/lacquer.png"
+    },
+    {
+      "key": "vault",
+      "prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: burnt copper (#975E3B). Emblem: A single simple round dark vault-door glyph, pale four-spoke wheel and square central hub. Flat graphic emblem.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-21a7e947-c44e-4032-bb1f-5d95bb3b51c7.png",
+      "workspace_source": "sources/vault.png"
+    },
+    {
+      "key": "hinge",
+      "prompt": "Use case: stylized-concept. Asset type: a new Balatro Boss Blind poker-chip sprite. Create exactly ONE centered circular token, complete and uncropped, front facing, on genuinely transparent background. This must read like original Balatro BlindChips: extremely simple, flat, chunky pixel art with a round 1-pixel dark outer rim, narrow pale upper-left rim highlight, solid color disc, and a single clear line-art emblem. Build as if on a strict 34 by 34 logical-pixel grid and enlarge without smoothing. The circle occupies 32 pixels of the 34-pixel canvas leaving 1 pixel transparent around. Maximum five solid colors, no gradients, no texture, no shadows outside token, no perspective, no sparkles, no letters, no numbers, no text. Not an ornate casino chip, no alternating rim stripes, no tiny decoration. Mobile legibility at 34 pixels is essential. Palette: muted rose-purple (#875C7D). Emblem: A single small silver door hinge glyph: two rectangular plates and three interlocked center knuckles, one side dark plum and one pale lavender. Flat graphic emblem.",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-0e4e-7150-9506-5a809c412311\\exec-29deac9d-e008-4a79-90c2-59e34b7b78fb.png",
+      "workspace_source": "sources/hinge.png"
+    }
+  ]
+}

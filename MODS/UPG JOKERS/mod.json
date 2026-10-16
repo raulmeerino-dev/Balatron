@@ -1,0 +1,17 @@
+{
+  "id": "upgraded_jokers",
+  "name": "Upgraded Jokers",
+  "display_name": "Upgraded Jokers",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Evolving Jokers. Generation switches apply to the next run.",
+  "prefix": "upg",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 110,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay (>=1.0.0)"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "portrait_horizons",
+  "name": "Horizons",
+  "display_name": "Horizons",
+  "author": ["reggiemdfk"],
+  "description": "New challenges, blinds, vouchers, tags, packs and playable decks.",
+  "prefix": "hz",
+  "main_file": "main.lua",
+  "version": "1.1.0",
+  "priority": 140,
+  "dependencies": ["Steamodded (>=1.0.0~BETA-1224a)", "portrait_gameplay"]
+}

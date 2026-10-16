@@ -1,0 +1,23 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 110
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "--Joker Effects"
+position = "before"
+match_indent = true
+payload = '''
+if PortraitHorizons and PortraitHorizons.tags then hand_chips, mult = PortraitHorizons.tags.before_jokers(hand_chips, mult) end
+'''
+
+[[patches]]
+[patches.regex]
+target = "functions/state_events.lua"
+pattern = "(?m)^[ \\t]*check_and_set_high_score\\('hand',\\s*SMODS.calculate_round_score\\(\\)\\s*\\)"
+position = "before"
+payload = '''
+if PortraitHorizons and PortraitHorizons.tags then PortraitHorizons.tags.final_score(SMODS.get_scoring_parameter('chips'), SMODS.get_scoring_parameter('mult')) end
+'''

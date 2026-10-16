@@ -2,12 +2,33 @@ PORTRAIT_CONFIG = {
     -- Single source of truth for the mod version: build.py parses it from
     -- here, and the Zygisk packaging refuses to ship a module.prop that
     -- disagrees with it. Bump this, module.prop and the CHANGELOG together.
-    version = "2.8.0",
+    version = "2.8.1",
+    background_animated_default = true,
+    background_cycle_seconds = 480, -- 14 stops at the original 240 / 7 seconds per stop
+    background_max_frame_seconds = 0.25, -- no colour jump after suspension/stalls
+    -- Alternate original felt tones and vivid peaks at the original transition pace.
+    -- RGB colours are normalized to the original green's luma once on first use.
+    background_palette = {
+        {80/255,132/255,110/255}, -- green: original felt
+        {32/255,154/255,77/255}, -- vivid emerald
+        {73/255,127/255,135/255}, -- teal
+        {28/255,148/255,175/255}, -- vivid turquoise
+        {94/255,116/255,148/255}, -- blue
+        {45/255,110/255,220/255}, -- vivid blue
+        {131/255,108/255,149/255}, -- violet
+        {166/255,78/255,220/255}, -- vivid purple
+        {150/255,103/255,125/255}, -- burgundy
+        {204/255,72/255,151/255}, -- vivid raspberry
+        {153/255,106/255,99/255}, -- dark red
+        {215/255,78/255,89/255}, -- vivid crimson
+        {150/255,115/255,86/255}, -- burnt orange
+        {203/255,104/255,42/255}, -- vivid amber
+    },
     scale_factor = 0.63,
-    hud_top_space = 13,
+    hud_top_space = 13, -- legacy compatibility; native run geometry uses layout below
     bottom_margin = 0.35,
     splash_scale_mult = 10 / 13,
-    card_scale = 0.8,
+    card_scale = 0.8, -- legacy compatibility; use layout.hand_scale/inventory_scale
     button = {
         width = 4,
         height = 2,
@@ -30,16 +51,59 @@ PORTRAIT_CONFIG = {
     },
     challenge_page_size = 5,
     challenge_page_size_landscape = 10,
-    jokers_y = 11,
+    jokers_y = 11, -- legacy compatibility; use layout.top_margin
     anti_jitter_threshold = 3.5,
     touch_drag_threshold = 9, -- logical points travelled since press, not per event
     touch_target_points = 44,
     diagnostics_page_size = 15,
-    build_revision = "ios-portrait-1",
+    build_revision = "ios-portrait-rc3-ui-lifecycle",
+    -- Run composition, in room tiles. The resolver measures the safe viewport
+    -- and actual HUD/buttons, so these are gaps/ratios rather than device offsets.
+    layout = {
+        side_margin = 0.28,
+        hud_side_margin = 0.18,
+        top_margin = 0.65,
+        bottom_margin = 0.16,
+        inventory_gap = 0.38,
+        consumable_width = 3.35,
+        inventory_scale = 1.16,
+        inventory_wrap_scale = 0.96,
+        inventory_panel_scale = 0.84,
+        joker_wrap_after = 8, -- 0-8 held Jokers: one row; 9+: two; capacity alone never wraps
+        consumable_wrap_after = 3,
+        inventory_row_gap = 0.15,
+        hand_scale = 1.42,
+        hand_scale_short = 1.28,
+        short_height = 23,
+        deck_scale = 0.72,
+        deck_footer_padding = 0.16,
+        deck_counter_height = 0.65,
+        deck_gap = 0.35,
+        hud_gap = 0.65,
+        action_gap = 0.10,
+        selection_clearance = 1.25,
+        panel_gap = 0.55,
+        panel_inventory_gap = 0.28,
+        panel_deck_gap = 0.12,
+    },
+    pack = {
+        columns = 3, max_columns = 5, card_scale = 1.35, hand_scale = 1.02, gap = 0.18,
+        min_step_ratio = 0.82,
+        top_gap = 0.35, hand_clearance = 0.65,
+        row_controls = 1.15, footer_height = 1.25,
+        highlight_lift = 0.22, button_height = 0.85,
+    },
+    quality = {
+        -- Preserve the user's CRT slider, but reduce the distortion/colour
+        -- fringing it applies to small portrait text. Zero is perfectly flat.
+        crt_multiplier = 0.12,
+        native_canvas_dpi = true,
+        prefer_2x_textures = true,
+    },
     fps_cap = 'auto', -- 'auto' = match display refresh rate (90/120 Hz), or a number like 60
     disable_touch_tilt = true, -- kill the cursor-lean tilt on touch (root fix for sheared-card warp)
     score_text_mult = 1.3, -- portrait multiplier for floating score/attention popups
-    deck_position = 'shelf', -- 'shelf' (top row, default) or 'bottom_right' (experimental)
+    deck_position = 'shelf', -- legacy compatibility; native layout docks deck in HUD footer
     gestures = {
         enabled = true,
         min_swipe = 1.4, -- min vertical travel in game units to count as a flick
@@ -89,6 +153,9 @@ PORTRAIT_CONFIG = {
     -- (64px at density 640, so 16dp, about half a tile) with a little over it.
     menu_bottom_gap_android = 1.15,
     tooltip_screen_padding = 0.12,
+    tooltip_safe_margin_points = 8,
+    tooltip_max_width = 11.5,
+    tooltip_min_text_points = 11,
     -- Gap in room tiles between a card and its tooltip on touch. Large enough
     -- that a thumb on the card does not cover the text; raise it if a bigger
     -- hand still reaches the popup.
@@ -138,15 +205,15 @@ PORTRAIT_CONFIG = {
     -- its "vanilla run select" option on the first time it sees the setting.
     -- Set this to false to leave the option alone entirely.
     smods_vanilla_run_select = true,
-    -- Height of one mod row in the Steamodded list, measured on the rig at
-    -- 390x844. Room tiles, so it holds at any resolution, and a box is one line
-    -- tall whatever the mod is called.
-    mod_list_row_h = 1.6,
+    -- Compact name/control, two description lines and a small category label.
+    mod_list_row_h = 3.2,
+    mod_list_icon_size = 0.85,
+    mod_list_text_scale = 0.4,
     -- Mods shown per page on a phone. Has to divide the number Steamodded pages
-    -- by (below) so a page of ours never straddles two of theirs. Six keeps the
+    -- by (below) so a page of ours never straddles two of theirs. Three keeps the
     -- window short enough that its back bar stays well clear of the home
     -- indicator; the rest of the mods are one page turn away.
-    mod_list_page_size = 6,
+    mod_list_page_size = 3,
     -- Mods per page upstream. Steamodded's own number, used to find which of
     -- its pages one of ours sits in.
     mod_list_per_page = 12,
@@ -155,7 +222,19 @@ PORTRAIT_CONFIG = {
     -- adds 1.14 tiles of padding and emboss around whatever its content asks
     -- for, so this is that plus roughly half a tile of daylight each side.
     mod_list_margin = 2.1,
-    view_deck_scale = 0.8,
+    deck_view = {
+        screen_margin = 1.6, -- frame, padding and clearance, both sides combined
+        chrome_height = 3.8, -- Remaining / Full Deck, Back and outer frame
+        summary_height = 6.2, -- title, tallies, rank counts and optional notes
+        card_scale = 0.64,
+        cards_per_row = 13,
+        index_fraction = 0.30, -- exposed width of each overlapping card
+        row_gap = 0.06, -- fraction of card height, scales with expanded decks
+        panel_padding = 0.08,
+        text_scale = 0.34,
+        title_scale = 0.42,
+        ranks_per_row = 7,
+    },
     game_over_scale = 1.2,
     game_over_scale_landscape = 1.5,
     tag_align = {
@@ -169,24 +248,25 @@ PORTRAIT_CONFIG = {
     hand_base_offset = 3.1,
     discard_x_offset = 0.3,
     mobile_ui = {
-        hud_scale_tall = 0.39,
-        hud_scale_normal = 0.42,
-        hud_scale_short = 0.46,
-        hud_panel_minw = 8.4,
-        hud_top_right_minw = 4.22,
-        hud_score_minw = 4.1,
-        hud_chip_box_minw = 2.95,
+        hud_scale_tall = 0.46,
+        hud_scale_normal = 0.46,
+        hud_scale_short = 0.48,
+        hud_panel_minw = 12.0,
+        hud_panel_chrome = 0.14,
+        hud_top_right_minw = 6.7,
+        hud_score_minw = 6.6,
+        hud_chip_box_minw = 5.2,
         hud_chip_label_minw = 1.18,
-        hud_current_hand_minw = 4.1,
-        hud_hand_meter_minw = 1.88,
+        hud_current_hand_minw = 6.6,
+        hud_hand_meter_minw = 3.0,
         hud_money_minw = 3.05,
         hud_spacing = 0.07,
         hud_stat_pad = 0.035,
-        hud_stat_minw = 1.16,
-        hud_stat_label_scale = 0.68,
+        hud_stat_minw = 1.95,
+        hud_stat_label_scale = 0.82,
         hud_stat_count_scale = 1.72,
         hud_stats_gap = 0.1,
-        hud_blind_minw = 3.62,
+        hud_blind_minw = 4.65,
         hud_blind_minh = 3.12,
         hud_blind_body_minh = 1.92,
         hud_blind_dim = 0.82,
@@ -198,14 +278,14 @@ PORTRAIT_CONFIG = {
         hud_blind_lower_pad = 0.02,
         hud_blind_score_minw = 2.15,
         hud_blind_score_maxw = 2.05,
-        hud_blind_score_label_scale = 0.29,
-        hud_blind_reward_scale = 0.29,
+        hud_blind_score_label_scale = 0.34,
+        hud_blind_reward_scale = 0.34,
         hud_blind_dollar_scale = 0.4,
         hud_blind_line_h = 0.24,
         hud_blind_debuff_scale = 0.88,
         hud_blind_chip_row_h = 0.48,
         hud_blind_reward_h = 0.34,
-        hud_button_minw = 1.95,
+        hud_button_minw = 3.0,
         hud_button_minh = 0.78,
         card_button_mult = 1.4, -- portrait size multiplier for Use/Sell buttons on cards
         run_setup_back_desc_scale = 0.72,
@@ -213,9 +293,10 @@ PORTRAIT_CONFIG = {
         run_setup_back_desc_h = 1.9,
         blind_choice = {
             prompt_pad = 0.05,
-            prompt_scale_1 = 0.72,
-            prompt_scale_2 = 0.8,
+            prompt_scale_1 = 0.66,
+            prompt_scale_2 = 0.66,
             choice_pad = 0.02,
+            choice_extra_gap = 0.12, -- horizontal only; keep card sizes and side margins
             wrapper_pad = 0.012,
             wrapper_inner_pad = 0.018,
             panel_pad = 0.018,
@@ -226,12 +307,12 @@ PORTRAIT_CONFIG = {
             desc_scale = 0.46,
             score_label_scale = 0.42,
             reward_scale = 0.46,
-            chip_size = 1.6,
+            chip_size = 2.4,
             score_minw = 2.95,
             text_maxw = 2.75,
-            tag_pad = 0.012,
-            tag_button_pad = 0.018,
-            tag_skip_scale = 0.6,
+            tag_pad = 0.12,
+            tag_button_pad = 0.10,
+            tag_skip_scale = 0.52,
             tag_reward_scale = 0.5,
         },
         collection_blinds = {
@@ -243,11 +324,11 @@ PORTRAIT_CONFIG = {
             box_pad = 0.05,
         },
         shop_sign = {
-            w = 2.85,
-            h = 1.43,
-            panel_w = 3.18,
-            panel_h = 1.95,
-            text_scale = 0.34,
+            w = 2.45,
+            h = 1.23,
+            panel_w = 2.65,
+            panel_h = 1.65,
+            text_scale = 0.26,
         },
     },
 }
@@ -706,16 +787,42 @@ function portrait_hook_smods_mod_list()
         local last = math.min(offset + size - 1, #entries, total - (upstream_page - 1)*upstream)
 
         local rows = {}
+        local usable=G.ROOM.T.w-PORTRAIT_CONFIG.mod_list_margin
+        local function fit_entry(node)
+            local c=node.config or {}
+            -- Upstream reserves 68 physical pixels for its tag. In portrait
+            -- that is taller than a whole row; use logical UI dimensions.
+            if c.object and c.w and c.h then
+                c.w=PORTRAIT_CONFIG.mod_list_icon_size;c.h=c.w
+            end
+            if c.button and c.button:find('^openModUI_') then
+                if c.minw then c.minw=usable-2.2;c.maxh=nil
+                else c.minh=0.55;c.minw=0.65 end
+            end
+            if c.maxw and c.maxw<=4.5 then c.maxw=usable-3.5 end
+            if node.n==G.UIT.T and c.scale then
+                c.scale=math.max(c.scale,PORTRAIT_CONFIG.mod_list_text_scale)
+            end
+            for _,child in ipairs(node.nodes or {}) do fit_entry(child) end
+        end
         for i = offset, last do
             if entries[i] then
+                fit_entry(entries[i])
+                entries[i] = require('portrait_mod_info').decorate_entry(entries[i])
                 -- Fresh config per row: UIBox writes layout results back into
                 -- it, so the split rows cannot share one table.
                 local config = {}
                 for k, v in pairs(template.config or {}) do config[k] = v end
+                config.align = 'cm'
+                config.padding = 0.06
                 rows[#rows + 1] = {n = template.n, config = config, nodes = {entries[i]}}
             end
         end
         if #rows > 0 then pane.nodes = rows end
+        -- This definition becomes its own UIBox. A column root recalculates
+        -- from the box's screen coordinates and adds its parent offset twice
+        -- when ON/OFF or the next-run badge changes text length.
+        pane.n = G.UIT.ROOT
         return pane
     end
     SMODS.portrait_mod_list_hooked = true
@@ -884,6 +991,295 @@ function get_hand_base_offset()
     return PORTRAIT_CONFIG.hand_base_offset
 end
 
+-- All run coordinates are local to the room. Use the safe rectangle itself,
+-- not ROOM.h (which retains a legacy overshoot for the menu animation).
+function portrait_deck_view_metrics(suits)
+    local p, room = PORTRAIT_CONFIG.deck_view, G.ROOM.T
+    local width, height = room.w, room.h
+    local unit = G.TILESCALE * G.TILESIZE
+    if love.window.getSafeArea and unit > 0 then
+        local ok, _, _, sw, sh = pcall(love.window.getSafeArea)
+        if ok and type(sw) == 'number' and sw > 0 and type(sh) == 'number' and sh > 0 then
+            width, height = math.min(width, sw/unit), math.min(height, sh/unit)
+        end
+    end
+    width = math.max(G.CARD_W, width - p.screen_margin)
+    local rows = 0
+    for _, cards in pairs(suits) do rows = rows + math.ceil(#cards/p.cards_per_row) end
+    local scale = math.min(p.card_scale,
+        width/(G.CARD_W*(1 + (p.cards_per_row-1)*p.index_fraction)),
+        math.max(G.CARD_H, height-p.chrome_height-p.summary_height)/math.max(rows, 1)/G.CARD_H/(1+p.row_gap))
+    return {width = width, scale = scale, row_height = G.CARD_H*scale*(1+p.row_gap),
+        per_row = p.cards_per_row}
+end
+
+-- Shared by the base game and Steamodded: a measured grid above the hand.
+function portrait_pack_ui(count, title)
+    local contracts=PortraitGameplay and PortraitGameplay.modules.contracts
+    if contracts and contracts.refresh_hud then contracts.refresh_hud() end
+    local p, l = PORTRAIT_CONFIG.pack, portrait_run_layout(true)
+    local cols = math.min(count, p.columns)
+    local rows = math.ceil(count/cols)
+    local width = l.width-2*PORTRAIT_CONFIG.layout.side_margin-0.3
+    local top = PORTRAIT_CONFIG.layout.top_margin+l.inventory_h+p.top_gap
+    local footer = portrait_touch_height(p.footer_height)
+    local controls = math.max(p.row_controls,portrait_touch_height(p.button_height)+p.highlight_lift+0.12)
+    local available = l.hand_y-p.hand_clearance-top-footer-0.3
+    local scale = 0
+    for candidate=cols,math.min(count,p.max_columns) do
+        local candidate_rows=math.ceil(count/candidate)
+        -- Permit the light overlap used by native card areas before shrinking.
+        local candidate_scale=math.min(p.card_scale,width/((1+(candidate-1)*p.min_step_ratio)*G.CARD_W),
+            (available-candidate_rows*controls)/(candidate_rows*G.CARD_H))
+        if candidate_scale>scale then cols,rows,scale=candidate,candidate_rows,candidate_scale end
+    end
+    scale = math.max(0.45, scale)
+    G.pack_cards = CardArea(0,0,width,rows*(G.CARD_H*scale+controls),
+        {card_limit=count,type='consumeable',highlight_limit=1,negative_info=true,
+         portrait_pack_scale=scale,portrait_pack_columns=cols,portrait_pack_controls=controls})
+    return {n=G.UIT.ROOT,config={align='cm',colour=G.C.CLEAR,padding=0.08},nodes={
+        {n=G.UIT.R,config={align='cm'},nodes={{n=G.UIT.O,config={object=G.pack_cards}}}},
+        {n=G.UIT.R,config={align='cm',padding=0.08,colour=G.C.UI.TRANSPARENT_DARK,r=0.15},nodes={
+            {n=G.UIT.C,config={align='cm',minw=width-3.2,maxw=width-3.2},nodes={
+                {n=G.UIT.R,config={align='cm'},nodes={{n=G.UIT.T,config={text=title,scale=0.42,colour=G.C.WHITE,shadow=true}}}},
+                {n=G.UIT.R,config={align='cm'},nodes={
+                    {n=G.UIT.T,config={text=localize('k_choose')..' ',scale=0.34,colour=G.C.WHITE}},
+                    {n=G.UIT.T,config={ref_table=G.GAME,ref_value='pack_choices',scale=0.34,colour=G.C.WHITE}},
+                }},
+            }},
+            {n=G.UIT.C,config={align='cm',minw=2.7,minh=footer,r=0.15,colour=G.C.GREY,
+                button='skip_booster',func='can_skip_booster',one_press=true,hover=true,shadow=true},nodes={
+                {n=G.UIT.T,config={text=localize('b_skip'),scale=0.45,colour=G.C.WHITE,shadow=true,
+                    focus_args={button='y',orientation='bm'},func='set_button_pip'}},
+            }},
+        }},
+    }}
+end
+
+function portrait_pack_slot(area, index)
+    local p, cols = PORTRAIT_CONFIG.pack, area.config.portrait_pack_columns
+    local row = math.floor((index-1)/cols)
+    local n = math.min(cols,#area.cards-row*cols)
+    local w, h = G.CARD_W*area.config.portrait_pack_scale, G.CARD_H*area.config.portrait_pack_scale
+    local step=n>1 and math.min(w+p.gap,(area.T.w-w)/(n-1)) or 0
+    return area.T.x+(area.T.w-w-(n-1)*step)/2+((index-1)%cols)*step,
+        area.T.y+row*(h+area.config.portrait_pack_controls)+p.highlight_lift
+end
+
+function portrait_footer_deck_metrics()
+    local p = PORTRAIT_CONFIG.layout
+    local scale = math.max(p.deck_scale, portrait_touch_height(0)/G.CARD_W)
+    return {scale=scale, w=G.CARD_W*scale+2*p.deck_footer_padding,
+        h=G.CARD_H*scale+p.deck_counter_height+2*p.deck_footer_padding}
+end
+
+function portrait_run_layout(opening_pack)
+    local p, room = PORTRAIT_CONFIG.layout, G.ROOM.T
+    local unit = G.TILESCALE * G.TILESIZE
+    local height = room.h
+    if love.window.getSafeArea then
+        local ok, _, _, _, sh = pcall(love.window.getSafeArea)
+        if ok and type(sh) == 'number' and sh > 0 then height = math.min(height, sh/unit) end
+    end
+    local scale = height < p.short_height and p.hand_scale_short or p.hand_scale
+    local combat = G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND or G.STATE == G.STATES.HAND_PLAYED
+    local action_h = G.buttons and G.buttons.T.h or (combat and (G.F_SWIPE_ONLY and 1.8 or 3) or 0)
+    local hud_h = G.HUD and G.HUD.T.h or 6
+    local action_y = height - p.bottom_margin - action_h
+    local hud_y = action_y - p.action_gap - hud_h
+    local workspace_hud_y = hud_y
+    local s = G.STATES
+    local pack = opening_pack or G.STATE==s.TAROT_PACK or G.STATE==s.PLANET_PACK or
+        G.STATE==s.SPECTRAL_PACK or G.STATE==s.STANDARD_PACK or G.STATE==s.BUFFOON_PACK or
+        (s.SMODS_BOOSTER_OPENED and G.STATE==s.SMODS_BOOSTER_OPENED)
+    if pack then scale=math.min(scale,PORTRAIT_CONFIG.pack.hand_scale) end
+    if pack and PortraitGameplay and PortraitGameplay.modules.contracts then
+        -- Pack cards and the hand share a stable workspace budget. The real HUD
+        -- still collapses its contract row completely when it has no icons.
+        local row = G.HUD and G.HUD:get_UIE_by_ID('portrait_contracts')
+        workspace_hud_y = hud_y + (row and row.T.h or 0) - 0.92
+    end
+    local _, inventory_scale = portrait_inventory_metrics()
+    local inventory_h = math.max(portrait_inventory_height(G.jokers), portrait_inventory_height(G.consumeables))
+    if G.HUD_tags and #G.HUD_tags>0 then inventory_h=inventory_h+1.1 end
+    local table_top = p.top_margin + inventory_h + p.selection_clearance
+    scale = math.min(scale, (workspace_hud_y-p.hud_gap-table_top-p.selection_clearance)/(2*G.CARD_H))
+    local hand_h = G.CARD_H * scale
+    local hand_y = workspace_hud_y - p.hud_gap - hand_h
+    local play_y = table_top + math.max(0, (hand_y - p.selection_clearance - hand_h - table_top)/2)
+    return {width=room.w, height=height, scale=scale, hand_h=hand_h,
+        hand_y=hand_y, play_y=play_y, hud_y=hud_y, action_y=action_y,
+        inventory_h=inventory_h, inventory_scale=inventory_scale, table_top=table_top}
+end
+
+function portrait_inventory_metrics(area)
+    local p = PORTRAIT_CONFIG.layout
+    local joker_rows = G.jokers and G.jokers.cards and #G.jokers.cards > p.joker_wrap_after and 2 or 1
+    local consume_rows = G.consumeables and G.consumeables.cards and #G.consumeables.cards > p.consumable_wrap_after and 2 or 1
+    local rows = math.max(joker_rows, consume_rows)
+    -- Each shelf owns its row count and scale. Extra consumables must not
+    -- shrink a normal Joker row or reserve an empty second row beneath it.
+    if area and area == G.jokers then rows = joker_rows
+    elseif area and area == G.consumeables then rows = consume_rows end
+    local scale = rows > 1 and p.inventory_wrap_scale or p.inventory_scale
+    local s = G.STATES
+    if rows > 1 and (G.STATE == s.SHOP or G.STATE == s.BLIND_SELECT or G.STATE == s.ROUND_EVAL
+        or G.STATE == s.TAROT_PACK or G.STATE == s.PLANET_PACK or G.STATE == s.SPECTRAL_PACK
+        or G.STATE == s.STANDARD_PACK or G.STATE == s.BUFFOON_PACK
+        or (s.SMODS_BOOSTER_OPENED and G.STATE == s.SMODS_BOOSTER_OPENED)) then scale = p.inventory_panel_scale end
+    return rows, scale
+end
+
+function portrait_inventory_height(area)
+    local rows, scale = portrait_inventory_metrics(area)
+    return G.CARD_H*scale*rows + PORTRAIT_CONFIG.layout.inventory_row_gap*(rows-1)
+end
+
+function portrait_inventory_count(area)
+    -- Negative editions add capacity, not mandatory empty columns. Keep the
+    -- normal empty slots, then distribute extra held cards over the same shelf.
+    return math.max(#area.cards, math.min(area.config.card_limit, area == G.jokers and 5 or 2))
+end
+
+function portrait_inventory_slot(area, index, count)
+    local rows, scale = portrait_inventory_metrics(area)
+    local columns = math.ceil(count/rows)
+    local row = math.floor((index-1)/columns)
+    local col = (index-1)%columns
+    local card_h = G.CARD_H*scale
+    local x = area.T.x + (columns == 1 and area.T.w/2 or area.card_w/2 + (area.T.w-area.card_w)*col/(columns-1))
+    local y = area.T.y + card_h/2 + row*(card_h+PORTRAIT_CONFIG.layout.inventory_row_gap)
+    return x,y
+end
+
+function portrait_canvas_settings()
+    local settings = {type='2d', readable=true}
+    if G.F_PORTRAIT and PORTRAIT_CONFIG.quality.native_canvas_dpi then
+        -- LOVE uses logical coordinates for input/layout; DPI belongs to the
+        -- render target. Never multiply TILESCALE or touch coordinates by DPI.
+        settings.dpiscale = love.graphics.getDPIScale()
+    end
+    return settings
+end
+
+function portrait_anchor_run_ui(box, y)
+    if not box then return end
+    box:set_alignment({type='a'})
+    box:set_role({role_type='Major'})
+    box.T.x = (G.ROOM.T.w - box.T.w)/2
+    box.T.y = y
+end
+
+function portrait_position_run_areas()
+    local p, l = PORTRAIT_CONFIG.layout, portrait_run_layout()
+    local full_w = l.width - 2*p.side_margin
+    G.jokers.T.x, G.jokers.T.y = p.side_margin, p.top_margin
+    G.jokers.T.w, G.jokers.T.h = full_w-p.consumable_width-p.inventory_gap, portrait_inventory_height(G.jokers)
+    G.consumeables.T.x, G.consumeables.T.y = l.width-p.side_margin-p.consumable_width, p.top_margin
+    G.consumeables.T.w, G.consumeables.T.h = p.consumable_width, portrait_inventory_height(G.consumeables)
+    -- Keep the original earned-tag UIBoxes in one row below the inventory.
+    -- Re-anchor every tag independently so removal never leaves a broken chain.
+    local tags=G.HUD_tags or {}
+    local tag_y=math.max(G.jokers.T.y+G.jokers.T.h,G.consumeables.T.y+G.consumeables.T.h)+0.18
+    local tag_x=p.side_margin
+    local tag_size=math.min(0.8,math.max(0.1,full_w/math.max(1,#tags)-0.24))
+    local total=0
+    for _,tag in ipairs(tags) do
+        local icon=tag.UIRoot.children[1].children[1]
+        if icon.config.w~=tag_size then
+            icon.config.w,icon.config.h=tag_size,tag_size
+            icon.config.object.T.w,icon.config.object.T.h=tag_size,tag_size
+            tag:recalculate()
+        end
+        total=total+tag.T.w
+    end
+    local gap=#tags>1 and math.min(0.12,math.max(0,(full_w-total)/(#tags-1))) or 0
+    for _,tag in ipairs(tags) do
+        tag:set_alignment({type='tli',major=G.ROOM_ATTACH,bond='Weak',
+            offset={x=tag_x-G.ROOM_ATTACH.T.x,y=tag_y-G.ROOM_ATTACH.T.y}})
+        tag_x=tag_x+tag.T.w+gap
+    end
+    local deck = portrait_footer_deck_metrics()
+    G.deck.T.w, G.deck.T.h = G.CARD_W*deck.scale, G.CARD_H*deck.scale
+    G.hand.T.w, G.hand.T.h = full_w, l.hand_h
+    G.hand.T.x = p.side_margin
+    G.play.T.x, G.play.T.y = p.side_margin, l.play_y
+    G.play.T.w, G.play.T.h = full_w, l.hand_h
+    G.discard.T.x, G.discard.T.y = l.width+p.deck_gap, l.play_y
+    -- Counters are measured UIBoxes, not stretchable labels. Recreate them
+    -- when a negative inventory changes row count and the hand resizes.
+    for _, area in ipairs({G.hand, G.jokers, G.consumeables, G.deck}) do
+        local size = area.portrait_counter_size
+        if size and (math.abs(size.w-area.T.w)>0.001 or math.abs(size.h-area.T.h)>0.001) then
+            if area.children.area_uibox then area.children.area_uibox:remove(); area.children.area_uibox=nil end
+        end
+        if not size or size.w ~= area.T.w or size.h ~= area.T.h then
+            area.portrait_counter_size = {w=area.T.w, h=area.T.h}
+        end
+    end
+    portrait_anchor_run_ui(G.HUD, l.hud_y)
+    portrait_anchor_run_ui(G.buttons, l.action_y)
+    local dock = G.HUD and G.HUD:get_UIE_by_ID('portrait_deck_dock')
+    if dock then
+        G.deck.T.x = dock.T.x+(dock.T.w-G.deck.T.w)/2
+        G.deck.T.y = dock.T.y+(dock.T.h-G.deck.T.h-p.deck_counter_height)/2
+    else
+        G.deck.T.x = l.width-p.side_margin-G.deck.T.w
+        G.deck.T.y = l.hud_y+ (G.HUD and G.HUD.T.h or 6)-deck.h+p.deck_footer_padding
+    end
+    local panel = G.STATE == G.STATES.SHOP and G.shop or G.STATE == G.STATES.BLIND_SELECT and G.blind_select or G.STATE == G.STATES.ROUND_EVAL and G.round_eval
+    if panel and panel.portrait_target_y and math.abs(panel.alignment.offset.y-panel.portrait_target_y)<0.001 then
+        if panel.portrait_inventory_h ~= l.inventory_h or panel.portrait_h ~= panel.T.h or panel.portrait_hud_y ~= l.hud_y then
+            portrait_anchor_run_panel(panel)
+        end
+    end
+    return l
+end
+
+-- Panels share the middle workspace. Keep their existing entrance/exit
+-- animations; only replace the final anchor when each panel opens.
+function portrait_anchor_run_panel(box, below_hand)
+    local p, l = PORTRAIT_CONFIG.layout, portrait_run_layout()
+    if below_hand then
+        box:set_alignment({major=G.ROOM_ATTACH, type='tmi', bond='Weak',
+            offset={x=0, y=p.top_margin+l.inventory_h+PORTRAIT_CONFIG.pack.top_gap-G.ROOM_ATTACH.T.y}})
+        return
+    end
+    local top = below_hand and l.table_top+l.hand_h+p.panel_gap or p.top_margin+l.inventory_h+p.panel_inventory_gap
+    local bottom = l.hud_y-p.hud_gap
+    local y = top + math.max(0, (bottom-top-box.T.h)/2)
+    box:set_alignment({major=G.ROOM_ATTACH, type='tmi', bond='Weak', offset={x=0, y=y-G.ROOM_ATTACH.T.y}})
+    box.portrait_target_y = box.alignment.offset.y
+    box.portrait_inventory_h, box.portrait_h, box.portrait_hud_y = l.inventory_h, box.T.h, l.hud_y
+end
+
+-- Change actual dimensions (including hitboxes), preserving special Joker
+-- proportions. The previous dimensions are transient and never enter saves.
+function portrait_scale_area_cards(area)
+    local p, scale = PORTRAIT_CONFIG.layout, 1
+    if G.F_PORTRAIT then
+        if area == G.hand or area == G.play then scale = portrait_run_layout().scale
+        elseif area == G.jokers or area == G.consumeables then local _, s = portrait_inventory_metrics(area); scale = s
+        elseif area == G.deck then scale = portrait_footer_deck_metrics().scale
+        elseif area == G.pack_cards then scale = area.config.portrait_pack_scale or 1 end
+    end
+    if area == G.hand or area == G.play or area == G.jokers or area == G.consumeables or area == G.deck or area == G.pack_cards then
+        area.card_w = (area.config.card_w or G.CARD_W)*scale
+    end
+    for _, card in ipairs(area.cards) do
+        local prev = card.portrait_dimensions
+        local w, h = card.T.w, card.T.h
+        if not prev or prev.scale ~= scale or math.abs(w-prev.w) > 0.0001 or math.abs(h-prev.h) > 0.0001 then
+            if prev then
+                if math.abs(w-prev.w) < 0.0001 then w = w/prev.scale end
+                if math.abs(h-prev.h) < 0.0001 then h = h/prev.scale end
+            end
+            card.T.w, card.T.h = w*scale, h*scale
+            card.portrait_dimensions = {w=card.T.w, h=card.T.h, scale=scale}
+        end
+    end
+end
+
 function apply_portrait_tooltip_fit(config)
     if config and G and G.F_PORTRAIT then
         if config.can_collide == nil then config.can_collide = false end
@@ -916,6 +1312,7 @@ function prepare_portrait_popup_fit(box)
         if box.states.drag then box.states.drag.can = false end
     end
 
+    if require("portrait_popup_layout").place(box) then return end
     if box.align_to_major then box:align_to_major() end
     if box.fit_to_room then box:fit_to_room() end
     if box.hard_set_VT then box:hard_set_VT() end
@@ -931,27 +1328,9 @@ function get_portrait_room_fit_delta(box, opts)
         return 0, 0
     end
 
-    local room_w = G.ROOM.T.w or 0
-    local room_h = G.ROOM.T.h or 0
-    if room_w <= 0 or room_h <= 0 then return 0, 0 end
-
-    local padding = opts.screen_padding or (PORTRAIT_CONFIG and PORTRAIT_CONFIG.tooltip_screen_padding) or 0.12
-    local left = padding
-    local top = padding
-    local right = math.max(left, room_w - padding)
-    local bottom = math.max(top, room_h - padding)
-    -- The room deliberately retains Android's bottom overshoot. Popups must
-    -- instead clamp to the actual iOS safe rectangle, in room coordinates.
-    if love.system.getOS() == 'iOS' and love.window.getSafeArea then
-        local ok, sx, sy, sw, sh = pcall(love.window.getSafeArea)
-        local unit = (G.TILESCALE or 0) * (G.TILESIZE or 0)
-        if ok and unit > 0 and type(sh) == 'number' and sh > 0 then
-            left = math.max(left, sx/unit - (G.ROOM.T.x or 0) + padding)
-            top = math.max(top, sy/unit - (G.ROOM.T.y or 0) + padding)
-            right = math.min(right, (sx + sw)/unit - (G.ROOM.T.x or 0) - padding)
-            bottom = math.min(bottom, (sy + sh)/unit - (G.ROOM.T.y or 0) - padding)
-        end
-    end
+    local viewport=require('portrait_popup_layout').viewport(opts,box.container)
+    local left,top=viewport.x,viewport.y
+    local right,bottom=left+viewport.w,top+viewport.h
     local min_x = box.T.x
     local min_y = box.T.y
     local max_x = box.T.x + box.T.w
@@ -1025,50 +1404,14 @@ function get_portrait_side_tooltip_config(parent)
     return align, offset
 end
 
--- Edge-aware popup config for sprites that anchor their tooltip above/below
--- themselves (HUD tags, blind tags, etc.). Unlike fit_to_room, the horizontal
--- offset is derived deterministically from the sprite's own screen position, so
--- a static sprite near the right/left edge gets pulled back on-screen on the
--- first frame instead of relying on the popup's width being measured. fit_to_room
--- stays enabled as a backstop. `opts.half_w` is the assumed popup half-width in
--- tiles; `opts.margin` is the gap kept from the screen edge.
+-- Preferred direction only; UIBox measures every section before flip/clamp.
 function get_portrait_top_popup_config(sprite, opts)
-    opts = opts or {}
-    local parent = opts.parent or sprite
-
-    if not (G and G.F_PORTRAIT and G.ROOM and G.ROOM.T and sprite and sprite.T) then
-        -- Landscape / fallback: original side placement
-        return {align = 'cl', offset = {x = -0.1, y = 0}, parent = parent}
+    opts=opts or {}
+    local parent=opts.parent or sprite
+    if not (G and G.F_PORTRAIT and G.ROOM and sprite and sprite.T) then
+        return {align='cl',offset={x=-.1,y=0},parent=parent}
     end
-
-    local room_w = G.ROOM.T.w or 20
-    local room_h = G.ROOM.T.h or 20
-    local half_w = opts.half_w or 2.4
-    local margin = opts.margin or 0.2
-
-    local sprite_cx = sprite.T.x + sprite.T.w/2
-    local sprite_cy = sprite.T.y + sprite.T.h/2
-
-    -- Drop the popup toward screen center: below when the sprite sits in the top
-    -- half, above when it sits in the bottom half, so it never runs off the top.
-    local dir = (sprite_cy > room_h*0.5) and 'tm' or 'bm'
-    local off_y = (dir == 'tm') and (opts.offset_y_tm or -0.2) or (opts.offset_y_bm or 0.1)
-
-    -- Push the centered popup back inside the screen when the sprite is near an edge.
-    local offset_x = 0
-    if sprite_cx - half_w < margin then
-        offset_x = (margin + half_w) - sprite_cx
-    elseif sprite_cx + half_w > room_w - margin then
-        offset_x = (room_w - margin - half_w) - sprite_cx
-    end
-
-    return {
-        major = parent,
-        parent = parent,
-        type = dir,
-        offset = {x = offset_x, y = off_y},
-        fit_to_room = true,
-        snap_to_fit = true,
-        can_drag = false,
-    }
+    local dir=sprite.T.y+sprite.T.h/2>G.ROOM.T.h/2 and 'tm' or 'bm'
+    return {major=parent,parent=parent,type=dir,offset={x=0,y=0},
+        fit_to_room=true,snap_to_fit=true,can_drag=false}
 end

@@ -27,8 +27,15 @@ function Game:start_up()
             end
         end
     end
+    if love.system.getOS() == 'iOS' and PORTRAIT_CONFIG.quality.prefer_2x_textures then
+        self.SETTINGS.GRAPHICS.texture_scaling = 2
+    end
     self.SETTINGS.version = settings_ver or G.VERSION
     self.SETTINGS.paused = nil
+    if self.SETTINGS.animated_background==nil then
+        self.SETTINGS.animated_background=PORTRAIT_CONFIG.background_animated_default
+    end
+    require('portrait_background').update(0,self.SETTINGS,PORTRAIT_CONFIG)
 
     --Latch Swipe Only mode for this session. The flag is read by layout code
     --(portrait scale, hand offset, button row) and must never change while a
@@ -236,6 +243,8 @@ function Game:start_up()
     --Create the event manager for the game
     self.E_MANAGER = EventManager()
     self.SPEEDFACTOR = 1
+    require('portrait_smods').apply()
+    PortraitQOL.install()
 
     set_profile_progress()
     boot_timer('prep stage', 'splash prep',1)
@@ -1140,6 +1149,8 @@ function Game:set_render_settings()
         self.ASSET_ATLAS[self.asset_images[i].name].px = self.asset_images[i].px
         self.ASSET_ATLAS[self.asset_images[i].name].py = self.asset_images[i].py
     end
+
+    CardSkins.load_atlases()
 
     for _, v in pairs(G.I.SPRITE) do
         v:reset()
@@ -2093,6 +2104,7 @@ function Game:start_run(args)
     local selected_back = saveTable and saveTable.BACK.name or (args.challenge and args.challenge.deck and args.challenge.deck.type) or (self.GAME.viewed_back and self.GAME.viewed_back.name) or self.GAME.selected_back and self.GAME.selected_back.name or 'Red Deck'
     selected_back = get_deck_from_name(selected_back)
     self.GAME = saveTable and saveTable.GAME or self:init_game_object()
+    PortraitQOL.begin_run(saveTable ~= nil)
     self.GAME.starting_params = self.GAME.starting_params or get_starting_params()
     self.GAME.starting_params.play_limit = self.GAME.starting_params.play_limit or 5
     self.GAME.starting_params.discard_limit = self.GAME.starting_params.discard_limit or 5
@@ -2467,15 +2479,11 @@ function Game:start_run(args)
         }
     }
     
-    -- Portrait: Force HUD to TOP of screen
-    if G.F_PORTRAIT then
-        self.HUD.T.y = 0.2  -- Little margin - HUD at top
-        self.HUD.T.x = (G.ROOM.T.w - self.HUD.T.w) / 2
-    end
-    
+    if G.F_PORTRAIT then portrait_position_run_areas() end
+
     self.HUD_blind = UIBox{
         definition = create_UIBox_HUD_blind(),
-        config = {major = G.HUD:get_UIE_by_ID('row_blind'), align = 'cm', offset = {x=0,y=-10}, bond = 'Weak'}
+        config = {major = G.HUD:get_UIE_by_ID(G.F_PORTRAIT and 'row_blind_bottom' or 'row_blind'), align = 'cm', offset = {x=0,y=G.F_PORTRAIT and G.ROOM.T.h or -10}, bond = 'Weak'}
     }
     -- Attach the debuff-text func AFTER construction so G.HUD_blind is set.
     -- We use portrait_HUD_blind_debuff (defined in button_callbacks.lua) instead
@@ -2541,6 +2549,7 @@ function Game:start_run(args)
 end
 
 function Game:update(dt)
+    require('portrait_background').update(dt,self.SETTINGS,PORTRAIT_CONFIG)
     nuGC(nil, nil, true)
 
     G.MAJORS = 0
@@ -2887,7 +2896,8 @@ function Game:draw()
     if (not self.OVERLAY_MENU) or (not self.F_HIDE_BG) then 
         timer_checkpoint('primatives', 'draw')
         for k, v in pairs(self.I.UIBOX) do
-            if not v.attention_text and not v.parent and v ~= self.OVERLAY_MENU and v ~= self.screenwipe and v ~= self.OVERLAY_TUTORIAL and v ~= self.debug_tools and v ~= self.online_leaderboard and v ~= self.achievement_notification then 
+            if not v.attention_text and not v.parent and v ~= self.OVERLAY_MENU and v ~= self.screenwipe and v ~= self.OVERLAY_TUTORIAL and v ~= self.debug_tools and v ~= self.online_leaderboard and v ~= self.achievement_notification
+                and not (self.F_PORTRAIT and v == self.SHOP_SIGN and self.shop and self.shop.portrait_draws_sign) then
                 love.graphics.push()
                 v:translate_container()
                 v:draw()
@@ -2992,6 +3002,27 @@ function Game:draw()
         love.graphics.pop()
     end
 
+    -- Selected inventory consumables own the foreground above both inventory
+    -- rows. Draw their actions last, including with SMODS' per-card draw steps.
+    if self.F_PORTRAIT and self.consumeables then
+        for _, card in ipairs(self.consumeables.cards) do
+            if card:is_portrait_consumable_focus() then
+                love.graphics.push()
+                card:translate_container()
+                self.portrait_foreground_card = card
+                card:draw()
+                self.portrait_foreground_card = nil
+                local actions = card.children.use_button
+                if actions then
+                    self.portrait_foreground_actions = actions
+                    actions:draw()
+                    self.portrait_foreground_actions = nil
+                end
+                love.graphics.pop()
+            end
+        end
+    end
+
     for k, v in pairs(self.I.POPUP) do
         love.graphics.push()
         v:translate_container()
@@ -3031,21 +3062,20 @@ love.graphics.pop()
     if (not G.recording_mode or G.video_control) and true then
         G.ARGS.eased_cursor_pos = G.ARGS.eased_cursor_pos or {x=G.CURSOR.T.x,y=G.CURSOR.T.y, sx = G.CONTROLLER.cursor_position.x, sy = G.CONTROLLER.cursor_position.y}
         G.screenwipe_amt = G.screenwipe_amt and (0.95*G.screenwipe_amt + 0.05*((self.screenwipe and 0.4 or self.screenglitch and 0.4) or 0)) or 1
-        G.SETTINGS.GRAPHICS.crt = G.SETTINGS.GRAPHICS.crt*0.3
-        G.SHADERS['CRT']:send('distortion_fac', {1.0 + 0.07*G.SETTINGS.GRAPHICS.crt/100, 1.0 + 0.1*G.SETTINGS.GRAPHICS.crt/100})
-        G.SHADERS['CRT']:send('scale_fac', {1.0 - 0.008*G.SETTINGS.GRAPHICS.crt/100, 1.0 - 0.008*G.SETTINGS.GRAPHICS.crt/100})
+        local crt_strength = G.SETTINGS.GRAPHICS.crt*0.3*(G.F_PORTRAIT and PORTRAIT_CONFIG.quality.crt_multiplier or 1)
+        G.SHADERS['CRT']:send('distortion_fac', {1.0 + 0.07*crt_strength/100, 1.0 + 0.1*crt_strength/100})
+        G.SHADERS['CRT']:send('scale_fac', {1.0 - 0.008*crt_strength/100, 1.0 - 0.008*crt_strength/100})
         G.SHADERS['CRT']:send('feather_fac', 0.01)
         G.SHADERS['CRT']:send('bloom_fac', G.SETTINGS.GRAPHICS.bloom - 1)
         G.SHADERS['CRT']:send('time',400 + G.TIMERS.REAL)
-        G.SHADERS['CRT']:send('noise_fac',0.001*G.SETTINGS.GRAPHICS.crt/100)
-        G.SHADERS['CRT']:send('crt_intensity', 0.16*G.SETTINGS.GRAPHICS.crt/100)
-        G.SHADERS['CRT']:send('glitch_intensity', 0)--0.1*G.SETTINGS.GRAPHICS.crt/100 + (G.screenwipe_amt) + 1)
+        G.SHADERS['CRT']:send('noise_fac',0.001*crt_strength/100)
+        G.SHADERS['CRT']:send('crt_intensity', 0.16*crt_strength/100)
+        G.SHADERS['CRT']:send('glitch_intensity', 0)--0.1*crt_strength/100 + (G.screenwipe_amt) + 1)
         G.SHADERS['CRT']:send('scanlines', G.CANVAS:getPixelHeight()*0.75/G.CANV_SCALE)
         G.SHADERS['CRT']:send('mouse_screen_pos', G.video_control and {love.graphics.getWidth( )/2, love.graphics.getHeight( )/2} or {G.ARGS.eased_cursor_pos.sx, G.ARGS.eased_cursor_pos.sy})
         G.SHADERS['CRT']:send('screen_scale', G.TILESCALE*G.TILESIZE)
         G.SHADERS['CRT']:send('hovering', 1)
         love.graphics.setShader( G.SHADERS['CRT'])
-        G.SETTINGS.GRAPHICS.crt = G.SETTINGS.GRAPHICS.crt/0.3
     end
 
         love.graphics.draw(self.CANVAS, 0, 0)
@@ -3161,45 +3191,9 @@ function Game:update_selecting_hand(dt)
     end
 end
 
-function Game:update_shop(dt)
-    if not G.STATE_COMPLETE then
-        stop_use()
-
-        --Shop entry is a safe boundary to apply a pending Swipe Only toggle:
-        --no cards are mid-animation and the shop UI hasn't been built yet, so
-        --everything below picks up the new scale/layout. The next hand then
-        --starts in the new mode without restarting the run.
-        if G.F_PORTRAIT and G.F_SWIPE_ONLY ~= (not not G.SETTINGS.swipe_only_mode) then
-            G.F_SWIPE_ONLY = not not G.SETTINGS.swipe_only_mode
-            pcall(function() love.resize(love.graphics.getDimensions()) end)
-            if G.HUD and G.ROOM then G.HUD.T.x = (G.ROOM.T.w - G.HUD.T.w)/2 end
-            rebuild_buttons_uibox()
-        end
-
-        ease_background_colour_blind(G.STATES.SHOP)
-        local shop_exists = not not G.shop
-        G.shop = G.shop or UIBox{
-            definition = G.UIDEF.shop(),
-            config = {align='tmi', offset = {x=0,y=G.ROOM.T.y+11},major = G.hand, bond = 'Weak'}
-        }
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    G.shop.alignment.offset.y = -5.3
-                    G.shop.alignment.offset.x = 0
-                    G.E_MANAGER:add_event(Event({
-                        trigger = 'after',
-                        delay = 0.2,
-                        blockable = false,
-                        func = function()
-                            if math.abs(G.shop.T.y - G.shop.VT.y) < 3 then
-                                G.ROOM.jiggle = G.ROOM.jiggle + 3
-                                play_sound('cardFan2')
-                                for i = 1, #G.GAME.tags do
-                                    G.GAME.tags[i]:apply_to_run({type = 'shop_start'})
-                                end
-                                local nosave_shop = nil
-                                if not shop_exists then
-                                
+-- Shared native stocking path: the Contraband preview commits this same stock.
+function Game:populate_shop_stock()
+    local nosave_shop
                                     if G.load_shop_jokers then 
                                         nosave_shop = true
                                         G.shop_jokers:load(G.load_shop_jokers)
@@ -3269,6 +3263,50 @@ function Game:update_shop(dt)
                                             G.GAME.tags[i]:apply_to_run({type = 'shop_final_pass'})
                                         end
                                     end
+    return nosave_shop
+end
+
+function Game:update_shop(dt)
+    if not G.STATE_COMPLETE then
+        stop_use()
+
+        --Shop entry is a safe boundary to apply a pending Swipe Only toggle:
+        --no cards are mid-animation and the shop UI hasn't been built yet, so
+        --everything below picks up the new scale/layout. The next hand then
+        --starts in the new mode without restarting the run.
+        if G.F_PORTRAIT and G.F_SWIPE_ONLY ~= (not not G.SETTINGS.swipe_only_mode) then
+            G.F_SWIPE_ONLY = not not G.SETTINGS.swipe_only_mode
+            pcall(function() love.resize(love.graphics.getDimensions()) end)
+            if G.HUD and G.ROOM then G.HUD.T.x = (G.ROOM.T.w - G.HUD.T.w)/2 end
+            rebuild_buttons_uibox()
+        end
+
+        ease_background_colour_blind(G.STATES.SHOP)
+        local shop_exists = not not G.shop
+        G.shop = G.shop or UIBox{
+            definition = G.UIDEF.shop(),
+            config = {align='tmi', offset = {x=0,y=G.ROOM.T.y+11},major = G.hand, bond = 'Weak'}
+        }
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if G.F_PORTRAIT then portrait_anchor_run_panel(G.shop)
+                    else G.shop.alignment.offset.y = -5.3 end
+                    G.shop.alignment.offset.x = 0
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.2,
+                        blockable = false,
+                        func = function()
+                            if math.abs(G.shop.T.y - G.shop.VT.y) < 3 then
+                                G.ROOM.jiggle = G.ROOM.jiggle + 3
+                                play_sound('cardFan2')
+                                for i = 1, #G.GAME.tags do
+                                    G.GAME.tags[i]:apply_to_run({type = 'shop_start'})
+                                end
+                                local nosave_shop = nil
+                                if not shop_exists then
+                                
+                                    nosave_shop = self:populate_shop_stock()
                                 end
 
                                 G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})
@@ -3387,7 +3425,8 @@ function Game:update_blind_select(dt)
                     definition = create_UIBox_blind_select(),
                     config = {align="bmi", offset = {x=0,y=G.ROOM.T.y + 29},major = G.hand, bond = 'Weak'}
                 }
-                G.blind_select.alignment.offset.y = 0.8-(G.hand.T.y - G.jokers.T.y) + G.blind_select.T.h
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.blind_select)
+                else G.blind_select.alignment.offset.y = 0.8-(G.hand.T.y - G.jokers.T.y) + G.blind_select.T.h end
                 G.ROOM.jiggle = G.ROOM.jiggle + 3
                 G.blind_select.alignment.offset.x = 0
                 G.CONTROLLER.lock_input = false
@@ -3436,7 +3475,10 @@ function Game:update_round_eval(dt)
                 G.E_MANAGER:add_event(Event({
                     trigger = 'immediate',
                     func = function()
-                        if G.round_eval.alignment.offset.y ~= -7.8 then
+                        if G.F_PORTRAIT and not G.round_eval.portrait_anchored then
+                            portrait_anchor_run_panel(G.round_eval)
+                            G.round_eval.portrait_anchored = true
+                        elseif not G.F_PORTRAIT and G.round_eval.alignment.offset.y ~= -7.8 then
                             G.round_eval.alignment.offset.y = -7.8
                         else
                             if math.abs(G.round_eval.T.y - G.round_eval.VT.y) < 3 then
@@ -3456,7 +3498,7 @@ end
 
 function Game:update_arcana_pack(dt)
     if self.buttons then self.buttons:remove(); self.buttons = nil end
-    if self.shop then G.shop.alignment.offset.y = G.ROOM.T.y+11 end
+    if self.shop then G.shop.alignment.offset.y = (G.F_PORTRAIT and G.ROOM.T.h or G.ROOM.T.y)+11 end
 
     if not G.STATE_COMPLETE then
         G.STATE_COMPLETE = true
@@ -3481,7 +3523,8 @@ function Game:update_arcana_pack(dt)
                     definition = create_UIBox_arcana_pack(),
                     config = {align="tmi", offset = {x=0,y=G.ROOM.T.y + 9},major = G.hand, bond = 'Weak'}
                 }
-                G.booster_pack.alignment.offset.y = -2.2
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.booster_pack, true)
+                else G.booster_pack.alignment.offset.y = -2.2 end
                         G.ROOM.jiggle = G.ROOM.jiggle + 3
                 ease_background_colour_blind(G.STATES.TAROT_PACK)
                 G.E_MANAGER:add_event(Event({
@@ -3507,7 +3550,7 @@ end
 
 function Game:update_spectral_pack(dt)
     if self.buttons then self.buttons:remove(); self.buttons = nil end
-    if self.shop then G.shop.alignment.offset.y = G.ROOM.T.y+11 end
+    if self.shop then G.shop.alignment.offset.y = (G.F_PORTRAIT and G.ROOM.T.h or G.ROOM.T.y)+11 end
 
     if not G.STATE_COMPLETE then
         G.STATE_COMPLETE = true
@@ -3532,7 +3575,8 @@ function Game:update_spectral_pack(dt)
                     definition = create_UIBox_spectral_pack(),
                     config = {align="tmi", offset = {x=0,y=G.ROOM.T.y + 9},major = G.hand, bond = 'Weak'}
                 }
-                G.booster_pack.alignment.offset.y = -2.2
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.booster_pack, true)
+                else G.booster_pack.alignment.offset.y = -2.2 end
                         G.ROOM.jiggle = G.ROOM.jiggle + 3
                 ease_background_colour_blind(G.STATES.SPECTRAL_PACK)
                 G.E_MANAGER:add_event(Event({
@@ -3558,7 +3602,7 @@ end
 
 function Game:update_standard_pack(dt)
     if self.buttons then self.buttons:remove(); self.buttons = nil end
-    if self.shop then G.shop.alignment.offset.y = G.ROOM.T.y+11 end
+    if self.shop then G.shop.alignment.offset.y = (G.F_PORTRAIT and G.ROOM.T.h or G.ROOM.T.y)+11 end
 
     if not G.STATE_COMPLETE then
         G.STATE_COMPLETE = true
@@ -3583,7 +3627,8 @@ function Game:update_standard_pack(dt)
                     definition = create_UIBox_standard_pack(),
                     config = {align="tmi", offset = {x=0,y=G.ROOM.T.y + 9},major = G.hand, bond = 'Weak'}
                 }
-                G.booster_pack.alignment.offset.y = -2.2
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.booster_pack, true)
+                else G.booster_pack.alignment.offset.y = -2.2 end
                         G.ROOM.jiggle = G.ROOM.jiggle + 3
                 ease_background_colour_blind(G.STATES.STANDARD_PACK)
                 G.E_MANAGER:add_event(Event({
@@ -3607,7 +3652,7 @@ end
 
 function Game:update_buffoon_pack(dt)
     if self.buttons then self.buttons:remove(); self.buttons = nil end
-    if self.shop then G.shop.alignment.offset.y = G.ROOM.T.y+11 end
+    if self.shop then G.shop.alignment.offset.y = (G.F_PORTRAIT and G.ROOM.T.h or G.ROOM.T.y)+11 end
 
     if not G.STATE_COMPLETE then
         G.STATE_COMPLETE = true
@@ -3619,7 +3664,8 @@ function Game:update_buffoon_pack(dt)
                     definition = create_UIBox_buffoon_pack(),
                     config = {align="tmi", offset = {x=0,y=G.ROOM.T.y + 9},major = G.hand, bond = 'Weak'}
                 }
-                G.booster_pack.alignment.offset.y = -2.2
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.booster_pack, true)
+                else G.booster_pack.alignment.offset.y = -2.2 end
                         G.ROOM.jiggle = G.ROOM.jiggle + 3
                 ease_background_colour_blind(G.STATES.BUFFOON_PACK)
                 G.E_MANAGER:add_event(Event({
@@ -3643,7 +3689,7 @@ end
 
 function Game:update_celestial_pack(dt)
     if self.buttons then self.buttons:remove(); self.buttons = nil end
-    if self.shop then G.shop.alignment.offset.y = G.ROOM.T.y+11 end
+    if self.shop then G.shop.alignment.offset.y = (G.F_PORTRAIT and G.ROOM.T.h or G.ROOM.T.y)+11 end
 
     if not G.STATE_COMPLETE then
         G.STATE_COMPLETE = true
@@ -3681,7 +3727,8 @@ function Game:update_celestial_pack(dt)
                         bond = 'Weak'
                     }
                 }
-                G.booster_pack.alignment.offset.y = -2.2
+                if G.F_PORTRAIT then portrait_anchor_run_panel(G.booster_pack, true)
+                else G.booster_pack.alignment.offset.y = -2.2 end
                 G.ROOM.jiggle = G.ROOM.jiggle + 3 
                 G.E_MANAGER:add_event(Event({
                     func = function()

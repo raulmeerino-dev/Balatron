@@ -1,0 +1,12 @@
+[manifest]
+version = "1.0.0"
+priority = 35
+dump_lua = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME = saveTable and saveTable.GAME or self:init_game_object()"
+position = "after"
+match_indent = true
+payload = "if RiskJokers then RiskJokers.registry.begin_run(saveTable ~= nil) end"

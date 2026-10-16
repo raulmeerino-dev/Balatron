@@ -1,0 +1,21 @@
+{
+  "frame": [
+    71,
+    95
+  ],
+  "order": [
+    "A",
+    "B",
+    "base"
+  ],
+  "prompts": "options-harlequin-prompts.json",
+  "sources": {
+    "a": "7ad0ef62b41079ae249344127bd7558066e46b1ea54b3331af026c8e21d0f9e6",
+    "b": "90d4ca545442c017d81b19e10f6a4965dc940d6ba638dad29b208197a87be754",
+    "base": "ae48ad039d2bd02f91e21814dd6150ecc4f8c3d538ce6ad299e5a2cd0ab81ce9"
+  },
+  "sprites": {
+    "1": "e7075c385eba7d107a6451c03a5d1319df5991bd404b9058d51a2b9d921d8ecd",
+    "2": "eb779fa0c45fc19e5a34f4396915eb6133d69bced96b4e889bc730ce92fa6562"
+  }
+}

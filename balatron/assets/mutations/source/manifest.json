@@ -1,0 +1,66 @@
+{
+  "tool": "image_gen",
+  "style": "32px Balatro-style pixel art, transparent, no text",
+  "icons": [
+    {
+      "id": "deep_pockets",
+      "subject": "a deep purple trouser pocket with a fan of cream playing cards peeking out",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-0dc64f1a-b665-469b-ac11-7f1ce9689d5d.png"
+    },
+    {
+      "id": "second_chance",
+      "subject": "a cream playing card embraced by a green circular return arrow",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-8a309ab4-cf81-4f3f-b808-9aa831cfdc30.png"
+    },
+    {
+      "id": "loose_hands",
+      "subject": "a red discarded playing card tossed aside with two simple motion marks",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-320bd4d2-fb65-4701-af82-9ce2b47fa1ba.png"
+    },
+    {
+      "id": "interest_rate",
+      "subject": "a golden coin with a small upward stepped arrow",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-e73b7bed-7423-4b44-84b3-505210fd6e4b.png"
+    },
+    {
+      "id": "heavy_hearts",
+      "subject": "a red heart suspended above a small iron weight",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-fc435aaa-cd36-4c01-9acf-921b1b55a86b.png"
+    },
+    {
+      "id": "sharp_spades",
+      "subject": "a black spade suit shaped like a sharp steel blade",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-03ec7b91-8ae3-47c7-aeda-69e5ea376e0d.png"
+    },
+    {
+      "id": "royal_blood",
+      "subject": "a golden crown above one crimson blood droplet",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-5270d4f2-cf06-42dd-828a-62cc04d217d4.png"
+    },
+    {
+      "id": "low_life",
+      "subject": "a small battered cream playing card with two red pips and a tiny crack",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-76b6f623-6bdf-4f6b-91a3-0ef68bc9dd33.png"
+    },
+    {
+      "id": "bigger_pockets",
+      "subject": "a teal satchel with two small potion bottles sticking out",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-84af0eac-1fff-496e-b070-408b1e52b7d1.png"
+    },
+    {
+      "id": "enhanced_genetics",
+      "subject": "a green and violet DNA double helix with one golden sparkle",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-f850b091-f916-4ded-bdf8-7a16cca9d283.png"
+    },
+    {
+      "id": "lucky_deck",
+      "subject": "a green four leaf clover over a cream playing card",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-69d96657-3ea4-40dd-ba96-9172fb95e27f.png"
+    },
+    {
+      "id": "joker_habitat",
+      "subject": "a tiny purple jester hat inside a golden house silhouette",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-9c6aff47-c4c9-4b78-83bc-36a54d76cd69.png"
+    }
+  ]
+}

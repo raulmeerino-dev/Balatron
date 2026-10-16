@@ -1,0 +1,53 @@
+[manifest]
+version = "1.0.0"
+priority = 40
+dump_lua = false
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME = saveTable and saveTable.GAME or self:init_game_object()"
+position = "after"
+match_indent = true
+payload = "if PortraitEvents then PortraitEvents.begin_run(saveTable ~= nil) end"
+
+# Coartada supplies a read-only effective history only at Joker call sites.
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "local play_more_than = (G.GAME.hands[context.scoring_name].played or 0)"
+position = "at"
+match_indent = true
+payload = "local play_more_than = PortraitExpansion48 and PortraitExpansion48.joker_history(context.scoring_name, 'played') or (G.GAME.hands[context.scoring_name].played or 0)"
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "message = localize{type='variable',key='a_mult',vars={G.GAME.hands[context.scoring_name].played}},"
+position = "at"
+match_indent = true
+payload = "message = localize{type='variable',key='a_mult',vars={PortraitExpansion48 and PortraitExpansion48.joker_history(context.scoring_name, 'played') or G.GAME.hands[context.scoring_name].played}},"
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "mult_mod = G.GAME.hands[context.scoring_name].played"
+position = "at"
+match_indent = true
+payload = "mult_mod = PortraitExpansion48 and PortraitExpansion48.joker_history(context.scoring_name, 'played') or G.GAME.hands[context.scoring_name].played"
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if k ~= context.scoring_name and v.played >= play_more_than and SMODS.is_poker_hand_visible(k) then"
+position = "at"
+match_indent = true
+payload = "if k ~= context.scoring_name and (PortraitExpansion48 and PortraitExpansion48.joker_history(k, 'played') or v.played) >= play_more_than and SMODS.is_poker_hand_visible(k) then"
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "if self.ability.name == 'Card Sharp' and G.GAME.hands[context.scoring_name] and G.GAME.hands[context.scoring_name].played_this_round > 1 then"
+position = "at"
+match_indent = true
+payload = "if self.ability.name == 'Card Sharp' and G.GAME.hands[context.scoring_name] and (PortraitExpansion48 and PortraitExpansion48.joker_history(context.scoring_name, 'played_this_round') or G.GAME.hands[context.scoring_name].played_this_round) > 1 then"

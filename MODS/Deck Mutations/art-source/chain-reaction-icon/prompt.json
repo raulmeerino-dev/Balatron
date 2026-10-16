@@ -1,0 +1,9 @@
+{
+  "tool": "built-in image_gen",
+  "source": "art-source/chain-reaction-icon/source.png",
+  "prompt": "Use case: stylized-concept. Create ONE replacement square Mutation icon for Balatro Portrait, not a Joker card. The two supplied images are STYLE REFERENCES ONLY for the existing Mutation family: compact isolated inventory symbols, chunky crisp pixel art, dark single-pixel silhouette outline, bright hard-edged pixel highlights, no frame, transparent background. Subject: THREE ivory domino pieces in a tight diagonal sequential topple, visibly knocking into the next, with small gold activation sparks growing slightly from the first piece to the third. The chain reaction must read instantly at 64x64. Three clear simple silhouettes, sparse black domino pips, a small red-to-gold impact accent connecting each pair. Composition fills about 85% of a square with clean even transparent margins. Draw at a coherent native 64x64 pixel-art density with no blur, antialiasing, gradients or fine illustrative noise. NO person, jester, face, playing card, card border, rectangular background, decorative frame, text, numbers, labels, Joker lettering or watermark. This is an effect symbol, not a scene or card illustration. Preserve the reference family's visual weight and pixel density.",
+  "references": [
+    "assets/2x/run_rules/seal_relay.png",
+    "assets/2x/run_rules/large_packs.png"
+  ]
+}

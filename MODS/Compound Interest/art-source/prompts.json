@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tax_collector",
+    "prompt": "Create ONE production pixel-art Joker playing card for Balatro, portrait 71:95 aspect ratio. Straight flat front view, entire card visible, small rounded corners, transparent outside card. Restrained authentic vanilla Balatro 71x95 pixel-grid aesthetics: chunky hard pixel edges, limited palette, simple central silhouette, 2-3 shade clusters, sparse tiny dithering; no antialias painted look, no 3D, no realism, no busy microdetails, no horror or grotesque faces. Off-white lightly aged paper (#f3f1e7), subtle gray blue 1px edge, NOT yellow parchment. Leave generous breathing room. Small dark slate vertical J O K E R down left edge and inverted on right as original cards. No other text, labels, numbers or UI. Illustrated subject uses middle 75% width and 65% height. A slightly comical friendly tax clerk bust with a green visor, round spectacles, red bow tie and muted teal jacket, holding a short cream receipt and two green banknotes. A simple recognizable vanilla joker face, red round nose and small smile. No menacing grin.",
+    "tool": "image_gen (built-in)",
+    "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a115ae-62be-7c31-822b-34139a3fe30d\\exec-7afdfd17-5657-416f-89b3-1e324039dd22.png"
+  },
+  {
+    "id": "hipster",
+    "prompt": "Create ONE production pixel-art Joker playing card for Balatro, portrait 71:95 aspect ratio. Straight flat front view, entire card visible, small rounded corners, transparent outside card. Restrained authentic vanilla Balatro 71x95 pixel-grid aesthetics: chunky hard pixel edges, limited palette, simple central silhouette, 2-3 shade clusters, sparse tiny dithering; no antialias painted look, no 3D, no realism, no busy microdetails, no horror or grotesque faces. Off-white lightly aged paper (#f3f1e7), subtle gray blue 1px edge, NOT yellow parchment. Leave generous breathing room. Small dark slate vertical J O K E R down left edge and inverted on right as original cards. No other text, labels, numbers or UI. Illustrated subject uses middle 75% width and 65% height. A mildly smug friendly jester bust with thick dark glasses, small moustache, short muted purple knit beanie with two tiny jester bells, teal scarf and a small coffee cup. Humorous understated alternative hipster character, no elaborate beard, no realistic portrait.",
+    "tool": "image_gen (built-in)",
+    "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a115ae-62be-7c31-822b-34139a3fe30d\\exec-05b30bbc-fcac-47ef-8b15-8ebd280d6e5b.png"
+  },
+  {
+    "id": "world_record",
+    "prompt": "Create ONE production pixel-art Joker playing card for Balatro, portrait 71:95 aspect ratio. Straight flat front view, entire card visible, small rounded corners, transparent outside card. Restrained authentic vanilla Balatro 71x95 pixel-grid aesthetics: chunky hard pixel edges, limited palette, simple central silhouette, 2-3 shade clusters, sparse tiny dithering; no antialias painted look, no 3D, no realism, no busy microdetails, no horror or grotesque faces. Off-white lightly aged paper (#f3f1e7), subtle gray blue 1px edge, NOT yellow parchment. Leave generous breathing room. Small dark slate vertical J O K E R down left edge and inverted on right as original cards. No other text, labels, numbers or UI. Illustrated subject uses middle 75% width and 65% height. One simple golden trophy cup with small red and teal ribbons and a dark teal block pedestal. A tiny five-point star embossed on cup. Clean central silhouette, modest flat pixel highlights, no sparkle cloud or scenery.",
+    "tool": "image_gen (built-in)",
+    "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a115ae-62be-7c31-822b-34139a3fe30d\\exec-878e7b20-e8a7-4029-b7ea-f36211342c8e.png"
+  },
+  {
+    "id": "excessive_force",
+    "prompt": "Create ONE production pixel-art Joker playing card for Balatro, portrait 71:95 aspect ratio. Straight flat front view, entire card visible, small rounded corners, transparent outside card. Restrained authentic vanilla Balatro 71x95 pixel-grid aesthetics: chunky hard pixel edges, limited palette, simple central silhouette, 2-3 shade clusters, sparse tiny dithering; no antialias painted look, no 3D, no realism, no busy microdetails, no horror or grotesque faces. Off-white lightly aged paper (#f3f1e7), subtle gray blue 1px edge, NOT yellow parchment. Leave generous breathing room. Small dark slate vertical J O K E R down left edge and inverted on right as original cards. No other text, labels, numbers or UI. Illustrated subject uses middle 75% width and 65% height. One oversized gray steel mallet with reddish wood handle lying diagonally after flattening one small bent nail in a tiny teal wooden block. Understated visual joke about excessive force. Just two little impact ticks, no giant explosion.",
+    "tool": "image_gen (built-in)",
+    "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a115ae-62be-7c31-822b-34139a3fe30d\\exec-1e4050c8-18a3-47e7-b8a6-5e6a236f016a.png"
+  },
+  {
+    "id": "collector",
+    "prompt": "Create ONE production pixel-art Joker playing card for Balatro, portrait 71:95 aspect ratio. Straight flat front view, entire card visible, small rounded corners, transparent outside card. Restrained authentic vanilla Balatro 71x95 pixel-grid aesthetics: chunky hard pixel edges, limited palette, simple central silhouette, 2-3 shade clusters, sparse tiny dithering; no antialias painted look, no 3D, no realism, no busy microdetails, no horror or grotesque faces. Off-white lightly aged paper (#f3f1e7), subtle gray blue 1px edge, NOT yellow parchment. Leave generous breathing room. Small dark slate vertical J O K E R down left edge and inverted on right as original cards. No other text, labels, numbers or UI. Illustrated subject uses middle 75% width and 65% height. A small centered walnut display cabinet with four square compartments containing four simple collectibles: red playing-card diamond, tiny gold coin, blue marble and green miniature figurine. Broad pixel clusters with readable shapes, modest glass highlight, no labels or realistic wood grain.",
+    "tool": "image_gen (built-in)",
+    "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a115ae-62be-7c31-822b-34139a3fe30d\\exec-b898e597-f0e1-4c3f-903f-dffed87f7d79.png"
+  }
+]

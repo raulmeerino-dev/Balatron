@@ -1,0 +1,110 @@
+{
+  "tool": "ChatGPT Image (built-in image_gen)",
+  "size": [
+    284,
+    380
+  ],
+  "logical_cell": [
+    71,
+    95
+  ],
+  "dpi_scale": 4,
+  "cards": [
+    {
+      "name": "hearts_J",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-4df4c9a7-d099-410f-9d45-28165d72e446.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct J and hearts suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a mischievous grinning red horned demon page, small flame dagger and heart shaped collar, agile diagonal pose. Suit hearts; rank Jack. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\hearts_J.png",
+      "saved_source": "assets/skins/deck1/source/courts/hearts_J.png",
+      "source_sha256": "dd2fcf675f19858efe36b3beb5bc28d1182e177f89cfdd6563bb0fd900662dc7"
+    },
+    {
+      "name": "hearts_Q",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-4e19cd8d-09cc-49d9-b203-de6bb9c413ed.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct Q and hearts suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with an elegant expressive red demon queen, swept horns shaped like the lobes of a heart, heart pendant and small flame fan, regal narrow silhouette. Suit hearts; rank Queen. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\hearts_Q.png",
+      "saved_source": "assets/skins/deck1/source/courts/hearts_Q.png",
+      "source_sha256": "4351764c1f8bd3ccb56ebac3780413c940b05173dc7dc6f9518cb6198a38f956"
+    },
+    {
+      "name": "hearts_K",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-aa646dd7-a152-4451-b598-38af6cae7db0.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct K and hearts suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a broad powerful scarlet demon king with huge curled horns, flame crown and heart tipped sceptre, roaring dramatic expression. Suit hearts; rank King. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\hearts_K.png",
+      "saved_source": "assets/skins/deck1/source/courts/hearts_K.png",
+      "source_sha256": "42b3a02ad0e58c9b4f2db5c175a864f614b48246a77ea565e2c200e8142e72d2"
+    },
+    {
+      "name": "diamonds_J",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-d022407f-04ab-481c-88c1-6403fb205782.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct J and diamonds suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a sly angular red demon treasurer page holding one large diamond, short pointed horns and simple diamond patterned tunic. Suit diamonds; rank Jack. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\diamonds_J.png",
+      "saved_source": "assets/skins/deck1/source/courts/diamonds_J.png",
+      "source_sha256": "407da614c22339c1675e96dc6a3c6efa73be4cd88e058b4d6c18c5f60f28dd9d"
+    },
+    {
+      "name": "diamonds_Q",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-fbb0030d-73d3-4578-a558-62135c8730dc.png",
+      "prompt": "Edit target: attached Queen of Diamonds playing card. Replace ONLY her central mirrored court character with an elegant RED-SKINNED DEMON QUEEN OF DIAMONDS. A living infernal queen with a solid angular crimson face, pointed ears, sweeping red horns, narrow golden eyes, lips and two small fangs. Red skin on hands and face; NO SKULL, NO SKELETON, NO EXPOSED BONES OR RIBS. She wears a geometric diamond gold tiara, black and ochre robes with large red diamond shapes, and delicately holds one cut ruby in clawed fingers. Both mirrored halves depict the same red demon queen. Preserve the aged cream paper, thin black frame, exact red Q and diamond indices upper left and inverted lower right, complete playing card silhouette and 284:380 aspect ratio. Minimalist coarse retro PIXEL ART like the supplied deck, flat cream/black/red/ochre ink, grotesque elegant, clean large readable pixel clusters, no gradients or fine details. No extra text. One whole card straight on, no perspective, no drop shadow, no cute, no realism or modern polished art.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\diamonds_Q.png",
+      "saved_source": "assets/skins/deck1/source/courts/diamonds_Q.png",
+      "source_sha256": "89d870afe354710d841fd3c4bba76712b032124a9527a72206d811c82f4bfdb3"
+    },
+    {
+      "name": "diamonds_K",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-af5211af-e0a6-47da-a455-5a99b5d22b54.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct K and diamonds suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a dominant angular demon king with a massive jewel studded crown and diamond headed sceptre, square red face, lavish but simple ochre robe. Suit diamonds; rank King. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\diamonds_K.png",
+      "saved_source": "assets/skins/deck1/source/courts/diamonds_K.png",
+      "source_sha256": "1238e2a8d3d60d857cf2b26161e5666cb0be735be40a1fcbaa97056426af1755"
+    },
+    {
+      "name": "spades_J",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-b6526ca0-6e7e-43be-8005-c1b3755c6e5f.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct J and spades suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a lean severe skeletal lancer page, small spade shaped helmet and sharp spear, hollow eyes, angular bone jaw. Suit spades; rank Jack. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\spades_J.png",
+      "saved_source": "assets/skins/deck1/source/courts/spades_J.png",
+      "source_sha256": "46bd5c7ece1e59af72c08406c8a422b13d07cf3cd54e67cd162c60d31f8ea054"
+    },
+    {
+      "name": "spades_Q",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-0fe81676-5a96-4c7c-99eb-a6ac6af6cd0c.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct Q and spades suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a sinister elegant skeleton queen with sharp spade crown, hollow skull face and a black spade shaped fan, long slender bone fingers. Suit spades; rank Queen. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\spades_Q.png",
+      "saved_source": "assets/skins/deck1/source/courts/spades_Q.png",
+      "source_sha256": "66600a3a8e8d48efbe7cfcfbd00d068b7107649db4d794d3204950e7a22e414a"
+    },
+    {
+      "name": "spades_K",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-ab25aaeb-12ec-4ca5-a6db-1536b192d4d4.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct K and spades suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a powerful skeletal king with a tall sharp spade crown, imposing broad shoulders and black spear sceptre, unmistakable skull face. Suit spades; rank King. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\spades_K.png",
+      "saved_source": "assets/skins/deck1/source/courts/spades_K.png",
+      "source_sha256": "5f0df37b8f0e674335c563a85a73707b4437f4b0856cbd6e4c3b84fe78ea34aa"
+    },
+    {
+      "name": "clubs_J",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-d5ef9d6d-2e44-48e4-a945-4d82021cfdb6.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct J and clubs suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a crooked grinning skeletal gardener page, bone fingers holding a twisted sprig with three club shaped leaves, simple organic hat. Suit clubs; rank Jack. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\clubs_J.png",
+      "saved_source": "assets/skins/deck1/source/courts/clubs_J.png",
+      "source_sha256": "ce48657129f81abbf1c4a081949aa7b1be8f69628491d1cc8ff1767be0950b38"
+    },
+    {
+      "name": "clubs_Q",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-ea931467-e2ee-4793-8970-03792dc71799.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct Q and clubs suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with an elegant skeletal forest queen, unmistakable skull face, dark clover leaf crown and winding thorn vine sceptre, refined curved silhouette. Suit clubs; rank Queen. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\clubs_Q.png",
+      "saved_source": "assets/skins/deck1/source/courts/clubs_Q.png",
+      "source_sha256": "c8136696675c5e93749f170a9d7dfcf6712183010c03a9c1a72974358b751ac3"
+    },
+    {
+      "name": "clubs_K",
+      "source": "C:\\Users\\rulo3\\.codex\\generated_images\\01a110aa-9e5a-7472-bbb9-fc0df6290361\\exec-c613a79d-a87a-434f-bef5-05c38abbd31a.png",
+      "prompt": "Use case: precise-object-edit. Edit the attached playing card (the edit target). Keep its full card format, exact aged cream border, thin black inner frame, correct K and clubs suit indices in upper left and inverted lower right corners, and the two-headed 180-degree mirrored traditional court composition. Replace only the central court character with a broad ancient skeletal forest king, gnarled antler-like root crown with club leaves, massive crooked wooden club sceptre and wide grinning skull. Suit clubs; rank King. Match the existing deliberately low-resolution retro pixel art: coarse crisp pixel clusters, minimalist flat black/red/ochre/cream palette, slightly worn old printed paper, grotesque but elegant. Strong simple readable shapes at a final 71x95 logical card size. Skeleton means exposed skull and bones, no human skin; demon means unmistakable horns and demonic face. Unique silhouette appropriate to this rank. No text except the existing corner rank letters, no Joker lettering, no captions, no stats, no modern polished illustration, no 3D, no realism, no cute, no excessive detail. Show one complete card straight on, no perspective, same 284:380 aspect ratio with all border visible.",
+      "reference": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\balatron\\assets\\skins\\deck1\\cards\\clubs_K.png",
+      "saved_source": "assets/skins/deck1/source/courts/clubs_K.png",
+      "source_sha256": "4fb883f7fa6eb36e808ca8ea24870c1e58a06844df3d2d815f1dca3f4a7c13c3"
+    }
+  ]
+}

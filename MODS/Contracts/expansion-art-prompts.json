@@ -1,0 +1,52 @@
+[
+  {
+    "id": "recasting",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: two theatrical masks swapping places with a bold curved arrow, on a signed ivory contract",
+    "source": "art-source/expansion/recasting.png"
+  },
+  {
+    "id": "embargo",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: a closed business door symbol sealed with a vivid red diagonal closure strip, on an ivory contract",
+    "source": "art-source/expansion/embargo.png"
+  },
+  {
+    "id": "no_repeat",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: three distinct musical notes with a crossed repeat symbol, on an ivory contract",
+    "source": "art-source/expansion/no_repeat.png"
+  },
+  {
+    "id": "cash_register",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: a small vintage brass cash register with a playing card and one gold coin, on an ivory receipt contract",
+    "source": "art-source/expansion/cash_register.png"
+  },
+  {
+    "id": "debut",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: an elegant gala invitation with one pristine empty square and a tiny bow tie, on an ivory contract",
+    "source": "art-source/expansion/debut.png"
+  },
+  {
+    "id": "back_row",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: three marked playing-card tabs at the bottom of a stack, on an ivory contract",
+    "source": "art-source/expansion/back_row.png"
+  },
+  {
+    "id": "domino_effect",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: a clear chain of five toppling ivory dominoes, on an ivory contract",
+    "source": "art-source/expansion/domino_effect.png"
+  },
+  {
+    "id": "administrative_silence",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: a rubber stamp pressing a silence emblem of a closed mouth, on an ivory administrative contract",
+    "source": "art-source/expansion/administrative_silence.png"
+  },
+  {
+    "id": "protected_witnesses",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: three dark witness silhouettes sheltered beneath one small red umbrella, on an ivory contract",
+    "source": "art-source/expansion/protected_witnesses.png"
+  },
+  {
+    "id": "seed_capital",
+    "prompt": "Use case: stylized-concept. Asset type: one final Balatro Portrait Contract icon, square 128x128 logical pixels. Generate ONE isolated icon, no sheet. Match the supplied family reference: square dark crimson rounded outer tile, stack of ivory paper sheets slightly rotated, chunky black outlines, a small red wax seal at upper right, tiny neutral line strokes suggesting writing, central bold pictogram. Clean sharp pixel art with visible square pixels, narrow palette, no gradients, no antialiasing, extremely legible on mobile. Full icon fills square canvas, opaque dark crimson background. No words, no letters, no numbers, no watermark. New central subject: one green seedling growing between two signed receipts and a gold coin, on an ivory contract",
+    "source": "art-source/expansion/seed_capital.png"
+  }
+]

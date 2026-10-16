@@ -1,0 +1,74 @@
+﻿[
+    {
+        "paper_pixels":  1514,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "C09A6A346095F50D363C29B7B3C994040E4372378C2C458242D1D33569A9D86E",
+        "asset":  "MODS/UPG JOKERS/assets/1x/bottomless.png",
+        "source_sha256":  "736C5B132B237452BE9A7826E6EB741454490ECE827A5BCD8B9B9D5C8EADCE11"
+    },
+    {
+        "paper_pixels":  818,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "90F66DB68DFD1E0C3C5641433F53626E3FEB36BF6692A02A5B8B752353AEBDCC",
+        "asset":  "MODS/RISK JOKERS/assets/1x/greed.png",
+        "source_sha256":  "B267B8F7E358AEBC54F5CA204CA65F2A5D8A613B750DB5152B5042B62AC2B933"
+    },
+    {
+        "paper_pixels":  805,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "AA5D1C8E8DD39B13EA9A59E3AAFE7CB0F35B4703B58658B222951947AAE4314A",
+        "asset":  "MODS/RISK JOKERS/assets/1x/glass_cannon.png",
+        "source_sha256":  "B4D5A48B26DC8F8DC31B99CFFEB84E0A377EACC86BE9A0FD240399E273F2348C"
+    },
+    {
+        "paper_pixels":  6821,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "F1E7C4D4636FF85191A7C5A9AB21C85F1E65D4FCAD7E14EFB1143E0A830DE3F2",
+        "asset":  "MODS/UPG JOKERS/assets/2x/bottomless.png",
+        "source_sha256":  "EE1B85C1E000803B0EED1555B5D06497C9EC933D489A5FC74C19FABC8989A45F"
+    },
+    {
+        "paper_pixels":  3575,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "C31CF6E3B589966A94F366AD594F0F002DA8652CDDBEB59F9E75C24385BBB392",
+        "asset":  "MODS/RISK JOKERS/assets/2x/greed.png",
+        "source_sha256":  "CE813043260C2C372A019DB9D7930192086C3C67976F32D15AFA6F30787A9E13"
+    },
+    {
+        "paper_pixels":  3572,
+        "reference_rgb":  [
+                              238,
+                              230,
+                              221
+                          ],
+        "artwork":  "Original pixels preserved within guarded silhouettes",
+        "output_sha256":  "51F3F349BFB317EAB4E7D64B8F2A8C8A04FA3F9F590B0F4EE51680F2CAF79DD3",
+        "asset":  "MODS/RISK JOKERS/assets/2x/glass_cannon.png",
+        "source_sha256":  "2DCAFA854BCAA40DD41162B1343FB9ED87BFC6558076201A4F2EA4A18A078C2B"
+    }
+]

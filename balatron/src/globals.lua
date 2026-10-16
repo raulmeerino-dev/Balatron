@@ -202,6 +202,7 @@ function Game:set_globals()
             },
         },
         CUSTOM_DECK = {
+            skin = 'default',
             Collabs = {
                 Spades = 'default',
                 Hearts = 'default',
@@ -587,13 +588,13 @@ end
 function rebuild_buttons_uibox()
     if G.buttons then G.buttons:remove(); G.buttons = nil end
     local swipe_only = G.F_PORTRAIT and G.F_SWIPE_ONLY
-    -- Both modes attach under the hand (the proven render path); Swipe Only
-    -- shows the compact sort strip, offset past the hand's card counter so
-    -- the "8/8" label never overlaps it.
+    -- Landscape retains its hand anchor. Portrait replaces it with a fixed
+    -- safe-bottom anchor after measuring either the full row or the sort strip.
     G.buttons = UIBox{
         definition = create_UIBox_buttons(),
         config = {align = 'bm', offset = {x=0, y=swipe_only and 0.45 or 0.3}, major = G.hand, bond = 'Weak'}
     }
+    if G.F_PORTRAIT then portrait_position_run_areas() end
 end
 
 --Swipe Only mode: hides the Play Hand/Discard buttons (swipe up = play,

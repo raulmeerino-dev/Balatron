@@ -1,0 +1,132 @@
+{
+  "tool": "built-in image_gen",
+  "revision": 2,
+  "cell": [
+    71,
+    95
+  ],
+  "dpi": 2,
+  "ranks": [
+    "A",
+    "J",
+    "Q",
+    "K"
+  ],
+  "variant": "four_realms_v2",
+  "sampling": "nearest; native-grid placement; binary alpha; no mipmaps",
+  "fallback": "native default 2\u201310; native paper, enhancements and run back",
+  "cards": {
+    "hearts_J": {
+      "cell": [
+        9,
+        0
+      ],
+      "source_sha256": "373368dcf8e28f877b18b991644b431bfa2015f268fa36d2243b97578d453edb"
+    },
+    "hearts_Q": {
+      "cell": [
+        10,
+        0
+      ],
+      "source_sha256": "396ceadc7fe652062677fa9468610d71f2bc3e6e4cdf8befef8ee00d3b1188b1"
+    },
+    "hearts_K": {
+      "cell": [
+        11,
+        0
+      ],
+      "source_sha256": "25a79533a1334ecccc95d26c20057e2997b3c071b46dfcbcf3e205854e53ba37"
+    },
+    "hearts_A": {
+      "cell": [
+        12,
+        0
+      ],
+      "source_sha256": "4a1344a6d4bd546be0111139d6ceb6b2ece8c0090730bcc0f7cb5be69cac83f9"
+    },
+    "clubs_J": {
+      "cell": [
+        9,
+        1
+      ],
+      "source_sha256": "301a3e1474286a74f986bbd61c9740e77a24c0e46f1a47822889224d2b9ec1aa"
+    },
+    "clubs_Q": {
+      "cell": [
+        10,
+        1
+      ],
+      "source_sha256": "3076c0f49ad3673b67b43077c88b90cad3282ecb9f91d82288483ecce52825c4"
+    },
+    "clubs_K": {
+      "cell": [
+        11,
+        1
+      ],
+      "source_sha256": "ebb72d8d30e9af89d821bd3e15fcabe0a90091c93011514de79604dfd5fa6137"
+    },
+    "clubs_A": {
+      "cell": [
+        12,
+        1
+      ],
+      "source_sha256": "dccd92743e724dd15fe28b3442c8abfd0f20c7535486fca94e1f1d78c7b33a52"
+    },
+    "diamonds_J": {
+      "cell": [
+        9,
+        2
+      ],
+      "source_sha256": "27b759dcac139571a57639d8c7848582b6d502e06a2fdf52dca37cf929049661"
+    },
+    "diamonds_Q": {
+      "cell": [
+        10,
+        2
+      ],
+      "source_sha256": "4ac799e3cac7d9b85cdffab8a2b7d0c88398e4b670e39b541f15232289074540"
+    },
+    "diamonds_K": {
+      "cell": [
+        11,
+        2
+      ],
+      "source_sha256": "8bb7c37f3015c9c908cc599006e7e9cf8f620397842ea28ccef7f2e2451eb73b"
+    },
+    "diamonds_A": {
+      "cell": [
+        12,
+        2
+      ],
+      "source_sha256": "b6be591b905493573145fff874554895fe0138004dc4fb5fa1e804cabcc42038"
+    },
+    "spades_J": {
+      "cell": [
+        9,
+        3
+      ],
+      "source_sha256": "08a3766702b0f5f4f62fbea6a1905c362e29d1cc76ff28bdab951a32967646b5"
+    },
+    "spades_Q": {
+      "cell": [
+        10,
+        3
+      ],
+      "source_sha256": "dbc8f9c2f9099d0bd7bb036aca572106961c68fd371858e85556a227a940a280"
+    },
+    "spades_K": {
+      "cell": [
+        11,
+        3
+      ],
+      "source_sha256": "9ed02d83e6b7e8ab38ea769207346248a006c1a79ddc27a240b50bccd5bdc7ed"
+    },
+    "spades_A": {
+      "cell": [
+        12,
+        3
+      ],
+      "source_sha256": "633da518b024f8b96642bd023343456612eecbba7eee427d79de451e86d6b58c"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 --Class
 Sprite = Moveable:extend()
+local portrait_background = require('portrait_background')
 
 --Class Methods
 function Sprite:init(X, Y, W, H, new_sprite_atlas, sprite_pos)
@@ -82,7 +83,8 @@ function Sprite:draw_shader(_shader, _shadow_height, _send, _no_tilt, other_obj,
     if custom_shader then 
         if _send then 
             for k, v in ipairs(_send) do
-                G.SHADERS[_shader]:send(v.name, v.val or (v.func and v.func()) or v.ref_table[v.ref_value])
+                local value=v.val or (v.func and v.func()) or v.ref_table[v.ref_value]
+                G.SHADERS[_shader]:send(v.name, portrait_background.for_uniform(self,_shader,v.name,value))
             end
         end
     elseif _shader == 'vortex' then 

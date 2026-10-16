@@ -87,8 +87,10 @@ do
 end
 
 function love.conf(t)
+    t.identity = 'game'
+    require('portrait_mods').install(t.identity)
 	t.console = not _RELEASE_MODE
-	t.title = 'Balatro'
+	t.title = 'BALATRÓN'
 	t.window.width = 0
     t.window.height = 0
 	t.window.minwidth = 100

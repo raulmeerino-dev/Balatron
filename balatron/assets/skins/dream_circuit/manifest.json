@@ -1,0 +1,132 @@
+{
+  "tool": "built-in image_gen",
+  "revision": 2,
+  "cell": [
+    71,
+    95
+  ],
+  "dpi": 2,
+  "ranks": [
+    "A",
+    "J",
+    "Q",
+    "K"
+  ],
+  "variant": "dream_circuit",
+  "sampling": "nearest; native-grid placement; binary alpha; no mipmaps",
+  "fallback": "native default 2\u201310; native paper, enhancements and run back",
+  "cards": {
+    "hearts_J": {
+      "cell": [
+        9,
+        0
+      ],
+      "source_sha256": "68bb127c603b197a710891d85fc82a5a5b1faf65a5fa039fb9cf04d4aa73ea5f"
+    },
+    "hearts_Q": {
+      "cell": [
+        10,
+        0
+      ],
+      "source_sha256": "69b7fa6e5eaecdff788aa6cf8e6e159d242199794af164e013a7c8164f71a5bd"
+    },
+    "hearts_K": {
+      "cell": [
+        11,
+        0
+      ],
+      "source_sha256": "9c6c51c3cee80c398f1d206ccacb0a43e78b75a5f0c0001a146a28db8a74265d"
+    },
+    "hearts_A": {
+      "cell": [
+        12,
+        0
+      ],
+      "source_sha256": "04dd37502f2de5f21755b0154a342b66dc54de6a5c3c213bb3a3f72538a5cfde"
+    },
+    "clubs_J": {
+      "cell": [
+        9,
+        1
+      ],
+      "source_sha256": "674f4f3f59664f06650baa8268f1b423624bd6825cdc50551ec1a7556ad421d2"
+    },
+    "clubs_Q": {
+      "cell": [
+        10,
+        1
+      ],
+      "source_sha256": "c36aaf80f4ce62728ea0f546f812532f3db08b46859c618ef9c8df1cab74c8bb"
+    },
+    "clubs_K": {
+      "cell": [
+        11,
+        1
+      ],
+      "source_sha256": "c154da06204f94430ce94f993d1740561aec8aa185161e1193c9c0813d978252"
+    },
+    "clubs_A": {
+      "cell": [
+        12,
+        1
+      ],
+      "source_sha256": "00b81239bfdb8b443cb50c6a44d3c6c705efae9b5be5cb2a8f203e8ade94be9a"
+    },
+    "diamonds_J": {
+      "cell": [
+        9,
+        2
+      ],
+      "source_sha256": "b3edb439ac9e23185514d9394c1aaedcb130f5a40cb6dab05604447294ea5f7b"
+    },
+    "diamonds_Q": {
+      "cell": [
+        10,
+        2
+      ],
+      "source_sha256": "c81bf1fa2abecee1ff011dbab193fa5cbd950cab80736b715bf11fe91c22b802"
+    },
+    "diamonds_K": {
+      "cell": [
+        11,
+        2
+      ],
+      "source_sha256": "48d550eaac4dc795507504f2aa057e273af9de260f46ed2501a58bf170424b14"
+    },
+    "diamonds_A": {
+      "cell": [
+        12,
+        2
+      ],
+      "source_sha256": "2a8f165540491e5b9a87d79db17d4a3fa92f2e54529edfc083f292414317fd3d"
+    },
+    "spades_J": {
+      "cell": [
+        9,
+        3
+      ],
+      "source_sha256": "cd3498e50d2f01227e3a1bc0b8a9db69896b7287436a71fdf784073c9f78bfeb"
+    },
+    "spades_Q": {
+      "cell": [
+        10,
+        3
+      ],
+      "source_sha256": "51872211cee6c1ac09278219b2c865cab6947ba7ae8c5e0610dd85a2fe290574"
+    },
+    "spades_K": {
+      "cell": [
+        11,
+        3
+      ],
+      "source_sha256": "33c2d37656820ab88ae2b1cfcafa1b937e2c40f4415cdb22694af069ddccd68b"
+    },
+    "spades_A": {
+      "cell": [
+        12,
+        3
+      ],
+      "source_sha256": "04138ac46b7de25a59e64989a1406094fb0124295330dc4894eec37297553496"
+    }
+  }
+}

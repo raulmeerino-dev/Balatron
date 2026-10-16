@@ -13,6 +13,7 @@ responsive de Run Info para el viewport del iPhone 14 Pro.
 | [`DECK1/`](DECK1/) | Arte fuente del primer mazo. |
 | [`DECK 2/`](DECK%202/) | Arte y trabajo del segundo mazo. |
 | [`DECK 3/`](DECK%203/) | Arte y trabajo del tercer mazo. |
+| `releases/` | Última IPA entregada y su checksum; no se incluye en Git. |
 
 Las carpetas mantienen sus rutas originales: `balatron/build.py` carga los mods
 desde `../MODS/`. Los sprites y atlas integrados están en `balatron/assets/`,
@@ -32,9 +33,9 @@ El script genera `balatron/balatron.ipa` y valida su contenido. La instalación
 original, los recursos extraídos, herramientas descargadas, cachés y partidas
 de QA no se versionan. El historial de IPA antiguas permanece local.
 
-Las IPA entregadas se publican como adjuntos de
-[Releases](https://github.com/raulmeerino-dev/balatron/releases), fuera del
-historial de código. No se recompila una IPA sin petición explícita.
+La carpeta de entrega incluye la última IPA en `releases/`, fuera del historial
+de código. No se ha subido este proyecto a GitHub. Si lo publicas más adelante,
+puedes adjuntar la IPA a una Release. No se recompila una IPA sin petición explícita.
 
 ## Documentación
 

@@ -1,0 +1,16 @@
+{
+  "id": "portrait_gameplay",
+  "name": "Gameplay Core",
+  "display_name": "Gameplay Core",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Optional run gameplay. Generation switches apply to the next run.",
+  "prefix": "pg",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 125,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)"
+  ]
+}

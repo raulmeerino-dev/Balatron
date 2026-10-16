@@ -23,6 +23,11 @@ function UIBox:init(args)
     self.states.drag.can = false
     self.draw_layers = {} --if we need to explicitly change the draw order of the UIEs
 
+    -- Fit all native/SMODS informational boxes through one measured layout.
+    if G.F_PORTRAIT then
+        require("portrait_run_info").prepare(args)
+        require("portrait_popup_layout").prepare(args)
+    end
     --The definition table that contains the schematic of this UIBox
     self.definition = args.definition
 
@@ -70,6 +75,7 @@ function UIBox:init(args)
     --Set the midpoint for any future alignments to use
     self.Mid = self.Mid or self.UIRoot
     --Calculate the correct and width/height and offset for each node
+    require("portrait_popup_layout").begin_measure(self)
     self:calculate_xywh(self.UIRoot, self.T)
 
     --set the transform w/h to equal that of the calculated box
@@ -80,8 +86,10 @@ function UIBox:init(args)
     --Then, set all of the correct alignments for the ui elements\
 
     self.UIRoot:set_alignments()
+    require("portrait_popup_layout").end_measure(self)
 
     self:align_to_major()
+    if self.config.portrait_layout then require("portrait_popup_layout").place(self) end
     self.VT.x, self.VT.y = self.T.x, self.T.y
     self.VT.w, self.VT.h = self.T.w, self.T.h
 
@@ -126,6 +134,15 @@ function UIBox:get_UIE_by_ID(id, node)
 end
 
 function UIBox:calculate_xywh(node, _T, recalculate, _scale)
+    if recalculate and node.UIT == G.UIT.O and not node.config.object then
+        -- Vanilla callbacks (toggle_seeded_run, change_viewed_back, etc.) can
+        -- leave an initialized object slot empty. Do not reinitialize its role
+        -- or invent a replacement object while measuring that empty slot.
+        node.T.w, node.T.h = 0, 0
+        node.content_dimensions.w, node.content_dimensions.h = 0, 0
+        node.role.offset.x, node.role.offset.y = _T.x, _T.y
+        return 0, 0
+    end
     node.ARGS.xywh_node_trans = node.ARGS.xywh_node_trans or {}
     local _nt = node.ARGS.xywh_node_trans
     local _ct = {}
@@ -278,6 +295,10 @@ function UIBox:set_parent_child(node, parent)
     end
 end
 function UIBox:remove()
+    if self.REMOVED or self.pointer_removing then return end
+    self.pointer_removing = true
+    G.CONTROLLER:invalidate_node(self)
+    require("portrait_popup_layout").removing(self)
     if self == G.OVERLAY_MENU then G.REFRESH_ALERTS = true end
     self.UIRoot:remove()
     for k, v in pairs(G.I[self.config.instance_type or 'UIBOX']) do
@@ -290,9 +311,20 @@ function UIBox:remove()
     Moveable.remove(self)
 end
 
+function UIBox:translate_container()
+    if self.config.portrait_layout and not self.config.portrait_embedded and self.container then
+        -- Reading panels stay level while the game's room shakes/rotates.
+        love.graphics.translate(self.container.T.x*G.TILESCALE*G.TILESIZE,self.container.T.y*G.TILESCALE*G.TILESIZE)
+        return
+    end
+    return Node.translate_container(self)
+end
+
 function UIBox:draw()
     if self.FRAME.DRAW >= G.FRAMES.DRAW and not G.OVERLAY_TUTORIAL then return end
     self.FRAME.DRAW = G.FRAMES.DRAW
+    local portrait_clip=require("portrait_popup_layout").clip(self)
+    if portrait_clip==false then return end
 
     for k, v in pairs(self.children) do
         if k ~= 'h_popup' and k ~= 'alert' then v:draw() end
@@ -300,7 +332,7 @@ function UIBox:draw()
 
     if self.states.visible then
         add_to_drawhash(self)
-        self.UIRoot:draw_self()
+        if not self.config.portrait_panel then self.UIRoot:draw_self() end
         self.UIRoot:draw_children()
         for k, v in ipairs(self.draw_layers) do
             if v.draw_self then v:draw_self() else v:draw() end
@@ -311,10 +343,14 @@ function UIBox:draw()
     if self.children.alert then self.children.alert:draw() end
 
     self:draw_boundingrect()
+    require("portrait_popup_layout").unclip(self,portrait_clip)
 end
 
 function UIBox:recalculate()
+    if self.REMOVED or self.pointer_removing or self.portrait_recalculating then return end
+    self.portrait_recalculating = true
     --Calculate the correct dimensions and width/height and offset for each node
+    require("portrait_popup_layout").begin_measure(self)
     self:calculate_xywh(self.UIRoot, self.T, true)
     --Then, calculate the correct width and height for each container
     self.UIRoot:set_wh()
@@ -322,6 +358,7 @@ function UIBox:recalculate()
     self.UIRoot:set_alignments()
     self.T.w = self.UIRoot.T.w
     self.T.h = self.UIRoot.T.h
+    require("portrait_popup_layout").end_measure(self)
     G.REFRESH_FRAME_MAJOR_CACHE = (G.REFRESH_FRAME_MAJOR_CACHE or 0) + 1
     if self.config and self.config.fit_to_room then
         self:align_to_major()
@@ -330,20 +367,31 @@ function UIBox:recalculate()
             prepare_portrait_popup_fit(self)
         end
     end
+    if self.config.portrait_layout then require("portrait_popup_layout").place(self) end
     self.UIRoot:initialize_VT()
     G.REFRESH_FRAME_MAJOR_CACHE = (G.REFRESH_FRAME_MAJOR_CACHE > 1 and G.REFRESH_FRAME_MAJOR_CACHE - 1 or nil)
+    self.portrait_recalculating = nil
+end
+
+function UIBox:move_xy(dt)
+    if self.config and self.config.portrait_layout then require("portrait_popup_layout").place(self) end
+    return Moveable.move_xy(self, dt)
 end
 
 function UIBox:move(dt)
+    if self.REMOVED or self.pointer_removing then return end
     Moveable.move(self, dt)
     self:fit_to_room()
-    if self.config and self.config.snap_to_fit and prepare_portrait_popup_fit then
-        prepare_portrait_popup_fit(self)
-    end
     Moveable.move(self.UIRoot, dt)
 end
 
+function UIBox:move_r(dt, velocity)
+    if dt == 0 then return end
+    return Moveable.move_r(self,dt,velocity)
+end
+
 function UIBox:fit_to_room()
+    if G and G.F_PORTRAIT and require("portrait_popup_layout").place(self) then return end
     if not (G and G.F_PORTRAIT and G.ROOM and G.ROOM.T and self.config and self.config.fit_to_room) then return end
 
     local dx, dy = 0, 0
@@ -983,6 +1031,7 @@ function UIElement:draw_pixellated_rect(_type, _parallax, _emboss, _progress)
 end
 
 function UIElement:update(dt)
+    if self.REMOVED or self.pointer_removing or self.UIBox.REMOVED or self.UIBox.pointer_removing then return end
     G.ARGS.FUNC_TRACKER = G.ARGS.FUNC_TRACKER or {}
     if self.config.button_delay then
         self.config.button_temp = self.config.button or self.config.button_temp
@@ -1003,7 +1052,7 @@ end
 
 function UIElement:collides_with_point(cursor_trans)
     if self.UIBox.states.collide.can then
-        return Node.collides_with_point(self, cursor_trans)
+        return require("portrait_popup_layout").hit(self, cursor_trans) and Node.collides_with_point(self, cursor_trans)
     else
         return false
     end
@@ -1091,6 +1140,9 @@ function UIElement:put_focused_cursor()
 end
 
 function UIElement:remove()
+    if self.REMOVED or self.pointer_removing then return end
+    self.pointer_removing = true
+    G.CONTROLLER:invalidate_node(self)
     if self.config and self.config.object then
         self.config.object:remove()
         self.config.object = nil

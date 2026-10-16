@@ -1,0 +1,16 @@
+{
+  "id": "portrait_events",
+  "name": "Events",
+  "display_name": "Events",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Optional shops and events for Balatrón.",
+  "prefix": "evt",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 120,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)"
+  ]
+}

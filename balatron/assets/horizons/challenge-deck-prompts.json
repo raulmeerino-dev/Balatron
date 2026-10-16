@@ -1,0 +1,170 @@
+[
+  {
+    "id": "CH01",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait named Blast Furnace (do not write any text). Complete vertical card, exact proportions 71:95, centered large on a solid pure magenta #FF00FF outer background so it can be cropped precisely. Opaque ivory pixel border with square-stepped corners, dark charcoal interior. Central icon: an industrial black furnace, two small playing cards entering from left and right, a single vivid purple fused card emerging from the furnace mouth. Very readable silhouette, simple shapes, hard crisp pixel clusters at approximately 71x95 logical pixels, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no lettering, no UI, no shadows outside card. Full card must be visible. This is a single coherent finished game sprite, not a sheet or illustration mockup.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-b1ed549c-4e3b-485c-ad69-f1da30faf4a6.png",
+    "source": "balatron/assets/horizons/challenges/CH01-source.png",
+    "crop": [
+      76,
+      82,
+      1007,
+      1360
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH01.png"
+  },
+  {
+    "id": "CH02",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Blood Debt: a crimson coin purse stitched into the shape of a playing card, heavy black seam, two gold coins leaking out, a thin red thread like a vein. Crimson, gold, black, ivory.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-2d5165af-561b-4a13-b9c1-1706b618a800.png",
+    "source": "balatron/assets/horizons/challenges/CH02-source.png",
+    "crop": [
+      84,
+      97,
+      1001,
+      1349
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH02.png"
+  },
+  {
+    "id": "CH03",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Payment in Kind: large copper scissors cutting a small cream price tag from a playing card, with one triangular torn corner falling. Copper, dark teal, cream.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-8bda7ddb-0be1-4e5b-883a-88a7e534d1fb.png",
+    "source": "balatron/assets/horizons/challenges/CH03-source.png",
+    "crop": [
+      93,
+      94,
+      991,
+      1346
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH03.png"
+  },
+  {
+    "id": "CH04",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Oath: a formal ivory contract held closed by a red wax seal pierced by a slim ceremonial sword; short abstract ink strokes only, no readable writing. Red, ivory, black, gold.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-ac529c75-c473-4906-840b-9ed9ca90455b.png",
+    "source": "balatron/assets/horizons/challenges/CH04-source.png",
+    "crop": [
+      73,
+      67,
+      1011,
+      1370
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH04.png"
+  },
+  {
+    "id": "CH05",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Made to Order: a wrapped kraft-paper parcel shaped like a playing card, dark blue ribbon, small ivory hourglass attached to its front, two golden grains of sand. Ochre, blue, ivory.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-76d58694-5beb-41fe-a79c-35332f128511.png",
+    "source": "balatron/assets/horizons/challenges/CH05-source.png",
+    "crop": [
+      89,
+      89,
+      995,
+      1361
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH05.png"
+  },
+  {
+    "id": "CH06",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Carry-on: a compact brown leather suitcase, open just enough to reveal one purple jester playing card and a turquoise potion bottle fitted snugly together. Five simple brass studs on case front. Brown, violet, turquoise, ivory.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-7680709f-1061-44e3-9c0b-2b3ecf704df2.png",
+    "source": "balatron/assets/horizons/challenges/CH06-source.png",
+    "crop": [
+      77,
+      74,
+      1007,
+      1374
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH06.png"
+  },
+  {
+    "id": "CH07",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Blind Date: an elegant black eye mask covering the middle of a blank ivory playing card, with a large small gold price tag hanging beside it; no digits. Black, ivory, gold, dark wine red.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-07a858a7-19be-433c-bdac-5bbf2f4ca6f7.png",
+    "source": "balatron/assets/horizons/challenges/CH07-source.png",
+    "crop": [
+      79,
+      80,
+      1005,
+      1371
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH07.png"
+  },
+  {
+    "id": "CH08",
+    "category": "challenges",
+    "prompt": "Create ONE production pixel-art challenge card artwork for Balatro Portrait. No words or letters. Complete vertical card, exact proportions 71:95, centered large on solid pure magenta #FF00FF outer background for precise cropping. Opaque ivory pixel border with stepped corners, simple dark interior. Hard crisp pixel clusters at approximately 71x95 logical pixels; readable mobile silhouette, restrained palette, no gradients, no blur, no anti-aliasing, no photorealism, no UI, no shadows outside the card. Full card visible. Single finished sprite, not a sheet. Subject: Dress Rehearsal: crimson theatre curtains framing one large crimson casino chip at center, with two smaller shadow chips mirroring its silhouette behind it left and right. Elegant, readable theatrical scene, ivory, black, crimson, muted gold.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-0c9b0f56-9aae-43fb-bc7e-1cc3f5ebd293.png",
+    "source": "balatron/assets/horizons/challenges/CH08-source.png",
+    "crop": [
+      82,
+      83,
+      1001,
+      1365
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/challenges/CH08.png"
+  },
+  {
+    "id": "DK01",
+    "category": "decks",
+    "prompt": "Create ONE finished production PLAYING CARD BACK sprite for Balatro Portrait, not a face card and not a Joker. Complete vertical card exact proportions 71:95 centered large on solid pure magenta #FF00FF outer background for precise cropping. Narrow opaque ivory pixel border, stepped corners, structured ornamental interior like a real official Balatro deck back. Strong central emblem, restrained palette, hard crisp pixel-art clusters at 71x95 logical resolution, visually clear on mobile. No text, no letters, no numbers, no gradients, no blur, no photorealism, no shadow outside card, no sheet or mockup. Full card visible. Theme: RELAY: two stylized gloved hands passing a baton, blue upper hand and burnt-orange lower hand, interlocking angular blue/orange lanes making a balanced two-way repeating pattern, charcoal interior, ivory accents.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-b24c93fd-89b8-4d29-b7db-9bc667cf5988.png",
+    "source": "balatron/assets/horizons/decks/DK01-source.png",
+    "crop": [
+      62,
+      60,
+      1022,
+      1365
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/decks/DK01.png"
+  },
+  {
+    "id": "DK02",
+    "category": "decks",
+    "prompt": "Create ONE finished production PLAYING CARD BACK sprite for Balatro Portrait, not a face card and not a Joker. Complete vertical card exact proportions 71:95 centered large on solid pure magenta #FF00FF outer background for precise cropping. Narrow opaque ivory pixel border, stepped corners, structured ornamental interior like a real official Balatro deck back. Strong central emblem, restrained palette, hard crisp pixel-art clusters at 71x95 logical resolution, visually clear on mobile. No text, no letters, no numbers, no gradients, no blur, no photorealism, no shadow outside card, no sheet or mockup. Full card visible. Theme: PER DIEM: an ivory allowance envelope with a gold coin emerging, simple navy horizontal bands above and below and a geometric gold coin motif repeated in the corners. Cream, navy blue, ochre gold.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-6b00df5b-1428-4b31-a02e-87ef45836484.png",
+    "source": "balatron/assets/horizons/decks/DK02-source.png",
+    "crop": [
+      65,
+      76,
+      1020,
+      1369
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/decks/DK02.png"
+  },
+  {
+    "id": "DK03",
+    "category": "decks",
+    "prompt": "Create ONE finished production PLAYING CARD BACK sprite for Balatro Portrait, not a face card and not a Joker. Complete vertical card exact proportions 71:95 centered large on solid pure magenta #FF00FF outer background for precise cropping. Narrow opaque ivory pixel border, stepped corners, structured ornamental interior like a real official Balatro deck back. Strong central emblem, restrained palette, hard crisp pixel-art clusters at 71x95 logical resolution, visually clear on mobile. No text, no letters, no numbers, no gradients, no blur, no photorealism, no shadow outside card, no sheet or mockup. Full card visible. Theme: LABYRINTH: a bold teal square maze with three distinct tiny casino chips embedded in three pathways, one crimson boss chip and two ivory chips. Angular corridors on very dark navy, turquoise walls, ivory border, strong readable central maze emblem.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-1c2ab10d-bcca-41ff-8c45-68ac767c73b1.png",
+    "source": "balatron/assets/horizons/decks/DK03-source.png",
+    "crop": [
+      82,
+      86,
+      1002,
+      1362
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/decks/DK03.png"
+  },
+  {
+    "id": "DK04",
+    "category": "decks",
+    "prompt": "Create ONE finished production PLAYING CARD BACK sprite for Balatro Portrait, not a face card and not a Joker. Complete vertical card exact proportions 71:95 centered large on solid pure magenta #FF00FF outer background for precise cropping. Narrow opaque ivory pixel border, stepped corners, structured ornamental interior like a real official Balatro deck back. Strong central emblem, restrained palette, hard crisp pixel-art clusters at 71x95 logical resolution, visually clear on mobile. No text, no letters, no numbers, no gradients, no blur, no photorealism, no shadow outside card, no sheet or mockup. Full card visible. Theme: TIDES: two opposing curling waves forming a rotationally balanced yin-yang-like arrangement, one turquoise and one carmine, each carrying a small plain card-shaped tile, ivory foam, dark navy center. Elegant rhythmic curved pixel shapes.",
+    "generated_path": "C:\\Users\\rulo3\\.codex\\generated_images\\01a1444d-8120-7871-a124-d65566075ff8\\exec-2ea441ab-8d7c-434d-9829-fb426caf59c8.png",
+    "source": "balatron/assets/horizons/decks/DK04-source.png",
+    "crop": [
+      79,
+      73,
+      1005,
+      1365
+    ],
+    "runtime": "MODS/Horizons/assets/{1x,2x}/decks/DK04.png"
+  }
+]

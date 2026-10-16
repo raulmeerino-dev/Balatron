@@ -3,8 +3,8 @@ function win_game()
         set_joker_win()
         set_deck_win()
         
-        check_and_set_high_score('win_streak', G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt+1)
-        check_and_set_high_score('current_streak', G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt+1)
+        check_and_set_high_score('win_streak', PortraitQOL.records().current_streak.amt+1)
+        check_and_set_high_score('current_streak', PortraitQOL.records().current_streak.amt+1)
         check_for_unlock({type = 'win_no_hand'})
         check_for_unlock({type = 'win_no'})
         check_for_unlock({type = 'win_custom'})
@@ -115,12 +115,13 @@ function end_round()
             if game_over then
                 G.STATE = G.STATES.GAME_OVER
                 if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then 
-                    G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
+                    PortraitQOL.records().current_streak.amt = 0
                 end
                 G:save_settings()
                 G.FILE_HANDLER.force = true
                 G.STATE_COMPLETE = false
             else
+                if G.GAME.blind:get_type() == 'Boss' and G.GAME.chips>=G.GAME.blind.chips then PortraitQOL.haptic('boss') end
                 G.GAME.unused_discards = (G.GAME.unused_discards or 0) + G.GAME.current_round.discards_left
                 if G.GAME.blind and G.GAME.blind.config.blind then 
                     discover_card(G.GAME.blind.config.blind)
@@ -146,7 +147,8 @@ function end_round()
                     inc_career_stat('c_single_hand_round_streak', 1)
                 else
                     if not G.GAME.seeded and not G.GAME.challenge  then
-                        G.PROFILES[G.SETTINGS.profile].career_stats.c_single_hand_round_streak = 0
+                        PortraitQOL.stats().career_stats.c_single_hand_round_streak = 0
+                    G.PROFILES[G.SETTINGS.profile].career_stats.c_single_hand_round_streak = 0
                         G:save_settings()
                     end
                 end
@@ -434,7 +436,9 @@ G.FUNCS.discard_cards_from_highlighted = function(e, hook)
             if G.GAME.modifiers.discard_cost then
                 ease_dollars(-G.GAME.modifiers.discard_cost)
             end
-            ease_discard(-1)
+            local free = PortraitRunRules and PortraitRunRules.has('free_discard') and G.GAME.current_round.discards_used==0
+            if not free then ease_discard(-1) end
+            if PortraitModifierUnlocks then PortraitModifierUnlocks.record('blind_discards',G.GAME.current_round.discards_used+1,nil,true) end
             G.GAME.current_round.discards_used = G.GAME.current_round.discards_used + 1
             G.STATE = G.STATES.DRAW_TO_HAND
             G.E_MANAGER:add_event(Event({
@@ -1203,21 +1207,26 @@ G.FUNCS.evaluate_round = function()
         end
     end
     if G.GAME.dollars >= 5 and not G.GAME.modifiers.no_interest then
-        add_round_eval_row({bonus = true, name='interest', pitch = pitch, dollars = G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)})
+        local modifier_interest = PortraitRunRules and PortraitRunRules.interest() or G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)
+        add_round_eval_row({bonus = true, name='interest', pitch = pitch, dollars = modifier_interest})
+        if PortraitModifierUnlocks then PortraitModifierUnlocks.record('interest',modifier_interest,G.GAME.round) end
         pitch = pitch + 0.06
         if not G.GAME.seeded and not G.GAME.challenge then
             if G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5) == G.GAME.interest_amount*G.GAME.interest_cap/5 then 
+                PortraitQOL.career('c_round_interest_cap_streak',1)
                 G.PROFILES[G.SETTINGS.profile].career_stats.c_round_interest_cap_streak = G.PROFILES[G.SETTINGS.profile].career_stats.c_round_interest_cap_streak + 1
             else
+                PortraitQOL.stats().career_stats.c_round_interest_cap_streak = 0
                 G.PROFILES[G.SETTINGS.profile].career_stats.c_round_interest_cap_streak = 0
             end
         end
         check_for_unlock({type = 'interest_streak'})
-        dollars = dollars + G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)
+        dollars = dollars + modifier_interest
     end
 
     pitch = pitch + 0.06
 
+    dollars = dollars + require('portrait_score').evaluate()
     add_round_eval_row({name = 'bottom', dollars = dollars})
 end
 
@@ -1361,7 +1370,8 @@ G.FUNCS.tutorial_part = function(_part)
             },
             snap_to = function() 
                 if G.blind_select and G.blind_select.UIRoot and G.blind_select.UIRoot.children[1] and G.blind_select.UIRoot.children[1].children[1] and G.blind_select.UIRoot.children[1].children[1].config.object then 
-                    return G.blind_select.UIRoot.children[1].children[1].config.object:get_UIE_by_ID('select_blind_button') end
+                    local node = G.blind_select.UIRoot.children[1].children[1].config.object:get_UIE_by_ID(G.F_PORTRAIT and 'portrait_blind_token' or 'select_blind_button')
+                    return G.F_PORTRAIT and node and node.config.object or node end
                 end,
             attach = {major =  G.blind_select.UIRoot.children[1].children[1], type = 'tr', offset = {x = 2, y = 4}},
             step = step,
@@ -1422,7 +1432,8 @@ G.FUNCS.tutorial_part = function(_part)
             step = step,
             no_button = true,
             snap_to = function() 
-                return blind_choice_uie('big', 2, 'select_blind_button')
+                local node = blind_choice_uie('big', 2, G.F_PORTRAIT and 'portrait_blind_token' or 'select_blind_button')
+                return G.F_PORTRAIT and node and node.config.object or node
             end,
             button_listen = 'select_blind'
         })

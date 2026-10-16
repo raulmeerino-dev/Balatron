@@ -1,0 +1,75 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 25
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind:get_type() == 'Boss' then"
+position = "at"
+payload = """
+if PortraitHorizons and PortraitHorizons.challenges and PortraitHorizons.challenges.end_round_failed() then game_over = true end
+if not game_over and ((PortraitHorizons and PortraitHorizons.decks and PortraitHorizons.decks.is_winning_round()) or (not PortraitHorizons and G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind:get_type() == 'Boss')) then
+"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = """
+if G.GAME.round_resets.blind_states.Boss == 'Defeated' then
+  G.GAME.round_resets.blind_ante = G.GAME.round_resets.ante
+"""
+position = "at"
+payload = """
+if G.GAME.round_resets.blind_states.Boss == 'Defeated' and (not PortraitHorizons or not PortraitHorizons.decks.active('DK03') or (G.GAME.round_resets.blind_states.Small == 'Defeated' and G.GAME.round_resets.blind_states.Big == 'Defeated')) then
+  G.GAME.round_resets.blind_ante = G.GAME.round_resets.ante
+"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """
+if G.GAME.blind:get_type() == 'Boss' then
+    G.GAME.voucher_restock = nil
+"""
+position = "at"
+payload = """
+if (PortraitHorizons and PortraitHorizons.decks and PortraitHorizons.decks.closes_ante()) or (not PortraitHorizons and G.GAME.blind:get_type() == 'Boss') then
+    if PortraitHorizons then PortraitHorizons.decks.close_ante() end
+    G.GAME.voucher_restock = nil
+"""
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """
+G.STATE = G.STATES.ROUND_EVAL
+G.STATE_COMPLETE = false
+
+if G.GAME.round_resets.blind == G.P_BLINDS.bl_small then
+"""
+position = "at"
+payload = """
+G.STATE = G.STATES.ROUND_EVAL
+G.STATE_COMPLETE = false
+
+if PortraitHorizons and PortraitHorizons.decks and PortraitHorizons.decks.finish_round() then
+elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_small then
+"""
+match_indent = true
+times = 1
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "if G.GAME.chips - G.GAME.blind.chips >= 0 or G.GAME.current_round.hands_left < 1 then"
+position = "at"
+payload = """
+if PortraitHorizons and PortraitHorizons.decks then PortraitHorizons.decks.after_hand() end
+if G.GAME.chips - G.GAME.blind.chips >= 0 or G.GAME.current_round.hands_left < 1 or (PortraitHorizons and PortraitHorizons.challenges.failed()) then
+"""
+match_indent = true

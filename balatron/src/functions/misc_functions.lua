@@ -873,6 +873,11 @@ function modulate_sound(dt)
   G.ARGS.push = G.ARGS.push or {}
   G.ARGS.push.type = 'modulate'
   G.ARGS.push.pitch_mod = G.PITCH_MOD
+  -- Music-only modulation, shared by threaded and direct audio playback.
+  local market = PortraitEvents and PortraitEvents.black_market
+  if market and market.music_pitch then
+    G.ARGS.push.pitch_mod = G.ARGS.push.pitch_mod*market.music_pitch(dt)
+  end
   G.ARGS.push.state = G.STATE
   G.ARGS.push.time = G.TIMERS.REAL
   G.ARGS.push.dt = dt
@@ -1130,13 +1135,13 @@ function check_and_set_high_score(score, amt)
     G.GAME.round_scores[score].amt = math.floor(amt)
   end
   if  G.GAME.seeded  then return end
-  if score == 'hand' and G.SETTINGS.COMP and ((not G.SETTINGS.COMP.score) or (G.SETTINGS.COMP.score < math.floor(amt))) then 
+  if not G.GAME.run_is_modded and score == 'hand' and G.SETTINGS.COMP and ((not G.SETTINGS.COMP.score) or (G.SETTINGS.COMP.score < math.floor(amt))) then 
     G.SETTINGS.COMP.score = amt
     send_score(math.floor(amt))
   end
-  if G.PROFILES[G.SETTINGS.profile].high_scores[score] and math.floor(amt) > G.PROFILES[G.SETTINGS.profile].high_scores[score].amt then
+  if PortraitQOL.records()[score] and math.floor(amt) > PortraitQOL.records()[score].amt then
     if G.GAME.round_scores[score] then G.GAME.round_scores[score].high_score = true end
-    G.PROFILES[G.SETTINGS.profile].high_scores[score].amt = math.floor(amt)
+    PortraitQOL.records()[score].amt = math.floor(amt)
     G:save_settings()
   end
 end
@@ -1536,6 +1541,7 @@ end
 
 function inc_career_stat(stat, mod)
   if G.GAME.seeded or G.GAME.challenge then return end
+  PortraitQOL.career(stat, mod)
   if not G.PROFILES[G.SETTINGS.profile].career_stats[stat] then G.PROFILES[G.SETTINGS.profile].career_stats[stat] = 0 end
   G.PROFILES[G.SETTINGS.profile].career_stats[stat] = G.PROFILES[G.SETTINGS.profile].career_stats[stat] + (mod or 0)
   G:save_settings()
@@ -1942,7 +1948,9 @@ function get_stake_sprite(_stake, _scale)
   return stake_sprite
 end
 
-function get_front_spriteinfo(_front)
+function get_front_spriteinfo(_front, card)
+  local skin_atlas, skin_pos = CardSkins.front(_front, card)
+  if skin_atlas then return skin_atlas, skin_pos end
   if _front and _front.suit and (_front.value == 'Jack' or _front.value == 'Queen' or _front.value == 'King') then
     if G.SETTINGS.CUSTOM_DECK and G.SETTINGS.CUSTOM_DECK.Collabs[_front.suit] then
       local _collab = G.SETTINGS.CUSTOM_DECK.Collabs[_front.suit]

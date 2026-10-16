@@ -1,0 +1,240 @@
+{
+  "clean_hands": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "one_shot": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      1,
+      0
+    ]
+  },
+  "monochrome": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      2,
+      0
+    ]
+  },
+  "high_roller": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      3,
+      0
+    ]
+  },
+  "no_safety_net": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      0,
+      1
+    ]
+  },
+  "execution": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      1,
+      1
+    ]
+  },
+  "debt_collector": {
+    "source": "../../balatron/art-source/visual-polish/contracts.png",
+    "sha256": "6e0c815aa9137c210c452d0450cc7ea609052e9d9da4c6c2ad92945dacfccdf5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "pos": [
+      2,
+      1
+    ]
+  },
+  "recasting": {
+    "source": "art-source/expansion/recasting.png",
+    "sha256": "fdf615c96dc02edf4dd3d1a41bfb404097729d1890c2e9b0a25d3f0013bb27c5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "embargo": {
+    "source": "art-source/expansion/embargo.png",
+    "sha256": "a86fc2330b968f1a6cf5024b51159979cb4387c3ab166e4dba022605296255f5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "no_repeat": {
+    "source": "art-source/expansion/no_repeat.png",
+    "sha256": "ed3a737f34d791f7add23d6edb60ad6710a0dd82707225c304c50ef00f88349c",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "cash_register": {
+    "source": "art-source/expansion/cash_register.png",
+    "sha256": "879f094e1e48c31dac6ae1e2b98131de78845d37a226bd17384affea1f11d784",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "debut": {
+    "source": "art-source/expansion/debut.png",
+    "sha256": "502fdee3eeb76536c170bfabc5998443e550af4ab9bcdcfabe12bfb120479d36",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "back_row": {
+    "source": "art-source/expansion/back_row.png",
+    "sha256": "3c652800c78d602237773c0ffd2451b50cfa37072c56bd99cb3b7cef3ef641a5",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "domino_effect": {
+    "source": "art-source/expansion/domino_effect.png",
+    "sha256": "289ea62664dd0607d07b66732ecf9df85b4db70a1402cdf23ce31e61de1426fc",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "administrative_silence": {
+    "source": "art-source/expansion/administrative_silence.png",
+    "sha256": "beab08645202bdd9773185f9238f4494ae51afc804603ec68f37d3804f1dcbe7",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "protected_witnesses": {
+    "source": "art-source/expansion/protected_witnesses.png",
+    "sha256": "b22f58d431b0b5238aa72609d66c62b091acb6a22bdd855c69ca6b742feb7b33",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  },
+  "seed_capital": {
+    "source": "art-source/expansion/seed_capital.png",
+    "sha256": "8660960b1ef3a82fb1183e79bfd04afce4d6d29f912d439acdb78d0f85252b5a",
+    "cell": [
+      128,
+      128
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "expansion-art-prompts.json",
+    "pos": [
+      0,
+      0
+    ]
+  }
+}

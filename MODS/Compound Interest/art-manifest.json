@@ -1,0 +1,438 @@
+{
+  "previous_compound_interest_source": {
+    "source_sha256": "14303370b0645048aabe0384d967a55ce9dc5448e956f66ac225cffa9ef2f482",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "crop": [
+      73,
+      47,
+      1010,
+      1377
+    ],
+    "preserve_aspect": true,
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "2807075a87f9bb4be09ea8bfa8a30c3e7ccdde250e7896022ba7b78f28c918db"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "ffd3f01d94f8f6a484cf8b376ab039cab6de4fdd4c09b8d6335e983712cd55e3"
+      }
+    }
+  },
+  "compound_interest": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 0,
+    "row": 0,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "797c4ead2495151fca86a383c2c66cfa6722f3d5b5e011c0fd8f36a43a394943"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "82e40d683c6e7d768f086c885420a72600a0b474c2339c871e0bfbb79151032e"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "tax_collector": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 1,
+    "row": 0,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "a7db4e6f3528c0c955314c79f883087d796788d8da59ea5d583d29b6b60f240a"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "d91a1d43bce1f26f951b002fd5bda623f9bbfe9e7c8e82c0edc22af52b692c8c"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "hipster": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 2,
+    "row": 0,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "17c921c889785de793c324e2e451885535b9a01732c281454fbc0671a9addbc6"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "531c9acaeee45abdada98854a91ef33e10978981c73dbf2d5c488bf7d4cb6d7f"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "world_record": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 0,
+    "row": 1,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "a487cf3bf01b8c107e81ce56766ef64af21edec6e799c34c8ffc3670172a92b7"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "bf6fbf765a35d46619774eb35b8f6d7c22c57b52e9d448892612efe582eebfe6"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "excessive_force": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 1,
+    "row": 1,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "e402a700d3fd92df56d6e258d64381a5d27044f47f5afd6a0800ecb80b5ec00c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "a941d0deb1755b30bafa74b431cc1ad0089332102df0e5cf16d23b34c4b6f7d3"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "collector": {
+    "source": "../../balatron/art-source/custom-coherence/extra-family.png",
+    "sha256": "150b81643c895d0914285635f04e67b5f878162d0c7c4ea63bfab59c616e3471",
+    "grid": [
+      3,
+      2
+    ],
+    "column": 2,
+    "row": 1,
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "equal grid cells; nearest-neighbour centre sampling to 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/family-border-prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "eaf0f4d6e9bd1318693edcc7c5c4775ff281d73973fb3bbd91547928a379cbe2"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "52c16b86f7e2b1c41fe72d507c4868ab08f8f0b80abc019941c0d40e7abae1f0"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "olympico": {
+    "source": "art-source/olympico.png",
+    "sha256": "fd19dff0832dcbff3e9cbd7a12c887808c2e9de09587ee4d6ba1a2b05815b182",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour centre sampling independently at1x and2x",
+    "prompts": "art-source/olympico-prompt.txt",
+    "tool": "built-in image_gen",
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "sniper": {
+    "source": "art-source/sniper.png",
+    "crop": [
+      1,
+      0,
+      1085,
+      1448
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "Extra normal thin grey-blue outer border, no red or gold frame",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "7f9dbe7db3541293351ad96ad1c3f6b1388c33e0a5e2cf5c281f46da08addc73"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "2b838b5fa13f462a51450b1ed99ba3eecad46c2d8af322e17becff41076434aa"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "second_course": {
+    "source": "art-source/second_course.png",
+    "crop": [
+      41,
+      49,
+      1043,
+      1395
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "Extra normal thin grey-blue outer border, no red or gold frame",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "f52a08c0cf719754c0e8a486cfcb957f303ae9c76e76e3ac3f722849ad072e0c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "e8be5148d1b82d9d5114974272d401b20c04c667ce2e4b5a878f314c4371b84c"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "color_call": {
+    "manifest": "art-source/doubles/manifest.json",
+    "prompts": "art-source/doubles/prompts.json",
+    "family": "doubles",
+    "side_text": false,
+    "frame": [
+      71,
+      95
+    ],
+    "order": [
+      "A",
+      "B",
+      "neutral"
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "91c5deeeb8694edf13ba34c47f82a7894ad40792fef34ff51a4a21cd7d946547"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "381279770ed5f958a1cf92bce193659f9704ec4e91662c08b98d3cb5335285f7"
+      }
+    }
+  },
+  "double_entry": {
+    "manifest": "art-source/doubles/manifest.json",
+    "prompts": "art-source/doubles/prompts.json",
+    "family": "doubles",
+    "side_text": false,
+    "frame": [
+      71,
+      95
+    ],
+    "order": [
+      "A",
+      "B",
+      "neutral"
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "2402fa02ae87f88f9c250673e2c0c6eae99655fba141265cd4bc3aca9a4054f0"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "5d7cba33f5c80b944b1fd2662432c976e57bda32fdb1e1ed189fe86a9357f085"
+      }
+    }
+  },
+  "graft": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/graft.png",
+        "sha256": "89816917637b8b312ce4ed314f0f701c3e1856322117c8a54377575e05163360"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "2ceb7027298eb803ad4e4ffc48ae9c402a71895832fb490f15099b1ae80dde8a"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "647c4953f1fbf62d9dfb04196703f2ff61c8c0dd8066e1bc4d538f3544c9ee64"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "extra",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "second_course",
+    "columns": [
+      0
+    ]
+  },
+  "intermission": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/intermission.png",
+        "sha256": "de1f0c00ee5296fc2afeb07d9b443a365d4fd076d7d64517abcae983232488ba"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "40e9ed1dc9b07fe3bf48d1a9e33993ba0d947ca7e5fac050f5d9c1996c4bff5d"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "a8fa7f743598aebbdf5c3599948ee3b7c463a8fb68d968a3e6f991f745621bbf"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "extra",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "second_course",
+    "columns": [
+      0
+    ]
+  }
+}

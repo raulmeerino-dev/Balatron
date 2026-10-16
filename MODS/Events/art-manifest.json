@@ -1,0 +1,27 @@
+{
+  "source": "../../balatron/art-source/visual-polish/contraband.png",
+  "sha256": "a42bec34c58d5437ca66562942c3e189a7fdc9936be8ecb6e86ca9e5a9ec683b",
+  "columns": [
+    32,
+    402,
+    767,
+    1131,
+    1502
+  ],
+  "rows": [
+    [
+      0,
+      508
+    ],
+    [
+      514,
+      500
+    ]
+  ],
+  "cell": [
+    71,
+    95
+  ],
+  "fit": "nearest-neighbour per cell; 2x pixel doubling",
+  "prompts": "../../balatron/art-source/visual-polish/prompts.json"
+}

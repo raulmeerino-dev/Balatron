@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Use case: stylized-concept. Create ONE new square 64x64-density pixel-art Mutation effect icon for Balatro Portrait. Use the two supplied images ONLY as reference for chunky black outlined icon style and simple palette, not their subjects. Subject: ONE large cobalt-blue ringed planet with cyan facet highlights, with ONE bold golden double-up chevron rising above its upper-right shoulder. The stacked two upward chevrons clearly communicate twice the levels; the planet dominates the icon. Compact coherent silhouette, 1-pixel dark outlines, large hard flat colour clusters, limited 10-colour palette, legible at 64x64. Isolated on genuinely transparent background with even margins, no glow outside silhouette, no gradients, no anti-aliasing, no blur, no typography, no numbers, no labels, no character, no Joker/Tarot card, no rectangle or decorative frame. One finished icon only, square composition.",
+  "original": "C:\\Users\\rulo3\\.codex\\generated_images\\01a11b8d-95d2-71c3-b8b9-a462bcbe0b59\\exec-ce8c57f5-06a0-4450-a1f5-6f87e9ae7eb5.png",
+  "asset": "source.png"
+}

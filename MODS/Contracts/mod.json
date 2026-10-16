@@ -1,0 +1,17 @@
+{
+  "id": "contracts",
+  "name": "Contracts",
+  "display_name": "Contracts",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Optional run gameplay. Generation switches apply to the next run.",
+  "prefix": "ct",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 131,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay"
+  ]
+}

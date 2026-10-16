@@ -237,6 +237,17 @@ function create_UIBox_high_scores_filling(_resp)
 end
 
 function G.UIDEF.use_and_sell_buttons(card)
+  if G.F_PORTRAIT and card.area == G.pack_cards and G.pack_cards then
+    return {n=G.UIT.ROOT,config={align='cm',padding=0,colour=G.C.CLEAR},nodes={
+      {n=G.UIT.R,config={ref_table=card,align='cm',r=0.1,minw=card.T.w,maxw=card.T.w,
+        minh=portrait_touch_height(PORTRAIT_CONFIG.pack.button_height),padding=0.04,
+        colour=G.C.UI.BACKGROUND_INACTIVE,button='use_card',one_press=true,hover=true,shadow=true,
+        func=card.ability.consumeable and 'can_use_consumeable' or 'can_select_card'},nodes={
+        {n=G.UIT.T,config={text=localize(card.ability.consumeable and 'b_use' or 'b_select'),
+          scale=0.38,colour=G.C.WHITE,shadow=true}},
+      }},
+    }}
+  end
   -- Portrait: PC-sized Use/Sell buttons are too small for thumbs; scale them up.
   local m = G.F_PORTRAIT and ((PORTRAIT_CONFIG.mobile_ui and PORTRAIT_CONFIG.mobile_ui.card_button_mult) or 1.4) or 1
   -- Smaller multiplier for the tray Sell/Use column (the tall right-side buttons),
@@ -696,7 +707,24 @@ function G.UIDEF.shop()
     G.E_MANAGER:add_event(Event({
       trigger = 'immediate',
       func = (function()
-          G.SHOP_SIGN.alignment.offset.y = 0
+          if G.F_PORTRAIT and G.shop then
+            local header = G.shop:get_UIE_by_ID('portrait_shop_sign')
+            if header then
+              G.SHOP_SIGN:set_alignment{major=header,type='cm',offset={x=0,y=0},bond='Weak'}
+              G.SHOP_SIGN.config.major=header
+              G.SHOP_SIGN.config.offset={x=0,y=0}
+              -- Draw decoration inside the header: after its panel but before
+              -- product CardAreas and their buy buttons. Keep native ownership.
+              local draw_header = header.draw_self
+              function header:draw_self()
+                draw_header(self)
+                if self.states.visible and G.SHOP_SIGN and not G.SHOP_SIGN.REMOVED then
+                  G.SHOP_SIGN:draw()
+                end
+              end
+              G.shop.portrait_draws_sign = true
+            end
+          else G.SHOP_SIGN.alignment.offset.y = 0 end
           return true
       end)
     }))
@@ -733,12 +761,11 @@ function G.UIDEF.shop()
           {n=G.UIT.R, config = {align = "cm", padding= 0.06, colour = G.C.DYN_UI.MAIN, r=0.1}, nodes={
           {n=G.UIT.C, config={align = "cm", padding = 0.07, emboss = 0.05, r = 0.1, colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={
-              -- Same order as vanilla (Next Round above Reroll): players carry
-              -- muscle memory from desktop and were rerolling by accident.
-              {n=G.UIT.C, config={align = "cm", padding = 0.06}, nodes={
-                next_round_button,
-                reroll_button,
-              }},
+              {n=G.UIT.C, config={align="cm",padding=0.06}, nodes={next_round_button}},
+              {n=G.UIT.C, config={id='portrait_shop_sign',align="cm",minw=shop_sign_panel_w+0.2,minh=shop_sign_panel_h+0.2}, nodes={}},
+              {n=G.UIT.C, config={align="cm",padding=0.06}, nodes={reroll_button}},
+            }},
+            {n=G.UIT.R, config={align="cm",padding=0.12}, nodes={
               {n=G.UIT.C, config={align = "cm", padding = 0.1, r=0.2, colour = G.C.L_BLACK, emboss = 0.05}, nodes={
                 {n=G.UIT.O, config={object = G.shop_jokers}},
               }},
@@ -972,7 +999,9 @@ end
       align = args.align or 'cm',
       offset = args.offset or {x=0,y=0}, 
       major = args.cover or args.major or nil,
+      fit_to_room = args.portrait_fit or nil,
     }
+    if args.portrait_fit then args.uibox_config.can_collide = false end
 
     G.E_MANAGER:add_event(Event({
       trigger = 'after',
@@ -980,17 +1009,18 @@ end
       blockable = false,
       blocking = false,
       func = function()
+          local status_text = DynaText({scale = args.scale, string = args.text, maxw = args.maxw, colours = {args.colour},float = true, shadow = true, silent = not args.noisy, args.scale, pop_in = 0, pop_in_rate = 6, rotate = args.rotate or nil})
+          local status_nodes = args.status_nodes and args.status_nodes(args.colour) or {}
+          status_nodes[#status_nodes+1] = {n=G.UIT.O, config={draw_layer=1, object=status_text}}
           args.AT = UIBox{
             T = {args.pos.x,args.pos.y,0,0},
             definition = 
-              {n=G.UIT.ROOT, config = {align = args.cover_align or 'cm', minw = (args.cover and args.cover.T.w or 0.001) + (args.cover_padding or 0), minh = (args.cover and args.cover.T.h or 0.001) + (args.cover_padding or 0), padding = 0.03, r = 0.1, emboss = args.emboss, colour = args.cover_colour}, nodes={
-                {n=G.UIT.O, config={draw_layer = 1, object = DynaText({scale = args.scale, string = args.text, maxw = args.maxw, colours = {args.colour},float = true, shadow = true, silent = not args.noisy, args.scale, pop_in = 0, pop_in_rate = 6, rotate = args.rotate or nil})}},
-              }}, 
+              {n=G.UIT.ROOT, config = {align = args.cover_align or 'cm', minw = (args.cover and args.cover.T.w or 0.001) + (args.cover_padding or 0), minh = (args.cover and args.cover.T.h or 0.001) + (args.cover_padding or 0), padding = 0.03, r = 0.1, emboss = args.emboss, colour = args.cover_colour}, nodes=status_nodes},
             config = args.uibox_config
           }
           args.AT.attention_text = true
 
-          args.text = args.AT.UIRoot.children[1].config.object
+          args.text = status_text
           args.text:pulse(0.5)
           
           if args.cover then
@@ -1033,10 +1063,10 @@ end
         func = function()
           if not args.start_time then
             args.start_time = G.TIMERS.TOTAL
-            args.text:pop_out(3)
+            if args.text:is(DynaText) then args.text:pop_out(3*PortraitQOL.speed()) end
           else
             --args.AT:align_to_attach()
-            args.fade = math.max(0, 1 - 3*(G.TIMERS.TOTAL - args.start_time))
+            args.fade = math.max(0, 1 - 3*PortraitQOL.speed()*(G.TIMERS.TOTAL - args.start_time))
             if args.cover_colour then args.cover_colour[4] = math.min(args.cover_colour[4], 2*args.fade) end
             if args.cover_colour_l then args.cover_colour_l[4] = math.min(args.cover_colour_l[4], args.fade) end
             if args.cover_colour_d then args.cover_colour_d[4] = math.min(args.cover_colour_d[4], args.fade) end
@@ -1061,6 +1091,7 @@ function create_UIBox_buttons()
     text_scale = pc.text_scale
     button_height = pc.height
     button_width = pc.width
+    button_width = math.min(button_width, (G.ROOM.T.w - 2*PORTRAIT_CONFIG.layout.side_margin - 2*portrait_touch_height(0.9) - 1.5)/2)
   end
 
   local play_button = {n=G.UIT.C, config={id = 'play_button', align = "tm", minw = button_width, minh = button_height, padding = 0.3, r = 0.1, hover = true, colour = G.C.BLUE, button = "play_cards_from_highlighted", one_press = true, shadow = true, func = 'can_play'}, nodes={
@@ -1086,10 +1117,10 @@ function create_UIBox_buttons()
           {n=G.UIT.C, config={align = "cm", padding = 0.05}, nodes={
             {n=G.UIT.T, config={text = localize('b_sort_hand'), scale = text_scale*0.6, colour = G.C.UI.TEXT_LIGHT}}
           }},
-          {n=G.UIT.C, config={align = "cm", minh = 0.62, minw = 0.9, padding = 0.08, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_value", shadow = true}, nodes={
+          {n=G.UIT.C, config={align = "cm", minh = portrait_touch_height(0.62), minw = portrait_touch_height(0.9), padding = 0.08, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_value", shadow = true}, nodes={
             {n=G.UIT.T, config={text = localize('k_rank'), scale = text_scale*0.55, colour = G.C.UI.TEXT_LIGHT}}
           }},
-          {n=G.UIT.C, config={align = "cm", minh = 0.62, minw = 0.9, padding = 0.08, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_suit", shadow = true}, nodes={
+          {n=G.UIT.C, config={align = "cm", minh = portrait_touch_height(0.62), minw = portrait_touch_height(0.9), padding = 0.08, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_suit", shadow = true}, nodes={
             {n=G.UIT.T, config={text = localize('k_suit'), scale = text_scale*0.55, colour = G.C.UI.TEXT_LIGHT}}
           }}
         }}
@@ -1108,10 +1139,10 @@ function create_UIBox_buttons()
                 {n=G.UIT.T, config={text = localize('b_sort_hand'), scale = text_scale*0.7, colour = G.C.UI.TEXT_LIGHT}}
               }},
               {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
-                {n=G.UIT.C, config={align = "cm", minh = 0.7, minw = 0.9, padding = 0.1, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_value", shadow = true}, nodes={
+                {n=G.UIT.C, config={align = "cm", minh = portrait_touch_height(0.7), minw = portrait_touch_height(0.9), padding = 0.1, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_value", shadow = true}, nodes={
                   {n=G.UIT.T, config={text = localize('k_rank'), scale = text_scale*0.6, colour = G.C.UI.TEXT_LIGHT}}
                 }},
-                {n=G.UIT.C, config={align = "cm", minh = 0.7, minw = 0.9, padding = 0.1, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_suit", shadow = true}, nodes={
+                {n=G.UIT.C, config={align = "cm", minh = portrait_touch_height(0.7), minw = portrait_touch_height(0.9), padding = 0.1, r = 0.1, hover = true, colour =G.C.ORANGE, button = "sort_hand_suit", shadow = true}, nodes={
                   {n=G.UIT.T, config={text = localize('k_suit'), scale = text_scale*0.6, colour = G.C.UI.TEXT_LIGHT}}
                 }}
               }}
@@ -1249,7 +1280,7 @@ end
           {n=G.UIT.R, config={padding = outer_padding, r = 0.12, colour = lighten(G.C.JOKER_GREY, 0.5), emboss = 0.07}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.07, r = 0.1, colour = adjust_alpha(card_type_background, 0.8)}, nodes={
               name_from_rows(AUT.name, is_playing_card and G.C.WHITE or nil),
-              desc_from_rows(AUT.main),
+              require('portrait_tooltips').native_body(card),
               badges[1] and {n=G.UIT.R, config={align = "cm", padding = 0.03}, nodes=badges} or nil,
             }}
           }}
@@ -1304,6 +1335,7 @@ end
   end
   
   function create_popup_UIBox_tooltip(tooltip)
+    if tooltip.class and PortraitRunGallery then return PortraitRunGallery.item_tooltip(tooltip) end
     local title = tooltip.title or nil
     local text = tooltip.text or {}
     local rows = {}
@@ -1334,6 +1366,28 @@ end
   end
 
 function create_UIBox_HUD_blind()
+  if G.F_PORTRAIT then
+    local blind = G.GAME.blind
+    local dim = portrait_touch_height(1.4)
+    blind:change_dim(dim, dim)
+    blind.states.drag.can = false
+    blind.children.animatedSprite.states.drag.can = false
+    blind.config.force_focus = true
+    portrait_bind_tag_tooltip(blind)
+    return {n=G.UIT.ROOT, config={align='cm', padding=0.02, colour=G.C.CLEAR,
+      func='HUD_blind_visible', id='HUD_blind'}, nodes={
+      {n=G.UIT.R, config={align='cm', padding=0}, nodes={
+        {n=G.UIT.O, config={object=blind, draw_layer=1, focus_with_object=true}}
+      }},
+      {n=G.UIT.R, config={align='cm', padding=0.025, maxw=2.1}, nodes={
+        {n=G.UIT.O, config={object=get_stake_sprite(G.GAME.stake or 1, 0.35),
+          w=0.35, h=0.35, can_collide=false}},
+        {n=G.UIT.T, config={ref_table=blind, ref_value='chip_text', scale=0.6,
+          portrait_scale=0.6, colour=G.C.WHITE, shadow=true,
+          id='HUD_blind_count', func='blind_chip_UI_scale'}}
+      }}
+    }}
+  end
   local scale = 0.4
   local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
   -- Plain-text mirror of G.GAME.blind.loc_debuff_lines. The two debuff rows are
@@ -1632,20 +1686,24 @@ function create_UIBox_HUD_vertical()
   local stat_count_scale = mobile_ui.hud_stat_count_scale or 1.8
   local stats_gap = mobile_ui.hud_stats_gap or 0
   local panel_minw = mobile_ui.hud_panel_minw or 8.4
+  local width_delta = 0
   if G.ROOM and G.ROOM.T and G.ROOM.T.w then
-    panel_minw = math.min(panel_minw, math.max(7.2, G.ROOM.T.w - 0.6))
+    local available = G.ROOM.T.w - 2*PORTRAIT_CONFIG.layout.hud_side_margin - mobile_ui.hud_panel_chrome
+    width_delta = available-panel_minw
+    panel_minw = available
   end
-  local top_right_minw = mobile_ui.hud_top_right_minw or 4.22
-  local score_minw = mobile_ui.hud_score_minw or 4.1
+  local score_minw = panel_minw-0.1
   local chip_label_minw = mobile_ui.hud_chip_label_minw or 1.18
-  local chip_box_minw = mobile_ui.hud_chip_box_minw or 2.95
-  local current_hand_minw = mobile_ui.hud_current_hand_minw or 4.1
-  local hand_meter_minw = mobile_ui.hud_hand_meter_minw or 1.88
-  local money_minw = mobile_ui.hud_money_minw or 3.05
+  local score_side_minw = chip_label_minw+0.72
+  local chip_box_minw = score_minw-2*score_side_minw-0.14
+  local current_hand_minw = score_minw
+  local hand_meter_minw = (current_hand_minw-0.75)/2
+  local money_minw = (mobile_ui.hud_money_minw or 3.05)+width_delta
   local button_minw = mobile_ui.hud_button_minw or 1.95
-  local button_minh = mobile_ui.hud_button_minh or 0.78
-  local blind_minw = mobile_ui.hud_blind_minw or 3.65
-  local blind_minh = mobile_ui.hud_blind_minh or 2.38
+  local button_minh = portrait_touch_height(mobile_ui.hud_button_minh or 0.78)
+  local deck_dock = portrait_footer_deck_metrics()
+  local blind_minw = math.max(2.2, portrait_touch_height(1.15)+0.1)
+  button_minw = math.min(button_minw, (panel_minw-blind_minw-deck_dock.w-0.5)/2)
   local temp_col = G.C.DYN_UI.BOSS_MAIN
   local temp_col2 = G.C.DYN_UI.BOSS_DARK
 
@@ -1693,47 +1751,56 @@ function create_UIBox_HUD_vertical()
   }}
 
   -- ==========================================
-  -- 2. TOP RIGHT (Round Score & Current Hand)
+  -- 2. FULL-WIDTH SCORE (Round Score & Current Hand)
   -- ==========================================
   local round_score = {n=G.UIT.R, config={align = "cm",r=0.1, padding = 0, minw = score_minw, colour = temp_col, emboss = 0.05, id = 'row_dollars_chips'}, nodes={
     {n=G.UIT.C, config={align = "cm", padding = 0.035}, nodes={
-      {n=G.UIT.C, config={align = "cm", minw = chip_label_minw}, nodes={
+      {n=G.UIT.C, config={align = "cm", minw = score_side_minw, maxw = score_side_minw}, nodes={
+      {n=G.UIT.O, config={w=0.52,h=0.52,object=stake_sprite,can_collide=false}},
+      {n=G.UIT.C, config={align="cm",minw=chip_label_minw}, nodes={
       {n=G.UIT.R, config={align = "cm", padding = 0, maxw = chip_label_minw}, nodes={
           {n=G.UIT.T, config={text = localize('k_round'), scale = 0.84*scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
       }},
       {n=G.UIT.R, config={align = "cm", padding = 0, maxw = chip_label_minw}, nodes={
           {n=G.UIT.T, config={text =localize('k_lower_score'), scale = 0.84*scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
       }}
-      }},
-      {n=G.UIT.C, config={align = "cm", minw = chip_box_minw, minh = 0.62, r = 0.1, colour = G.C.DYN_UI.BOSS_DARK}, nodes={
-      {n=G.UIT.O, config={w=0.5,h=0.5 , object = stake_sprite, hover = true, can_collide = false}},
-      {n=G.UIT.B, config={w=0.1,h=0.1}},
-      {n=G.UIT.T, config={ref_table = G.GAME, ref_value = 'chips_text', lang = G.LANGUAGES['en-us'], scale = 0.78, colour = G.C.WHITE, id = 'chip_UI_count', func = 'chip_UI_set', shadow = true}}
       }}
+      }},
+      {n=G.UIT.C, config={align = "cm", minw = chip_box_minw, minh = 0.86, r = 0.1, colour = G.C.DYN_UI.BOSS_DARK}, nodes={
+      {n=G.UIT.T, config={ref_table = G.GAME, ref_value = 'chips_text', lang = G.LANGUAGES['en-us'], scale = 1.35, portrait_scale=1.35, colour = G.C.WHITE, id = 'chip_UI_count', func = 'chip_UI_set', shadow = true}}
+      }},
+      {n=G.UIT.C, config={id='portrait_record_dock',align="cm",minw=score_side_minw}, nodes={}}
     }}
   }}
 
   local current_hand = 
     {n=G.UIT.R, config={align = "cm", id = 'hand_text_area', minw = current_hand_minw, colour = darken(G.C.BLACK, 0.1), r = 0.1, emboss = 0.05, padding = 0.035}, nodes={
       {n=G.UIT.C, config={align = "cm"}, nodes={
-        {n=G.UIT.R, config={align = "cm", minh = 0.84}, nodes={
-          {n=G.UIT.O, config={id = 'hand_name', func = 'hand_text_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "handname_text"}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, float = true, scale = scale*1.34})}},
-          {n=G.UIT.O, config={id = 'hand_chip_total', func = 'hand_chip_total_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "chip_total_text"}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, float = true, scale = scale*1.34})}},
-          {n=G.UIT.T, config={ref_table = G.GAME.current_round.current_hand, ref_value='hand_level', scale = scale, colour = G.C.UI.TEXT_LIGHT, id = 'hand_level', shadow = true}}
+        {n=G.UIT.R, config={align = "cm", minh = 0.6}, nodes={
+          {n=G.UIT.C, config={align="cm",minw=current_hand_minw*0.25,maxw=current_hand_minw*0.25}, nodes={
+          {n=G.UIT.O, config={id = 'hand_name', func = 'hand_text_UI_set',portrait_maxw=current_hand_minw*0.25,object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "handname_text"}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, float = true, scale = scale*1.34})}},
+          }},
+          {n=G.UIT.C, config={align="cm",minw=current_hand_minw*0.5}, nodes={
+          {n=G.UIT.O, config={id = 'hand_chip_total', portrait_scale=1.24, func = 'hand_chip_total_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "chip_total_text"}}, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, float = true, scale = scale*1.34})}},
+          }},
+          {n=G.UIT.C, config={align="cm",minw=current_hand_minw*0.25,maxw=current_hand_minw*0.25}, nodes={
+          {n=G.UIT.T, config={ref_table = G.GAME.current_round.current_hand, ref_value='hand_level', scale = scale, colour = G.C.UI.TEXT_LIGHT, id = 'hand_level', shadow = true}},
+          create_UIBox_hand_usage(scale*0.85,'hand_usage'),
+          }},
         }},
-        {n=G.UIT.R, config={align = "cm", minh = 0.82, padding = 0.035}, nodes={
-          {n=G.UIT.C, config={align = "cr", minw = hand_meter_minw, minh = 0.82, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area', emboss = 0.05}, nodes={
+        {n=G.UIT.R, config={align = "cm", minh = 1.4, padding = 0.035}, nodes={
+          {n=G.UIT.C, config={align = "cr", minw = hand_meter_minw, minh = 1.4, r = 0.1,colour = G.C.UI_CHIPS, id = 'hand_chip_area', emboss = 0.05}, nodes={
             {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_chips', object = Moveable(0,0,0,0), w = 0, h = 0, _w = 2.5, _h = 2.5}},
-            {n=G.UIT.O, config={id = 'hand_chips', func = 'hand_chip_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "chip_text"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2.15})}},
+            {n=G.UIT.O, config={id = 'hand_chips', portrait_scale=1.5, func = 'hand_chip_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "chip_text"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = 1.5})}},
             {n=G.UIT.B, config={w=0.1,h=0.1}},
           }},
           {n=G.UIT.C, config={align = "cm"}, nodes={
           {n=G.UIT.T, config={text = "X", lang = G.LANGUAGES['en-us'], scale = scale*2, colour = G.C.UI_MULT, shadow = true}},
           }},
-          {n=G.UIT.C, config={align = "cl", minw = hand_meter_minw, minh = 0.82, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area', emboss = 0.05}, nodes={
+          {n=G.UIT.C, config={align = "cl", minw = hand_meter_minw, minh = 1.4, r = 0.1,colour = G.C.UI_MULT, id = 'hand_mult_area', emboss = 0.05}, nodes={
             {n=G.UIT.O, config={func = 'flame_handler',no_role = true, id = 'flame_mult', object = Moveable(0,0,0,0), w = 0, h = 0, _w = 2.5, _h = 2.5}},
             {n=G.UIT.B, config={w=0.1,h=0.1}},
-            {n=G.UIT.O, config={id = 'hand_mult', func = 'hand_mult_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "mult_text"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2.15})}},
+            {n=G.UIT.O, config={id = 'hand_mult', portrait_scale=1.5, func = 'hand_mult_UI_set',object = DynaText({string = {{ref_table = G.GAME.current_round.current_hand, ref_value = "mult_text"}}, colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = 1.5})}},
           }}
         }}
       }}
@@ -1742,7 +1809,6 @@ function create_UIBox_HUD_vertical()
 -- ==========================================
   -- 3. HUD BOTTOM (Buttons)
   -- ==========================================
-  local pos = G.SETTINGS.runinfo_options_button_pos or 1
 
   -- Compact, muted chrome buttons: red/orange stays reserved for Discard and
   -- gameplay actions, so these no longer compete with Play/Discard for attention.
@@ -1764,54 +1830,29 @@ function create_UIBox_HUD_vertical()
     }}
   }}
 
-  local order = {run_info_button, options_button}
+  local order = {
+    {n=G.UIT.C, config={id='row_blind', align='cm', padding=0, minw=blind_minw, minh=deck_dock.h}, nodes={
+      {n=G.UIT.B, config={id='row_blind_bottom', w=blind_minw, h=deck_dock.h}}
+    }},
+    run_info_button, options_button
+  }
+  -- Reserve real footer space; the existing deck CardArea retains its own
+  -- cards, counter, draw animations and deck-info interaction.
+  order[#order+1] = {n=G.UIT.C, config={id='portrait_deck_dock', align='cm', padding=0,
+    minw=deck_dock.w, minh=deck_dock.h}, nodes={}}
 
-  -- invert order if needed
-  if pos % 2 == 0 then
-    order = {options_button, run_info_button}
-  end
-
-  -- alignment
-  local align = "bm"
-  if pos >= 3 and pos <= 4 then align = "bl" end
-  if pos >= 5 then align = "br" end
-
-  local buttons = {n=G.UIT.R, config={align=align, padding = 0.02, colour = G.C.CLEAR, id='button_area'}, nodes=order}
+  local buttons = {n=G.UIT.R, config={align='cm', minw=panel_minw, padding=0.02, colour=G.C.CLEAR, id='button_area'}, nodes=order}
 
   -- ==========================================
   -- 4. FINAL ASSEMBLY (Grid Structure)
   -- ==========================================
-  return {n=G.UIT.ROOT, config = {align = "cm", padding = 0.02, colour = G.C.CLEAR}, nodes={
+  return {n=G.UIT.ROOT, config = {align = "cm", padding = 0, colour = G.C.CLEAR}, nodes={
     {n=G.UIT.R, config = {align = "cm", padding= 0.025, minw = panel_minw, colour = G.C.DYN_UI.MAIN, r=0.1}, nodes={
       {n=G.UIT.R, config={align = "cm", minw = panel_minw, colour = G.C.DYN_UI.BOSS_DARK, r=0.1, padding = 0.025}, nodes={
 
-        -- Top Line: Blind (Left) + Current Stats (Right)
-        {n=G.UIT.R, config={align = "ct", padding = 0.02, minw = panel_minw}, nodes={
-
-          -- Left Column: Reserving Space for the Blind
-          -- SMODS-compat: SMODS's lovely/blind_ui.toml injects a 'row_blind_bottom'
-          -- spacer into the LANDSCAPE row_blind (G.UIT.R + minh=3.75 pattern) and
-          -- then patches game.lua to anchor HUD_blind to that spacer. Our portrait
-          -- row_blind is a G.UIT.C and doesn't match the lovely pattern, so the
-          -- spacer never gets injected here — leaving HUD_blind anchor-less and
-          -- invisible whenever SMODS is loaded. We mirror the spacer ourselves so
-          -- G.HUD:get_UIE_by_ID('row_blind_bottom') resolves in both layouts.
-          -- Vanilla behavior is unchanged: HUD_blind anchors to row_blind (cm)
-          -- and the inner spacer just occupies the column's reserved height.
-          {n=G.UIT.C, config={align = "cm", id = 'row_blind', minw = blind_minw, minh = blind_minh}, nodes={
-            {n=G.UIT.B, config={w=0, h=blind_minh, id = 'row_blind_bottom'}, nodes={}}
-          }},
-
-          -- Space at the middle
-          {n=G.UIT.C, config={w = 0.28}, nodes={}},
-
-          -- Right Column: Round Score + Hand Played
-          {n=G.UIT.C, config={align = "tm", minw = top_right_minw}, nodes={
-              round_score,
-              {n=G.UIT.R, config={minh = 0.045}, nodes={}},
-              current_hand
-          }}
-        }},
+        round_score,
+        {n=G.UIT.R, config={minh=0.045, padding=0}, nodes={}},
+        current_hand,
 
         {n=G.UIT.R, config={minh = stats_gap}, nodes={}},
 
@@ -1826,15 +1867,23 @@ end
 -- Portrait: small floating chip above the hand showing the currently selected
 -- poker hand (name, level, chips X mult) so the eye stays in the thumb zone
 -- instead of travelling to the HUD at the top of the screen on every tap.
+function create_UIBox_hand_usage(scale,id)
+  -- Reserve a compact slot so changing x0/x10 never pushes chips or Mult.
+  return {n=G.UIT.O,config={id=id,func='hand_usage_UI_set',w=0.85,usage_scale=scale,
+    object=DynaText{string={require('portrait_score').hand_usage(G.GAME.current_round.current_hand.handname)},
+      scale=scale,maxw=0.85,colours={G.C.UI.TEXT_LIGHT},shadow=true,silent=true}}}
+end
+
 function create_UIBox_hand_preview()
   local hp = PORTRAIT_CONFIG.hand_preview or {}
   local s = hp.scale or 0.55
   local ch = G.GAME.current_round.current_hand
   return {n=G.UIT.ROOT, config={align='cm', padding=0.02, colour=G.C.CLEAR, func='hand_preview_visibility', id='hand_preview_root'}, nodes={
     {n=G.UIT.R, config={id='hand_preview_pill', align='cm', padding=0.09, r=0.12, colour=darken(G.C.BLACK, 0.1), emboss=0.05, outline=1.2, outline_colour=adjust_alpha(G.C.WHITE, 0.12)}, nodes={
-      {n=G.UIT.O, config={id='hand_preview_name', object=DynaText({string={{ref_table=ch, ref_value='handname_text'}}, colours={G.C.UI.TEXT_LIGHT}, shadow=true, float=true, scale=s*1.15})}},
+      {n=G.UIT.O, config={id='hand_preview_name', object=DynaText({string={{ref_table=ch, ref_value='handname_text'}}, colours={G.C.UI.TEXT_LIGHT}, shadow=true, float=true, scale=s*1.15,maxw=3.6})}},
       {n=G.UIT.B, config={w=0.1, h=0.1}},
       {n=G.UIT.T, config={ref_table=ch, ref_value='hand_level', scale=s*0.75, colour=G.C.UI.TEXT_LIGHT, shadow=true}},
+      create_UIBox_hand_usage(s*0.75,'hand_preview_usage'),
       {n=G.UIT.B, config={w=0.18, h=0.1}},
       {n=G.UIT.C, config={align='cm', r=0.1, padding=0.05, minw=0.95, colour=G.C.UI_CHIPS, emboss=0.05}, nodes={
         {n=G.UIT.O, config={id='hand_preview_chips', object=DynaText({string={{ref_table=ch, ref_value='chip_text'}}, colours={G.C.UI.TEXT_LIGHT}, font=G.LANGUAGES['en-us'].font, shadow=true, float=true, scale=s})}}
@@ -1847,14 +1896,71 @@ function create_UIBox_hand_preview()
   }}
 end
 
+-- Reuse the same content bands after a boss reroll as on initial selection.
+function portrait_align_blind_choice_bands()
+  if not G.F_PORTRAIT then return end
+  local choices={}
+  for _,key in ipairs({'small','big','boss'}) do
+    local box=G.blind_select_opts and G.blind_select_opts[key]
+    if box then choices[#choices+1]=box end
+  end
+  local bands={'blind_name','portrait_blind_description','portrait_blind_score','blind_extras'}
+  local mobile_blind=(PORTRAIT_CONFIG.mobile_ui and PORTRAIT_CONFIG.mobile_ui.blind_choice) or {}
+  for _,box in ipairs(choices) do
+    -- Measure natural content again after a boss reroll; old shared dimensions
+    -- must not accumulate or keep a previous boss's longer description.
+    for id,height in pairs({blind_name=0.68,portrait_blind_description=0.55,portrait_blind_score=0,blind_extras=0}) do
+      local band=box:get_UIE_by_ID(id)
+      if band then band.config.minh=height end
+    end
+    for _,id in ipairs({'portrait_blind_body','blind_extras'}) do
+      local band=box:get_UIE_by_ID(id)
+      if band then band.config.minw=nil end
+    end
+    local score=box:get_UIE_by_ID('portrait_blind_score')
+    if score then score.config.minw=mobile_blind.score_minw or 2.95 end
+    box:recalculate()
+  end
+  for _,id in ipairs(bands) do
+    local height,width=0,0
+    for _,box in ipairs(choices) do
+      local band=box:get_UIE_by_ID(id)
+      if band then height=math.max(height,band.T.h);width=math.max(width,band.T.w) end
+    end
+    for _,box in ipairs(choices) do
+      local band=box:get_UIE_by_ID(id)
+      if band then
+        band.config.minh=height
+        if id=='portrait_blind_score' then band.config.minw=width end
+      end
+    end
+  end
+  -- Equalise the actual painted body AND footer, not just the transparent
+  -- UIBox root. The Boss footer shares the skip-tag band's height and centres
+  -- its ante information inside it, leaving all three bottom edges aligned.
+  local width=0
+  for _,box in ipairs(choices) do
+    for _,id in ipairs({'portrait_blind_body','blind_extras'}) do
+      local band=box:get_UIE_by_ID(id)
+      if band then width=math.max(width,band.T.w) end
+    end
+  end
+  for _,box in ipairs(choices) do
+    for _,id in ipairs({'portrait_blind_body','blind_extras'}) do
+      local band=box:get_UIE_by_ID(id)
+      if band then band.config.minw=width end
+    end
+  end
+  for _,box in ipairs(choices) do box:recalculate() end
+end
+
 function create_UIBox_blind_select()
   local mobile_blind = (PORTRAIT_CONFIG.mobile_ui and PORTRAIT_CONFIG.mobile_ui.blind_choice) or {}
   local prompt_pad = G.F_PORTRAIT and (mobile_blind.prompt_pad or 0.05) or 0.2
   local prompt_scale_1 = G.F_PORTRAIT and (mobile_blind.prompt_scale_1 or 0.72) or 0.6
   local prompt_scale_2 = G.F_PORTRAIT and (mobile_blind.prompt_scale_2 or 0.8) or 0.7
   local choice_pad = G.F_PORTRAIT and (mobile_blind.choice_pad or 0.02) or 0.5
-  G.blind_prompt_box = UIBox{
-    definition =
+  local prompt_definition =
       {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR, padding = prompt_pad}, nodes={
         {n=G.UIT.R, config={align = "cm"}, nodes={
           {n=G.UIT.O, config={object = DynaText({string = localize('ph_choose_blind_1'), colours = {G.C.WHITE}, shadow = true, bump = true, scale = prompt_scale_1, pop_in = 0.5, maxw = 5}), id = 'prompt_dynatext1'}}
@@ -1864,12 +1970,32 @@ function create_UIBox_blind_select()
         }},
         (G.GAME.used_vouchers["v_retcon"] or G.GAME.used_vouchers["v_directors_cut"]) and
         UIBox_button({label = {localize('b_reroll_boss'), localize('$')..'10'}, button = "reroll_boss", func = 'reroll_boss_button'}) or nil
+      }}
+  if G.F_PORTRAIT then
+    -- Keep both vanilla text objects and animation IDs, but share one header.
+    local first, second = prompt_definition.nodes[1], prompt_definition.nodes[2]
+    first.n, second.n = G.UIT.C, G.UIT.C
+    first.config.padding, second.config.padding = 0, 0
+    local reroll = prompt_definition.nodes[3]
+    prompt_definition.nodes = {
+      {n=G.UIT.R, config={align='cm', padding=0, maxw=G.ROOM.T.w-1.0}, nodes={
+        first, {n=G.UIT.B, config={w=0.16,h=0}}, second
       }},
-    config = {align="cm", offset = {x=0,y=-15},major = G.HUD:get_UIE_by_ID('row_blind'), bond = 'Weak'}
+      reroll
+    }
+  end
+  G.blind_prompt_box = UIBox{
+    definition = prompt_definition,
+    config = {align="cm", offset = {x=0,y=-15},major = G.F_PORTRAIT and G.ROOM or G.HUD:get_UIE_by_ID('row_blind'), bond = 'Weak'}
   }
   G.E_MANAGER:add_event(Event({
     trigger = 'immediate',
     func = (function()
+        if G.F_PORTRAIT then
+            if not G.blind_select then return false end
+            G.blind_prompt_box:set_alignment({type='tmi',
+                major=G.blind_select:get_UIE_by_ID('portrait_blind_prompt'),offset={x=0,y=0}})
+        end
         G.blind_prompt_box.alignment.offset.y = 0
         return true
     end)
@@ -1899,14 +2025,40 @@ function create_UIBox_blind_select()
   G.blind_select_opts.small = G.GAME.round_resets.blind_states['Small'] ~= 'Hide' and compact_blind_choice('Small', get_blind_main_colour('Small')) or nil
   G.blind_select_opts.big = G.GAME.round_resets.blind_states['Big'] ~= 'Hide' and compact_blind_choice('Big', get_blind_main_colour('Big')) or nil
   G.blind_select_opts.boss = G.GAME.round_resets.blind_states['Boss'] ~= 'Hide' and compact_blind_choice('Boss', get_blind_main_colour('Boss'), mix_colours(G.C.BLACK, get_blind_main_colour('Boss'), 0.8)) or nil
+
+  local choice_nodes = {}
+  if G.F_PORTRAIT then
+    portrait_align_blind_choice_bands()
+    local choices, total_width = {}, 0
+    for _, key in ipairs({'small','big','boss'}) do
+      local box = G.blind_select_opts[key]
+      if box then choices[#choices+1] = box; total_width = total_width + box.T.w end
+    end
+    local available = G.ROOM.T.w - 2*PORTRAIT_CONFIG.layout.side_margin - 2*G.UIT.padding
+    local extra = math.min(mobile_blind.choice_extra_gap or 0.12,
+      math.max(0, (available-total_width-choice_pad*(#choices+1))/math.max(1,#choices-1)))
+    for _, box in ipairs(choices) do
+      if #choice_nodes>0 and extra>choice_pad then
+        choice_nodes[#choice_nodes+1] = {n=G.UIT.B,config={w=extra-choice_pad,h=0}}
+      end
+      choice_nodes[#choice_nodes+1] = {n=G.UIT.O,config={align='tm',object=box}}
+    end
+  else
+    choice_nodes = {
+      G.blind_select_opts.small and {n=G.UIT.O,config={align='cm',object=G.blind_select_opts.small}} or nil,
+      G.blind_select_opts.big and {n=G.UIT.O,config={align='cm',object=G.blind_select_opts.big}} or nil,
+      G.blind_select_opts.boss and {n=G.UIT.O,config={align='cm',object=G.blind_select_opts.boss}} or nil,
+    }
+  end
  
   local t = {n=G.UIT.ROOT, config = {align = 'tm',minw = width, r = 0.15, colour = G.C.CLEAR}, nodes={
-    {n=G.UIT.R, config={align = "cm", padding = choice_pad}, nodes={
-      G.GAME.round_resets.blind_states['Small'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.small}} or nil,
-      G.GAME.round_resets.blind_states['Big'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.big}} or nil,
-      G.GAME.round_resets.blind_states['Boss'] ~= 'Hide' and {n=G.UIT.O, config={align = "cm", object = G.blind_select_opts.boss}} or nil,
-    }}
+    {n=G.UIT.R, config={align = G.F_PORTRAIT and "tm" or "cm", padding = choice_pad}, nodes=choice_nodes}
   }}
+  if G.F_PORTRAIT then
+    table.insert(t.nodes,1,{n=G.UIT.R,config={id='portrait_blind_prompt',align='cm',padding=0,
+      minw=G.ROOM.T.w-2*PORTRAIT_CONFIG.layout.side_margin,
+      minh=G.blind_prompt_box.T.h+0.55},nodes={}})
+  end
   return t 
 end
 
@@ -1914,15 +2066,15 @@ function create_UIBox_blind_tag(blind_choice, run_info)
   G.GAME.round_resets.blind_tags = G.GAME.round_resets.blind_tags or {}
   if not G.GAME.round_resets.blind_tags[blind_choice] then return nil end
   local mobile_blind = (PORTRAIT_CONFIG.mobile_ui and PORTRAIT_CONFIG.mobile_ui.blind_choice) or {}
-  local tag_pad = G.F_PORTRAIT and (mobile_blind.tag_pad or 0.012) or 0.1
-  local tag_button_pad = G.F_PORTRAIT and (mobile_blind.tag_button_pad or 0.018) or 0.07
+  local tag_pad = G.F_PORTRAIT and (run_info and 0.012 or mobile_blind.tag_pad or 0.075) or 0.1
+  local tag_button_pad = G.F_PORTRAIT and (mobile_blind.tag_button_pad or 0.07) or 0.07
   local skip_scale = G.F_PORTRAIT and (mobile_blind.tag_skip_scale or 0.6) or 0.4
   local reward_scale = G.F_PORTRAIT and (mobile_blind.tag_reward_scale or 0.5) or 0.35
   local _tag = Tag(G.GAME.round_resets.blind_tags[blind_choice], nil, blind_choice)
   local _tag_ui, _tag_sprite = _tag:generate_UI()
-  _tag_sprite.states.collide.can = not not run_info
+  _tag_sprite.states.collide.can = G.F_PORTRAIT or G.CONTROLLER.HID.touch or not not run_info
   return 
-  {n=G.UIT.R, config={id = 'tag_container', ref_table = _tag, align = "cm"}, nodes={
+  {n=G.UIT.R, config={id = 'tag_container', ref_table = _tag, align = "cm", padding=G.F_PORTRAIT and not run_info and 0.04 or nil}, nodes={
     {n=G.UIT.R, config={align = 'tm', minh = 0.65}, nodes={
       {n=G.UIT.T, config={text = localize('k_or'), scale = 0.55, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = not disabled}},
     }},
@@ -1930,7 +2082,7 @@ function create_UIBox_blind_tag(blind_choice, run_info)
         {n=G.UIT.C, config={id = 'tag_desc', align = "cm", minh = 1}, nodes={
           _tag_ui
         }},
-        not run_info and {n=G.UIT.C, config={align = "cm", colour = G.C.UI.BACKGROUND_INACTIVE, minh = G.F_PORTRAIT and 0.62 or 0.6, minw = G.F_PORTRAIT and 2.1 or 2, maxw = G.F_PORTRAIT and 2.1 or 2, padding = tag_button_pad, r = 0.1, shadow = true, hover = true, one_press = true, button = 'skip_blind', func = 'hover_tag_proxy', ref_table = _tag}, nodes={
+        not run_info and {n=G.UIT.C, config={align = "cm", colour = G.C.UI.BACKGROUND_INACTIVE, minh = G.F_PORTRAIT and 0.85 or 0.6, minw = G.F_PORTRAIT and 2.1 or 2, maxw = G.F_PORTRAIT and 2.1 or 2, padding = tag_button_pad, r = 0.1, shadow = true, hover = true, one_press = true, button = 'skip_blind', func = 'hover_tag_proxy', ref_table = _tag}, nodes={
           {n=G.UIT.T, config={text = localize('b_skip_blind'), scale = skip_scale, colour = G.C.UI.TEXT_INACTIVE}}
         }} or {n=G.UIT.C, config={align = "cm", padding = tag_pad, emboss = 0.05, colour = mix_colours(G.C.BLUE, G.C.BLACK, 0.4), r = 0.1, maxw = 2}, nodes={
           {n=G.UIT.T, config={text = localize('b_skip_reward'), scale = reward_scale, colour = G.C.WHITE}},
@@ -1953,7 +2105,7 @@ function create_UIBox_blind_choice(type, run_info)
   local disabled = false
   type = type or 'Small'
   local mobile_blind = (PORTRAIT_CONFIG.mobile_ui and PORTRAIT_CONFIG.mobile_ui.blind_choice) or {}
-  local choice_minh = G.F_PORTRAIT and nil or 10
+  local choice_minh = G.F_PORTRAIT and 0 or 10
   local panel_pad = G.F_PORTRAIT and (mobile_blind.panel_pad or 0.018) or 0.05
   local inner_pad = G.F_PORTRAIT and (mobile_blind.inner_pad or 0.026) or 0.2
   local button_pad = G.F_PORTRAIT and (mobile_blind.button_pad or 0.018) or 0.07
@@ -1964,6 +2116,7 @@ function create_UIBox_blind_choice(type, run_info)
   local reward_scale = G.F_PORTRAIT and (mobile_blind.reward_scale or 0.46) or 0.35
   local blind_text_maxw = G.F_PORTRAIT and (mobile_blind.text_maxw or 2.75) or 2.8
   local score_minw = G.F_PORTRAIT and (mobile_blind.score_minw or 2.95) or 3.1
+  local fit_boss = G.F_PORTRAIT and not run_info and type == 'Boss'
 
   local blind_choice = {
     config = G.P_BLINDS[G.GAME.round_resets.blind_choices[type]],
@@ -1975,9 +2128,7 @@ function create_UIBox_blind_choice(type, run_info)
     {shader = 'dissolve', shadow_height = 0.05},
     {shader = 'dissolve'}
   })
-  -- Portrait: tapping the blind token pops up the same info card the
-  -- Collections Blinds page uses, so the rules are readable at full size
-  -- without growing the panel text (#40).
+  -- Keep the native blind popup; the same token also selects on a short tap.
   if G.F_PORTRAIT then
     local token = blind_choice.animation
     token.float = true
@@ -2001,6 +2152,21 @@ function create_UIBox_blind_choice(type, run_info)
       end
     end
     token.stop_hover = function() token.hovering = false; Node.stop_hover(token); token.hover_tilt = 0 end
+    portrait_bind_tag_tooltip(token)
+    if not run_info then
+      token.states.click.can = true
+      token.config.button = 'select_blind'
+      token.config.ref_table = blind_choice.config
+      token.config.one_press = true
+      token.click = function(self)
+        if G.STATE ~= G.STATES.BLIND_SELECT or G.GAME.blind_on_deck ~= type or
+          G.GAME.round_resets.blind_states[type] ~= 'Select' or
+          G.GAME.facing_blind then return end
+        self:stop_hover()
+        self.UIBox = G.blind_select_opts[string.lower(type)]
+        UIElement.click(self)
+      end
+    end
   end
   local extras = nil
   local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
@@ -2079,11 +2245,109 @@ function create_UIBox_blind_choice(type, run_info)
     return nodes
   end
   local portrait_blind_desc_nodes = {}
-  for line_index, line in ipairs(text_table or {}) do
-    portrait_blind_desc_nodes[#portrait_blind_desc_nodes+1] = {n=G.UIT.R, config={align = "cm", maxw = blind_text_maxw}, nodes=blind_choice_desc_nodes(line, line_index)}
+  -- Wrap plain text runs while retaining each localized run's colour/font.
+  -- Styled boxes and animated spans stay intact and use the same size limits.
+  local function text_size(node)
+    local c = node.config or {}
+    if node.n == G.UIT.T then
+      local font = c.font or (c.lang and c.lang.font) or G.LANG.font
+      local unit = (c.scale or 1)*font.FONTSCALE/G.TILESIZE
+      return font.FONT:getWidth(c.text or '')*(font.squish or 1)*unit,
+        font.FONT:getHeight()*font.TEXT_HEIGHT_SCALE*unit
+    elseif c.object then return c.object.T.w, c.object.T.h end
+    local w,h = 0,0
+    local padding=c.padding or G.UIT.padding
+    for _,child in ipairs(node.nodes or {}) do
+      local cw,ch = text_size(child)
+      if child.n==G.UIT.R then
+        h=h+ch+padding;w=math.max(w,cw+padding)
+      else
+        w=w+cw+padding;h=math.max(h,ch+padding)
+      end
+    end
+    return w+padding,h+padding
+  end
+  local function fit_text_rows(nodes, maxw, maxh)
+    local rows, current, used = {}, {}, 0
+    local function finish_row()
+      local last=current[#current]
+      if last and last.n==G.UIT.T and last.config.text and not last.config.func then
+        last.config.text=last.config.text:gsub('%s+$','')
+      end
+      if #current>0 then rows[#rows+1]=current end
+      current={};used=0
+    end
+    local function append(node)
+      local w = text_size(node)
+      if used+w>maxw and used>0 then finish_row() end
+      if used==0 and node.n==G.UIT.T and node.config.text and not node.config.func then
+        node.config.text=node.config.text:gsub('^%s+','')
+        w=text_size(node)
+      end
+      current[#current+1]=node;used=used+w
+    end
+    for _,node in ipairs(nodes) do
+      if node.n==G.UIT.T and node.config.text and node.config.text:find('%S') and not node.config.func then
+        for word in node.config.text:gmatch('%s*%S+%s*') do
+          local c={};for k,v in pairs(node.config) do c[k]=v end
+          c.text=word;append({n=G.UIT.T,config=c})
+        end
+      else append(node) end
+    end
+    finish_row()
+    local widest,height=0,0
+    for _,line in ipairs(rows) do
+      local w,h=0,0
+      for _,node in ipairs(line) do local nw,nh=text_size(node);w=w+nw;h=math.max(h,nh) end
+      widest=math.max(widest,w);height=height+h+0.02
+    end
+    local factor=math.min(1,maxw/math.max(widest,0.001),maxh and maxh/math.max(height,0.001) or 1)
+    local function shrink(node)
+      local c=node.config
+      if c.scale then c.scale=c.scale*factor end
+      if c.object then c.object.scale=c.object.scale*factor;c.object:update_text(true) end
+      for _,child in ipairs(node.nodes or {}) do shrink(child) end
+    end
+    local result={}
+    for _,line in ipairs(rows) do
+      if factor<1 then for _,node in ipairs(line) do shrink(node) end end
+      result[#result+1]={n=G.UIT.R,config={align='cm',padding=0,maxw=maxw},nodes=line}
+    end
+    return result
+  end
+  for line_index, line in ipairs(not (G.F_PORTRAIT and not run_info) and text_table or {}) do
+    portrait_blind_desc_nodes[#portrait_blind_desc_nodes+1] = {n=G.UIT.R, config={align = "cm", padding = fit_boss and 0 or nil, maxw = blind_text_maxw}, nodes=blind_choice_desc_nodes(line, line_index)}
+  end
+  if fit_boss then
+    local overflow,height=false,0
+    for _,line in ipairs(portrait_blind_desc_nodes) do
+      local w,h=text_size(line)
+      overflow=overflow or w>blind_text_maxw-0.10;height=height+h+0.02
+    end
+    if overflow or height>1.05 then
+      local runs={}
+      for i,line in ipairs(portrait_blind_desc_nodes) do
+        if i>1 then runs[#runs+1]={n=G.UIT.T,config={text=' ',scale=desc_scale,colour=G.C.WHITE}} end
+        for _,node in ipairs(line.nodes) do runs[#runs+1]=node end
+      end
+      -- Let readable lines determine this band's height; all three cards share
+      -- that height. A fixed height cap used to squeeze the entire boss effect.
+      portrait_blind_desc_nodes=fit_text_rows(runs,blind_text_maxw-0.10)
+    end
+  end
+  local name_nodes={{n=G.UIT.O,config={object=DynaText({string=loc_name,
+    colours={disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE},shadow=not disabled,
+    float=not disabled,y_offset=-4,scale=name_scale,maxw=blind_text_maxw})}}}
+  if fit_boss and _type(loc_name)=='string' then
+    local name={n=G.UIT.T,config={text=loc_name,scale=name_scale,colour=G.C.WHITE,shadow=true}}
+    if text_size(name)>blind_text_maxw then
+      name_nodes[1].config.object:remove()
+      name_nodes=fit_text_rows({name},blind_text_maxw-0.10,0.90)
+    end
   end
   local blind_col = get_blind_main_colour(type)
-  local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_choice.config.mult*G.GAME.starting_params.ante_scaling
+  local blind_presentation = PortraitRunRules and PortraitRunRules.blind_values(blind_choice.config) or blind_choice.config
+  local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_presentation.mult*G.GAME.starting_params.ante_scaling
 
   local blind_state = G.GAME.round_resets.blind_states[type]
   local _reward = true
@@ -2092,7 +2356,7 @@ function create_UIBox_blind_choice(type, run_info)
   local run_info_colour = run_info and (blind_state == 'Defeated' and G.C.GREY or blind_state == 'Skipped' and G.C.BLUE or blind_state == 'Upcoming' and G.C.ORANGE or blind_state == 'Current' and G.C.RED or G.C.GOLD)
   local t = 
   {n=G.UIT.R, config={id = type, align = "tm", func = 'blind_choice_handler', minh = not run_info and choice_minh or nil, ref_table = {deck = nil, run_info = run_info}, r = 0.1, padding = panel_pad}, nodes={
-    {n=G.UIT.R, config={align = "cm", colour = mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5), r = 0.1, outline = 1, outline_colour = G.C.L_BLACK}, nodes={  
+    {n=G.UIT.R, config={id='portrait_blind_body',align = "cm", colour = mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5), r = 0.1, outline = 1, outline_colour = G.C.L_BLACK}, nodes={  
       {n=G.UIT.R, config={align = "cm", padding = inner_pad}, nodes={
           not run_info and {n=G.UIT.R, config={id = 'select_blind_button', align = "cm", ref_table = blind_choice.config, colour = disabled and G.C.UI.BACKGROUND_INACTIVE or G.C.ORANGE, minh = 0.6, minw = 2.7, padding = button_pad, r = 0.1, shadow = true, hover = true, one_press = true, button = 'select_blind'}, nodes={
             {n=G.UIT.T, config={ref_table = G.GAME.round_resets.loc_blind_states, ref_value = type, scale = button_scale, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.UI.TEXT_LIGHT, shadow = not disabled}}
@@ -2101,20 +2365,20 @@ function create_UIBox_blind_choice(type, run_info)
             {n=G.UIT.T, config={text = localize(blind_state, 'blind_states'), scale = button_scale, colour = G.C.UI.TEXT_LIGHT, shadow = true}}
           }}
         }},
-        {n=G.UIT.R, config={id = 'blind_name',align = "cm", padding = G.F_PORTRAIT and 0.04 or 0.07}, nodes={
+        {n=G.UIT.R, config={id = 'blind_name',align = "cm", minh = G.F_PORTRAIT and not run_info and 0.68 or nil, padding = G.F_PORTRAIT and 0.04 or 0.07}, nodes={
           {n=G.UIT.R, config={align = "cm", r = 0.1, outline = 1, outline_colour = blind_col, colour = darken(blind_col, 0.3), minw = 2.9, emboss = 0.1, padding = G.F_PORTRAIT and 0.035 or 0.07, line_emboss = 1}, nodes={
-            {n=G.UIT.O, config={object = DynaText({string = loc_name, colours = {disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE}, shadow = not disabled, float = not disabled, y_offset = -4, scale = name_scale, maxw = blind_text_maxw})}},
+            unpack(name_nodes)
           }},
         }},
         {n=G.UIT.R, config={align = "cm", padding = G.F_PORTRAIT and 0.025 or 0.05}, nodes={
           {n=G.UIT.R, config={id = 'blind_desc', align = "cm", padding = G.F_PORTRAIT and 0.025 or 0.05}, nodes={
             {n=G.UIT.R, config={align = "cm"}, nodes={
-              {n=G.UIT.R, config={align = "cm", minh = G.F_PORTRAIT and 1.28 or 1.5}, nodes={
-                {n=G.UIT.O, config={object = blind_choice.animation}},
+              {n=G.UIT.R, config={align = "cm", minh = G.F_PORTRAIT and (not run_info and (blind_chip_size+0.16) or 1.28) or 1.5, padding = G.F_PORTRAIT and not run_info and 0.04 or nil}, nodes={
+                {n=G.UIT.O, config={id='portrait_blind_token', object = blind_choice.animation, focus_with_object=true}},
               }},
-              portrait_blind_desc_nodes[1] and {n=G.UIT.R, config={align = "cm", minh = G.F_PORTRAIT and 0.55 or 0.7, padding = G.F_PORTRAIT and 0.018 or 0.05, minw = 2.9}, nodes=portrait_blind_desc_nodes} or nil,
+              portrait_blind_desc_nodes[1] and {n=G.UIT.R, config={id='portrait_blind_description',align = "cm", minh = G.F_PORTRAIT and 0.55 or 0.7, padding = G.F_PORTRAIT and run_info and 0.018 or 0.05, minw = 2.9}, nodes=portrait_blind_desc_nodes} or nil,
             }},
-            {n=G.UIT.R, config={align = "cm",r = 0.1, padding = G.F_PORTRAIT and 0.022 or 0.05, minw = score_minw, colour = G.C.BLACK, emboss = 0.05}, nodes={
+            {n=G.UIT.R, config={id='portrait_blind_score',align = "cm",r = 0.1, padding = G.F_PORTRAIT and 0.022 or 0.05, minw = score_minw, colour = G.C.BLACK, emboss = 0.05}, nodes={
               {n=G.UIT.R, config={align = "cm", maxw = blind_text_maxw}, nodes={
                 {n=G.UIT.T, config={text = localize('ph_blind_score_at_least'), scale = score_label_scale, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = not disabled}}
               }},
@@ -2123,19 +2387,27 @@ function create_UIBox_blind_choice(type, run_info)
                 {n=G.UIT.B, config={h=0.1,w=0.1}},
                 {n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(G.F_PORTRAIT and 1.0 or 0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}}
               }},
-              _reward and {n=G.UIT.R, config={align = "cm"}, nodes={
+              -- Long boss payouts must not widen all three portrait columns.
+              _reward and {n=G.UIT.R, config={align = "cm", maxw = G.F_PORTRAIT and not run_info and 3.4 or nil}, nodes={
                 {n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = reward_scale, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.WHITE, shadow = not disabled}},
-                {n=G.UIT.T, config={text = string.rep(localize("$"), blind_choice.config.dollars)..'+', scale = reward_scale, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}
+                {n=G.UIT.T, config={text = string.rep(localize("$"), blind_presentation.dollars)..'+', scale = reward_scale, colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.MONEY, shadow = not disabled}}
               }} or nil,
             }},
           }},
         }},
       }},
-        {n=G.UIT.R, config={id = 'blind_extras', align = "cm", padding = G.F_PORTRAIT and 0.02 or 0}, nodes={
+        {n=G.UIT.R, config={id = 'blind_extras', align = "cm", padding = G.F_PORTRAIT and not run_info and 0.10 or G.F_PORTRAIT and 0.02 or 0}, nodes={
           extras,
         }}
 
     }}
+  if G.F_PORTRAIT and not run_info then
+    table.remove(t.nodes[1].nodes, 1)
+    -- Names belong to the card surface; keep the target/reward as its only inset.
+    local name_plate = t.nodes[1].nodes[1].nodes[1].config
+    name_plate.colour = G.C.CLEAR
+    name_plate.outline, name_plate.emboss, name_plate.line_emboss = nil, nil, nil
+  end
   return t
 end
   
@@ -2186,6 +2458,7 @@ local function portrait_pack_container(nodes)
 end
 
 function create_UIBox_arcana_pack()
+  if G.F_PORTRAIT then return portrait_pack_ui(G.GAME.pack_size, localize('k_arcana_pack')) end
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
     G.ROOM.T.x + 9 + G.hand.T.x, G.hand.T.y,
@@ -2232,6 +2505,7 @@ function create_UIBox_arcana_pack()
 end
 
 function create_UIBox_spectral_pack()
+  if G.F_PORTRAIT then return portrait_pack_ui(G.GAME.pack_size, localize('k_spectral_pack')) end
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
     G.ROOM.T.x + 9 + G.hand.T.x, G.hand.T.y,
@@ -2278,6 +2552,7 @@ function create_UIBox_spectral_pack()
 end
 
 function create_UIBox_standard_pack()
+  if G.F_PORTRAIT then return portrait_pack_ui(G.GAME.pack_size, localize('k_standard_pack')) end
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
     G.ROOM.T.x + 9 + G.hand.T.x, G.hand.T.y,
@@ -2324,6 +2599,7 @@ function create_UIBox_standard_pack()
 end
 
 function create_UIBox_buffoon_pack()
+  if G.F_PORTRAIT then return portrait_pack_ui(G.GAME.pack_size, localize('k_buffoon_pack')) end
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
     G.ROOM.T.x + 9 + G.hand.T.x, G.hand.T.y,
@@ -2370,6 +2646,7 @@ function create_UIBox_buffoon_pack()
 end
 
 function create_UIBox_celestial_pack()
+  if G.F_PORTRAIT then return portrait_pack_ui(G.GAME.pack_size, localize('k_celestial_pack')) end
   local _size = G.GAME.pack_size
   G.pack_cards = CardArea(
     G.ROOM.T.x + 9 + G.hand.T.x, G.hand.T.y,
@@ -2639,10 +2916,12 @@ function create_tabs(args)
   }
 
   local tab_buttons = {}
+  if G.F_PORTRAIT and args.portrait_run_info then require('portrait_run_info').tabs(args) end
 
   for k, v in ipairs(args.tabs) do
     if v.chosen then args.current = {k = k, v = v} end
-    tab_buttons[#tab_buttons+1] = UIBox_button({id = 'tab_but_'..(v.label or ''), ref_table = v, button = 'change_tab', label = {v.label}, minh = 0.8*args.scale, minw = 2.5*args.scale, col = true, choice = true, scale = args.text_scale, chosen = v.chosen, func = v.func, focus_args = {type = 'none'}})
+    local label=args.button_width and require('portrait_run_info').lines(v.label,args.button_width-.08,args.text_scale) or {v.label}
+    tab_buttons[#tab_buttons+1] = UIBox_button({id = 'tab_but_'..(v.label or ''), ref_table = v, button = 'change_tab', label = label, minh = args.button_height or 0.8*args.scale, minw = args.button_width or 2.5*args.scale, maxw = args.button_width and args.button_width-.08, col = true, choice = true, scale = args.text_scale, chosen = v.chosen, func = v.func, focus_args = {type = 'none'}})
   end
 
   -- Multi-line portrait layout
@@ -2656,7 +2935,9 @@ function create_tabs(args)
       
       local per_row
       
-      if total_tabs <= 6 then
+      if args.portrait_run_info then
+        per_row = 4
+      elseif total_tabs <= 6 then
         per_row = pc.rows_5_6
       else
         per_row = pc.rows_7_plus
@@ -2678,7 +2959,7 @@ function create_tabs(args)
 
         tabs_container_nodes[#tabs_container_nodes+1] = {
           n = G.UIT.R,
-          config = {align = "cm", padding = 0.05},
+          config = {align = "cm", padding = args.button_padding or 0.05},
           nodes = row_nodes
         }
       end
@@ -2689,7 +2970,7 @@ function create_tabs(args)
   {n=G.UIT.R, config={padding = 0.0, align = "cm", colour = G.C.CLEAR}, nodes={
     {n=G.UIT.R, config={align = "cm", colour = G.C.CLEAR}, nodes = {
       (#args.tabs > 1 and not args.no_shoulders) and {n=G.UIT.C, config={minw = 0.7,align = "cm", colour = G.C.CLEAR,func = 'set_button_pip', focus_args = {button = 'leftshoulder', type = 'none', orientation = 'cm', scale = 0.7, offset = {x = -0.1, y = 0}}}, nodes = {}} or nil,
-      {n=G.UIT.C, config={id = args.no_shoulders and 'no_shoulders' or 'tab_shoulders', ref_table = args, align = "cm", padding = 0.15, group = 1, collideable = true, focus_args = #args.tabs > 1 and {type = 'tab', nav = 'wide',snap_to = args.snap_to_nav, no_loop = args.no_loop} or nil}, nodes=tabs_container_nodes},
+      {n=G.UIT.C, config={id = args.no_shoulders and 'no_shoulders' or 'tab_shoulders', ref_table = args, align = "cm", padding = args.button_padding or 0.15, group = 1, collideable = true, focus_args = #args.tabs > 1 and {type = 'tab', nav = 'wide',snap_to = args.snap_to_nav, no_loop = args.no_loop} or nil}, nodes=tabs_container_nodes},
       (#args.tabs > 1 and not args.no_shoulders) and {n=G.UIT.C, config={minw = 0.7,align = "cm", colour = G.C.CLEAR,func = 'set_button_pip', focus_args = {button = 'rightshoulder', type = 'none', orientation = 'cm', scale = 0.7, offset = {x = 0.1, y = 0}}}, nodes = {}} or nil,
     }},
     {n=G.UIT.R, config={align = args.tab_alignment, padding = args.padding or 0.1, no_fill = true, minh = args.tab_h, minw = args.tab_w}, nodes={
@@ -2900,6 +3181,7 @@ function create_UIBox_settings()
     tab_definition_function = G.UIDEF.settings_tab,
     tab_definition_function_args = 'Game'
   }
+  tabs[#tabs+1]={label=PortraitQOL.label('controls'),tab_definition_function=G.UIDEF.settings_tab,tab_definition_function_args='Controls'}
   if G.F_VIDEO_SETTINGS then   tabs[#tabs+1] = {
       label = localize('b_set_video'),
       tab_definition_function = G.UIDEF.settings_tab,
@@ -2928,8 +3210,8 @@ end
 
 function G.UIDEF.settings_tab(tab)
   local ml_play_main_hand_opt = {
-    "Left Hand",
-    "Right Hand",
+    PortraitQOL.label('left'),
+    PortraitQOL.label('right'),
   }
 
   local ml_runinfo_options_pos_opt = {
@@ -2941,20 +3223,29 @@ function G.UIDEF.settings_tab(tab)
     "Options/Run Info (right)",
   }
 
+  if (G.SETTINGS.language or ''):sub(1,2)=='es' then
+    ml_runinfo_options_pos_opt={'Info/Opciones (centro)','Opciones/Info (centro)',
+      'Info/Opciones (izquierda)','Opciones/Info (izquierda)',
+      'Info/Opciones (derecha)','Opciones/Info (derecha)'}
+  end
+
   if tab == 'Game' then
     return {n=G.UIT.ROOT, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={
       create_option_cycle({label = localize('b_set_gamespeed'),scale = 0.8, options = {0.5, 1, 2, 4}, opt_callback = 'change_gamespeed', current_option = (G.SETTINGS.GAMESPEED == 0.5 and 1 or G.SETTINGS.GAMESPEED == 4 and 4 or G.SETTINGS.GAMESPEED + 1)}),
-      create_option_cycle({w = 5, label = localize('b_set_play_discard_pos'),scale = 0.8, options = localize('ml_play_discard_pos_opt'), opt_callback = 'change_play_discard_position', current_option = (G.SETTINGS.play_button_pos)}),
-      G.F_PORTRAIT and create_option_cycle({w = 5, label = 'Left or Right Hand',scale = 0.8, options = ml_play_main_hand_opt, opt_callback = 'change_play_main_hand', current_option = (G.SETTINGS.play_main_hand)}),
-      G.F_PORTRAIT and create_option_cycle({w = 5, label = 'Run Info/Options Button Position (Classic Only)',scale = 0.8, options = ml_runinfo_options_pos_opt, opt_callback = 'change_runinfo_options_position', current_option = (G.SETTINGS.runinfo_options_button_pos)}),
       G.F_RUMBLE and create_toggle({label = localize('b_set_rumble'), ref_table = G.SETTINGS, ref_value = 'rumble'}) or nil,
-      G.F_PORTRAIT and create_toggle({label = 'Swipe Only Mode (no Play/Discard buttons)', ref_table = G.SETTINGS, ref_value = 'swipe_only_mode', callback = on_swipe_only_setting_changed}) or nil,
-      G.F_PORTRAIT and create_toggle({label = 'Haptic Feedback', ref_table = G.SETTINGS, ref_value = 'haptic_enabled', callback = on_haptic_setting_changed}) or nil,
       create_slider({label = localize('b_set_screenshake'),w = 4, h = 0.4, ref_table = G.SETTINGS, ref_value = 'screenshake', min = 0, max = 100}),
       create_toggle({label = localize('ph_display_stickers'), ref_table = G.SETTINGS, ref_value = 'run_stake_stickers'}),
       create_toggle({label = localize('b_high_contrast_cards'), ref_table = G.SETTINGS, ref_value = 'colourblind_option', callback = G.FUNCS.refresh_contrast_mode}),
       create_toggle({label = localize('b_reduced_motion'), ref_table = G.SETTINGS, ref_value = 'reduced_motion'}),
       G.F_CRASH_REPORTS and create_toggle({label = localize('b_set_crash_reports'), ref_table = G.SETTINGS, ref_value = 'crashreports', info = localize('ml_crash_report_info')}) or nil,
+    }}
+  elseif tab == 'Controls' then
+    return {n=G.UIT.ROOT,config={align='cm',padding=0.05,colour=G.C.CLEAR},nodes={
+      create_option_cycle({w = 5, label = localize('b_set_play_discard_pos'),scale = 0.8, options = localize('ml_play_discard_pos_opt'), opt_callback = 'change_play_discard_position', current_option = (G.SETTINGS.play_button_pos)}),
+      G.F_PORTRAIT and create_option_cycle({w = 5, label = PortraitQOL.label('hand'),scale = 0.8, options = ml_play_main_hand_opt, opt_callback = 'change_play_main_hand', current_option = (G.SETTINGS.play_main_hand)}),
+      G.F_PORTRAIT and create_option_cycle({w = 5, label = PortraitQOL.label('classic'),scale = 0.8, options = ml_runinfo_options_pos_opt, opt_callback = 'change_runinfo_options_position', current_option = (G.SETTINGS.runinfo_options_button_pos)}),
+      G.F_PORTRAIT and create_toggle({label = PortraitQOL.label('swipe'), ref_table = G.SETTINGS, ref_value = 'swipe_only_mode', callback = on_swipe_only_setting_changed}) or nil,
+      create_option_cycle{label=PortraitQOL.label('haptics'),options={PortraitQOL.label('off'),PortraitQOL.label('low'),PortraitQOL.label('normal')},current_option=G.SETTINGS.haptics_mode=='LOW' and 2 or (G.SETTINGS.haptics_mode=='OFF' or G.SETTINGS.haptic_enabled==false) and 1 or 3,opt_callback='qol_haptics',w=5,scale=0.7},
     }}
   elseif tab == 'Video' then
     --Reset the queue so there are no pending changes
@@ -2979,6 +3270,7 @@ function G.UIDEF.settings_tab(tab)
     }}
   elseif tab == 'Graphics' then 
     return {n=G.UIT.ROOT, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={
+      create_option_cycle({w = 4,scale = 0.8, label = G.SETTINGS.language:sub(1,2)=='es' and 'Fondo animado' or 'Animated Background', options = {'On','Off'}, opt_callback = 'change_animated_background', current_option = G.SETTINGS.animated_background and 1 or 2}),
       create_option_cycle({w = 4,scale = 0.8, label = localize("b_set_shadows"),options = localize('ml_shadow_opt'), opt_callback = 'change_shadows', current_option = (G.SETTINGS.GRAPHICS.shadows == 'On' and 1 or 2)}),
       create_option_cycle({w = 4,scale = 0.8, label = localize("b_set_pixel_smoothing"),options = localize('ml_smoothing_opt'), opt_callback = 'change_pixel_smoothing', current_option = G.SETTINGS.GRAPHICS.texture_scaling}),
       create_slider({label = localize('b_set_CRT'),w = 4, h = 0.4, ref_table = G.SETTINGS.GRAPHICS, ref_value = 'crt', min = 0, max = 100}),
@@ -3086,7 +3378,7 @@ function create_UIBox_usage(args)
   local _type, _set = args[1], args[2]
   local used_cards = {}
   local max_amt = 0
-  for k, v in pairs(G.PROFILES[G.SETTINGS.profile][_type]) do
+  for k, v in pairs(PortraitQOL.view_stats()[_type]) do
     if G.P_CENTERS[k] and (not _set or G.P_CENTERS[k].set == _set) and G.P_CENTERS[k].discovered then
       used_cards[#used_cards + 1] = {count = v.count, key = k}
       if v.count > max_amt then max_amt = v.count end
@@ -3167,7 +3459,12 @@ function create_UIBox_usage(args)
 end
 
 function create_UIBox_customize_deck()
+  local skin_options, current_skin = CardSkins.options()
   local t = create_UIBox_generic_options({ back_func = 'options', snap_back = nil, contents = {
+    {n=G.UIT.R, config={align = 'cm', padding = 0.08}, nodes={
+      create_option_cycle({label = 'Card Skin', options = skin_options, w = 5.5,
+        opt_callback = 'change_card_skin', current_option = current_skin, colour = G.C.RED})
+    }},
     {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
       create_tabs(
         {tabs = {
@@ -3200,12 +3497,14 @@ end
 
 function G.UIDEF.custom_deck_tab(_suit)
   local t = {}
+  local partial_skin = CardSkins.registry[CardSkins.active()].partial
 
   local face_cards = CardArea(
     0,0,
     4*G.CARD_W,
     1.4*G.CARD_H, 
-    {card_limit = 3, type = 'title', highlight_limit = 0})
+    {card_limit = partial_skin and 4 or 3, type = 'title', highlight_limit = 0,
+      portrait_deck_view = partial_skin})
 
   table.insert(t, 
     {n=G.UIT.R, config={align = "cm", colour = G.C.BLACK, r = 0.1, padding = 0.07, no_fill = true}, nodes={
@@ -3226,17 +3525,20 @@ function G.UIDEF.custom_deck_tab(_suit)
     if G.SETTINGS.CUSTOM_DECK.Collabs[_suit] == v then current_option = k end
   end
 
-  table.insert(t, 
+  if CardSkins.active() == 'default' then table.insert(t,
     {n=G.UIT.R, config={align = "cm"}, nodes={
       create_option_cycle({options = loc_options, w = 5.5, cycle_shoulders = true, curr_suit = _suit, opt_callback = 'change_collab', current_option = current_option, colour = G.C.RED, focus_args = {snap_to = true, nav = 'wide'}}),
     }}
-  )
-  table.insert(t, create_toggle({label = localize('b_high_contrast_cards'), ref_table = G.SETTINGS, ref_value = 'colourblind_option', callback = G.FUNCS.refresh_contrast_mode}))
+  ) end
+  if CardSkins.active() == 'default' or partial_skin then
+    table.insert(t, create_toggle({label = localize('b_high_contrast_cards'), ref_table = G.SETTINGS, ref_value = 'colourblind_option', callback = G.FUNCS.refresh_contrast_mode}))
+  end
 
-  local faces = {'K','Q','J'}
-  for i = 1, 3 do
+  local faces = partial_skin and {'A','J','Q','K'} or (CardSkins.active() == 'default' and {'K','Q','J'} or {'A','8','J','Q','K'})
+  local preview_scale = #faces == 3 and 1.2 or 1.0
+  for i = 1, #faces do
     local card_code = (string.sub(_suit, 1, 1))..'_'..faces[i]
-    local card = Card(0,0, G.CARD_W*1.2, G.CARD_H*1.2, G.P_CARDS[card_code], G.P_CENTERS.c_base)
+    local card = Card(0,0, G.CARD_W*preview_scale, G.CARD_H*preview_scale, G.P_CARDS[card_code], G.P_CENTERS.c_base)
     card.no_ui = true
     face_cards:emplace(card)
   end
@@ -3266,6 +3568,8 @@ function create_UIBox_high_scores()
   end
   
   local t = create_UIBox_generic_options({ back_func = 'options', snap_back = true, contents = {
+    create_option_cycle{label=PortraitQOL.label('statistics'),options={'Vanilla',PortraitQOL.label('modded')},current_option=PortraitQOL.stats_scope=='modded' and 2 or 1,opt_callback='qol_stats_scope',w=5,scale=0.7},
+    PortraitQOL.text(PortraitQOL.label('runs')..': '..(PortraitQOL.view_stats().career_stats.c_runs or 0)..' / '..PortraitQOL.label('wins')..': '..(PortraitQOL.view_stats().career_stats.c_wins or 0)..' / '..PortraitQOL.label('losses')..': '..(PortraitQOL.view_stats().career_stats.c_losses or 0),0.32),
     {n=display, config={align = "cm", minw = 3, padding = 0.2, r = 0.1, colour = G.C.CLEAR}, nodes={
       {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes=
         scores
@@ -3353,26 +3657,26 @@ function create_progress_box(_profile_progress, smaller)
 end
 
 function create_UIBox_high_scores_row(score)
-  if not G.PROFILES[G.SETTINGS.profile].high_scores[score] then return nil end
-  local label_scale = 0.65 - 0.025*math.max(string.len(G.PROFILES[G.SETTINGS.profile].high_scores[score].label)-8, 0)
+  if not PortraitQOL.view_stats().high_scores[score] then return nil end
+  local label_scale = 0.65 - 0.025*math.max(string.len(PortraitQOL.view_stats().high_scores[score].label)-8, 0)
   local label_w, score_w, h = 3.5, 4, 0.8
   local score_tab = {}
  
   if score == 'poker_hand' then 
     local handname, amount = localize('k_none'), 0
-    for k, v in pairs(G.PROFILES[G.SETTINGS.profile].hand_usage) do if v.count > amount then handname = v.order; amount = v.count end end
+    for k, v in pairs(PortraitQOL.view_stats().hand_usage) do if v.count > amount then handname = v.order; amount = v.count end end
     score_tab = {
       {n=G.UIT.O, config={object = DynaText({string = {amount < 1 and handname or localize(handname,'poker_hands')}, colours = {G.C.WHITE},shadow = true, float = true, scale = 0.55})}},
       {n=G.UIT.T, config={text = " ("..amount..")", scale = 0.45, colour = G.C.JOKER_GREY}}
     }
   elseif score == 'most_money' then 
     score_tab = {
-      {n=G.UIT.O, config={object = DynaText({string = {localize('$')..number_format(G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)}, colours = {G.C.MONEY},shadow = true, float = true, scale = score_number_scale(0.85, G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)})}},
+      {n=G.UIT.O, config={object = DynaText({string = {localize('$')..number_format(PortraitQOL.view_stats().high_scores[score].amt)}, colours = {G.C.MONEY},shadow = true, float = true, scale = score_number_scale(0.85, PortraitQOL.view_stats().high_scores[score].amt)})}},
     }
   elseif score == 'win_streak' then 
     score_tab = {
-      {n=G.UIT.O, config={object = DynaText({string = {number_format(G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)}, colours = {G.C.WHITE},shadow = true, float = true, scale = score_number_scale(0.85, G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)})}},
-      {n=G.UIT.T, config={text = " ("..G.PROFILES[G.SETTINGS.profile].high_scores["current_streak"].amt..")", scale = 0.45, colour = G.C.JOKER_GREY}}
+      {n=G.UIT.O, config={object = DynaText({string = {number_format(PortraitQOL.view_stats().high_scores[score].amt)}, colours = {G.C.WHITE},shadow = true, float = true, scale = score_number_scale(0.85, PortraitQOL.view_stats().high_scores[score].amt)})}},
+      {n=G.UIT.T, config={text = " ("..PortraitQOL.view_stats().high_scores["current_streak"].amt..")", scale = 0.45, colour = G.C.JOKER_GREY}}
     }
   elseif score == 'hand' then 
     local chip_sprite = Sprite(0,0,0.4,0.4,G.ASSET_ATLAS["ui_"..(G.SETTINGS.colourblind_option and 2 or 1)], {x=0, y=0})
@@ -3382,19 +3686,19 @@ function create_UIBox_high_scores_row(score)
         {n=G.UIT.O, config={w=0.4,h=0.4 , object = chip_sprite}}
       }},
       {n=G.UIT.C, config={align = "cm"}, nodes={
-        {n=G.UIT.O, config={object = DynaText({string = {number_format(G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)}, colours = {G.C.RED},shadow = true, float = true, scale = math.min(0.75, score_number_scale(1.5, G.PROFILES[G.SETTINGS.profile].high_scores[score].amt))})}},
+        {n=G.UIT.O, config={object = DynaText({string = {number_format(PortraitQOL.view_stats().high_scores[score].amt)}, colours = {G.C.RED},shadow = true, float = true, scale = math.min(0.75, score_number_scale(1.5, PortraitQOL.view_stats().high_scores[score].amt))})}},
       }},
     }
   elseif score == 'collection' then 
     score_tab = {
       {n=G.UIT.C, config={align = "cm"}, nodes={
-        {n=G.UIT.O, config={object = DynaText({string = {'%'..math.floor(0.01+100*G.PROFILES[G.SETTINGS.profile].high_scores[score].amt/G.PROFILES[G.SETTINGS.profile].high_scores[score].tot)}, colours = {G.C.WHITE},shadow = true, float = true, scale = math.min(0.75, score_number_scale(1.5, G.PROFILES[G.SETTINGS.profile].high_scores[score].amt))})}},
-        {n=G.UIT.T, config={text = " ("..G.PROFILES[G.SETTINGS.profile].high_scores[score].amt..'/'..G.PROFILES[G.SETTINGS.profile].high_scores[score].tot..")", scale = 0.45, colour = G.C.JOKER_GREY}}
+        {n=G.UIT.O, config={object = DynaText({string = {'%'..math.floor(0.01+100*PortraitQOL.view_stats().high_scores[score].amt/PortraitQOL.view_stats().high_scores[score].tot)}, colours = {G.C.WHITE},shadow = true, float = true, scale = math.min(0.75, score_number_scale(1.5, PortraitQOL.view_stats().high_scores[score].amt))})}},
+        {n=G.UIT.T, config={text = " ("..PortraitQOL.view_stats().high_scores[score].amt..'/'..PortraitQOL.view_stats().high_scores[score].tot..")", scale = 0.45, colour = G.C.JOKER_GREY}}
       }},
     }
   else
     score_tab = {
-      {n=G.UIT.O, config={object = DynaText({string = {number_format(G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)}, colours = {G.C.FILTER},shadow = true, float = true, scale = score_number_scale(0.85, G.PROFILES[G.SETTINGS.profile].high_scores[score].amt)})}},
+      {n=G.UIT.O, config={object = DynaText({string = {number_format(PortraitQOL.view_stats().high_scores[score].amt)}, colours = {G.C.FILTER},shadow = true, float = true, scale = score_number_scale(0.85, PortraitQOL.view_stats().high_scores[score].amt)})}},
     }
   end
   return {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = darken(G.C.JOKER_GREY, 0.1), emboss = 0.05}, nodes={
@@ -3413,6 +3717,7 @@ function create_UIBox_win()
   eased_green[4] = 0
   ease_value(eased_green, 4, 0.5, nil, nil, true)
   local t = create_UIBox_generic_options({ padding = 0, bg_colour = eased_green , colour = G.C.BLACK, outline_colour = G.C.EDITION, no_back = true, no_esc = true, contents = {
+    PortraitQOL.summary(),
     {n=G.UIT.R, config={align = "cm"}, nodes={
       {n=G.UIT.O, config={object = DynaText({string = {localize('ph_you_win')}, colours = {G.C.EDITION},shadow = true, float = true, spacing = 10, rotate = true, scale = 1.5, pop_in = 0.4, maxw = 6.5})}},
     }},
@@ -3652,6 +3957,7 @@ function create_UIBox_game_over()
   end
   
   local t = create_UIBox_generic_options({ bg_colour = eased_red ,no_back = true, padding = 0, contents = {
+    PortraitQOL.summary(),
     {n=G.UIT.R, config={align = "cm"}, nodes={
       {n=G.UIT.O, config={object = DynaText({string = {localize('ph_game_over')}, colours = {G.C.RED},shadow = true, float = true, scale = G.F_PORTRAIT and PORTRAIT_CONFIG.game_over_scale or PORTRAIT_CONFIG.game_over_scale_landscape, pop_in = 0.4, maxw = 6.5})}},
     }},
@@ -3856,7 +4162,7 @@ function create_UIBox_current_hands(simple)
 end
 
 function G.UIDEF.deck_info(_show_remaining)
-  return create_UIBox_generic_options({contents ={create_tabs(
+  return create_UIBox_generic_options({minw = G.F_PORTRAIT and 0 or nil, padding = G.F_PORTRAIT and PORTRAIT_CONFIG.deck_view.panel_padding or nil, contents ={create_tabs(
     {tabs = _show_remaining and {
         {
           label = localize('b_remaining'),
@@ -3875,13 +4181,14 @@ function G.UIDEF.deck_info(_show_remaining)
         tab_definition_function = G.UIDEF.view_deck
       },
     },
-    tab_h = 8,
+    tab_h = G.F_PORTRAIT and 0 or 8,
+    no_shoulders = G.F_PORTRAIT,
     snap_to_nav = true})}})
 end
 
 function G.UIDEF.run_info()
-  return create_UIBox_generic_options({contents ={create_tabs(
-    {tabs = {
+  local result = create_UIBox_generic_options({minw=G.F_PORTRAIT and 0 or nil, padding=G.F_PORTRAIT and .08 or nil, contents ={create_tabs(
+    {portrait_run_info=G.F_PORTRAIT,tabs = {
           {
             label = localize('b_poker_hands'),
             chosen = true,
@@ -3902,6 +4209,8 @@ function G.UIDEF.run_info()
     },
     tab_h = 8,
     snap_to_nav = true})}})
+  result.config.portrait_run_info=G.F_PORTRAIT
+  return result
 end
 
 function G.UIDEF.current_blinds()
@@ -3983,13 +4292,86 @@ function G.UIDEF.current_stake()
   }}
 end
 
-function G.UIDEF.view_deck(unplayed_only)
-  local SCALE =  1
-  if G.F_PORTRAIT then
-    SCALE = PORTRAIT_CONFIG.view_deck_scale
+function portrait_deck_view_cards(SUITS, suit_map, unplayed_only)
+  local deck_tables = {}
+  local layout = G.F_PORTRAIT and portrait_deck_view_metrics(SUITS)
+  for j = 1, #suit_map do
+    local cards = SUITS[suit_map[j]]
+    local per_row = layout and layout.per_row or math.max(1, #cards)
+    for first = 1, #cards, per_row do
+      local last = math.min(first + per_row - 1, #cards)
+      local card_scale = layout and layout.scale or 0.7
+      local view_deck = CardArea(
+        G.ROOM.T.x + 0.2*G.ROOM.T.w/2, G.ROOM.T.h,
+        layout and layout.width or 6.5*G.CARD_W,
+        layout and layout.row_height or 0.6*G.CARD_H,
+        {card_limit = last-first+1, type = 'title', view_deck = true,
+         portrait_deck_view = G.F_PORTRAIT, negative_info = 'playing_card', highlight_limit = 0,
+         card_w = G.CARD_W*card_scale, draw_layers = {'card'}})
+      deck_tables[#deck_tables+1] = {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+        {n=G.UIT.O, config={object = view_deck}}
+      }}
+      for i = first, last do
+        local greyed = unplayed_only and not ((cards[i].area and cards[i].area == G.deck) or cards[i].ability.wheel_flipped)
+        local copy = copy_card(cards[i], nil, card_scale)
+        -- These are visual copies of this run's real deck, not deck identities.
+        copy.skin_run_preview = CardSkins.uses_run_back(cards[i])
+        CardSkins.refresh_back(copy)
+        copy.greyed = greyed
+        copy.T.x = view_deck.T.x + view_deck.T.w/2
+        copy.T.y = view_deck.T.y
+        copy:hard_set_T()
+        view_deck:emplace(copy)
+      end
+    end
   end
 
-  local deck_tables = {}
+  return deck_tables, layout
+end
+
+function portrait_deck_view_definition(layout, deck_tables, rank_cols, tally_ui, modded, wheel_flipped, flip_col)
+  local p = PORTRAIT_CONFIG.deck_view
+  local function text_row(text, colour, scale)
+    return {n=G.UIT.R, config={align = "cm", padding = p.panel_padding}, nodes={
+      {n=G.UIT.O, config={object = DynaText({string = {text}, colours = {colour},
+        scale = scale or p.text_scale, maxw = layout.width, silent = true, shadow = true})}}
+    }}
+  end
+  local nodes = {text_row(G.GAME.selected_back.loc_name, G.C.WHITE, p.title_scale)}
+  if tally_ui[1] then nodes[#nodes+1] = tally_ui[1] end
+  local tallies = {}
+  for i = 2, #tally_ui do
+    for _, cell in ipairs(tally_ui[i].nodes) do tallies[#tallies+1] = cell end
+  end
+  for first = 1, #tallies, p.ranks_per_row do
+    local row = {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={}}
+    for i = first, math.min(first+p.ranks_per_row-1, #tallies) do row.nodes[#row.nodes+1] = tallies[i] end
+    nodes[#nodes+1] = row
+  end
+  -- Reflow native rank counters, retaining their effective/base animation.
+  for first = 1, #rank_cols, p.ranks_per_row do
+    local row = {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={}}
+    for i = first, math.min(first+p.ranks_per_row-1, #rank_cols) do
+      local cell = rank_cols[i]
+      cell.n = G.UIT.C
+      for _, child in ipairs(cell.nodes) do child.n = G.UIT.R; child.config.align = "cm" end
+      row.nodes[#row.nodes+1] = cell
+    end
+    nodes[#nodes+1] = row
+  end
+  nodes[#nodes+1] = {n=G.UIT.R, config={align = "cm", padding = p.panel_padding, r = 0.1, colour = G.C.BLACK}, nodes={
+    {n=G.UIT.C, config={align = "cm", padding = 0}, nodes=deck_tables}
+  }}
+  if modded then nodes[#nodes+1] = text_row(localize('ph_deck_preview_effective'), G.C.BLUE) end
+  if wheel_flipped > 0 then
+    nodes[#nodes+1] = text_row(localize{type='variable',
+      key=wheel_flipped > 1 and 'deck_preview_wheel_plural' or 'deck_preview_wheel_singular',
+      vars={wheel_flipped}}, flip_col)
+  end
+  return {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes=nodes}
+end
+
+function G.UIDEF.view_deck(unplayed_only)
   remove_nils(G.playing_cards)
   G.VIEWING_DECK = true
   table.sort(G.playing_cards, function (a, b) return a:get_nominal('suit') > b:get_nominal('suit') end )
@@ -4003,36 +4385,7 @@ function G.UIDEF.view_deck(unplayed_only)
   for k, v in ipairs(G.playing_cards) do
     table.insert(SUITS[v.base.suit], v)
   end
-  for j = 1, 4 do
-    if SUITS[suit_map[j]][1] then
-      local view_deck = CardArea(
-        G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
-        6.5*G.CARD_W*SCALE,
-        0.6*G.CARD_H*SCALE,
-        {card_limit = #SUITS[suit_map[j]], type = 'title', view_deck = true, highlight_limit = 0, card_w = G.CARD_W*0.7*SCALE, draw_layers = {'card'}})
-      table.insert(deck_tables, 
-      {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
-        {n=G.UIT.O, config={object = view_deck}}
-      }}
-      )
-
-      for i = 1, #SUITS[suit_map[j]] do
-        if SUITS[suit_map[j]][i] then
-          local greyed, _scale = nil, 0.7
-          if unplayed_only and not ((SUITS[suit_map[j]][i].area and SUITS[suit_map[j]][i].area == G.deck) or SUITS[suit_map[j]][i].ability.wheel_flipped) then
-            greyed = true
-          end
-          local copy = copy_card(SUITS[suit_map[j]][i],nil, _scale)
-          copy.greyed = greyed
-          copy.T.x = view_deck.T.x + view_deck.T.w/2
-          copy.T.y = view_deck.T.y
-
-          copy:hard_set_T()
-          view_deck:emplace(copy)
-        end
-      end
-    end
-  end
+  local deck_tables, layout = portrait_deck_view_cards(SUITS, suit_map, unplayed_only)
 
   local flip_col = G.C.WHITE
 
@@ -4100,82 +4453,19 @@ function G.UIDEF.view_deck(unplayed_only)
     }}
   end
 
-  local rank_rows = {n = G.UIT.R, config = {align = "cm", padding = 0.05}, nodes = {}}
-  for i = 13, 1, -1 do
-    local mod_delta2 = mod_rank_tallies[i] ~= rank_tallies[i]
-    rank_rows.nodes[#rank_rows.nodes+1] = {n=G.UIT.C, config={align = "cm", padding = 0.07}, nodes={
-      -- Rank row (A, K, Q, etc.)
-      {n=G.UIT.R, config={align = "cm", r = 0.1, padding = 0.04, emboss = 0.04, minw = 0.5, colour = G.C.L_BLACK}, nodes={
-        {n=G.UIT.T, config={text = rank_name_mapping[i],colour = G.C.JOKER_GREY, scale = 0.35, shadow = true}},
-      }},
-      -- Tally row
-      {n=G.UIT.R, config={align = "cm", minw = 0.4}, nodes={
-        mod_delta2 and {n=G.UIT.O, config={object = DynaText({string = {{string = ''..rank_tallies[i], colour = flip_col},{string =''..mod_rank_tallies[i], colour = G.C.BLUE}}, colours = {G.C.RED}, scale = 0.4, y_offset = -2, silent = true, shadow = true, pop_in_rate = 10, pop_delay = 4})}} or
-        {n=G.UIT.T, config={text = rank_tallies[i] or 'NIL',colour = flip_col, scale = 0.45, shadow = true}}
-      }}
-    }}
-  end
-
   if G.F_PORTRAIT then
-    local t = 
-    {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes={
-      {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes={}},
-      {n=G.UIT.R, config={align = "cm"}, nodes={
-        {n=G.UIT.R, config={align = "cm", minw = 1.5, minh = 2, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes={
-          {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
-            {n=G.UIT.C, config={align = "cm", r = 0.1, colour = G.C.L_BLACK, emboss = 0.05, padding = 0.15}, nodes={
-              {n=G.UIT.R, config={align = "cm"}, nodes={
-                {n=G.UIT.O, config={object = DynaText({string = G.GAME.selected_back.loc_name, colours = {G.C.WHITE}, bump = true, rotate = true, shadow = true, scale = 0.6 - string.len(G.GAME.selected_back.loc_name)*0.01})}},
-              }},
-              {n=G.UIT.R, config={align = "cm", r = 0.1, padding = 0.1, minw = 2.5, minh = 1.3, colour = G.C.WHITE, emboss = 0.05}, nodes={
-                {n=G.UIT.O, config={object = UIBox{
-                  definition = G.GAME.selected_back:generate_UI(nil,0.7, 0.5, G.GAME.challenge),
-                  config = {offset = {x=0,y=0}}
-                }}}
-              }}
-            }},
-            {n=G.UIT.B, config={w = 0.25, h = 0.25}},
-            {n=G.UIT.C, config={align = "cm", r = 0.1, outline_colour = G.C.L_BLACK, line_emboss = 0.05, outline = 1.5}, nodes={
-              {n=G.UIT.R, config={align = "cm", minh = 0.05, padding = 0.07}, nodes={
-                  {n=G.UIT.O, config={object = DynaText({string = {{string = localize('k_base_cards'), colour = G.C.RED}, modded and {string = localize('k_effective'), colour = G.C.BLUE} or nil}, colours = {G.C.RED}, silent = true,scale = 0.4,pop_in_rate = 10, pop_delay = 4})}}
-              }},
-              {n=G.UIT.R, config={align = "cm", minh = 0.05, padding = 0.1}, nodes={
-                tally_sprite({x=1,y=0},{{string = ''..ace_tally, colour = flip_col},{string =''..mod_ace_tally, colour = G.C.BLUE}}, {localize('k_aces')}),--Aces
-                tally_sprite({x=2,y=0},{{string = ''..face_tally, colour = flip_col},{string =''..mod_face_tally, colour = G.C.BLUE}}, {localize('k_face_cards')}),--Face
-                tally_sprite({x=3,y=0},{{string = ''..num_tally, colour = flip_col},{string =''..mod_num_tally, colour = G.C.BLUE}}, {localize('k_numbered_cards')}),--Numbers
-              }},
-              {n=G.UIT.R, config={align = "cm", minh = 0.05, padding = 0.1}, nodes={
-                tally_sprite({x=3,y=1}, {{string = ''..suit_tallies['Spades'], colour = flip_col},{string =''..mod_suit_tallies['Spades'], colour = G.C.BLUE}}, {localize('Spades', 'suits_plural')}),
-                tally_sprite({x=0,y=1}, {{string = ''..suit_tallies['Hearts'], colour = flip_col},{string =''..mod_suit_tallies['Hearts'], colour = G.C.BLUE}}, {localize('Hearts', 'suits_plural')}),
-                tally_sprite({x=2,y=1}, {{string = ''..suit_tallies['Clubs'], colour = flip_col},{string =''..mod_suit_tallies['Clubs'], colour = G.C.BLUE}}, {localize('Clubs', 'suits_plural')}),
-                tally_sprite({x=1,y=1}, {{string = ''..suit_tallies['Diamonds'], colour = flip_col},{string =''..mod_suit_tallies['Diamonds'], colour = G.C.BLUE}}, {localize('Diamonds', 'suits_plural')}),
-              }},
-            }}
-          }},
-          rank_rows
-        }}
-      }},
-      {n=G.UIT.R, config={align = "cm"}, nodes={
-        {n=G.UIT.B, config={w = 0.2, h = 0.8}},
-      }},
-      {n=G.UIT.R, config={align = "cm"}, nodes={
-        {n=G.UIT.B, config={w = 0.2, h = 0.5}},
-        {n=G.UIT.C, config={align = "cm", padding = 0.1, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables}
-      }},
-      {n=G.UIT.R, config={align = "cm", minh = 0.8, padding = 0.05}, nodes={
-        modded and {n=G.UIT.R, config={align = "cm"}, nodes={
-          {n=G.UIT.C, config={padding = 0.3, r = 0.1, colour = mix_colours(G.C.BLUE, G.C.WHITE,0.7)}, nodes = {}},
-          {n=G.UIT.T, config={text =' '..localize('ph_deck_preview_effective'),colour = G.C.WHITE, scale =0.3}},
-        }} or nil,
-        wheel_flipped > 0 and {n=G.UIT.R, config={align = "cm"}, nodes={
-          {n=G.UIT.C, config={padding = 0.3, r = 0.1, colour = flip_col}, nodes = {}},
-          {n=G.UIT.T, config={text =' '..(wheel_flipped > 1 and
-            localize{type = 'variable', key = 'deck_preview_wheel_plural', vars = {wheel_flipped}} or
-            localize{type = 'variable', key = 'deck_preview_wheel_singular', vars = {wheel_flipped}}),colour = G.C.WHITE, scale =0.3}},
-        }} or nil,
+    local tally_ui = {{n=G.UIT.R, config={align="cm"}, nodes={}},
+      {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
+        tally_sprite({x=1,y=0}, {{string=' '..ace_tally, colour=flip_col}, {string=' '..mod_ace_tally, colour=G.C.BLUE}}, {localize('k_aces')}),
+        tally_sprite({x=2,y=0}, {{string=' '..face_tally, colour=flip_col}, {string=' '..mod_face_tally, colour=G.C.BLUE}}, {localize('k_face_cards')}),
+        tally_sprite({x=3,y=0}, {{string=' '..num_tally, colour=flip_col}, {string=' '..mod_num_tally, colour=G.C.BLUE}}, {localize('k_numbered_cards')}),
+        tally_sprite({x=3,y=1}, {{string=' '..suit_tallies.Spades, colour=flip_col}, {string=' '..mod_suit_tallies.Spades, colour=G.C.BLUE}}, {localize('Spades', 'suits_plural')}),
+        tally_sprite({x=0,y=1}, {{string=' '..suit_tallies.Hearts, colour=flip_col}, {string=' '..mod_suit_tallies.Hearts, colour=G.C.BLUE}}, {localize('Hearts', 'suits_plural')}),
+        tally_sprite({x=2,y=1}, {{string=' '..suit_tallies.Clubs, colour=flip_col}, {string=' '..mod_suit_tallies.Clubs, colour=G.C.BLUE}}, {localize('Clubs', 'suits_plural')}),
+        tally_sprite({x=1,y=1}, {{string=' '..suit_tallies.Diamonds, colour=flip_col}, {string=' '..mod_suit_tallies.Diamonds, colour=G.C.BLUE}}, {localize('Diamonds', 'suits_plural')}),
       }}
-    }}
-    return t
+    }
+    return portrait_deck_view_definition(layout, deck_tables, rank_cols, tally_ui, modded, wheel_flipped, flip_col)
   else
     local t = 
     {n=G.UIT.ROOT, config={align = "cm", colour = G.C.CLEAR}, nodes={
@@ -5055,14 +5345,16 @@ function create_UIBox_blind_popup(blind, discovered, vars)
 end 
 
 
-function create_UIBox_card_unlock(card_center)
+function create_UIBox_card_unlock(card_center, presentation)
+  local card
+  if not presentation then
   G.your_collection = CardArea(
     G.ROOM.T.x + G.ROOM.T.w/2,G.ROOM.T.h,
     1*G.CARD_W,
     1*G.CARD_H, 
     {card_limit = 2, type = 'consumeable', highlight_limit = 0})
   
-  local card = Card(G.your_collection.T.x + G.your_collection.T.w/2 - G.CARD_W/2, G.your_collection.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, card_center, {bypass_discovery_center = true, bypass_discovery_ui = true})
+  card = Card(G.your_collection.T.x + G.your_collection.T.w/2 - G.CARD_W/2, G.your_collection.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, card_center, {bypass_discovery_center = true, bypass_discovery_ui = true})
   local locked_card = Card(G.your_collection.T.x + G.your_collection.T.w/2 - G.CARD_W/2, G.your_collection.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, card_center.set == 'Voucher' and G.v_locked or G.j_locked)
   locked_card:remove_UI()
   locked_card.ID = card.ID
@@ -5110,24 +5402,25 @@ function create_UIBox_card_unlock(card_center)
   
   G.your_collection:emplace(card)
   G.your_collection:emplace(locked_card)
+  end
 
   local t = create_UIBox_generic_options({padding = 0,back_label = localize('b_continue'), no_pip = true, snap_back = true, back_func = 'continue_unlock', minw = 4.5, contents = {
       {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
           {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
-              {n=G.UIT.O, config={object = DynaText({string = {card_center.set == 'Voucher' and localize('k_voucher') or localize('k_joker')}, colours = {G.C.BLUE},shadow = true, rotate = true, bump = true, pop_in = 0.3, pop_in_rate = 2, scale = 1.2})}}
+              {n=G.UIT.O, config={object = DynaText({string = {presentation and presentation.heading or (card_center.set == 'Voucher' and localize('k_voucher') or localize('k_joker'))}, colours = {G.C.BLUE},shadow = true, rotate = true, bump = true, pop_in = 0.3, pop_in_rate = 2, scale = 1.2})}}
             }},
             {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
               {n=G.UIT.O, config={object = DynaText({string = {localize('k_unlocked_ex')}, colours = {G.C.RED},shadow = true, rotate = true, bump = true, pop_in = 0.6, pop_in_rate = 2, scale = 0.8})}}
             }},
           }},
           {n=G.UIT.R, config={align = "cm", padding = 0, draw_layer = 1}, nodes={
-            {n=G.UIT.O, config={object = G.your_collection}}
+            {n=G.UIT.O, config={object = presentation and presentation.sprite or G.your_collection}}
           }},
           {n=G.UIT.R, config={align = "cm", padding = 0.2}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.05, emboss = 0.05, colour = G.C.WHITE, r = 0.1}, nodes={
-              desc_from_rows(card:generate_UIBox_unlock_table(true).main)
+              presentation and presentation.description or desc_from_rows(card:generate_UIBox_unlock_table(true).main)
             }}
           }}
         }}
@@ -5247,6 +5540,9 @@ function G.UIDEF.credits()
   local credits_fit = get_portrait_fit_scale(21.3)
   local text_scale = 0.75*credits_fit
   local t =   create_UIBox_generic_options({contents ={
+      {n=G.UIT.R,config={align='cm',padding=0.12},nodes={
+          {n=G.UIT.T,config={text='Balatro Portrait · reggiemdfk',scale=0.4,colour=G.C.GOLD,shadow=true}},
+      }},
       {n=G.UIT.R, config={align = "cm", padding = 0}, nodes={
         create_tabs(
         {tabs = {
@@ -7338,7 +7634,7 @@ function create_UIBox_generic_options(args)
     }))
   end
 
-  return {n=G.UIT.ROOT, config = {align = "cm", minw = G.ROOM.T.w*5, minh = G.ROOM.T.h*5,padding = 0.1, r = 0.1, colour = args.bg_colour or {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3],0.7}}, nodes={
+  return {n=G.UIT.ROOT, config = {portrait_panel = true, align = "cm", minw = G.ROOM.T.w*5, minh = G.ROOM.T.h*5,padding = 0.1, r = 0.1, colour = args.bg_colour or {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3],0.7}}, nodes={
     {n=G.UIT.R, config={align = "cm", minh = 1,r = 0.3, padding = 0.07, minw = 1, colour = args.outline_colour or G.C.JOKER_GREY, emboss = 0.1}, nodes={
       {n=G.UIT.C, config={align = "cm", minh = 1,r = 0.2, padding = 0.2, minw = 1, colour = args.colour or G.C.L_BLACK}, nodes={
         {n=G.UIT.R, config={align = "cm",padding = args.padding or 0.2, minw = args.minw or 7}, nodes=

@@ -18,5 +18,5 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Build fallido.' }
     & $PythonPath tools/validate_ipa.py --original $GameSource
     if ($LASTEXITCODE -ne 0) { throw 'Validacion fallida.' }
-    Get-FileHash -LiteralPath 'balatro-portrait.ipa' -Algorithm SHA256
+    Get-FileHash -LiteralPath 'balatron.ipa' -Algorithm SHA256
 } finally { Pop-Location }

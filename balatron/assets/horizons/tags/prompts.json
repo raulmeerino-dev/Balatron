@@ -1,0 +1,45 @@
+{
+  "method": "built-in imagegen",
+  "assets": [
+    {
+      "id": "bookmark",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: muted teal ribbon bookmark with three small cream card tabs. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/bookmark-source.png"
+    },
+    {
+      "id": "return_ticket",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: folded lilac ticket with a dark violet arrow returning to a little theater mask. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/return_ticket-source.png"
+    },
+    {
+      "id": "mislabel",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: two ivory price labels joined by a single crossing red thread. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/mislabel-source.png"
+    },
+    {
+      "id": "pantry",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: mint green open tin containing a tiny ice cream cone and a bean. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/pantry-source.png"
+    },
+    {
+      "id": "topsy_turvy",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: one blue and one red curved exchange arrow surrounding a small blue poker chip and red multiplication cross. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/topsy_turvy-source.png"
+    },
+    {
+      "id": "interval",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: deep magenta tiny opened theater curtain revealing a warm yellow shop counter. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/interval-source.png"
+    },
+    {
+      "id": "procession",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: six simple small red and blue playing-card pennants following a curved single procession. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/procession-source.png"
+    },
+    {
+      "id": "xray",
+      "prompt": "Generate exactly ONE Balatro game Tag sprite, NOT an atlas. The attached atlas is only the visual style reference. Main icon: deep navy booster wrapper whose inner three playing-card skeletons glow flat cyan. A small square ivory chip with rounded stepped corners and the same pale blue-grey rim as the official reference Tags. Icon centered and fills interior, a bold simple silhouette. Crisp 34x34 logical pixel art enlarged, hard square pixel edges, limited 6-8 colour palette, no blur, no realistic material. Complete small chip, front view, fully opaque ivory interior, genuinely transparent outside its rounded shape. No text, numbers, letters, watermark or additional chips. Must remain instantly readable at 34 pixels.",
+      "source": "balatron/assets/horizons/tags/xray-source.png"
+    }
+  ]
+}

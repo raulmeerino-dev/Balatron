@@ -1,4 +1,4 @@
-# Balatro Portrait Zygisk Module
+# Balatrón Zygisk Module
 
 Experimental root-only runtime module for the official Google Play Balatro.
 

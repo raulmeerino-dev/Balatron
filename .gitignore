@@ -26,6 +26,7 @@
 /balatron/src/resources/
 /balatron/src/localization/
 /.github-transfer/
+/BALATRON-ORGANIZADO/
 
 # Local credentials and editor settings
 .env

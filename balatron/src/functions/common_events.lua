@@ -9,62 +9,8 @@ function set_screen_positions()
         if not G.ROOM or not G.ROOM.T then return end
         
         if G.F_PORTRAIT then
-            local pc = PORTRAIT_CONFIG
-            local room_w = G.ROOM.T.w or 10
-            local room_h = G.ROOM.T.h or 20
-
-            local hud_top_space = pc.hud_top_space
-            local bottom_margin = pc.bottom_margin
-
-            -- Card area widths are fixed at run start; the room width in game
-            -- units shrinks when the UI is scaled up (Swipe Only mode), which
-            -- would push the shelves past the screen edges. Clamp them to the
-            -- room so everything stays centered at any scale.
-            local max_area_w = room_w * (pc.usable_w_factor or 0.96)
-            if G.jokers.T.w > max_area_w then G.jokers.T.w = max_area_w end
-            if G.hand.T.w > max_area_w then G.hand.T.w = max_area_w end
-            if G.play.T.w > max_area_w then G.play.T.w = max_area_w end
-
-            G.jokers.T.x = (room_w - G.jokers.T.w) / 2
-            G.jokers.T.y = pc.jokers_y
-            
-            G.hand.T.x = (room_w - G.hand.T.w) / 2
-            G.hand.T.y = room_h - G.hand.T.h - bottom_margin - get_hand_base_offset()
-
-            -- Center the played-card "stage" in the gap between the joker shelf
-            -- and the hand, instead of hugging the hand and leaving the middle
-            -- of the screen empty. The hand slides up ~3 units while selecting,
-            -- so center against that raised position to avoid overlap.
-            local jokers_bottom_limit = G.jokers.T.y + G.jokers.T.h + 2.5
-            local shelf_bottom = G.jokers.T.y + G.jokers.T.h
-            local hand_top_selecting = G.hand.T.y - 3
-            local centered_play_y = shelf_bottom + (hand_top_selecting - shelf_bottom - G.play.T.h) / 2
-
-            G.play.T.x = (room_w - G.play.T.w) / 2
-            G.play.T.y = math.min(centered_play_y, hand_top_selecting - G.play.T.h - 0.5)
-            G.play.T.y = math.max(G.play.T.y, jokers_bottom_limit)
-
-            if G.SETTINGS.play_main_hand == 2 then
-                G.consumeables.T.x = G.jokers.T.x + G.jokers.T.w - G.consumeables.T.w
-                G.consumeables.T.y = G.jokers.T.y - G.jokers.T.h - 0.6
-
-                G.deck.T.x = G.jokers.T.x + G.jokers.T.w/6
-                G.deck.T.y = G.jokers.T.y - G.jokers.T.h - 0.6
-            else
-                G.consumeables.T.x = G.jokers.T.x
-                G.consumeables.T.y = G.jokers.T.y - G.jokers.T.h - 0.6
-
-                G.deck.T.x = G.jokers.T.x + G.jokers.T.w - G.deck.T.w - G.jokers.T.w/6
-                G.deck.T.y = G.jokers.T.y - G.jokers.T.h - 0.6
-            end
-            
-            if pc.deck_position == 'bottom_right' then
-                G.deck.T.x = room_w - G.deck.T.w - 0.25
-                G.deck.T.y = G.hand.T.y - G.deck.T.h - 0.5
-            end
-
-            G.discard.T.x = G.play.T.x + G.play.T.w + pc.discard_x_offset
-            G.discard.T.y = G.play.T.y
+            local layout = portrait_position_run_areas()
+            G.hand.T.y = layout.hand_y
         else
             -- LANDSCAPE MODE (original)
             G.hand.T.x = G.TILE_W - G.hand.T.w - 2.85
@@ -540,8 +486,9 @@ function play_area_status_text(text, silent, delay)
     }))
 end
 
-function level_up_hand(card, hand, instant, amount)
+function level_up_hand(card, hand, instant, amount, source)
     amount = amount or 1
+    if PortraitRunRules then amount = PortraitRunRules.planet_level_amount(card,amount,source) end
     G.GAME.hands[hand].level = math.max(0, G.GAME.hands[hand].level + amount)
     G.GAME.hands[hand].mult = math.max(G.GAME.hands[hand].s_mult + G.GAME.hands[hand].l_mult*(G.GAME.hands[hand].level - 1), 1)
     G.GAME.hands[hand].chips = math.max(G.GAME.hands[hand].s_chips + G.GAME.hands[hand].l_chips*(G.GAME.hands[hand].level - 1), 0)
@@ -908,6 +855,7 @@ function set_main_menu_UI()
 end
 
 function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
+    if card and card.area==G.jokers and ((eval_type=='x_mult' and (amt or 0)>=2) or (extra and ((extra.Xmult_mod or extra.x_mult or 0)>=2))) then PortraitQOL.haptic('joker') end
     percent = percent or (0.9 + 0.2*math.random())
     if dir == 'down' then 
         percent = 1-percent
@@ -1006,6 +954,7 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
             config.scale = 0.7
         end
     end
+    if extra and extra.portrait_scale then config.scale=extra.portrait_scale end
     delay = delay*1.25
 
     if amt > 0 or amt < 0 then
@@ -1013,12 +962,14 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
             if extrafunc then extrafunc() end
             attention_text({
                 text = text,
+                status_nodes = extra and extra.status_nodes,
                 scale = config.scale or 1, 
                 hold = delay - 0.2,
                 backdrop_colour = colour,
                 align = card_aligned,
                 major = card,
-                offset = {x = 0, y = y_off}
+                portrait_fit = extra and extra.portrait_scale ~= nil,
+                offset = extra and extra.portrait_offset or {x = 0, y = y_off}
             })
             play_sound(sound, 0.8+percent*0.2, volume)
             if not extra or not extra.no_juice then
@@ -1033,12 +984,14 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
                     if extrafunc then extrafunc() end
                     attention_text({
                         text = text,
+                        status_nodes = extra and extra.status_nodes,
                         scale = config.scale or 1, 
                         hold = delay - 0.2,
                         backdrop_colour = colour,
                         align = card_aligned,
                         major = card,
-                        offset = {x = 0, y = y_off}
+                        portrait_fit = extra and extra.portrait_scale ~= nil,
+                        offset = extra and extra.portrait_offset or {x = 0, y = y_off}
                     })
                     play_sound(sound, 0.8+percent*0.2, volume)
                     if not extra or not extra.no_juice then
@@ -1074,6 +1027,10 @@ function add_round_eval_row(config)
         end
     end
 
+    if config.name == 'portrait_overkill' then
+        require('portrait_reward_fx').overkill(config,center_round_eval)
+        return
+    end
     if config.name ~= 'bottom' then
         if config.name ~= 'blind1' then
             if not G.round_eval.divider_added then 
@@ -1165,14 +1122,14 @@ function add_round_eval_row(config)
             end
         }))
         local dollar_row = 0
-        if num_dollars > 60 then 
-            local dollar_string = localize('$')..num_dollars
+        if num_dollars > 60 or config.compact_money then
+            local dollar_string = (config.compact_money and '+' or '')..localize('$')..num_dollars
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',delay = 0.38,
                 func = function()
                     G.round_eval:add_child(
                             {n=G.UIT.R, config={align = "cm", id = 'dollar_row_'..(dollar_row+1)..'_'..config.name}, nodes={
-                                {n=G.UIT.O, config={object = DynaText({string = {localize('$')..num_dollars}, colours = {G.C.MONEY}, shadow = true, pop_in = 0, scale = 0.65, float = true})}}
+                                {n=G.UIT.O, config={object = DynaText({string = {dollar_string}, colours = {G.C.MONEY}, shadow = true, pop_in = 0, scale = 0.65, float = true})}}
                             }},
                             G.round_eval:get_UIE_by_ID('dollar_'..config.name))
                     center_round_eval()
@@ -2016,17 +1973,19 @@ function unlock_notify()
     end
 end
 
-function create_unlock_overlay(key)
-    if G.P_CENTERS[key] then 
+function create_unlock_overlay(key, presentation)
+    if G.P_CENTERS[key] or presentation then
         G.E_MANAGER:add_event(Event({
             trigger = 'immediate',
             no_delete = true,
             func = (function()
+                if presentation and presentation.valid and not presentation.valid() then return true end
                 if not G.OVERLAY_MENU then 
                     G.SETTINGS.paused = true
                     G.FUNCS.overlay_menu{
-                        definition = G.P_CENTERS[key].set == 'Back' and create_UIBox_deck_unlock(G.P_CENTERS[key]) or create_UIBox_card_unlock(G.P_CENTERS[key]),
+                        definition = presentation and presentation.definition() or (G.P_CENTERS[key].set == 'Back' and create_UIBox_deck_unlock(G.P_CENTERS[key]) or create_UIBox_card_unlock(G.P_CENTERS[key])),
                     }
+                    if presentation and presentation.shown then presentation.shown(G.OVERLAY_MENU) end
                     play_sound('foil1', 0.7, 0.3)
                     play_sound('gong', 1.4, 0.15)
                     return true
@@ -2122,7 +2081,10 @@ end
 
 function get_current_pool(_type, _rarity, _legendary, _append)
         --create the pool
-        G.ARGS.TEMP_POOL = EMPTY(G.ARGS.TEMP_POOL)
+        -- Rarity weights and mod in_pool hooks can request another pool while
+        -- this one is being built. Never share its backing table with them:
+        -- otherwise empty_rarity (or another set's keys) leaks into create_card.
+        G.ARGS.TEMP_POOL = {}
         local _pool, _starting_pool, _pool_key, _pool_size = G.ARGS.TEMP_POOL, nil, '', 0
     
         if _type == 'Joker' then 
@@ -2197,7 +2159,7 @@ function get_current_pool(_type, _rarity, _legendary, _append)
 
         --if pool is empty
         if _pool_size == 0 then
-            _pool = EMPTY(G.ARGS.TEMP_POOL)
+            _pool = EMPTY(_pool)
             if _type == 'Tarot' or _type == 'Tarot_Planet' then _pool[#_pool + 1] = "c_strength"
             elseif _type == 'Planet' then _pool[#_pool + 1] = "c_pluto"
             elseif _type == 'Spectral' then _pool[#_pool + 1] = "c_incantation"
@@ -2271,6 +2233,12 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         _type = (center.set ~= 'Default' and center.set or _type)
     else
         local _pool, _pool_key = get_current_pool(_type, _rarity, legendary, key_append)
+        -- empty_rarity is a weight-probe sentinel, never a card key. An
+        -- explicitly requested, disabled/empty rarity uses the Common pool
+        -- (0 is the native Common rarity argument); retain its usual fallback.
+        if _type == 'Joker' and #_pool == 1 and _pool[1] == 'empty_rarity' then
+            _pool, _pool_key = get_current_pool('Joker', 0, false, key_append)
+        end
         center = pseudorandom_element(_pool, pseudoseed(_pool_key))
         local it = 1
         while center == 'UNAVAILABLE' do
@@ -2278,6 +2246,22 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
             center = pseudorandom_element(_pool, pseudoseed(_pool_key..'_resample'..it))
         end
 
+        -- A missing registry entry is an error, not permission to silently
+        -- replace a custom Joker. Include the actual selection in diagnostics.
+        if not G.P_CENTERS[center] then
+            local switches = {}
+            for _,id in ipairs({'incj','upg_jokers','risk_jokers','joker_fusion','deck_mutations'}) do
+                local config = G.GAME[id..'_config'] or {}
+                switches[#switches+1] = id..'='..tostring(config.enabled)
+                for key,enabled in pairs(config.jokers or {}) do
+                    switches[#switches+1] = id..'.'..key..'='..tostring(enabled)
+                end
+            end
+            error('Unregistered card key: '..tostring(center)..
+                ' set='..tostring(_type)..' rarity='..tostring(_rarity)..
+                ' forced_key='..tostring(forced_key)..' pool='..tostring(_pool_key)..
+                ' entries='..table.concat(_pool,',')..' toggles='..table.concat(switches,','))
+        end
         center = G.P_CENTERS[center]
     end
 

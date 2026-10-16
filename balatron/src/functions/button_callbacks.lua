@@ -128,6 +128,7 @@ G.FUNCS.HUD_blind_visible = function(e)
   elseif G.GAME.blind then
       G.GAME.blind.states.visible = false
   end
+  if G.F_PORTRAIT then e.states.visible = G.GAME.blind and G.GAME.blind.states.visible or false end
 end
 
 --Expands or contracts the 'debuff text' area of the blind HUD when it changes,
@@ -981,6 +982,17 @@ G.FUNCS.change_collab = function(args)
   G:save_settings()
 end
 
+G.FUNCS.change_animated_background = function(args)
+  G.SETTINGS.animated_background = args.to_key == 1
+  require('portrait_background').update(0,G.SETTINGS,PORTRAIT_CONFIG)
+  G:save_settings()
+end
+
+G.FUNCS.change_card_skin = function(args)
+  CardSkins.select(args.to_key)
+  G.FUNCS.customize_deck()
+end
+
 --||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 --                                         TEXT ENTRY
 --||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -1500,11 +1512,11 @@ end
 --**pause** Whether the game should be paused on creation of the UIBox
 G.FUNCS.overlay_menu  = function(args)
   if not args then return end
+  G.CONTROLLER:cancel_pointer_interaction()
   --Remove any existing overlays if there is one
   if G.OVERLAY_MENU then G.OVERLAY_MENU:remove() end
   G.CONTROLLER.locks.frame_set = true
   G.CONTROLLER.locks.frame = true
-  G.CONTROLLER.cursor_down.target = nil
   G.CONTROLLER:mod_cursor_context_layer(G.NO_MOD_CURSOR_STACK and 0 or 1)
 
   args.config = args.config or {}
@@ -1513,7 +1525,8 @@ G.FUNCS.overlay_menu  = function(args)
     offset = args.config.offset or {x=0,y=10},
     major = args.config.major or G.ROOM_ATTACH,
     bond = 'Weak',
-    no_esc = args.config.no_esc
+    no_esc = args.config.no_esc,
+    portrait_panel = G.F_PORTRAIT and true or nil
   }
   G.OVERLAY_MENU = true
   --Generate the UIBox
@@ -1531,6 +1544,7 @@ end
 --Removes the overlay menu if one exists, unpauses the game, and saves the settings to file
 G.FUNCS.exit_overlay_menu = function()
   if not G.OVERLAY_MENU then return end
+  G.CONTROLLER:cancel_pointer_interaction()
   G.CONTROLLER.locks.frame_set = true
   G.CONTROLLER.locks.frame = true
   G.CONTROLLER:mod_cursor_context_layer(-1000)
@@ -1720,6 +1734,7 @@ G.FUNCS.challenge_list = function(e)
 end
 
 G.FUNCS.high_scores = function(e)
+    PortraitQOL.stats_scope = 'vanilla'
   G.SETTINGS.paused = true
   G.FUNCS.overlay_menu{
     definition = create_UIBox_high_scores(),
@@ -2029,7 +2044,7 @@ G.FUNCS.start_setup_run = function(e)
     if not G.GAME or (not G.GAME.won and not G.GAME.seeded) then
       if G.SAVED_GAME ~= nil then
         if not G.SAVED_GAME.GAME.won then 
-          G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
+          PortraitQOL.records().current_streak.amt = 0
         end
         G:save_settings()
       end
@@ -2107,14 +2122,14 @@ end
 G.FUNCS.chip_UI_set = function(e)
   local new_chips_text = number_format(G.GAME.chips)
   if G.GAME.chips_text ~= new_chips_text then
-    e.config.scale = math.min(0.8, scale_number(G.GAME.chips, 1.1))
+    e.config.scale = math.min(e.config.portrait_scale or 0.8, scale_number(G.GAME.chips, e.config.portrait_scale and 1.35 or 1.1))
     G.GAME.chips_text = new_chips_text
   end
 end
 
 G.FUNCS.blind_chip_UI_scale = function(e)
   if G.GAME.blind and G.GAME.blind.chips then
-    e.config.scale = scale_number(G.GAME.blind.chips, 0.7, 100000)
+    e.config.scale = scale_number(G.GAME.blind.chips, e.config.portrait_scale or 0.7, 100000)
   end
 end
 
@@ -2134,7 +2149,7 @@ G.FUNCS.hand_mult_UI_set = function(e)
   local new_mult_text = number_format(G.GAME.current_round.current_hand.mult)
   if new_mult_text ~= G.GAME.current_round.current_hand.mult_text then 
     G.GAME.current_round.current_hand.mult_text = new_mult_text
-    e.config.object.scale = scale_number(G.GAME.current_round.current_hand.mult, 0.9, 1000)
+    e.config.object.scale = scale_number(G.GAME.current_round.current_hand.mult, e.config.portrait_scale or 0.9, 1000)
     e.config.object:update_text()
     if not G.TAROT_INTERRUPT_PULSE then G.FUNCS.text_super_juice(e, math.max(0,math.floor(math.log10(type(G.GAME.current_round.current_hand.mult) == 'number' and G.GAME.current_round.current_hand.mult or 1)))) end
   end
@@ -2144,7 +2159,7 @@ G.FUNCS.hand_chip_UI_set = function(e)
   local new_chip_text = number_format(G.GAME.current_round.current_hand.chips)
     if new_chip_text ~= G.GAME.current_round.current_hand.chip_text then 
       G.GAME.current_round.current_hand.chip_text = new_chip_text
-      e.config.object.scale = scale_number(G.GAME.current_round.current_hand.chips, 0.9, 1000)
+      e.config.object.scale = scale_number(G.GAME.current_round.current_hand.chips, e.config.portrait_scale or 0.9, 1000)
       e.config.object:update_text()
       if not G.TAROT_INTERRUPT_PULSE then G.FUNCS.text_super_juice(e, math.max(0,math.floor(math.log10(type(G.GAME.current_round.current_hand.chips) == 'number' and G.GAME.current_round.current_hand.chips or 1)))) end
     end
@@ -2156,7 +2171,7 @@ G.FUNCS.hand_chip_total_UI_set = function(e)
   else
     local new_chip_total_text = number_format(G.GAME.current_round.current_hand.chip_total)
     if new_chip_total_text ~= G.GAME.current_round.current_hand.chip_total_text then 
-      e.config.object.scale = scale_number(G.GAME.current_round.current_hand.chip_total, 0.95, 100000000)
+      e.config.object.scale = scale_number(G.GAME.current_round.current_hand.chip_total, e.config.portrait_scale or 0.95, 100000000)
       
       G.GAME.current_round.current_hand.chip_total_text = new_chip_total_text
       if not G.ARGS.hand_chip_total_UI_set or G.ARGS.hand_chip_total_UI_set <  G.GAME.current_round.current_hand.chip_total then 
@@ -2231,6 +2246,21 @@ G.FUNCS.flame_handler = function(e)
           }}})
           e.config.object:get_pos_pixel()
       end
+      if G.F_PORTRAIT then
+        -- Vanilla: a 2.5x2.5 flame sprite, bottom-centred inside a 2x1 meter.
+        -- Preserve those proportions using the actual laid-out panel dimensions.
+        -- Keep native Sprite drawing, full UVs, bmi anchor and unclipped overflow.
+        local sprite, panel = e.config.object, e.parent
+        local w, h = panel.T.w*(2.5/2), panel.T.h*(2.5/1)
+        if w > 0 and h > 0 and (sprite.T.w ~= w or sprite.T.h ~= h) then
+          sprite.T.w, sprite.T.h = w, h
+          sprite.scale_mag = math.min(sprite.scale.x/w, sprite.scale.y/h)
+          -- Alignment normally caches its type/offset, not its dimensions.
+          -- Recompute bmi after resizing; native movement inherits the HUD's VT.
+          sprite.alignment.prev_type = ''
+          sprite:align_to_major()
+        end
+      end
       local _F = G.ARGS[v.arg_tab]
       local exptime = math.exp(-0.4*G.real_dt)
       
@@ -2250,14 +2280,34 @@ G.FUNCS.flame_handler = function(e)
 end
 
 G.FUNCS.hand_text_UI_set = function(e)
-  if G.GAME.current_round.current_hand.handname ~= G.GAME.current_round.current_hand.handname_text then 
-    G.GAME.current_round.current_hand.handname_text = G.GAME.current_round.current_hand.handname
-    if G.GAME.current_round.current_hand.handname:len() >= 13 then
-      e.config.object.scale = 12*0.56/G.GAME.current_round.current_hand.handname:len()
+  local name=G.GAME.current_round.current_hand.handname
+  local label=G.F_PORTRAIT and name or require('portrait_score').hand_label(name)
+  if label ~= G.GAME.current_round.current_hand.handname_text then
+    G.GAME.current_round.current_hand.handname_text = label
+    if label:len() >= 13 then
+      e.config.object.scale = 12*0.56/label:len()
     else
-      e.config.object.scale = 2.4/math.sqrt(G.GAME.current_round.current_hand.handname:len()+5)
+      e.config.object.scale = 2.4/math.sqrt(label:len()+5)
     end
     e.config.object:update_text()
+    if e.config.portrait_maxw and e.config.object.T.w>e.config.portrait_maxw then
+      e.config.object.scale=e.config.object.scale*e.config.portrait_maxw/e.config.object.T.w
+      e.config.object:update_text(true)
+    end
+  end
+end
+
+G.FUNCS.hand_usage_UI_set = function(e)
+  local label=require('portrait_score').hand_usage(G.GAME.current_round.current_hand.handname)
+  if e.config.usage_label==label then return end
+  e.config.usage_label=label
+  local text=e.config.object
+  text.config.string={label}
+  text.scale=e.config.usage_scale
+  text:update_text(true)
+  if text.T.w>e.config.w then
+    text.scale=text.scale*e.config.w/text.T.w
+    text:update_text(true)
   end
 end
 
@@ -2364,7 +2414,8 @@ end
       end
       e.children.info = UIBox{
         definition = {n=G.UIT.ROOT, config = {align = 'cm', colour = G.C.CLEAR, padding = 0.02}, nodes=e.config.ref_table},
-        config = {offset = info_offset, align = info_align, parent = e, can_collide = false}
+        config = {offset = info_offset, align = info_align, parent = e, can_collide = false,
+          portrait_layout = G.F_PORTRAIT, portrait_side_info = true}
       }
       e.children.info:align_to_major()
       e.children.info.states.collide.can = false
@@ -2469,7 +2520,8 @@ end
       if card.ability.booster_pos then G.GAME.current_round.used_packs[card.ability.booster_pos] = 'USED' end
       draw_card(G.hand, G.play, 1, 'up', true, card, nil, true) 
       if not card.from_tag then 
-        G.GAME.round_scores.cards_purchased.amt = G.GAME.round_scores.cards_purchased.amt + 1
+        PortraitQOL.haptic('buy')
+          G.GAME.round_scores.cards_purchased.amt = G.GAME.round_scores.cards_purchased.amt + 1
       end
       e.config.ref_table:open()
     elseif card.ability.set == 'Voucher' then 
@@ -2869,6 +2921,17 @@ end
 
           local _blind_choice = G.blind_select_opts[string.lower(e.config.id)]
           local _top_button = e.UIBox:get_UIE_by_ID('select_blind_button')
+          local _token_node = G.F_PORTRAIT and e.UIBox:get_UIE_by_ID('portrait_blind_token')
+          if _token_node then
+            local active = e.config.id == G.GAME.blind_on_deck
+            _token_node.config.object.states.click.can = active
+            local body = e.UIBox:get_UIE_by_ID('portrait_blind_body')
+            body.config.outline_colour = G.C.L_BLACK
+            body.config.outline = 1
+            if active then
+              G.CONTROLLER:snap_to({node=_token_node.config.object})
+            end
+          end
           local _border = e.UIBox.UIRoot.children[1].children[1]
           local _tag = e.UIBox:get_UIE_by_ID('tag_'..e.config.id)
           local _tag_container = e.UIBox:get_UIE_by_ID('tag_container')
@@ -2882,6 +2945,12 @@ end
             _border.parent.config.outline_colour = G.C.UI.TRANSPARENT_DARK
             _border.config.outline_colour = _border.config.outline and _border.config.outline_colour or get_blind_main_colour(e.config.id)
             _border.config.outline = 1.5
+            if G.F_PORTRAIT then
+              _border.parent.config.outline = nil
+              _border.parent.config.outline_colour = nil
+              _border.config.outline = nil
+              _border.config.outline_colour = nil
+            end
             
             -- Elevates the active blind visually (portrait: no y-shift to prevent row drift)
             local y_offset_active = G.F_PORTRAIT and 0 or -0.9
@@ -2910,7 +2979,10 @@ end
           elseif e.config.id ~= G.GAME.blind_on_deck then 
             e.config.ref_table.deck = 'off'
             e.config.draw_after = true
-            e.config.colour = adjust_alpha(G.GAME.round_resets.blind_states[e.config.id] == 'Skipped' and mix_colours(G.C.BLUE, G.C.L_BLACK, 0.1) or G.C.L_BLACK, 0.5)
+            local state=G.GAME.round_resets.blind_states[e.config.id]
+            -- Use the vanilla inactive overlay in both orientations.
+            local dim=0.5
+            e.config.colour = adjust_alpha(state == 'Skipped' and mix_colours(G.C.BLUE, G.C.L_BLACK, 0.1) or G.C.L_BLACK, dim)
             _border.parent.config.outline = nil
             _border.parent.config.outline_colour = nil
             _border.config.outline_colour = nil
@@ -2923,7 +2995,14 @@ end
             if _tag and _tag_container then 
               if G.GAME.round_resets.blind_states[e.config.id] == 'Skipped' or
                 G.GAME.round_resets.blind_states[e.config.id] == 'Defeated' then
-                if not _tag_container.config.finished_blind_offset_applied then
+                if G.F_PORTRAIT then
+                  -- A completed preview stays in its layout slot, hidden. Moving
+                  -- it offscreen leaves independently drawn tag sprites below it.
+                  _tag_container.states.visible = false
+                  _tag.config.ref_table.states.visible = false
+                  _tag.config.ref_table.states.collide.can = false
+                  _tag.config.ref_table:stop_hover()
+                elseif not _tag_container.config.finished_blind_offset_applied then
                   _tag_container.children[2]:set_role({xy_bond = 'Weak'})
                   _tag_container.children[2]:align(0, 10)
                   _tag_container.children[1]:set_role({xy_bond = 'Weak'})
@@ -2961,6 +3040,11 @@ end
 
   G.FUNCS.hover_tag_proxy = function(e)
     if not e.parent or not e.parent.states then return end
+    if G.F_PORTRAIT or G.CONTROLLER.HID.touch then
+      -- Information belongs to a held tag icon, never to this action button.
+      if e.parent.children.alert then e.parent.children.alert:remove();e.parent.children.alert=nil end
+      return
+    end
     if (e.states.hover.is or e.parent.states.hover.is) and (e.created_on_pause == G.SETTINGS.paused) and
       not e.parent.children.alert then
         local _sprite = e.config.ref_table:get_uibox_table()
@@ -3109,6 +3193,8 @@ end
         G.blind_select_opts.boss.parent = par
         G.blind_select_opts.boss.alignment.offset.y = 0
         if G.F_PORTRAIT then
+            portrait_align_blind_choice_bands()
+            if G.blind_select then G.blind_select:recalculate() end
             -- Force-snap to the row slot so it doesn't render at its initial T.
             G.blind_select_opts.boss:align_to_major()
             G.blind_select_opts.boss:hard_set_VT()
@@ -3143,6 +3229,7 @@ end
         func = function()
           local final_free = G.GAME.current_round.free_rerolls > 0
           G.GAME.current_round.free_rerolls = math.max(G.GAME.current_round.free_rerolls - 1, 0)
+          PortraitQOL.haptic('reroll')
           G.GAME.round_scores.times_rerolled.amt = G.GAME.round_scores.times_rerolled.amt + 1
 
           calculate_reroll_cost(final_free)
@@ -3187,6 +3274,8 @@ end
   end
 
 G.FUNCS.cash_out = function(e)
+    if not G.round_eval or G.round_eval.portrait_cashout_started then return end
+    G.round_eval.portrait_cashout_started = true
     stop_use()
       if G.round_eval then  
         e.config.button = nil
@@ -3212,7 +3301,7 @@ G.FUNCS.cash_out = function(e)
             return true
           end
         }))
-        ease_dollars(G.GAME.current_round.dollars)
+        require('portrait_score').cash_out(G.GAME.current_round.dollars)
         G.E_MANAGER:add_event(Event({
           func = function()
               G.GAME.previous_round.dollars = G.GAME.dollars

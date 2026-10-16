@@ -1,0 +1,297 @@
+{
+  "LARVA.png": {
+    "source": "../../balatron/art-source/jokers-arcade/larva.png",
+    "sha256": "be0020068da0ceed09dbc1ec55c8bd366fc3ebab11a567c8ff6d954258568d28",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "fit": "nearest-neighbour centre sampling independently from original at1x and2x",
+    "prompts": "../../balatron/art-source/jokers-arcade/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "0dd5550b28300fd31b2347f6ae77b22095a162a426d9592425aab69a56d87ef2"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "ebbda8bf1fc19f527006fc44a77f7bac277b38249ffece16f3e931dc84ee7693"
+      }
+    },
+    "atlas": "metamorphosis",
+    "column": 0
+  },
+  "CHRYSALID.png": {
+    "source": "../../balatron/art-source/jokers-arcade/chrysalis.png",
+    "sha256": "efd133c98161eec942e0de73d80608921926f2a9537d1057d99fc55671bbf44d",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "fit": "nearest-neighbour centre sampling independently from original at1x and2x",
+    "prompts": "../../balatron/art-source/jokers-arcade/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "0dd5550b28300fd31b2347f6ae77b22095a162a426d9592425aab69a56d87ef2"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "ebbda8bf1fc19f527006fc44a77f7bac277b38249ffece16f3e931dc84ee7693"
+      }
+    },
+    "atlas": "metamorphosis",
+    "column": 1
+  },
+  "MOTH.png": {
+    "source": "../../balatron/art-source/jokers-arcade/moth.png",
+    "sha256": "76e58cae7ad7c3ba12a63c6d17ba1ee0c38967ee854f202ffb31823fc2d8feb5",
+    "source_size": [
+      1083,
+      1452
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "fit": "nearest-neighbour centre sampling independently from original at1x and2x",
+    "prompts": "../../balatron/art-source/jokers-arcade/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "0dd5550b28300fd31b2347f6ae77b22095a162a426d9592425aab69a56d87ef2"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "ebbda8bf1fc19f527006fc44a77f7bac277b38249ffece16f3e931dc84ee7693"
+      }
+    },
+    "atlas": "metamorphosis",
+    "column": 2
+  },
+  "BOTTOMLESS/Hungry.png": {
+    "source": "../../balatron/art-source/jokers-reference-pass/hungry.png",
+    "sha256": "219afaf3a787adf4360bc7bb6c2da0875179d9aeaaf06104992fabb840bda717",
+    "source_size": [
+      1086,
+      1448
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "f5870707018640fd3bf3e51df3bed0ad5a1ddc4cb6574e1197201f8d2bb0337a"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "0e66aa3889f0fbfcdacb646a036cc73faeadab0772628c00ddf8155b62fa388e"
+      }
+    },
+    "atlas": "bottomless",
+    "column": 0
+  },
+  "BOTTOMLESS/Starving.png": {
+    "source": "../../balatron/art-source/jokers-reference-pass/starving.png",
+    "sha256": "df422cc8b2f47c7954b050cd871d7200920507bd0fa375dcdc9a3492807ea7ff",
+    "source_size": [
+      1086,
+      1448
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "f5870707018640fd3bf3e51df3bed0ad5a1ddc4cb6574e1197201f8d2bb0337a"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "0e66aa3889f0fbfcdacb646a036cc73faeadab0772628c00ddf8155b62fa388e"
+      }
+    },
+    "atlas": "bottomless",
+    "column": 1
+  },
+  "BOTTOMLESS/Devourer Joker_ Feast of Cards.png": {
+    "source": "../../balatron/art-source/jokers-reference-pass/devourer.png",
+    "sha256": "ef66efbfe70c2f1f68ae2fe2395bf619b3f6c921c0ab862b96b0d28da0cd3f6d",
+    "source_size": [
+      1086,
+      1448
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "f5870707018640fd3bf3e51df3bed0ad5a1ddc4cb6574e1197201f8d2bb0337a"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "0e66aa3889f0fbfcdacb646a036cc73faeadab0772628c00ddf8155b62fa388e"
+      }
+    },
+    "atlas": "bottomless",
+    "column": 2
+  },
+  "wayfinder": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/wayfinder_1.png",
+        "sha256": "ca3af210a0a48d86960aefa2bf26665295edd33da1f5265066b82e0095e208f5"
+      },
+      {
+        "path": "../../balatron/art-source/mission-jokers/wayfinder_2.png",
+        "sha256": "007277c30dbb328a4d0cd2064b98880743e94dcb2f8a830001a92c6097d366cc"
+      },
+      {
+        "path": "../../balatron/art-source/mission-jokers/wayfinder_3.png",
+        "sha256": "5a8753ab4909a5449ec1e687789c562ec3d4b87c9714e70654a9743708571c9f"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "d9ccd717d15b6e884a359d462bb5d1f716cb132298f6445e5f29e10d66594e49"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "86d6b31996528726f62e1cdf3ec072f42e671988433dd44e68497cfdaad52e47"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "metamorphosis",
+    "columns": [
+      0,
+      1,
+      2
+    ]
+  },
+  "orrery": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/orrery_1.png",
+        "sha256": "c21bece1a5f5863bf7aa1be238762dfbeecb07b0807460aeefa02aa345b4e1ee"
+      },
+      {
+        "path": "../../balatron/art-source/mission-jokers/orrery_2.png",
+        "sha256": "8747534150f32ce02e0a9dd24f2cac22d9f6305ed9d409fbd8bf3674bdd7e3ca"
+      },
+      {
+        "path": "../../balatron/art-source/mission-jokers/orrery_3.png",
+        "sha256": "1400fe0aaa28c2b6284d163b2b2ce21b04920d1dbaee6cdaeb21fad5033c1da2"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          213,
+          95
+        ],
+        "sha256": "0658a8159730b66336ab2f90809982614b78dcbd934d89b233dbbe18c66c1de3"
+      },
+      "2": {
+        "size": [
+          426,
+          190
+        ],
+        "sha256": "4f3102791f0a85a3d8e4d9c6c4d39269e055cfef663078cbb127efb161d29bc0"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "upg",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "metamorphosis",
+    "columns": [
+      0,
+      1,
+      2
+    ]
+  }
+}

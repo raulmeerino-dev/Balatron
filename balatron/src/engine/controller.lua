@@ -109,6 +109,101 @@ self.keyboard_controller = {
 self.is_cursor_down = false
 end
 
+-- Touch keeps cursor_down pending while waiting for the drag threshold. Removing
+-- its owner or changing screens must finish the whole gesture, not just its target.
+local pointer_slots = {'cursor_down','cursor_up','cursor_hover','clicked','dragging','hovering','released_on'}
+function Controller:cancel_pointer_interaction()
+    if self.cancelling_pointer then return end
+    self.cancelling_pointer = true
+    local hovered,dragged = {},self.dragging.target
+    local function remember(node) if node then hovered[node]=true end end
+    remember(self.hovering.target);remember(self.hovering.prev_target)
+    remember(self.tooltip_press and self.tooltip_press.node)
+    self.is_cursor_down = false
+    self.consume_cursor_release = true
+    self.L_cursor_queue = nil;self.L_cursor_release_queue = nil
+    self.gesture_start = nil;self.tooltip_press = nil;self.pointer_release_pending = nil
+    if self.touch_position then self.touch_position.active = false end
+    for _,name in ipairs(pointer_slots) do
+        local slot=self[name]
+        for _,node in pairs({slot.target,slot.prev_target}) do
+            node._options_gesture=nil
+            if node.states then
+                for _,state in ipairs({'click','drag','hover','release_on'}) do
+                    if node.states[state] then node.states[state].is=false end
+                end
+            end
+        end
+        slot.target=nil;slot.prev_target=nil;slot.handled=true
+    end
+    -- Gamepad focus has its own return stack; node invalidation still clears it.
+    if not self.HID.controller then
+        for _,node in pairs({self.focused.target,self.focused.prev_target}) do
+            if node.states and node.states.focus then node.states.focus.is=false end
+        end
+        self.focused.target=nil;self.focused.prev_target=nil;self.focused.handled=true
+        self.snap_cursor_to=nil
+    end
+    self.cursor_collider=nil;self.collision_list={};self.nodes_at_cursor={}
+    for _,registry in pairs(self.button_registry) do
+        for _,entry in ipairs(registry) do entry.click=nil end
+    end
+    -- Clear references before callbacks: stop_hover can itself remove UI nodes.
+    if dragged and not dragged.REMOVED and not dragged.pointer_removing then dragged:stop_drag() end
+    for node in pairs(hovered) do
+        if not node.REMOVED and not node.pointer_removing then node:stop_hover() end
+    end
+    self.cancelling_pointer = nil
+end
+
+function Controller:invalidate_node(node)
+    if self.cursor_down.target==node or self.dragging.target==node or
+        (self.tooltip_press and self.tooltip_press.node==node) or
+        (self.clicked.target==node and not self.clicked.handled) or
+        (self.released_on.target==node and not self.released_on.handled) then
+        self:cancel_pointer_interaction()
+    end
+    local function clear(slot)
+        if slot.target==node then slot.target=nil;slot.handled=true end
+        if slot.prev_target==node then slot.prev_target=nil end
+    end
+    for _,name in ipairs(pointer_slots) do clear(self[name]) end
+    clear(self.focused)
+    if node.states then
+        for _,name in ipairs({'click','focus','drag','hover','release_on','collide'}) do
+            if node.states[name] then node.states[name].is=false end
+        end
+    end
+    node._options_gesture=nil
+    if self.cursor_collider==node then self.cursor_collider=nil end
+    if self.snap_cursor_to and self.snap_cursor_to.node==node then self.snap_cursor_to=nil end
+    for _,context in pairs(self.cursor_context.stack) do if context.node==node then context.node=nil end end
+    for _,list in pairs({self.collision_list,self.nodes_at_cursor}) do
+        for i=#list,1,-1 do if list[i]==node then table.remove(list,i) end end
+    end
+    for _,registry in pairs(self.button_registry) do
+        for i=#registry,1,-1 do if registry[i].node==node then table.remove(registry,i) end end
+    end
+end
+
+function Controller:validate_pointer_interaction()
+    local press,target=self.tooltip_press,self.cursor_down.target
+    local invalid=not self.cursor_down.handled and not target
+    if self.is_cursor_down and press then
+        local node=press.node or target
+        invalid=invalid or not node or node.REMOVED or node.pointer_removing or
+            not node.states.visible or node.under_overlay or
+            (node.UIBox and (node.UIBox.REMOVED or not node.UIBox.states.visible)) or
+            press.overlay~=G.OVERLAY_MENU or press.paused~=(not not G.SETTINGS.paused) or press.stage~=G.STAGE
+    end
+    if invalid then self:cancel_pointer_interaction() end
+    for _,name in ipairs({'cursor_down','cursor_up','cursor_hover','clicked','focused','dragging','hovering','released_on'}) do
+        local slot=self[name]
+        if slot.target and slot.target.REMOVED then self:invalidate_node(slot.target) end
+        if slot.prev_target and slot.prev_target.REMOVED then self:invalidate_node(slot.prev_target) end
+    end
+end
+
 --Sets the gamepad to be the updated gamepad, searches for the console type and sets the art button pips accordingly
 --Some code here is from github.com/idbrii/love-gamepadguesser (MIT License)
 function Controller:set_gamepad(_gamepad)
@@ -207,6 +302,7 @@ end
 
 --Called every game logic update frame
 function Controller:update(dt)
+    self:validate_pointer_interaction()
 
     --parse all locks and set
     self.locked = false
@@ -330,9 +426,22 @@ function Controller:update(dt)
     self:get_cursor_collision(G.CURSOR.T)
     self:update_focus()
     self:set_cursor_hover()
-    if self.L_cursor_queue then 
+    -- Finish an older release before binding a newer finger-down to its target.
+    -- If that release opens a modal, cancellation also discards the queued tap.
+    if self.L_cursor_queue and not self.pointer_release_pending then
         self:L_cursor_press(self.L_cursor_queue.x, self.L_cursor_queue.y)
         self.L_cursor_queue = nil
+    end
+    if self.L_cursor_release_queue and not self.L_cursor_queue then
+        self:L_cursor_release(self.L_cursor_release_queue.x, self.L_cursor_release_queue.y)
+        self.L_cursor_release_queue = nil
+    end
+    -- A tooltip belongs to one uninterrupted press on its original target.
+    local press = self.tooltip_press
+    if press and self.is_cursor_down and
+        (self.cursor_hover.target ~= press.node or self.dragging.target or
+        Vector_Dist(self.cursor_down.T, G.CURSOR.T)*G.TILESCALE*G.TILESIZE >= (PORTRAIT_CONFIG.touch_drag_threshold or 9)) then
+        press.cancelled = true
     end
 
     self.dragging.prev_target = self.dragging.target
@@ -341,6 +450,7 @@ function Controller:update(dt)
     self.hovering.prev_target = self.hovering.target
 
     --Cursor is currently down
+    self:validate_pointer_interaction()
     if not self.cursor_down.handled then 
         local touch_distance = self.HID.touch and self.cursor_down.T and
             Vector_Dist(self.cursor_down.T, G.CURSOR.T) * G.TILESCALE * G.TILESIZE or math.huge
@@ -358,9 +468,10 @@ function Controller:update(dt)
     if not self.cursor_up.handled then 
         --First, stop dragging
         if self.dragging.target then
-            self.dragging.target:stop_drag()
-            self.dragging.target.states.drag.is = false
+            local dragged=self.dragging.target
             self.dragging.target = nil
+            dragged.states.drag.is = false
+            dragged:stop_drag()
         end
         --Now, handle the Cursor release
         --Was the Cursor release in the same location as the Cursor press and within Cursor timeout?
@@ -397,8 +508,11 @@ function Controller:update(dt)
     --------------------------------------------------------------------
     --The clicked object
     if not self.clicked.handled then
-        self.clicked.target:click()
+        local clicked=self.clicked.target
+        local tooltip_only = self.tooltip_press and self.tooltip_press.shown and
+            self.tooltip_press.node == clicked
         self.clicked.handled = true
+        if not tooltip_only then clicked:click() end
     end
 
     --Process registry clicks
@@ -411,9 +525,10 @@ function Controller:update(dt)
 
     --The object released on
     if not self.released_on.handled and self.dragging.prev_target then
-        if self.dragging.prev_target == self.hovering.target then self.hovering.target:stop_hover();self.hovering.target = nil end
-        self.released_on.target:release(self.dragging.prev_target)
+        local released,dragged=self.released_on.target,self.dragging.prev_target
         self.released_on.handled = true
+        if dragged == self.hovering.target then self.hovering.target:stop_hover();self.hovering.target = nil end
+        if self.released_on.target==released and self.dragging.prev_target==dragged then released:release(dragged) end
     end
 
     --The object being hovered over
@@ -422,23 +537,6 @@ function Controller:update(dt)
         if self.hovering.prev_target ~= self.hovering.target then 
             if self.hovering.target ~= self.dragging.target and not self.HID.touch then               
                 self.hovering.target:hover() 
-            elseif self.HID.touch then
-                local _ID =  self.hovering.target.ID
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'after',
-                    blockable = false, 
-                    blocking = false,
-                    delay = G.MIN_HOVER_TIME,
-                    func = function()
-                        if self.hovering.target and _ID == self.hovering.target.ID then
-                            self.hovering.target:hover() 
-                        end
-                    return true
-                    end
-                }))
-                if self.hovering.prev_target then 
-                    self.hovering.prev_target:stop_hover()
-                end   
             end
             if self.hovering.prev_target then
                 self.hovering.prev_target:stop_hover()
@@ -447,8 +545,25 @@ function Controller:update(dt)
     elseif self.hovering.prev_target then
         self.hovering.prev_target:stop_hover()
     end
+    -- Touch inspection belongs to the press, not a delayed hover-change event.
+    -- Use the same wall-time gate as tags and Doubles, including paused menus.
+    -- Consume only an actual popup; releasing it must never also click the card.
+    local held = self.hovering.target
+    if self.HID.touch and held and self:is_tooltip_hold(held) and not self.tooltip_press.shown then
+        local hold=self.tooltip_press
+        if not hold.hovered then
+            hold.hovered = true
+            if not held.children.h_popup then held:hover() end
+        end
+        if self.tooltip_press==hold and not held.REMOVED and held.children.h_popup then hold.shown=true end
+    end
     if self.hovering.target and self.hovering.target == self.dragging.target and not self.HID.touch then
         self.hovering.target:stop_hover()
+    end
+    if self.pointer_release_pending then
+        if self.cursor_down.target then self.cursor_down.target._options_gesture=nil end
+        self.pointer_release_pending=nil;self.tooltip_press=nil
+        self.cursor_down.target=nil;self.cursor_up.target=nil
     end
 end
 
@@ -479,14 +594,16 @@ end
 --Process any click function of any nodes that have been clicked in the button registry
 function Controller:process_registry()
     for _, registry in pairs(self.button_registry) do
-        for i=1, #registry do
-            if registry[i].click and registry[i].node.click then 
-                if registry[i].menu == not not G.OVERLAY_MENU and 
-                    registry[i].node.T.x > -2 and registry[i].node.T.x < G.ROOM.T.w + 2 and
-                    registry[i].node.T.y > -2 and registry[i].node.T.y < G.ROOM.T.h + 2 then
-                    registry[i].node:click()
+        local pending={}
+        for i=1,#registry do pending[i]=registry[i] end
+        for _,entry in ipairs(pending) do
+            if entry.click and not entry.node.REMOVED and entry.node.click then
+                entry.click=nil -- A callback can remove itself and its entire registry.
+                if entry.menu == not not G.OVERLAY_MENU and
+                    entry.node.T.x > -2 and entry.node.T.x < G.ROOM.T.w + 2 and
+                    entry.node.T.y > -2 and entry.node.T.y < G.ROOM.T.h + 2 then
+                    entry.node:click()
                 end
-                registry[i].click = nil
             end
         end
     end
@@ -925,7 +1042,7 @@ function Controller:key_hold_update(key, dt)
         if key == "r" and not G.SETTINGS.paused then
             if self.held_key_times[key] > 0.7 then
                 if not G.GAME.won and not G.GAME.seeded and not G.GAME.challenge then 
-                    G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt = 0
+                    PortraitQOL.records().current_streak.amt = 0
                 end
                 G:save_settings()
                 self.held_key_times[key] = nil
@@ -1073,8 +1190,11 @@ function Controller:L_cursor_press(x, y)
     self.cursor_down.handled = false
     self.cursor_down.target = nil
     self.is_cursor_down = true
+    self.consume_cursor_release = nil
 
     local press_node =  (self.HID.touch and self.cursor_hover.target) or self.hovering.target or self.focused.target
+    self.tooltip_press = {node=press_node,started=love.timer.getTime(),overlay=G.OVERLAY_MENU,
+        paused=not not G.SETTINGS.paused,stage=G.STAGE}
 
     if press_node then 
         self.cursor_down.target = press_node.states.click.can and press_node or press_node:can_drag() or nil
@@ -1089,13 +1209,56 @@ function Controller:L_cursor_press(x, y)
     end
 end
 
+-- Cards and tags share one hold gate in gameplay, shops and collections.
+-- Wall time keeps the gesture independent of scoring speed and paused menus.
+function Controller:is_tooltip_hold(node)
+    local press = self.tooltip_press
+    return self.is_cursor_down and press and not press.cancelled and
+        press.node == node and self.cursor_hover.target == node and
+        not self.dragging.target and not node.REMOVED and node.states.visible and
+        not node.under_overlay and (not not node.created_on_pause) == (not not G.SETTINGS.paused) and
+        love.timer.getTime() - press.started >= 0.35
+end
+
 function Controller:L_cursor_release(x, y)
     x = x or self.cursor_position.x
     y = y or self.cursor_position.y
+    -- A tap may begin and end between two updates. Preserve that ordering.
+    if self.L_cursor_queue then
+        self.L_cursor_release_queue = {x=x,y=y}
+        return
+    end
+    if self.consume_cursor_release or not self.is_cursor_down then
+        self.consume_cursor_release=nil
+        return
+    end
 
-    if ((self.locked) and (not G.SETTINGS.paused or G.screenwipe)) or (self.locks.frame) then return end
+    -- Close before lock checks too: transitions must not strand a popup.
+    local press = self.tooltip_press
+    if press then
+        press.cancelled = true
+        if press.node and not press.node.REMOVED and
+            (self.HID.touch or (press.node.config and press.node.config.press_tooltip)) then
+            if not (press.shown and G.F_PORTRAIT and require("portrait_popup_layout").pin(press.node)) then
+                press.node:stop_hover()
+            end
+        end
+    end
+    -- stop_hover may replace a screen or remove the owner of this very press.
+    if self.consume_cursor_release or not self.is_cursor_down then
+        self.consume_cursor_release=nil
+        return
+    end
+
+    self.is_cursor_down = false
+    self.cursor_down.handled = true
+
+    if ((self.locked) and (not G.SETTINGS.paused or G.screenwipe)) or (self.locks.frame) then
+        self:cancel_pointer_interaction();self.consume_cursor_release=nil;return
+    end
 
     self.cursor_up.T = {x = x/(G.TILESCALE*G.TILESIZE), y = y/(G.TILESCALE*G.TILESIZE)}
+    self.pointer_release_pending=true
     self.cursor_up.time = G.TIMERS.TOTAL
     self.cursor_up.handled = false
     self.cursor_up.target = nil

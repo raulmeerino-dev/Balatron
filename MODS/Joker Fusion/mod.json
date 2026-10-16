@@ -1,0 +1,17 @@
+{
+  "id": "joker_fusion",
+  "name": "Joker Fusion",
+  "display_name": "Joker Fusion",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Optional run gameplay. Generation switches apply to the next run.",
+  "prefix": "fuse",
+  "main_file": "main.lua",
+  "version": "1.0.0",
+  "priority": 132,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay"
+  ]
+}

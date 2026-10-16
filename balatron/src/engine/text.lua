@@ -135,6 +135,7 @@ function DynaText:update_text(first_pass)
         if self.strings[k].H > self.config.H then self.config.H = self.strings[k].H; self.strings[k].H_offset = 0 end
     end
 
+
     if self.T then
         if (self.T.w ~= self.config.W or self.T.h ~= self.config.H) and (not first_pass or self.reset_pop_in) then
             self.ui_object_updated = true
@@ -296,6 +297,8 @@ function DynaText:draw()
         local real_pop_in = self.config.min_cycle_time == 0 and 1 or letter.pop_in
         love.graphics.setColor(letter.prefix or letter.suffix or letter.colour or self.colours[k%#self.colours + 1])
 
+        -- Keep native draw anchors intact for Steamodded text effects. Apply
+        -- wrapping to the drawing transform so custom letter hooks inherit it.
         love.graphics.draw(
             letter.letter,
             0.5*(letter.dims.x - letter.offset.x)*self.font.FONTSCALE/G.TILESIZE + _shadow_norm.x,

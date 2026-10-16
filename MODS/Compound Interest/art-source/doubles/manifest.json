@@ -1,0 +1,39 @@
+{
+  "tool": "built-in image_gen",
+  "frame": [
+    71,
+    95
+  ],
+  "order": [
+    "A",
+    "B",
+    "neutral"
+  ],
+  "sampling": "complete opaque card; nearest; 32 flat colours without dithering; exact 2x doubling",
+  "family_frame": "Options perimeter; opaque white corners; inner safe area 4,4,67,91",
+  "prompts": "prompts.json",
+  "cards": {
+    "color_call": {
+      "sources": {
+        "a": "d4192882822fb5b5a8434ce7356f950f2fda13ad378abe657b8bebed56fe19d2",
+        "b": "5bbb508535d50cea03fb96fcae6715cd2c2d0077a84411c5926c2ce460f015fe",
+        "base": "7db5fa07df3aa019edbb1352127d97351adc1f753742f1a8cc65069ef88b652d"
+      },
+      "sprites": {
+        "1": "91c5deeeb8694edf13ba34c47f82a7894ad40792fef34ff51a4a21cd7d946547",
+        "2": "381279770ed5f958a1cf92bce193659f9704ec4e91662c08b98d3cb5335285f7"
+      }
+    },
+    "double_entry": {
+      "sources": {
+        "a": "8728313253982244d85fe2ff665ec58a714dae09e693f962e87478d8fd379cab",
+        "b": "9eeba1b9803fa6f021af14065a1d506a5b8d948dcdf8fc48576a067b44a249b1",
+        "base": "e34fab4a14055300d2c01d48a0a9c14d9efa80691e647e3fe5b8fabe0611cfa5"
+      },
+      "sprites": {
+        "1": "2402fa02ae87f88f9c250673e2c0c6eae99655fba141265cd4bc3aca9a4054f0",
+        "2": "5d7cba33f5c80b944b1fd2662432c976e57bda32fdb1e1ed189fe86a9357f085"
+      }
+    }
+  }
+}

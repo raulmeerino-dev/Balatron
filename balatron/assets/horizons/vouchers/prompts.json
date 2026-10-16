@@ -1,0 +1,34 @@
+{
+  "letter_opener": {
+    "source": "exec-9ae54ac2-7195-4971-a603-b153c3966559.png",
+    "prompt": "Complete crisp Balatro Letter Opener voucher in crimson and ivory, 71:95 logical pixel sprite; VOUCHER header, narrow white double border and ticket notches."
+  },
+  "guillotine": {
+    "source": "exec-638e9909-f702-4f4b-b386-68780e39939c.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Guillotine, upgraded Letter Opener. A brass paper-cutting guillotine with a long ivory blade, flying rectangular paper offcuts, muted crimson paper with gold pixel sparks. Upgrade energy but sparse readable silhouette. Strong centered icon, limited 10-color palette, sober clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "alembic": {
+    "source": "exec-1b7538cc-9835-43d7-873d-437cab64dccf.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Alembic. A squat copper distillation apparatus with two little ivory cards feeding in, and one violet drop landing in a glass flask. Deep teal paper and warm copper. Base card, simple calm design. Strong centered icon, limited 10-color palette, sober clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "crucible": {
+    "source": "exec-02220559-1047-47ff-9ee0-79aba3bbc318.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Crucible, upgraded Alembic. Same copper vessel transformed into a broad elegant copper crucible with violet spectral flame and one bright white drop. Deep teal paper, violet rim light and sparse gold pixel sparks. Clear upgrade. Strong centered icon, limited 10-color palette, sober clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "sewing_kit": {
+    "source": "exec-eee49856-f550-4c70-9dc5-64b7de4ff7b7.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Sewing Kit. A small ivory sewing kit with one silver needle and exactly three bold folded fabric swatches: blue foil, magenta holographic and rainbow polychrome. Deep navy paper. Base card, restrained and legible. Limited 10-color palette, centered strong icon, clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "haute_couture": {
+    "source": "exec-fff35972-6d0d-4c99-8b0e-063259b1419b.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Haute Couture, upgraded Sewing Kit. A stately ivory dressmaker mannequin wearing three flowing fabric panels: blue foil, magenta holographic and rainbow polychrome, with a silver needle. Deep navy paper, tiny gold pixel sparkles, same base motif but more luxurious. Limited 10-color palette, centered strong icon, clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "second_opinion": {
+    "source": "exec-8d090a4d-66fe-4a05-a96b-b78c9d64f24d.png",
+    "prompt": "Use case: stylized-concept. Generate ONE final Balatro in-game voucher sprite. Portrait 71:95 aspect ratio. Entire canvas is a complete flat ticket, no external margin/background. Crisp low-resolution pixel art on 71x95 logical pixels enlarged nearest-neighbor. Narrow white double outline, middle semicircular notch at top and bottom. White top header with exactly VOUCHER in gray pixel capitals, perforation row below. Subject: Second Opinion. Two round brass magnifying lenses above a small ivory contract with a wax seal, one lens tilted aside. Muted olive-green paper. Base card, bold simple silhouette, minimal lines on document, no text except header. Limited 10-color palette, centered strong icon, clean mobile legibility. No blur, gradients, perspective, exterior shadow, watermark or other text."
+  },
+  "tender": {
+    "source": "exec-159241e1-1d12-4b0f-8ca6-0077e8030821.png",
+    "prompt": "Use case: stylized-concept. ONE Balatro voucher sprite, portrait71:95. Complete flat ticket fills canvas; no outside margin. Crisp low-res pixel art, 71x95 logical pixels nearest-neighbor. White double outline, middle semicircular notches top/bottom, white header VOUCHER in gray pixel capitals, perforation row. Tender, upgraded Second Opinion. A brass lectern with two ivory contracts and two red wax seals, two circular magnifying lenses mounted above. Muted olive-green paper with small golden sparkles. Same paired document/lens motif, now authoritative and richer. No blur, gradient, perspective, watermark or other words."
+  }
+}

@@ -110,7 +110,7 @@ function Blind:set_blind(blind, reset, silent)
         if not blind then self.chips = 0 end
 
         G.GAME.current_round.dollars_to_be_earned = self.dollars > 0 and (string.rep(localize('$'), self.dollars)..'') or ('')
-        G.HUD_blind.alignment.offset.y = -10
+        G.HUD_blind.alignment.offset.y = G.F_PORTRAIT and G.ROOM.T.h or -10
         G.HUD_blind:recalculate(false)
 
         if blind and blind.name and blind.name ~= '' then 
@@ -121,18 +121,20 @@ function Blind:set_blind(blind, reset, silent)
                 delay = 0.05,
                 blockable = false,
                 func = (function()
-                        G.HUD_blind:get_UIE_by_ID("HUD_blind_name").states.visible = false
-                        G.HUD_blind:get_UIE_by_ID("dollars_to_be_earned").parent.parent.states.visible = false
+                        local name = G.HUD_blind:get_UIE_by_ID('HUD_blind_name')
+                        local reward = G.HUD_blind:get_UIE_by_ID('dollars_to_be_earned')
+                        if name then name.states.visible = false end
+                        if reward then reward.parent.parent.states.visible = false end
                         G.HUD_blind.alignment.offset.y = 0
                     G.E_MANAGER:add_event(Event({
                         trigger = 'after',
                         delay = 0.15,
                         blockable = false,
                         func = (function()
-                            G.HUD_blind:get_UIE_by_ID("HUD_blind_name").states.visible = true
-                            G.HUD_blind:get_UIE_by_ID("dollars_to_be_earned").parent.parent.states.visible = true
-                            G.HUD_blind:get_UIE_by_ID("dollars_to_be_earned").config.object:pop_in(0)
-                            G.HUD_blind:get_UIE_by_ID("HUD_blind_name").config.object:pop_in(0)
+                            local name = G.HUD_blind:get_UIE_by_ID('HUD_blind_name')
+                            local reward = G.HUD_blind:get_UIE_by_ID('dollars_to_be_earned')
+                            if name then name.states.visible = true; name.config.object:pop_in(0) end
+                            if reward then reward.parent.parent.states.visible = true; reward.config.object:pop_in(0) end
                             G.HUD_blind:get_UIE_by_ID("HUD_blind_count"):juice_up()
                             self.children.animatedSprite:set_sprite_pos(self.config.blind.pos)
                             self.blind_set = true
@@ -291,8 +293,8 @@ function Blind:defeat(silent)
         fill = true
     })
 
-    local blind_name_dynatext = G.HUD_blind:get_UIE_by_ID('HUD_blind_name').config.object
-    blind_name_dynatext:pop_out(2)
+    local blind_name = G.HUD_blind:get_UIE_by_ID('HUD_blind_name')
+    if blind_name then blind_name.config.object:pop_out(2) end
 
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
@@ -324,7 +326,7 @@ function Blind:defeat(silent)
         blockable = false,
         delay =  0.8*dissolve_time,
         func = (function()
-            G.HUD_blind.alignment.offset.y = -10
+            G.HUD_blind.alignment.offset.y = G.F_PORTRAIT and G.ROOM.T.h or -10
             return true
         end)
     }))
@@ -433,6 +435,14 @@ function Blind:hover()
             self.hover_tilt = 2
             self.children.animatedSprite:juice_up(0.05, 0.02)
             play_sound('chips1', math.random()*0.1 + 0.55, 0.12)
+            if G.F_PORTRAIT and self.config.blind and self.config.blind.key then
+                local vars = self.loc_debuff_lines and self.loc_debuff_lines.vars
+                if not vars and self.name == 'The Ox' then
+                    vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}
+                end
+                self.config.h_popup = create_UIBox_blind_popup(self.config.blind, true, vars)
+                self.config.h_popup_config = get_portrait_top_popup_config(self)
+            end
             Node.hover(self)
         end
     end
@@ -745,8 +755,10 @@ function Blind:load(blindTable)
     self:change_colour()
     if self.dollars > 0 then
         G.GAME.current_round.dollars_to_be_earned = string.rep(localize('$'), self.dollars)..''
-        G.HUD_blind:get_UIE_by_ID("dollars_to_be_earned").config.object:pop_in(0)
+        local reward = G.HUD_blind:get_UIE_by_ID('dollars_to_be_earned')
+        if reward then reward.config.object:pop_in(0) end
         G.HUD_blind.alignment.offset.y = 0
     end
+    if G.F_PORTRAIT and self.blind_set then G.HUD_blind.alignment.offset.y = 0 end
     self:set_text()
 end

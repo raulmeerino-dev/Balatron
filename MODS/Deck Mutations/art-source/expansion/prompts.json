@@ -1,0 +1,100 @@
+{
+  "tool": "built-in image_gen",
+  "references": [
+    "assets/2x/run_rules/large_packs.png",
+    "assets/2x/run_rules/strong_seals.png",
+    "assets/2x/run_rules/chaos.png"
+  ],
+  "entries": [
+    {
+      "id": "consumable_exchange",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: a compact purple satchel holding two small red and blue potion bottles, with a single dark joker token tucked beneath it; storage traded for a joker",
+      "source": "MODS/Deck Mutations/art-source/expansion/consumable_exchange.png",
+      "assets": [
+        "assets/1x/run_rules/consumable_exchange.png",
+        "assets/2x/run_rules/consumable_exchange.png"
+      ]
+    },
+    {
+      "id": "orbital_echo",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: two small brightly coloured ringed planets linked by a single curved luminous orbital wave",
+      "source": "MODS/Deck Mutations/art-source/expansion/orbital_echo.png",
+      "assets": [
+        "assets/1x/run_rules/orbital_echo.png",
+        "assets/2x/run_rules/orbital_echo.png"
+      ]
+    },
+    {
+      "id": "seal_relay",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: one red wax seal and a smaller purple wax seal linked by a bold curved blue transfer arrow",
+      "source": "MODS/Deck Mutations/art-source/expansion/seal_relay.png",
+      "assets": [
+        "assets/1x/run_rules/seal_relay.png",
+        "assets/2x/run_rules/seal_relay.png"
+      ]
+    },
+    {
+      "id": "deck_pruning",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: silver pruning shears cleanly trimming a small fan of plain white playing cards",
+      "source": "MODS/Deck Mutations/art-source/expansion/deck_pruning.png",
+      "assets": [
+        "assets/1x/run_rules/deck_pruning.png",
+        "assets/2x/run_rules/deck_pruning.png"
+      ]
+    },
+    {
+      "id": "fusion_workshop",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: two tiny red and blue joker chips merging above a golden anvil with an empty purple storage pocket below",
+      "source": "MODS/Deck Mutations/art-source/expansion/fusion_workshop.png",
+      "assets": [
+        "assets/1x/run_rules/fusion_workshop.png",
+        "assets/2x/run_rules/fusion_workshop.png"
+      ]
+    },
+    {
+      "id": "contract_shortcut",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: a small rolled white contract with simple black marks and a golden seal, beside silver scissors cutting off the bottom corner",
+      "source": "MODS/Deck Mutations/art-source/expansion/contract_shortcut.png",
+      "assets": [
+        "assets/1x/run_rules/contract_shortcut.png",
+        "assets/2x/run_rules/contract_shortcut.png"
+      ]
+    },
+    {
+      "id": "contraband_credit",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: a dark burgundy smuggling crate holding a bright gold ticket and a tiny white joker token",
+      "source": "MODS/Deck Mutations/art-source/expansion/contraband_credit.png",
+      "assets": [
+        "assets/1x/run_rules/contraband_credit.png",
+        "assets/2x/run_rules/contraband_credit.png"
+      ]
+    },
+    {
+      "id": "discard_reserve",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: a small blue tray holding two folded red playing cards under a curved arrow pointing forward",
+      "source": "MODS/Deck Mutations/art-source/expansion/discard_reserve.png",
+      "assets": [
+        "assets/1x/run_rules/discard_reserve.png",
+        "assets/2x/run_rules/discard_reserve.png"
+      ]
+    },
+    {
+      "id": "field_reserves",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: a purple boss poker chip protected by a blue shield with one red card and one blue card tucked behind it",
+      "source": "MODS/Deck Mutations/art-source/expansion/field_reserves.png",
+      "assets": [
+        "assets/1x/run_rules/field_reserves.png",
+        "assets/2x/run_rules/field_reserves.png"
+      ]
+    },
+    {
+      "id": "pack_refund",
+      "prompt": "Use case: stylized-concept. Asset type: ONE square Balatro Portrait Mutation icon, NOT a Joker card. Reference images establish exact existing sprite-family language: compact isolated chunky pixel-art inventory icon, black 1-pixel outline, hard stair-step edges, deliberate coloured pixel highlights, simple shape clusters, no blurry paint, no modern 3D, no words, numbers or letters, no frame or card stock. Transparent background; centred subject filling about 85% of the square with even transparent margins. Match native 64x64 pixel-art density so it reads clearly reduced to 64x64. Make a different new icon, keeping the reference art style. Subject: an opened purple booster wrapper with two gold coins returning out of it",
+      "source": "MODS/Deck Mutations/art-source/expansion/pack_refund.png",
+      "assets": [
+        "assets/1x/run_rules/pack_refund.png",
+        "assets/2x/run_rules/pack_refund.png"
+      ]
+    }
+  ]
+}

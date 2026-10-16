@@ -43,6 +43,7 @@ function Event:init(config)
     self.func = config.func or function() return self.condition.ref_table[self.condition.ref_value] == self.condition.stop_val end
     end
     self.time = G.TIMERS[self.timer]
+    if PortraitQOL then PortraitQOL.presentation_event(self,config) end
 end
 
 function Event:handle(_results)

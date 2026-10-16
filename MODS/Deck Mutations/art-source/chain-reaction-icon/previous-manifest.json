@@ -1,0 +1,29 @@
+{
+  "source": "art-source/chain_reaction.png",
+  "crop": [
+    20,
+    27,
+    1066,
+    1407
+  ],
+  "fit": "nearest-neighbour sampling independently at 1x and 2x",
+  "tool": "built-in image_gen",
+  "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+  "visual_border": "exact existing golden Fusion inset border; visual treatment only",
+  "sprites": {
+    "1": {
+      "size": [
+        71,
+        95
+      ],
+      "sha256": "de5afd7ba809c6428e5c7914dab746fd016cf4e82ff81d7d8d7e12ea46cf6336"
+    },
+    "2": {
+      "size": [
+        142,
+        190
+      ],
+      "sha256": "9f5b89ec934e4c2430794453fe33512100f383ef0179990f9c7726028ab3bb38"
+    }
+  }
+}

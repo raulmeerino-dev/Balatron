@@ -1,0 +1,301 @@
+{
+  "burning_fuse": {
+    "source": "../../balatron/art-source/jokers-reference-pass/burning_fuse.png",
+    "sha256": "df115d5d60e4ddf0325a93c7f5cfb1acc9f893625e33d9050e14b2ab7a3c1d27",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/burning_fuse-prompt.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "812122d124ede5e781c8403cd2aab518d983b92763a93e36961ddccc82a2ca18"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "571d3b59e4d22852344a20f2056cf7bfe3c5095ffd405a7a4a07ee77dcaa545e"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "greed": {
+    "source": "../../balatron/art-source/jokers-reference-pass/greed.png",
+    "sha256": "672460159ca984f20db05451cd670e1bdfa1b0910f077086e5630d9c77186e9e",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "29c5eb553e6ecf6b4ea80368c4262a4694335f73ea41d8417388ab2723534a61"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "ed4a1a11d3e1a14b709617ace18ae518451c059b9691a3b461bdd90486f06059"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "glass_cannon": {
+    "source": "../../balatron/art-source/jokers-reference-pass/glass_cannon.png",
+    "sha256": "959c85fe40816f612b4ed1ca75e48d655b35331d46fb7118ab0279dc23794362",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "37af122c3715d4df91e88f7e58f3d2df70cb1ec339d23d8af53e5405566405a4"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "3ca3d85af8d47a71a3ab00f2c1d54eedc705992b1a3309fe8a0e8524416b8a5c"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "russian_joker": {
+    "source": "../../balatron/art-source/jokers-reference-pass/russian_joker.png",
+    "sha256": "d4a46aa5a7bff9254fd05e923e173554f647502bffa255fdc06232457f1e8be3",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "fedf04bcad47617dc3399ac928c5e32c86dd2925cf5b04da21d04cb98d8282f3"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "4501da66607927db983bf0fb828f954bbe7ddc41f78df8d4195a148d1814dc7e"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "all_or_nothing": {
+    "source": "../../balatron/art-source/jokers-reference-pass/all_or_nothing.png",
+    "sha256": "eece63c402da83c655066d280d67ced946206c8027f698469aa67d14d7002f8c",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "d80cbd9a154a3389ac3581c0b716835924c6800943b4740655d8b3760b198657"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "d54815e4c3df69893d1078523b479721fcf3e89e90f3c9a321be4fb6335066db"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "loan_shark": {
+    "source": "art-source/loan_shark.png",
+    "crop": [
+      36,
+      40,
+      1050,
+      1393
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "Risk exact existing red inset frame with dark outer contour",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "320f2cf085efd573c263a0ef08f274daffa6d550920ff9ed58a36be3d7c256bf"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "70d6827cced77e4656a011e772b8c0415481ca9a7b6ebba4cd97e1f11c2a8421"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "overheated": {
+    "source": "art-source/overheated.png",
+    "crop": [
+      16,
+      13,
+      1067,
+      1424
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "Risk exact existing red inset frame with dark outer contour",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "71991158dfc167f8dbd9d1d2b5df56071b6b93aab86f100ce8c4868290b922ed"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "25e2582b2e039e1e913a2115d3a5242668e0f65963569c13c4efae344b9d5bf6"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "scorched_earth": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/scorched_earth.png",
+        "sha256": "956c0804c1ebe731d1eb4048a63aad46a0ce0dbe97b0a3057881f1503a119fae"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "076262f6d3d409e1aef07c65023b7893717a98ceab7d5c934f99d85c85cbdae0"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "e231fcc47c2cb28a6f0e36feaa79bfc69c839b7e906847874d52070ecf5e6141"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "loan_shark",
+    "columns": [
+      0
+    ]
+  },
+  "powder_keg": {
+    "sources": [
+      {
+        "path": "../../balatron/art-source/mission-jokers/powder_keg.png",
+        "sha256": "a63497dff841e322eebca66d75e49a61f4843f4fb09f7956f686065ff2d9aa92"
+      }
+    ],
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "ac3fb41afc5db120f75b5dcaa7aaad3e4f544186b44dbfe11ad11f39ec7c984c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "a85acaf579f08bd6997ab1cf7c6a6ce86875fed5f2af132c7f03fb492b5d5a4b"
+      }
+    },
+    "cell": [
+      71,
+      95
+    ],
+    "family": "risk",
+    "generator": "built-in image_gen",
+    "side_text": true,
+    "prompts": "../../balatron/art-source/mission-jokers/prompts.json",
+    "sampling": "nearest; shared fixed palette without dithering; exact 2x doubling",
+    "family_frame": "loan_shark",
+    "columns": [
+      0
+    ]
+  }
+}

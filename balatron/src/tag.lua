@@ -490,6 +490,36 @@ function Tag:juice_up(_scale, _rot)
     if self.tag_sprite then self.tag_sprite:juice_up(_scale, _rot) end
 end
 
+-- Shared lifecycle for reward tags, collection tags and equivalent mod badges.
+function portrait_bind_tag_tooltip(sprite)
+    if sprite.config.press_tooltip then return end
+    sprite.config.press_tooltip = true
+    local hover,stop_hover,move = sprite.hover,sprite.stop_hover,sprite.move
+    sprite.hover = function(self)
+        if G.F_PORTRAIT or G.CONTROLLER.HID.touch then
+            if not G.CONTROLLER:is_tooltip_hold(self) then return end
+            G.CONTROLLER.tooltip_press.shown = true
+        end
+        hover(self)
+    end
+    sprite.stop_hover = function(self)
+        stop_hover(self)
+        self.hovering=false;self.hover_tilt=0
+        Node.stop_hover(self)
+        self.config.h_popup=nil
+    end
+    sprite.move = function(self,dt)
+        move(self,dt)
+        if G.F_PORTRAIT or G.CONTROLLER.HID.touch then
+            if G.CONTROLLER:is_tooltip_hold(self) then self:hover()
+            else self:stop_hover() end
+        end
+        if G.F_PORTRAIT and self.children.h_popup and prepare_portrait_popup_fit then
+            prepare_portrait_popup_fit(self.children.h_popup)
+        end
+    end
+end
+
 function Tag:generate_UI(_size)
     _size = _size or 0.8
 
@@ -522,9 +552,7 @@ function Tag:generate_UI(_size)
                 end
 
                 self:get_uibox_table(tag_sprite)
-                _self.config.h_popup =  G.UIDEF.card_h_popup(_self)
-                
-                -- Sets dynamic popup alignment based on screen orientation and hand setting
+                _self.config.h_popup = G.UIDEF.card_h_popup(_self)
                 if G.F_PORTRAIT and get_portrait_top_popup_config then
                     -- Edge-aware: pulls the tooltip back on-screen when the tag
                     -- sits near the left/right edge instead of overflowing.
@@ -544,19 +572,12 @@ function Tag:generate_UI(_size)
             end
         end
     end
-    tag_sprite.stop_hover = function(_self) _self.hovering = false; Node.stop_hover(_self); _self.hover_tilt = 0 end
-
-    -- Re-fit the hover tooltip every frame while it exists, mirroring Card:move.
-    -- A tag's popup was only fitted once at hover time, before its width was laid
-    -- out, so a tag near the screen edge kept a stale position and overflowed.
-    -- Clamping each frame uses the real measured width and keeps it on-screen.
-    local _tag_sprite_move = tag_sprite.move
-    tag_sprite.move = function(_self, dt)
-        _tag_sprite_move(_self, dt)
-        if G.F_PORTRAIT and _self.children and _self.children.h_popup and prepare_portrait_popup_fit then
-            prepare_portrait_popup_fit(_self.children.h_popup)
-        end
+    tag_sprite.stop_hover = function(_self)
+        _self.hovering=false;_self.hover_tilt=0
+        Node.stop_hover(_self)
     end
+
+    portrait_bind_tag_tooltip(tag_sprite)
 
     tag_sprite:juice_up()
     self.tag_sprite = tag_sprite

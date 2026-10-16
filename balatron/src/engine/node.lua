@@ -323,6 +323,10 @@ end
 --When this Node needs to be deleted, removes self from any tables it may have been added to to destroy any weak references\
 --Also calls the remove method of all children to have them do the same
 function Node:remove() 
+    self.pointer_removing=true
+    local layout = require("portrait_popup_layout")
+    if layout.pinned and layout.pinned.portrait_owner == self then layout.pinned:remove() end
+    G.CONTROLLER:invalidate_node(self)
 
     for k, v in pairs(G.I.POPUP) do
         if v == self then
@@ -347,31 +351,6 @@ function Node:remove()
             v:remove()
         end 
     end
-    if G.CONTROLLER.clicked.target ==self then 
-        G.CONTROLLER.clicked.target = nil
-    end
-    if G.CONTROLLER.focused.target ==self then 
-        G.CONTROLLER.focused.target = nil
-    end
-    if G.CONTROLLER.dragging.target ==self then 
-        G.CONTROLLER.dragging.target = nil
-    end
-    if G.CONTROLLER.hovering.target ==self then 
-        G.CONTROLLER.hovering.target = nil
-    end
-    if G.CONTROLLER.released_on.target ==self then 
-        G.CONTROLLER.released_on.target = nil
-    end
-    if G.CONTROLLER.cursor_down.target ==self then 
-        G.CONTROLLER.cursor_down.target = nil
-    end
-    if G.CONTROLLER.cursor_up.target ==self then 
-        G.CONTROLLER.cursor_up.target = nil
-    end
-    if G.CONTROLLER.cursor_hover.target ==self then 
-        G.CONTROLLER.cursor_hover.target = nil
-    end
-    
     self.REMOVED = true
 end
 

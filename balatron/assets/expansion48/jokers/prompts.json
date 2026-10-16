@@ -1,0 +1,82 @@
+[
+  {
+    "key": "backstage",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite, one single full card 71:95 ratio, flat front view, fully visible rounded corners. Subject: a theatrical cloak rack with five sleeves shaped like playing cards, velvet crimson stage curtains, clear simple silhouette. Crisp readable low-resolution pixel art, deliberate chunky pixel clusters, restricted palette, no blur/no antialiasing, simple background. Standard warm off-white card with thin slate gray double border, vertical pixel letters J O K E R down left edge and inverted along lower right like Balatro vanilla. Complete opaque card background, no floating transparent illustration, no mockup, no caption/name. Composition optimized to reduce to 71x95. Reference provided is style and card frame ONLY; draw entirely new subject.",
+    "source": "balatron/assets/expansion48/jokers/sources/backstage.png"
+  },
+  {
+    "key": "between_lines",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite, one single full card 71:95 ratio, flat front view, fully visible rounded corners. Subject: a hidden playing card peeking between three oversized horizontal ink lines on an ivory page, mysterious dark teal ink. Crisp readable low-resolution pixel art, deliberate chunky pixel clusters, restricted palette, no blur/no antialiasing, simple background. Standard warm off-white card with thin slate gray double border, vertical pixel letters J O K E R down left edge and inverted along lower right like Balatro vanilla. Complete opaque card background, no floating transparent illustration, no mockup, no caption/name. Composition optimized to reduce to 71x95. Reference provided is style and card frame ONLY; draw entirely new subject.",
+    "source": "balatron/assets/expansion48/jokers/sources/between_lines.png"
+  },
+  {
+    "key": "thumbtack",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite, one single full card 71:95 ratio, flat front view, fully visible rounded corners. Subject: an oversized red drawing pin fastening the corner of a playing card to a cream board, bold triangular cast shadow. Crisp readable low-resolution pixel art, deliberate chunky pixel clusters, restricted palette, no blur/no antialiasing, simple background. Standard warm off-white card with thin slate gray double border, vertical pixel letters J O K E R down left edge and inverted along lower right like Balatro vanilla. Complete opaque card background, no floating transparent illustration, no mockup, no caption/name. Composition optimized to reduce to 71x95. Reference provided is style and card frame ONLY; draw entirely new subject.",
+    "source": "balatron/assets/expansion48/jokers/sources/thumbtack.png"
+  },
+  {
+    "key": "extra_time",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite, one single full card 71:95 ratio, flat front view, fully visible rounded corners. Subject: a large brass clock topped by a luminous extra-time scoreboard, orange and midnight blue. Crisp readable low-resolution pixel art, deliberate chunky pixel clusters, restricted palette, no blur/no antialiasing, simple background. Standard warm off-white card with thin slate gray double border, vertical pixel letters J O K E R down left edge and inverted along lower right like Balatro vanilla. Complete opaque card background, no floating transparent illustration, no mockup, no caption/name. Composition optimized to reduce to 71x95. Reference provided is style and card frame ONLY; draw entirely new subject.",
+    "source": "balatron/assets/expansion48/jokers/sources/extra_time.png"
+  },
+  {
+    "key": "barterer",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, rounded corners visible. Subject: a sly elegant smiling merchant presenting two contrasting theatrical masks across a counter. Crisp deliberate pixel art, chunky pixels, restricted palette, high mobile readability. Off-white opaque card, thin slate gray double outline, vertical pixel letters J O K E R on left and inverted lower right like reference. Clean simple background, no blur, no antialiasing, no mockup or label, no text except JOKER. Reference is card frame and pixel style ONLY; entirely new composition.",
+    "source": "balatron/assets/expansion48/jokers/sources/barterer.png"
+  },
+  {
+    "key": "castling",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, rounded corners visible. Subject: a white chess king and black rook swapping the playing-card numbers 2 and A along two curved arrows. Crisp deliberate pixel art, chunky pixels, restricted palette, high mobile readability. Off-white opaque card, thin slate gray double outline, vertical pixel letters J O K E R on left and inverted lower right like reference. Clean simple background, no blur, no antialiasing, no mockup or label, no text except JOKER. Reference is card frame and pixel style ONLY; entirely new composition.",
+    "source": "balatron/assets/expansion48/jokers/sources/castling.png"
+  },
+  {
+    "key": "lightning_rod",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, rounded corners visible. Subject: a single copper lightning rod gathering four angular sparks from four small cards arranged below. Crisp deliberate pixel art, chunky pixels, restricted palette, high mobile readability. Off-white opaque card, thin slate gray double outline, vertical pixel letters J O K E R on left and inverted lower right like reference. Clean simple background, no blur, no antialiasing, no mockup or label, no text except JOKER. Reference is card frame and pixel style ONLY; entirely new composition.",
+    "source": "balatron/assets/expansion48/jokers/sources/lightning_rod.png"
+  },
+  {
+    "key": "last_performance",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, rounded corners visible. Subject: a bowing masked theatre actor under a spotlight, almost-closed dark red velvet curtain. Crisp deliberate pixel art, chunky pixels, restricted palette, high mobile readability. Off-white opaque card, thin slate gray double outline, vertical pixel letters J O K E R on left and inverted lower right like reference. Clean simple background, no blur, no antialiasing, no mockup or label, no text except JOKER. Reference is card frame and pixel style ONLY; entirely new composition.",
+    "source": "balatron/assets/expansion48/jokers/sources/last_performance.png"
+  },
+  {
+    "key": "promissory_note",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, entire rounded border visible. Subject: a folded ivory promissory note with two distinctly different large signatures, red wax seal, two fountain pens. Crisp deliberate low resolution pixel art, readable silhouette, restricted palette, simple opaque card background, no blur/no antialiasing. EXTRA family: warm off-white card, thin slate gray double border, vertical J O K E R at left and inverted at lower right. Reference only determines family frame and pixel art language, not subject. No mockup, no title, no illustration spilling beyond border.",
+    "source": "balatron/assets/expansion48/jokers/sources/promissory_note.png"
+  },
+  {
+    "key": "broken_record",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait EXTRA Joker sprite. ONE full card 71:95 ratio, flat front, entire rounded border visible. Subject: a cracked black vinyl record with red center label, one tiny four-leaf Lucky clover and one glass-shard emblem. Crisp deliberate low resolution pixel art, readable silhouette, restricted palette, simple opaque card background, no blur/no antialiasing. EXTRA family: warm off-white card, thin slate gray double border, vertical J O K E R at left and inverted at lower right. Reference only determines family frame and pixel art language, not subject. No mockup, no title, no illustration spilling beyond border.",
+    "source": "balatron/assets/expansion48/jokers/sources/broken_record.png"
+  },
+  {
+    "key": "pendulum_a",
+    "prompt": "Use case: stylized-concept. Asset: finished Balatro Portrait DOUBLE Joker sprite. ONE full card 71:95 ratio, flat front, entire rounded border visible. Subject: an elegant brass pendulum swung far to the LEFT, its broad red weight full of stacked blue poker chips; right side empty. Crisp deliberate low resolution pixel art, readable silhouette, restricted palette, simple opaque card background, no blur/no antialiasing. DOUBLE family card: thin violet-gray rounded double border, ivory background. NO letters, NO JOKER text anywhere; border is clean. Match same pendulum design across mode variants. Reference only determines family frame and pixel art language, not subject. No mockup, no title, no illustration spilling beyond border.",
+    "source": "balatron/assets/expansion48/jokers/sources/pendulum_a.png"
+  },
+  {
+    "key": "pendulum_b",
+    "prompt": "Use case: stylized-concept. Asset: single full Balatro Portrait DOUBLE Joker card, 71:95 proportion, entire card edges/corners visible, flat orthogonal front. Subject: The exact same red-and-gold hollow pendulum as reference, now swinging to the RIGHT, with blue poker chips pouring from its bowl. No person, no face, no jester. Keep identical pendulum design and frame.. Crisp chunky low resolution pixel art, restricted 18-color palette, sharp silhouettes readable at 71x95. Ivory opaque background, violet gray rounded border, absolutely NO text anywhere, no JOKER letters. Reference is same pendulum identity to preserve. No gradients, no blur, no anti-aliasing, no decorative small detail, no mockup. Output exactly one full card, not a multi-card sheet.",
+    "source": "balatron/assets/expansion48/jokers/sources/pendulum_b.png"
+  },
+  {
+    "key": "pendulum_base",
+    "prompt": "Use case: stylized-concept. Asset: single full Balatro Portrait DOUBLE Joker card, 71:95 proportion, entire card edges/corners visible, flat orthogonal front. Subject: The exact same red-and-gold hollow pendulum as reference, hanging straight DOWN centered, weight closed and evenly balanced, small blue chip on either side. No person, no face, no jester. Keep identical pendulum design and frame.. Crisp chunky low resolution pixel art, restricted 18-color palette, sharp silhouettes readable at 71x95. Ivory opaque background, violet gray rounded border, absolutely NO text anywhere, no JOKER letters. Reference is same pendulum identity to preserve. No gradients, no blur, no anti-aliasing, no decorative small detail, no mockup. Output exactly one full card, not a multi-card sheet.",
+    "source": "balatron/assets/expansion48/jokers/sources/pendulum_base.png"
+  },
+  {
+    "key": "spyglass_1",
+    "prompt": "Use case: stylized-concept. Asset: single full Balatro Portrait UPG Joker card, 71:95 proportion, entire card edges/corners visible, flat orthogonal front. Subject: a short handheld brass spyglass with one bright turquoise glass lens, resting diagonally on dark navy velvet, simple compact iconic silhouette. Crisp chunky low resolution pixel art, restricted 18-color palette, sharp silhouettes readable at 71x95. Dark navy opaque background with ivory card margin, purple double frame and purple vertical JOKER lettering left and inverse right, tiny red four-point upgrade star in upper right. Reference is UPG FAMILY FRAME only, do NOT include reference creature or jester. One telescope object dominates. No gradients, no blur, no anti-aliasing, no decorative small detail, no mockup. Output exactly one full card, not a multi-card sheet.",
+    "source": "balatron/assets/expansion48/jokers/sources/spyglass_1.png"
+  },
+  {
+    "key": "spyglass_2",
+    "prompt": "Use case: stylized-concept. Asset: single full Balatro Portrait UPG Joker card, 71:95 proportion, entire card edges/corners visible, flat orthogonal front. Subject: a large brass astronomical telescope with bright turquoise lens on an elegant three-legged observatory tripod, same gold lens motif, faint small star chart behind. Crisp chunky low resolution pixel art, restricted 18-color palette, sharp silhouettes readable at 71x95. Dark navy opaque background with ivory card margin, purple double frame and purple vertical JOKER lettering left and inverse right, tiny red four-point upgrade star in upper right. Reference is UPG FAMILY FRAME only, do NOT include reference creature or jester. One telescope object dominates. No gradients, no blur, no anti-aliasing, no decorative small detail, no mockup. Output exactly one full card, not a multi-card sheet.",
+    "source": "balatron/assets/expansion48/jokers/sources/spyglass_2.png"
+  },
+  {
+    "key": "spyglass_3",
+    "prompt": "Use case: stylized-concept. Asset: ONE complete Balatro Portrait UPG Joker card, final stage OBSERVATORY, 71:95 portrait proportion. Reference is the immediately previous evolutionary stage: preserve the gold-brass telescope body and luminous turquoise lens, purple border, ivory margins, vertical purple JOKER left and inverse right, tiny red four-point upgrade stars. Evolve the subject into a large imposing domed brass astronomical observatory containing the same huge telescope and cyan lens, three clean stars above, structured illuminated base. Clearly larger and more advanced, more architectural mass than reference, simple readable silhouette. Dark midnight navy full opaque background. Crisp blocky low-resolution pixel art designed for71x95, restricted palette, NO gradients, NO blur, no antialiasing, no cropped corners, no mockup, no caption, exactly one card.",
+    "source": "balatron/assets/expansion48/jokers/sources/spyglass_3.png"
+  }
+]

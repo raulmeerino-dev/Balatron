@@ -88,7 +88,7 @@ ask_yes_no() {
 }
 
 echo
-echo "Balatro Portrait build options"
+echo "Balatrón build options"
 if [ "$has_readabletro_flag" -eq 0 ]; then
   if ask_yes_no "Apply Readabletro font and high-res textures?" "yes"; then
     opts+=("--readabletro")
@@ -129,7 +129,7 @@ echo
 python build.py --no-ios "${opts[@]}" "$@"
 
 apk="balatro-mobile-maker/balatro-aligned-debugSigned.apk"
-download_apk="/sdcard/Download/balatro-portrait-mobile.apk"
+download_apk="/sdcard/Download/balatron.apk"
 
 if [ ! -f "$apk" ]; then
   echo "ERROR: build finished, but APK was not found at $apk" >&2

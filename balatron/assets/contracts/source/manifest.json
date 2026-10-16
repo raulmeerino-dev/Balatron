@@ -1,0 +1,13 @@
+{
+  "generator": "ChatGPT Image (built-in)",
+  "style": "32x32 pixel-art HUD icons, transparent background, dark ink outline, retro casino palette consistent with Mutations, no text; nearest-neighbour aspect-preserving reduction to 30px within 32px cells.",
+  "subjects": {
+    "clean_hands": "A white gloved open hand with two mint-green clean sparkles, no cards.",
+    "one_shot": "One cream playing card pierced centrally by a single red dart, strong bullseye motif, no rank marks.",
+    "monochrome": "A fan of three ivory cards each bearing a single large black spade, monochrome black and ivory with muted grey.",
+    "high_roller": "Three chunky gold casino chips stacked next to a single red casino die with ivory pips.",
+    "no_safety_net": "A severed teal trapeze safety net with a bold red broken rope, angular torn net and clear missing center.",
+    "execution": "A single ivory playing card cut cleanly in half by a red guillotine blade, stylized dark metal frame, no blood.",
+    "debt_collector": "An ivory rolled bill with a red wax seal and two gold coins, hooked dark gloved fingers collecting one coin, no writing."
+  }
+}

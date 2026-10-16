@@ -1,0 +1,19 @@
+[manifest]
+version = "1.0.0"
+priority = 45
+dump_lua = false
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME = saveTable and saveTable.GAME or self:init_game_object()"
+position = "after"
+match_indent = true
+payload = "if PortraitGameplay then PortraitGameplay.begin_run(saveTable ~= nil) end"
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "G.CONTROLLER:snap_to({node = G.shop:get_UIE_by_ID('next_round_button')})"
+position = "after"
+match_indent = true
+payload = "if PortraitGameplay then PortraitGameplay.shop_ready() end"

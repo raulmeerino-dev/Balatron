@@ -1,0 +1,17 @@
+{
+  "id": "incremental_joker",
+  "name": "Extra Jokers",
+  "display_name": "Extra Jokers",
+  "author": [
+    "reggiemdfk"
+  ],
+  "description": "Additional Jokers with evolving rewards, run records and a choice of random effects.",
+  "prefix": "incj",
+  "main_file": "main.lua",
+  "version": "1.3.0",
+  "priority": 100,
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay (>=1.0.0)"
+  ]
+}

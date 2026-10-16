@@ -1,0 +1,164 @@
+{
+  "midas": {
+    "source": "../../balatron/art-source/jokers-reference-pass/midas.png",
+    "sha256": "42ed86173a3fbafda10de16532a40418f61092c22e00a3b8e2eec11759b2a39f",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "fusion",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "5e25d045db60e40772e5cbb76ca5f0930d7c7d745eb9f03328a2310634c725db"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "747e0e7e6916cd6844965b52c62e875c4baa9c1101b2fbaf822f252b44725e3f"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "banana_cannon": {
+    "source": "../../balatron/art-source/jokers-reference-pass/banana_cannon.png",
+    "sha256": "5c20f4b84cb339c1946fa72d7658600eb8738a605ed322ff01008d46f1cee10f",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "fusion",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "a7c555c3f08f4983701fc709bc0b78bb758ac5b393718720bc3965ed9460aa0c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "1bd83c354a29ad45b61b943d9405ce86e889b6c162f63ee052706e5a2bff393e"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "glitch": {
+    "source": "../../balatron/art-source/jokers-reference-pass/glitch.png",
+    "sha256": "178819a4852688c980e59a8c1ff173fdfb918b5a3e5700fa480f62860d0acc18",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "fusion",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "ebd09599c0f63380dc2deb34c8344f0f1640631cd4314004dec741cf5444daf3"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "0becc723f5354e635827c210ed7ea8a6d03c5e068bb4bfafa285cf8a61eb5ae7"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "last_meal": {
+    "source": "../../balatron/art-source/jokers-reference-pass/last_meal.png",
+    "sha256": "e4ca0380ecf5f07bc1cce55fb6e6793fb1c7be6a48602157297201b1414739c3",
+    "source_size": [
+      1084,
+      1451
+    ],
+    "cell": [
+      71,
+      95
+    ],
+    "family": "fusion",
+    "generator": "built-in imagegen",
+    "fit": "Lanczos resolution conversion independently from full original at 1x and 2x; no illustration or frame edits",
+    "prompts": "../../balatron/art-source/jokers-reference-pass/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "3cfc05c1e40f06c57fd6d86933db85e47bda758b62e6225575d72372329e903e"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "cc0cb5fc198af78e246796f50b4e258a9554397635cd12c10568f00f23c9ac71"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  },
+  "broken_copier": {
+    "source": "art-source/broken_copier.png",
+    "crop": [
+      37,
+      53,
+      1047,
+      1395
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "exact existing golden Fusion inset border",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "cd1d0a97a7a0a9e54d45dce24a891cfdb2c0a72c40f1316fd5d247ee3e0ac20c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "64a559c50e69f1619320ba931b68fd97660f087cceacb71b0251acb32df9c61e"
+      }
+    },
+    "normalization": "../../balatron/art-source/format-normalization/manifest.json"
+  }
+}

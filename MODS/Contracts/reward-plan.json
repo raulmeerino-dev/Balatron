@@ -1,0 +1,83 @@
+{
+  "status": "design_only_not_loaded_by_game",
+  "scope": "Corrección de recompensas de los 20 Contracts propuestos. No registra Contracts ni modifica sus objetivos o misiones.",
+  "supersedes": "Quedan canceladas las instrucciones anteriores de crear consumibles SEAL, su clase, colección, arte, etiquetas, pools y selector de playing cards propios.",
+  "runtime_audit": {
+    "registered_contracts": 7,
+    "new_contracts_implemented": false,
+    "custom_seal_consumable_type_found": false,
+    "vanilla_seals_unchanged": true
+  },
+  "vanilla_spectral_references": [
+    {"key": "c_deja_vu", "name": "Deja Vu", "seal": "Red"},
+    {"key": "c_trance", "name": "Trance", "seal": "Blue"},
+    {"key": "c_talisman", "name": "Talisman", "seal": "Gold"},
+    {"key": "c_medium", "name": "Medium", "seal": "Purple"}
+  ],
+  "reward_policy": {
+    "set": "Spectral",
+    "create_new_consumable_type": false,
+    "create_new_registered_pool": false,
+    "eligibility": "Filtrar las referencias vanilla mediante la elegibilidad Spectral existente, bans y restricciones de duplicados. No exigir una playing card seleccionada para obtener el consumible.",
+    "selection": "Elegir sin reemplazo mediante RNG seeded del juego; cada opción debe tener una key distinta. Si quedan menos candidatos, mostrar solo los elegibles. Si no queda ninguno, conservar la recompensa pendiente sin sustitución silenciosa.",
+    "delivery": "Entregar la Spectral vanilla real en G.consumeables. No aplicar automáticamente ningún Seal ni consumir la carta al reclamarla.",
+    "use": "Reutilizar íntegramente Card.can_use_consumeable y Card.use_consumeable vanilla, sus objetivos y reglas de sustitución de Seals. No añadir una segunda selección de playing cards.",
+    "capacity": "Reutilizar la reclamación pendiente de Contracts y la gestión normal del inventario, respetando capacidad efectiva y reservas. Sin espacio, conservar carta/elección; no destruir, auto-usar, convertir en dinero ni añadir Negative para eludir el límite.",
+    "persistence": "Guardar las keys sorteadas al resolver la recompensa, antes de mostrarla, junto con contrato/recibo, opción elegida y estado pendiente/reclamado. Reabrir o cargar no vuelve a sortear ni permite cobrar dos veces.",
+    "integration_needed": "El flujo actual pending_spectral guarda una cantidad y genera una Spectral genérica al reclamar. Para estas nuevas recompensas deberá conservar también las keys y opciones concretas; aún no está implementado.",
+    "art_and_tooltips": "Usar sprites, localizaciones, badge Spectral y tooltips vanilla de cada carta. Tap elige/reclama; long press informa mediante la UI existente."
+  },
+  "affected_contract_rewards": [
+    {
+      "proposal_id": "clean_kill",
+      "name_es": "GOLPE LIMPIO",
+      "reward": {"mode": "random_one", "keys": ["c_deja_vu", "c_trance", "c_talisman", "c_medium"]},
+      "boss_reward": {"mode": "choose_one", "options": 2, "keys": ["c_deja_vu", "c_trance", "c_talisman", "c_medium"]},
+      "objective_audit": "El objetivo original duplica one_shot. La sustitución de objetivo/nombre sigue pendiente; esta corrección solo cambia su recompensa prevista."
+    },
+    {
+      "proposal_id": "minimalist",
+      "name_es": "MINIMALISTA",
+      "reward": {"mode": "random_one", "keys": ["c_trance", "c_medium"]}
+    },
+    {
+      "proposal_id": "sealed_deal",
+      "name_es": "TRATO SELLADO",
+      "reward": {"mode": "choose_one", "options": 2, "keys": ["c_deja_vu", "c_trance", "c_talisman", "c_medium"]}
+    },
+    {
+      "proposal_id": "fine_print",
+      "name_es": "LETRA PEQUEÑA",
+      "reward": {"mode": "choose_one", "options": 3, "keys": ["c_deja_vu", "c_trance", "c_talisman", "c_medium"]}
+    },
+    {
+      "proposal_id": "power_user",
+      "name_es": "USUARIO AVANZADO",
+      "reward": {"mode": "different_consumable_category", "categories": ["Tarot", "Planet", "Spectral", "Contraband"]},
+      "correction": "Eliminar SEAL de las categorías posibles. Las cuatro cartas de sello cuentan como Spectral; no son una quinta categoría. Contraband solo si está habilitado y es elegible."
+    }
+  ],
+  "other_proposed_rewards_unchanged": [
+    {"proposal_id": "precision_job", "name_es": "TRABAJO DE PRECISIÓN", "reward": "Planet vanilla de la mano más utilizada"},
+    {"proposal_id": "last_bullet", "name_es": "ÚLTIMA BALA", "reward": "Temporary X1.5 Mult durante 4 manos"},
+    {"proposal_id": "jack_of_all_trades", "name_es": "TODOTERRENO", "reward": "Arcana Pack vanilla"},
+    {"proposal_id": "overkill_order", "name_es": "EXCESO DE FUERZA", "reward": "Spectral Pack vanilla; mejora prevista para Overkill >= x100"},
+    {"proposal_id": "deep_pockets", "name_es": "BOLSILLOS LLENOS", "reward": "Tarot elegible; posible pequeño complemento monetario pendiente de balance"},
+    {"proposal_id": "big_game_hunter", "name_es": "CAZA MAYOR", "reward": "Buffoon Pack o recompensa de Joker Rare prevista, pendiente de balance"},
+    {"proposal_id": "liquidation", "name_es": "LIQUIDACIÓN", "reward": "Temporary X2 Mult durante 2 manos"},
+    {"proposal_id": "all_in", "name_es": "TODO DENTRO", "reward": "Elegir 1 de 3 Tarot elegibles"},
+    {"proposal_id": "full_house", "name_es": "AFORO COMPLETO", "reward": "Buffoon Pack mejorado vanilla"},
+    {"proposal_id": "encore", "name_es": "BIS", "reward": "Planet vanilla de la mano usada para completar el Contract"},
+    {"proposal_id": "playing_with_fire", "name_es": "JUGAR CON FUEGO", "reward": "Temporary X1.5 Mult durante 4 manos"},
+    {"proposal_id": "merger_clause", "name_es": "CLÁUSULA DE FUSIÓN", "reward": "Elegir Arcana Pack o Celestial Pack vanilla"},
+    {"proposal_id": "black_route", "name_es": "RUTA NEGRA", "reward": "Spectral Pack vanilla"},
+    {"proposal_id": "premium_package", "name_es": "PAQUETE PREMIUM", "reward": "Mega Booster vanilla elegible de un tipo distinto a los usados, cuando sea posible"},
+    {"proposal_id": "masterpiece", "name_es": "OBRA MAESTRA", "reward": "Temporary X2 Mult durante 2 manos y Planet vanilla de la mano que completó el Contract"}
+  ],
+  "audit_notes_no_other_changes": [
+    "Los premios de Packs, Planets, Tarot, Tags y Editions deben referenciar objetos y efectos nativos, sin crear clones custom.",
+    "Temporary Multiplier requiere duración y estado propios; reutilizar el scoring XMult nativo. No es equivalente exacto a un consumible o Tag vanilla.",
+    "Alambique, Perchero y Correo certificado siguen siendo propuestas de Jokers pendientes de aprobación: deben reutilizar las cartas Spectral, Editions y consumibles existentes.",
+    "La Mutation On the House ya concede el primer reroll gratis, efecto también presente en Chaos the Clown; no se modifica en esta corrección."
+  ]
+}

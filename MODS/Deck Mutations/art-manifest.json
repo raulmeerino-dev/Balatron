@@ -1,0 +1,1139 @@
+{
+  "overload": {
+    "source": "art-source/overload.png",
+    "crop": [
+      24,
+      12,
+      1060,
+      1415
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "exact existing red Risk-style inset frame with dark outer contour; visual treatment only",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "ed21d11a6b95b42e1b5ddd79c92179a984c185ad7b4fbd0af7aa9be7539d418c"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "22f547c526bde81717184e85053426599808d183f2bac4e00079c12f5be7c651"
+      }
+    }
+  },
+  "resonance": {
+    "source": "art-source/resonance.png",
+    "crop": [
+      21,
+      23,
+      1063,
+      1419
+    ],
+    "fit": "nearest-neighbour sampling independently at 1x and 2x",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/latest-eight/prompts.json",
+    "visual_border": "exact existing golden Fusion inset border; visual treatment only",
+    "sprites": {
+      "1": {
+        "size": [
+          71,
+          95
+        ],
+        "sha256": "da5dc002ba8c82ed2e67652dd005b8e8d1e2d5e02f52a64944ea0562c6eaa0bd"
+      },
+      "2": {
+        "size": [
+          142,
+          190
+        ],
+        "sha256": "d4a891445c1c799687ed1d83611743304b1037c20a588b416baf48652f05e5c5"
+      }
+    }
+  },
+  "chain_reaction": {
+    "source": "art-source/chain-reaction-icon/source.png",
+    "crop": [
+      53,
+      316,
+      1211,
+      1070
+    ],
+    "fit": "alpha bounds fit within 56x56 on a 64x64 grid; nearest-neighbour; 2x exact pixel doubling",
+    "tool": "built-in image_gen",
+    "prompts": "art-source/chain-reaction-icon/prompt.json",
+    "visual_border": "none; transparent Mutation effect icon",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "8203da90a54cea2fb5f557e1eaf5d2ceb70ba4509ae505b6626efe0c7bf48d85"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "c608d7e15e517163e4949f3508e5d9a81651479f25568ffefb106793f4565687"
+      }
+    }
+  },
+  "discounts": {
+    "source": "../../balatron/art-source/run-modifiers/discounts.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "345b16bd7ad8d8763d1f7fc946c90b139ae5ca40553a409ba47e63de2714bcfd"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "247cf0c3d2dc6be2c47038821cc207c03f85c98173891c8edc6bc6c9e2453fd7"
+      }
+    }
+  },
+  "inflation": {
+    "source": "../../balatron/art-source/run-modifiers/inflation.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "35cafd631242dad55230099bad8f9003a5784897e74d95b20b3169e4fd37c6d1"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "eebd44f7ce73eaa457ef41a6f3c58b8f62987d47cada0067da23d7118b765b39"
+      }
+    }
+  },
+  "rare_market": {
+    "source": "../../balatron/art-source/run-modifiers/rare_market.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "4a5b48c5328e1ec4a23a102786c61ff8268ae6ef391c4e3f1f4a1aadc9c887b8"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "014c145d892f9fd8f3afc7f7319ec80b53e9063aa1325cd9cfaff78ba21a78a4"
+      }
+    }
+  },
+  "shiny_market": {
+    "source": "../../balatron/art-source/run-modifiers/shiny_market.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "9b8bdf4ab6c4d9ffda66054b73e4b249e67b71bdd7ed4ebed7e039e63ce9280a"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "029c61c62ea57c6aa2331d57ebb79e45b83b5dd4ae35bd7318a5bf5d13b04197"
+      }
+    }
+  },
+  "black_market": {
+    "source": "../../balatron/art-source/run-modifiers/black_market.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "f132a8cac05b37ac5e0bda0e0c078a57160cc9d78c5964e96190f2b563cbf7c5"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "917197ab167f641c82615efe691bd128ea2e9b7923da68a5078328397a63376d"
+      }
+    }
+  },
+  "empowered_jokers": {
+    "source": "../../balatron/art-source/run-modifiers/empowered_jokers.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "d3eb23a81f1bd52065adb60463c4313f17de14ab7d5f4ea8abeb77698b746b73"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "6cd0b5e529d708685262ac5f63df3be3e1659d7b9e9e3da42b6a04835f829c05"
+      }
+    }
+  },
+  "easy_sale": {
+    "source": "../../balatron/art-source/run-modifiers/easy_sale.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "c0e7e5a47b20e2d86af6e05442381135ea64212a777c9cf9fc48d4ba365a088b"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "b725a5e13d0ad93123256cb409c290e18b8887a3e408b3b79d879b310fd78802"
+      }
+    }
+  },
+  "no_interest": {
+    "source": "../../balatron/art-source/run-modifiers/no_interest.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "d121056b2ff3aae64f569d5702914ee2afd05ff66fd811271950043cfd6a3ced"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "4d36c4b22be9fea0f54ae38dcbecfe4e2b3f871f85aa18d6cc62a7b1c898b051"
+      }
+    }
+  },
+  "light_deck": {
+    "source": "../../balatron/art-source/run-modifiers/light_deck.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "4ff73db5fec2c89928610c778d5a0363fe02d0f7fb0833fa2ab7fbca2e6fd0d5"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "2e48559f2651fbf4009a93660b7c494c036d69c4cbf34fba726bc2f2d8b19fba"
+      }
+    }
+  },
+  "heavy_deck": {
+    "source": "../../balatron/art-source/run-modifiers/heavy_deck.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "105ff43f78f4dc4f1388924214ae8e9d53c3adbc2bddbe45e120aa6c33ba614a"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "9b3f672958c1224a466db1c571a99c6dd95313a601784c70cd23295d15893cfa"
+      }
+    }
+  },
+  "empowered_cards": {
+    "source": "../../balatron/art-source/run-modifiers/empowered_cards.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "1254c2a8c32043e958d87bb71064a3cddfced0a8ec8cf2a9259c46eeccbdd06c"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "ec87c142347d0946ef70dbe5a6f0bed1c1da396a653866ee2de07025c564ff05"
+      }
+    }
+  },
+  "boosted_mult": {
+    "source": "../../balatron/art-source/run-modifiers/boosted_mult.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "e6707c6e66b072ad25234aa5060db01c5918591522291dd5b6b625f1df4702dc"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "b2ca52319674760cfd1d06b576281bce198493fbd1d4815d7b6af825ebc2a7f4"
+      }
+    }
+  },
+  "boosted_chips": {
+    "source": "../../balatron/art-source/run-modifiers/boosted_chips.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "d2fe3d49110e42f05a6e7d0644ec3204d9be6b7b6029d8258e594808bcf75c9b"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "c816df35a9ab4ca62eac5f07c5ef1aa9ebbde04efb910465ffbd44cf74f2a063"
+      }
+    }
+  },
+  "weak_boss": {
+    "source": "../../balatron/art-source/run-modifiers/weak_boss.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "a5e9bd8558f213c98e76e993a593c1c1e21013ea451b6c374956687ffff0e5d8"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "46d3edd5d278097985e752c496c1bfec7136a3170c4b31ddef180c82f9214437"
+      }
+    }
+  },
+  "strong_boss": {
+    "source": "../../balatron/art-source/run-modifiers/strong_boss.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "9efbe3094e021e6a7bd14cb582246a13cc1a76f9f0b8e7a1692b8eddf8efdf21"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "73e722692bd06e2fbf04d44cda7e84c60a624af73a69b6c38062a333a246fb15"
+      }
+    }
+  },
+  "more_shop": {
+    "source": "../../balatron/art-source/run-modifiers/more_shop.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "7c08f454edc53e04651556f1aec1b7ea16e51cf23549baeecf4e84f1b9087d4d"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "5338c787abc9c19748179dcddf759c6b7c1d427b8a31691281d28a7dcc3f6903"
+      }
+    }
+  },
+  "less_shop": {
+    "source": "../../balatron/art-source/run-modifiers/less_shop.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "b80d7d30b7ecaedb098782e3808a26629f7ccc6e126c2af12bfc52b74b7556da"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "8385a872063f0975833adfa1ca75f3f900ad4f58a7d630ffa65a149dd6301f29"
+      }
+    }
+  },
+  "cheap_reroll": {
+    "source": "../../balatron/art-source/run-modifiers/cheap_reroll.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "4d11b29ecc97ee76745aa42c6587bb5ea8029496856fde5edaa1098207fd899f"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "3116c76f1b5c6284c45080310d61e1cec86bdad0763ad51d3eaf7051b542cbf7"
+      }
+    }
+  },
+  "frequent_tarot": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_tarot.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "c434e726bc3d9e13dc158f4230fea31d035a454c68f26ae7e7900c9dea213141"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "9e788bdd4aa03cf9645eb341adab13c74aa6c47e1f6d1d0690d2141f1165341d"
+      }
+    }
+  },
+  "frequent_planet": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_planet.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "df1e17fcacffd2fd25bc885f10ca1aec311da11935b8d48a27b518696271d9ba"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "04458b0f0d38f5a231fa2bfd1596d171aad595bea9af30210ddc32e5e2d4817d"
+      }
+    }
+  },
+  "frequent_spectral": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_spectral.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "6030413d08c70ac419d979732570dd2f17a6db284e6080ec64b0a36591ec40d5"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "5bce7f78c911edaea93972528fb7e0c41976a256b89a1fcb0257f7676315b518"
+      }
+    }
+  },
+  "large_packs": {
+    "source": "../../balatron/art-source/run-modifiers/large_packs.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "f97badd47ebdb540c96726420ec5e031507b1c379f579e11e8c43e8971cf0b11"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "bec250b5aab80c749fe8007aded8771ef0a7d5c91e53d04d30451dff67faa668"
+      }
+    }
+  },
+  "cheap_packs": {
+    "source": "../../balatron/art-source/run-modifiers/cheap_packs.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "8b927ca263de868d5b97ac8e6f31f7b03111ff2b1784c8746664ed26bbfefac1"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "14ee5f43f10da5fc1f87f8403fbddfac61ef898e0d5804fb625ea7ca66013704"
+      }
+    }
+  },
+  "strong_editions": {
+    "source": "../../balatron/art-source/run-modifiers/strong_editions.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "60d384d8b7bfaa922b96813ccf92f1afa69a5a35cfa20f487be8f3be0b3d264f"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "8908b2452db99e674952e79d3393c551934588cb821734a0b696ecc0de6c7f61"
+      }
+    }
+  },
+  "strong_seals": {
+    "source": "../../balatron/art-source/run-modifiers/strong_seals.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "4a1db5eb0a222c2c113f6641c12bb8243d3fcc9b2dfcd593d3508b89bf77ee80"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "7b3dd8100cf9e028f10b80600d7815712e502dfe05b42bc36e4dfcdf4f297f8d"
+      }
+    }
+  },
+  "strong_enhancements": {
+    "source": "../../balatron/art-source/run-modifiers/strong_enhancements.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "1354a6565197311d9a823e0237472d2620020f544f5853ebe416d1a89cdcdc59"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "1e650f4f8cb72ffae0c1af2b6aef0400f67418fbf533d92a17ac5e8e24773db2"
+      }
+    }
+  },
+  "ante_money": {
+    "source": "../../balatron/art-source/run-modifiers/ante_money.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "13bafdc45cafc062b10fb8965e0eb916ea72ebf1bb4fc4cc6763f9cc5cb317b0"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "825122c5fdf32fce7dda86fb80155261d04b20bef7ffd1280dd639e9f04c3c1e"
+      }
+    }
+  },
+  "overkill_plus": {
+    "source": "../../balatron/art-source/run-modifiers/overkill_plus.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "c362584b98980287cd840ab9397e115811472eaefcc6aebc780515a604995297"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "b5c1902cc9f6b28b406f77648066ae648f964f951bfd92d9df90e5a4dca5fb46"
+      }
+    }
+  },
+  "contracts_plus": {
+    "source": "../../balatron/art-source/run-modifiers/contracts_plus.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "0bbc8f70011827b7b66dd1e2b8f948bb2ad1e377e567c9afa1bfea0ede80fd82"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "4b1010b8ec850bd3901c58b475fd0a9ec1e36dc72b509ca04905877a881d1e98"
+      }
+    }
+  },
+  "frequent_contracts": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_contracts.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "39a2aba5a7f1d7f08e1a81b845e97d086cab2809a410f6f52488ab210171a48d"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "f8fd74cc3bade18d05d4b60636267ae6af0743013f7fdecaae18f343d372532c"
+      }
+    }
+  },
+  "frequent_risk": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_risk.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "00178b65eff7673e579bd6dce16756c45af39ec0909e338124b601373008e9af"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "27b09dff5bcca5becc29b1ebd175c1c201a6cd71e4e3a7e78709d88e5aee4acd"
+      }
+    }
+  },
+  "frequent_fusion": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_fusion.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "457cd41a82556c446a2f9e1d046ca2f5b927b09cbd998856664480eb09c0c9f3"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "a91dfc109b90c8ab458c3c036f9b6f16740f47bde7186be42ee3089efbb0a51b"
+      }
+    }
+  },
+  "frequent_doubles": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_doubles.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "231b791190f5a3d89ed0a23b51e082baa2198da1136f5e1221c005829fa17da9"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "e6d64e82ee48e73ed2e7236ab835468a0881ac844374486557c86bc29639f6c6"
+      }
+    }
+  },
+  "frequent_negative": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_negative.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "98e23cfe09f8b2d1bd52d7d45c7ad0ba384684b45ac8337e92720ae7eacd8d45"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "629fcd63279ceff48c102984520dbd2855023709c4538f3aa65a2e6636c8d177"
+      }
+    }
+  },
+  "fewer_commons": {
+    "source": "../../balatron/art-source/run-modifiers/fewer_commons.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "e5e915f81779217e4af0eccc48d39ff3cd8e389265f065495a20afe064650c6f"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "f46fde6501d26d719673bab964aa40a7a7364db4759120a7ffa0d860edae9546"
+      }
+    }
+  },
+  "chaos": {
+    "source": "../../balatron/art-source/run-modifiers/chaos.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "97fbe051b1222dc897644c8d032ff74740d41fe4aa5d549ace679408ec38b7f9"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "d4d2ba29aed4cc545be431ac5f4cc2a6350d179ce21fed0c54c8aa3f8175d3cd"
+      }
+    }
+  },
+  "free_reroll": {
+    "source": "../../balatron/art-source/run-modifiers/free_reroll.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "0199b69559170b135ed5c92b43a4d5a3a139e70db5fbd3dd0286b52db2655ca0"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "fdb2ddc278a60ca19c873b0eb036aef2f18b1fa365ca760ea79fbf846d514a52"
+      }
+    }
+  },
+  "high_stakes": {
+    "source": "../../balatron/art-source/run-modifiers/high_stakes.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "662b66941fac85d1b2c0999adbf9c8c12258aabd27dbc7f52ace5523e0713bad"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "9d0e9bc8fc923a9e820903dce4f6a4ae9b8548002942bbfd491f4abc3da58d23"
+      }
+    }
+  },
+  "double_interest": {
+    "source": "../../balatron/art-source/run-modifiers/double_interest.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "6440a00e5ea54e282d7dc23d5575dff880d20b6ca58ab6e99bf26f73a2c3b60e"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "65680f216660d172b93eabefd19cd3075b09c55db939168776ba2f0b6bf8801f"
+      }
+    }
+  },
+  "cheap_jokers": {
+    "source": "../../balatron/art-source/run-modifiers/cheap_jokers.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "062a3c4190e45ef5da76cdc133c7068d43bc053fa817695562280181db2794a5"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "9eb6a32fff9372359e32945e62c9250ecbe07484a2257dcd6b2bb4581f86c8ba"
+      }
+    }
+  },
+  "cheap_consumables": {
+    "source": "../../balatron/art-source/run-modifiers/cheap_consumables.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "6f0c170c504e5db0d76675c705d9cb053f3b88a50c6ac64591bd5592c7b679eb"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "db3f6f7ee0392c6ae352690f3c004608a44366b39ab369ff5674300f0e2df20e"
+      }
+    }
+  },
+  "profitable_sale": {
+    "source": "../../balatron/art-source/run-modifiers/profitable_sale.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "72944a3c8ea3474db16c50c19c7f31f845916a8d44d34dde02e5e44dee9599e7"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "230775d515523d576bd032bd40e5111079a2aef01a8b42506ac7bce8911e6a94"
+      }
+    }
+  },
+  "first_hand": {
+    "source": "../../balatron/art-source/run-modifiers/first_hand.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "918619a2c2c1aac6a0ee63380be816598a6fa1718630561a467bfc023bc50705"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "dc0215c607d6c76ea1aa39392291d94bb4ff6784d2a27fc625ab66c0d41c11ba"
+      }
+    }
+  },
+  "free_discard": {
+    "source": "../../balatron/art-source/run-modifiers/free_discard.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "5f163d48a840aa21cd2271f0c035038f14ccc2f0ffd6815d38ba06b5035bbbee"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "5dd39de29c8d61c0a9f426120d0342ba8c025b0fdd50dfe8e88a961a9dfa376b"
+      }
+    }
+  },
+  "frequent_packs": {
+    "source": "../../balatron/art-source/run-modifiers/frequent_packs.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "59748ecf486b4eca7ce430bcea67a0317a93beb0a96c7bea10ad6c5a5f07ccfa"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "8b09fa8483bd634634a10f25f98b066b6267466eadfb8bd380437f7c47e8118c"
+      }
+    }
+  },
+  "second_pick": {
+    "source": "../../balatron/art-source/run-modifiers/second_pick.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "bffd430fb8557552cd278164d0a55815c4022238e299324d15ce7872ef4d72b5"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "b9cf29865b4e752c295ff795b7c73397b57891bdcc2ec440e01de1d8bc1d05b9"
+      }
+    }
+  },
+  "quick_blind": {
+    "source": "../../balatron/art-source/run-modifiers/quick_blind.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "b38735eca9e8f01a60cfecc40d5ad548eb19b0dba292ce3e7b24109b15f223f6"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "82852367a14b829c7daf27521d840c9f6ba2000fa70b824db1174477ff5860ca"
+      }
+    }
+  },
+  "fortune": {
+    "source": "../../balatron/art-source/run-modifiers/fortune.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "81c285661b85035b9833fb3290b44ec36f3292585b9ff50c8ab4b2f896af47b3"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "a831fe03c57c9743c2e9fd19809e651904950eed5c3c66d94784544d16aa4d2e"
+      }
+    }
+  },
+  "extra_reward": {
+    "source": "../../balatron/art-source/run-modifiers/extra_reward.png",
+    "tool": "built-in image_gen",
+    "prompts": "../../balatron/art-source/run-modifiers/prompts.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "e552fd1ddb06666058f31fa30613ff3d9939ca9e64cfdb403d336a5203679d67"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "070a23330afd87babb190c7ce1ed5e06317425266d4ed36a5bf06d294c79f59e"
+      }
+    }
+  },
+  "double_planets": {
+    "source": "art-source/double_planets/source.png",
+    "tool": "built-in image_gen",
+    "prompts": "art-source/double_planets/prompt.json",
+    "sprites": {
+      "1": {
+        "size": [
+          64,
+          64
+        ],
+        "sha256": "763d3ecac5150b2422232df645f6f489d72d29592ea820fb082c01ac5f983493"
+      },
+      "2": {
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "81c0b4a8caf961e53a1cb506630ce2a2bdd17a5f7e6cd53f8c34d8f58c887ace"
+      }
+    }
+  }
+}

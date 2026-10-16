@@ -1,0 +1,751 @@
+{
+  "skin": "deck1",
+  "card_size": [
+    284,
+    380
+  ],
+  "atlas_size": [
+    3692,
+    1520
+  ],
+  "logical_cell": [
+    71,
+    95
+  ],
+  "dpi_scale": 4,
+  "sources": {
+    "hearts": {
+      "file": "CORAZON\\Imagen de ChatGPT 6 oct 2026, 13_18_33-1.png",
+      "sha256": "47068d0ad9b84f47501e3ec4bfb0812e99e95b409c161ac39217358491bccde9"
+    },
+    "clubs": {
+      "file": "TREBOL\\Imagen de ChatGPT 6 oct 2026, 13_18_36-4.png",
+      "sha256": "6ff1aac1851b0ad5a8005436a46c2106283df2a1d18a3e339dc1faf57b698e76"
+    },
+    "diamonds": {
+      "file": "ROMBOS\\Imagen de ChatGPT 6 oct 2026, 13_18_35-3.png",
+      "sha256": "fed7917586caa771db223cde1c30e0fafb8cc312c93f321401c52a0bf9aac9dc"
+    },
+    "spades": {
+      "file": "PICAS\\Imagen de ChatGPT 6 oct 2026, 13_18_34-2.png",
+      "sha256": "900f9fa3eb79905b0668c80e8220a7c5b177cd54e3e01da205425f3cb93bb98f"
+    },
+    "back": {
+      "file": "REVERSO\\Imagen de ChatGPT 6 oct 2026, 13_12_56-5.png",
+      "sha256": "ab0dac3085adffa274034a631fd52d2dc733dcc850a994acb957ff4d89e7fd22"
+    }
+  },
+  "cards": {
+    "hearts_A.png": {
+      "crop": [
+        15,
+        46,
+        252,
+        412
+      ],
+      "atlas_cell": [
+        12,
+        0
+      ],
+      "sha256": "0b1580891b5cb6b9921989c7ece7a6e3dbf68ecd4930eee3735f93bcc82d8443"
+    },
+    "hearts_2.png": {
+      "crop": [
+        263,
+        46,
+        499,
+        412
+      ],
+      "atlas_cell": [
+        0,
+        0
+      ],
+      "sha256": "4bb9fdbdde9a45922c7ad82c0aed76bf07c7bef8ed6708726b76900f7a77a8e2"
+    },
+    "hearts_3.png": {
+      "crop": [
+        509,
+        46,
+        745,
+        412
+      ],
+      "atlas_cell": [
+        1,
+        0
+      ],
+      "sha256": "84e74218e426c801f814a4a8beea17886b651aaacf39b7a820606836bd2181d5"
+    },
+    "hearts_4.png": {
+      "crop": [
+        756,
+        46,
+        993,
+        412
+      ],
+      "atlas_cell": [
+        2,
+        0
+      ],
+      "sha256": "e9fc75665aeac03a2fb277756b71cef60e861255ab67fdca689849373f45d559"
+    },
+    "hearts_5.png": {
+      "crop": [
+        1004,
+        46,
+        1241,
+        412
+      ],
+      "atlas_cell": [
+        3,
+        0
+      ],
+      "sha256": "34f40d481cf738419a0ac8ead55d153efe54d8beaef3eafc7627235cd1a987ed"
+    },
+    "hearts_6.png": {
+      "crop": [
+        15,
+        430,
+        252,
+        803
+      ],
+      "atlas_cell": [
+        4,
+        0
+      ],
+      "sha256": "de332a34a7ad5b83df92ab0c822250c0f07d77bed0e4babf8037a5aa646035b6"
+    },
+    "hearts_7.png": {
+      "crop": [
+        263,
+        430,
+        499,
+        803
+      ],
+      "atlas_cell": [
+        5,
+        0
+      ],
+      "sha256": "b849c6d1daed4a67148c63867e677c7d19dbc605aa583bda267606db40a37b94"
+    },
+    "hearts_8.png": {
+      "crop": [
+        509,
+        431,
+        745,
+        802
+      ],
+      "atlas_cell": [
+        6,
+        0
+      ],
+      "sha256": "c202ae882954e28b76f7cb28f2b26ea59e6c9ae2a1495c8b321da85312e46bf5"
+    },
+    "hearts_9.png": {
+      "crop": [
+        756,
+        431,
+        993,
+        802
+      ],
+      "atlas_cell": [
+        7,
+        0
+      ],
+      "sha256": "d67f152f2204eae4960290fe6617cb472de6842d3c70687301d1adceea0a0449"
+    },
+    "hearts_10.png": {
+      "crop": [
+        1004,
+        431,
+        1241,
+        803
+      ],
+      "atlas_cell": [
+        8,
+        0
+      ],
+      "sha256": "e285b4c0c8a899eadecbf9dd5353e22e86f03d0a60f7026b33a100b75281cedd"
+    },
+    "hearts_J.png": {
+      "crop": [
+        235,
+        822,
+        491,
+        1197
+      ],
+      "atlas_cell": [
+        9,
+        0
+      ],
+      "sha256": "2d3ccceaa7b923990117b610f51718dd9c5e9cce5431eb31c69dc4443e675c71",
+      "face_override": "face_overrides/hearts_J.png",
+      "face_override_sha256": "2d3ccceaa7b923990117b610f51718dd9c5e9cce5431eb31c69dc4443e675c71"
+    },
+    "hearts_Q.png": {
+      "crop": [
+        502,
+        822,
+        752,
+        1197
+      ],
+      "atlas_cell": [
+        10,
+        0
+      ],
+      "sha256": "13b0da61cdb5f539943a519200f1f10500172c5e03106b2d03288c0fac724b08",
+      "face_override": "face_overrides/hearts_Q.png",
+      "face_override_sha256": "13b0da61cdb5f539943a519200f1f10500172c5e03106b2d03288c0fac724b08"
+    },
+    "hearts_K.png": {
+      "crop": [
+        763,
+        822,
+        1016,
+        1197
+      ],
+      "atlas_cell": [
+        11,
+        0
+      ],
+      "sha256": "805e29db0a8aa95a3fac5eaaf2bcc1339dd74822ebd9593d2a8bc349ea7a3bdc",
+      "face_override": "face_overrides/hearts_K.png",
+      "face_override_sha256": "805e29db0a8aa95a3fac5eaaf2bcc1339dd74822ebd9593d2a8bc349ea7a3bdc"
+    },
+    "clubs_A.png": {
+      "crop": [
+        15,
+        45,
+        252,
+        412
+      ],
+      "atlas_cell": [
+        12,
+        1
+      ],
+      "sha256": "244bf76c0e9470a573a49a61391eee1ec1c4f4082233cc5b9544054761609fe2"
+    },
+    "clubs_2.png": {
+      "crop": [
+        263,
+        45,
+        499,
+        412
+      ],
+      "atlas_cell": [
+        0,
+        1
+      ],
+      "sha256": "5e4cd2fa884199aa7d11b993b4f7e926d9fdeb562c02be34bb7f629ab138ac9c"
+    },
+    "clubs_3.png": {
+      "crop": [
+        510,
+        45,
+        745,
+        412
+      ],
+      "atlas_cell": [
+        1,
+        1
+      ],
+      "sha256": "e4871d248d2737ebb483d27a62cc440fbc3ce7a2b99cef6ffb275475783d8056"
+    },
+    "clubs_4.png": {
+      "crop": [
+        756,
+        45,
+        993,
+        412
+      ],
+      "atlas_cell": [
+        2,
+        1
+      ],
+      "sha256": "548c7754ad7bc82df9c882e3dab4ebd2ba51d0546b5e1e4404f90d4856c377c8"
+    },
+    "clubs_5.png": {
+      "crop": [
+        1004,
+        45,
+        1241,
+        412
+      ],
+      "atlas_cell": [
+        3,
+        1
+      ],
+      "sha256": "25a7fbbdd5f5b6f99819722802d319637e69e918a612ca2bf75392aa1f3053a8"
+    },
+    "clubs_6.png": {
+      "crop": [
+        15,
+        430,
+        252,
+        803
+      ],
+      "atlas_cell": [
+        4,
+        1
+      ],
+      "sha256": "b0cc6f724ca1fa916ab7b56046345c6dbc49d9d7fc7d150abedb7bf4a496f8ea"
+    },
+    "clubs_7.png": {
+      "crop": [
+        263,
+        430,
+        499,
+        803
+      ],
+      "atlas_cell": [
+        5,
+        1
+      ],
+      "sha256": "b6990c03472358a194423dfd469921535aea3cee1aa48a32608d0462eb77ce4f"
+    },
+    "clubs_8.png": {
+      "crop": [
+        510,
+        431,
+        745,
+        803
+      ],
+      "atlas_cell": [
+        6,
+        1
+      ],
+      "sha256": "764df700988580cc4d1d22568da2bcc7ee10be1daa44a674deaf818f75bb3fff",
+      "approved_correction": "corrections\\clubs_8.png",
+      "correction_sha256": "a52993e609183bbe9cc16fa87e55f1280b2f8fb5cb66a461d5dbebf2548302f6"
+    },
+    "clubs_9.png": {
+      "crop": [
+        756,
+        431,
+        993,
+        803
+      ],
+      "atlas_cell": [
+        7,
+        1
+      ],
+      "sha256": "d8123439d9f2e3d5db3242a01e8e217683a0771f5e6612c2d01757615693cc86"
+    },
+    "clubs_10.png": {
+      "crop": [
+        1004,
+        430,
+        1241,
+        803
+      ],
+      "atlas_cell": [
+        8,
+        1
+      ],
+      "sha256": "675e02c30f0d9113efd52e98a459238339ce035f5cc4fdb07f11bd8dc7a9529a"
+    },
+    "clubs_J.png": {
+      "crop": [
+        234,
+        822,
+        491,
+        1197
+      ],
+      "atlas_cell": [
+        9,
+        1
+      ],
+      "sha256": "a652930e1f92d925818fc497c51eb3e5c04208126a2845a52dfdd105a397c4f3",
+      "face_override": "face_overrides/clubs_J.png",
+      "face_override_sha256": "a652930e1f92d925818fc497c51eb3e5c04208126a2845a52dfdd105a397c4f3"
+    },
+    "clubs_Q.png": {
+      "crop": [
+        502,
+        822,
+        752,
+        1197
+      ],
+      "atlas_cell": [
+        10,
+        1
+      ],
+      "sha256": "d536064926948e47b4038501696d0704275577a54bab37b1ae1d5ed0cdc17934",
+      "face_override": "face_overrides/clubs_Q.png",
+      "face_override_sha256": "d536064926948e47b4038501696d0704275577a54bab37b1ae1d5ed0cdc17934"
+    },
+    "clubs_K.png": {
+      "crop": [
+        763,
+        822,
+        1016,
+        1197
+      ],
+      "atlas_cell": [
+        11,
+        1
+      ],
+      "sha256": "0f415c3f0005a338291f3d1fef764d522faf70aacfc30edbf6d0f0e20b282998",
+      "face_override": "face_overrides/clubs_K.png",
+      "face_override_sha256": "0f415c3f0005a338291f3d1fef764d522faf70aacfc30edbf6d0f0e20b282998"
+    },
+    "diamonds_A.png": {
+      "crop": [
+        15,
+        45,
+        252,
+        412
+      ],
+      "atlas_cell": [
+        12,
+        2
+      ],
+      "sha256": "72f5708cf202e3349ae3c1806a3ffda01750368fd0b02245b62a16dfb4121dcd"
+    },
+    "diamonds_2.png": {
+      "crop": [
+        263,
+        45,
+        499,
+        412
+      ],
+      "atlas_cell": [
+        0,
+        2
+      ],
+      "sha256": "a3e5bf87da194eb61e80889186de4a536524b40671a8fbdafefe2b02524a1e23"
+    },
+    "diamonds_3.png": {
+      "crop": [
+        510,
+        45,
+        746,
+        412
+      ],
+      "atlas_cell": [
+        1,
+        2
+      ],
+      "sha256": "cbfeb60ce9098a65f9ecb1f469c3f69e687d62f0016652554e845b6955d9d91c"
+    },
+    "diamonds_4.png": {
+      "crop": [
+        756,
+        45,
+        993,
+        412
+      ],
+      "atlas_cell": [
+        2,
+        2
+      ],
+      "sha256": "9e8a8d4ae28cf07caf95ef933079099d8e838738dc118b3e43a096e71332174a"
+    },
+    "diamonds_5.png": {
+      "crop": [
+        1004,
+        45,
+        1241,
+        412
+      ],
+      "atlas_cell": [
+        3,
+        2
+      ],
+      "sha256": "313f6119c29b6667c75f463647889f75306359ba1f3a6e3f7036582c6d44bf25"
+    },
+    "diamonds_6.png": {
+      "crop": [
+        15,
+        430,
+        252,
+        803
+      ],
+      "atlas_cell": [
+        4,
+        2
+      ],
+      "sha256": "eb26e4696e9929125c42994e72c56f9382deb4d013fe852b61a44b4a45643818"
+    },
+    "diamonds_7.png": {
+      "crop": [
+        263,
+        430,
+        499,
+        803
+      ],
+      "atlas_cell": [
+        5,
+        2
+      ],
+      "sha256": "a54e3a8409f6b5d7c1ceb675b4b6f0a1c6803d55ab0574a5f5ac1e8283d88caf"
+    },
+    "diamonds_8.png": {
+      "crop": [
+        510,
+        430,
+        745,
+        803
+      ],
+      "atlas_cell": [
+        6,
+        2
+      ],
+      "sha256": "afc723820e4dec051531ae1291e93b093e1bc36caa125006d159afb1b5fc92e1"
+    },
+    "diamonds_9.png": {
+      "crop": [
+        756,
+        430,
+        993,
+        803
+      ],
+      "atlas_cell": [
+        7,
+        2
+      ],
+      "sha256": "cdd8218cf98bc6f1fa338fe5e20050a5c72751b4d981bcf8409e42913b1b0311"
+    },
+    "diamonds_10.png": {
+      "crop": [
+        1005,
+        430,
+        1241,
+        803
+      ],
+      "atlas_cell": [
+        8,
+        2
+      ],
+      "sha256": "44d51e54d7f37d01a9ce399d2347e2480398ae9f0f229359dcb8109f9b601f0e"
+    },
+    "diamonds_J.png": {
+      "crop": [
+        235,
+        822,
+        491,
+        1197
+      ],
+      "atlas_cell": [
+        9,
+        2
+      ],
+      "sha256": "c02ee9b867bc1484bdc323b2af7fbec79440a1e965b2a0091db5fabbefdda43d",
+      "face_override": "face_overrides/diamonds_J.png",
+      "face_override_sha256": "c02ee9b867bc1484bdc323b2af7fbec79440a1e965b2a0091db5fabbefdda43d"
+    },
+    "diamonds_Q.png": {
+      "crop": [
+        502,
+        822,
+        752,
+        1197
+      ],
+      "atlas_cell": [
+        10,
+        2
+      ],
+      "sha256": "92fc6379d50ef62fdba095dd63f77c615c0a5e79b2dba728508b75deb4413000",
+      "face_override": "face_overrides/diamonds_Q.png",
+      "face_override_sha256": "92fc6379d50ef62fdba095dd63f77c615c0a5e79b2dba728508b75deb4413000"
+    },
+    "diamonds_K.png": {
+      "crop": [
+        763,
+        822,
+        1016,
+        1197
+      ],
+      "atlas_cell": [
+        11,
+        2
+      ],
+      "sha256": "79d0e6d583eb004e9401f25699544a436575adf53d39ec363e2168a33d77bbbe",
+      "face_override": "face_overrides/diamonds_K.png",
+      "face_override_sha256": "79d0e6d583eb004e9401f25699544a436575adf53d39ec363e2168a33d77bbbe"
+    },
+    "spades_A.png": {
+      "crop": [
+        15,
+        45,
+        252,
+        412
+      ],
+      "atlas_cell": [
+        12,
+        3
+      ],
+      "sha256": "e4b9012480d038de87305a85f035f7fceb1af3255137cddb153b942cd0bb2048"
+    },
+    "spades_2.png": {
+      "crop": [
+        263,
+        45,
+        499,
+        412
+      ],
+      "atlas_cell": [
+        0,
+        3
+      ],
+      "sha256": "b142cfa2679f0a1929c146bdb0addee88acf15259d18b276e89289d91e7ed0c0"
+    },
+    "spades_3.png": {
+      "crop": [
+        509,
+        45,
+        746,
+        412
+      ],
+      "atlas_cell": [
+        1,
+        3
+      ],
+      "sha256": "32a1e016f26e29e2316e4d10ae3eaa78e8ff4021315b1a8a7614e2a6479a86f9"
+    },
+    "spades_4.png": {
+      "crop": [
+        756,
+        45,
+        993,
+        412
+      ],
+      "atlas_cell": [
+        2,
+        3
+      ],
+      "sha256": "f11e7316d83aadd85a53102a0d3fc6a070d4fe5a3dc79587e9d1a752798b8dd0"
+    },
+    "spades_5.png": {
+      "crop": [
+        1004,
+        45,
+        1241,
+        412
+      ],
+      "atlas_cell": [
+        3,
+        3
+      ],
+      "sha256": "b938ab4433f60b177d91d78e33cd642cba33387b7c89e1f7b5b4e7c078363f80"
+    },
+    "spades_6.png": {
+      "crop": [
+        15,
+        431,
+        252,
+        803
+      ],
+      "atlas_cell": [
+        4,
+        3
+      ],
+      "sha256": "a1525243782e1dc85fcd312675a87163e6da86bc2116d5d55e9786b3229bbe94"
+    },
+    "spades_7.png": {
+      "crop": [
+        263,
+        431,
+        499,
+        803
+      ],
+      "atlas_cell": [
+        5,
+        3
+      ],
+      "sha256": "66c2760801c9b92c0deb7e44b4c523e9af341d0dc524a5c05a721268b12f9ba1"
+    },
+    "spades_8.png": {
+      "crop": [
+        510,
+        431,
+        745,
+        803
+      ],
+      "atlas_cell": [
+        6,
+        3
+      ],
+      "sha256": "1ae3f8e03d8182545be9ac7d63eb17eda0a90199bdfc9fb4457e5caee2b38835"
+    },
+    "spades_9.png": {
+      "crop": [
+        756,
+        431,
+        993,
+        803
+      ],
+      "atlas_cell": [
+        7,
+        3
+      ],
+      "sha256": "02c29147f62f1f8746774c8d59d681abb4c30702c2a85090f1409f699cc16bd3"
+    },
+    "spades_10.png": {
+      "crop": [
+        1004,
+        431,
+        1241,
+        803
+      ],
+      "atlas_cell": [
+        8,
+        3
+      ],
+      "sha256": "676b791a62554c37a685a2749cb78cbe14cbdd7bc542a1e49f84b3b5c9f5f1f4"
+    },
+    "spades_J.png": {
+      "crop": [
+        234,
+        822,
+        491,
+        1197
+      ],
+      "atlas_cell": [
+        9,
+        3
+      ],
+      "sha256": "3336fb7fd8fb1925995093b6b77c38cb2460771491862fa439610016c2733714",
+      "face_override": "face_overrides/spades_J.png",
+      "face_override_sha256": "3336fb7fd8fb1925995093b6b77c38cb2460771491862fa439610016c2733714"
+    },
+    "spades_Q.png": {
+      "crop": [
+        502,
+        822,
+        752,
+        1197
+      ],
+      "atlas_cell": [
+        10,
+        3
+      ],
+      "sha256": "9dd073f9504dd1a2d8f362c648f99b317120bb754f1120a5487110b30eebb48a",
+      "face_override": "face_overrides/spades_Q.png",
+      "face_override_sha256": "9dd073f9504dd1a2d8f362c648f99b317120bb754f1120a5487110b30eebb48a"
+    },
+    "spades_K.png": {
+      "crop": [
+        763,
+        822,
+        1016,
+        1197
+      ],
+      "atlas_cell": [
+        11,
+        3
+      ],
+      "sha256": "6dfce60ef04ea8348b3282ae38bc27c932316a783f1eb266751d974afb2c0d8c",
+      "face_override": "face_overrides/spades_K.png",
+      "face_override_sha256": "6dfce60ef04ea8348b3282ae38bc27c932316a783f1eb266751d974afb2c0d8c"
+    },
+    "back.png": {
+      "crop": [
+        274,
+        97,
+        980,
+        1157
+      ],
+      "sha256": "848e7362f474cf733f7efbfd444999cf0efeed1804631d53534a8fc5e09715cd"
+    }
+  }
+}

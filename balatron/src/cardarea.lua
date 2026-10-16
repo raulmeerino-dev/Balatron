@@ -234,10 +234,8 @@ function CardArea:move(dt)
         
         local desired_y
         if G.F_PORTRAIT then
-            local room_h = (G.ROOM and G.ROOM.T and G.ROOM.T.h) or G.TILE_H or 10
-            local base_offset = get_hand_base_offset()
-            local slide_offset = 3*((not G.deck_preview and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND)) and 1 or 0)
-            desired_y = room_h - G.hand.T.h - base_offset - slide_offset
+            local layout = portrait_position_run_areas()
+            desired_y = layout.hand_y
         else
             -- Landscape mode: Original behavior
             desired_y = (G.TILE_H or 10) - G.hand.T.h - 1.9*((not G.deck_preview and (G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.DRAW_TO_HAND)) and 1 or 0)
@@ -328,7 +326,7 @@ function CardArea:draw()
                     {n=G.UIT.B, config={w = 0.1,h=0.1}},
                     {n=G.UIT.T, config={ref_table = self.config, ref_value = 'card_count', scale = count_scale, colour = G.C.WHITE}},
                     {n=G.UIT.T, config={text = '/', scale = count_scale, colour = G.C.WHITE}},
-                    {n=G.UIT.T, config={ref_table = self.config, ref_value = 'card_limit', scale = count_scale, colour = G.C.WHITE}},
+                    {n=G.UIT.T, config={ref_table = self.config.card_limits or self.config, ref_value = self.config.card_limits and 'total_slots' or 'card_limit', scale = count_scale, colour = G.C.WHITE}},
                     {n=G.UIT.B, config={w = 0.1,h=0.1}}
                 }} or nil
 
@@ -351,7 +349,7 @@ function CardArea:draw()
                             }},
                             card_count
                         }},
-                    config = { align = 'cm', offset = {x=0,y=0}, major = self, parent = self}
+                    config = { align = G.F_PORTRAIT and self==G.deck and 'tmi' or 'cm', offset = {x=0,y=0}, major = self, parent = self}
                 }
             end
         self.children.area_uibox:draw()
@@ -363,9 +361,9 @@ function CardArea:draw()
         and (self == G.jokers or self == G.consumeables)
         and self.config.card_limit and self.config.card_limit > 0
         and #self.cards < self.config.card_limit then
-        local limit = self.config.card_limit
+        local limit = portrait_inventory_count(self)
         local slot_scale = PORTRAIT_CONFIG.joker_slots.slot_scale or 0.94
-        local slot_w, slot_h = G.CARD_W*slot_scale, G.CARD_H*slot_scale
+        local slot_w, slot_h = self.card_w*slot_scale, G.CARD_H*select(2, portrait_inventory_metrics(self))*slot_scale
         local r, g, b, a = love.graphics.getColor()
         local lw = love.graphics.getLineWidth()
         love.graphics.push()
@@ -373,13 +371,9 @@ function CardArea:draw()
         love.graphics.setColor(1, 1, 1, PORTRAIT_CONFIG.joker_slots.alpha or 0.16)
         love.graphics.setLineWidth(1.5)
         for i = 1, limit do
-            local sx
-            if limit == 1 then
-                sx = self.VT.x + (self.VT.w - slot_w)/2
-            else
-                sx = self.VT.x + (i-1)*(self.VT.w - slot_w)/(limit-1)
-            end
-            local sy = self.VT.y + (self.VT.h - slot_h)/2
+            local cx, cy = portrait_inventory_slot(self, i, limit)
+            local sx = cx-slot_w/2 + self.VT.x-self.T.x
+            local sy = cy-slot_h/2 + self.VT.y-self.T.y
             love.graphics.rectangle('line', sx*G.TILESIZE, sy*G.TILESIZE, slot_w*G.TILESIZE, slot_h*G.TILESIZE, 4, 4)
         end
         love.graphics.setLineWidth(lw)
@@ -483,6 +477,7 @@ end
 
 function CardArea:align_cards()
     if (self == G.hand or self == G.deck or self == G.discard or self == G.play) and G.view_deck and G.view_deck[1] and G.view_deck[1].cards then return end
+    portrait_scale_area_cards(self)
     if self.config.type == 'deck' then
             local deck_height = (self.config.deck_height or 0.15)/52
             for k, card in ipairs(self.cards) do
@@ -527,11 +522,10 @@ function CardArea:align_cards()
                 card.T.x = self.T.x + (usable_w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w) + (self.T.w - usable_w)/2
                 local highlight_height = G.HIGHLIGHT_H
                 if not card.highlighted then highlight_height = 0 end
-                -- Portrait booster: lift the hand row a little higher than the
-                -- desktop default so a selected pack card (which rises to reveal
-                -- its USE button) clears the hand instead of tucking under it.
+                -- Portrait anchors the hand below the pack. Keep the
+                -- original extra lift only for the landscape layout.
                 local pack_hand_lift = (G.F_PORTRAIT and PORTRAIT_CONFIG and PORTRAIT_CONFIG.pack_hand_lift) or 1.8
-                card.T.y = G.hand.T.y - pack_hand_lift*card.T.h - highlight_height + (G.SETTINGS.reduced_motion and 0 or 1)*0.1*math.sin(0.666*G.TIMERS.REAL+card.T.x) + math.abs(1.3*(-#self.cards/2 + k-0.5)/(#self.cards))^2-0.3
+                card.T.y = G.hand.T.y - (G.F_PORTRAIT and 0 or pack_hand_lift)*card.T.h - highlight_height + (G.SETTINGS.reduced_motion and 0 or 1)*0.1*math.sin(0.666*G.TIMERS.REAL+card.T.x) + math.abs(1.3*(-#self.cards/2 + k-0.5)/(#self.cards))^2-0.3
                 card.T.x = card.T.x + card.shadow_parrallax.x/30
             end
         end
@@ -563,6 +557,14 @@ function CardArea:align_cards()
                 if not card.highlighted then highlight_height = 0 end
                 card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height + (G.SETTINGS.reduced_motion and 0 or 1)*0.03*math.sin(0.666*G.TIMERS.REAL+card.T.x) + math.abs(0.5*(-#self.cards/2 + k-0.5)/(#self.cards))-(#self.cards>1 and 0.2 or 0)
                 card.T.x = card.T.x + card.shadow_parrallax.x/30
+                if self.config.portrait_deck_view then
+                    -- The viewer reserves the exact card rectangle: no fan or
+                    -- wobble spilling into the neighbouring suit row.
+                    card.T.r = 0
+                    card.T.x = self.T.x + (self.T.w-card.T.w)*(k-1)/math.max(#self.cards-1, 1)
+                    if #self.cards == 1 then card.T.x = self.T.x + (self.T.w-card.T.w)/2 end
+                    card.T.y = self.T.y + (self.T.h-card.T.h)/2
+                end
             end
         end
         table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
@@ -632,10 +634,27 @@ function CardArea:align_cards()
                 local highlight_height = G.HIGHLIGHT_H/2
                 if not card.highlighted then highlight_height = 0 end
                 card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height+ (G.SETTINGS.reduced_motion and 0 or 1)*0.03*math.sin(0.666*G.TIMERS.REAL+card.T.x)
+                if G.F_PORTRAIT and (self == G.jokers or self == G.consumeables) then
+                    local x,y = portrait_inventory_slot(self, k, portrait_inventory_count(self))
+                    card.T.x, card.T.y = x-card.T.w/2, y-card.T.h/2-highlight_height
+                end
                 card.T.x = card.T.x + card.shadow_parrallax.x/30
             end
         end
-        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
+        table.sort(self.cards, function (a, b)
+            local function position(card)
+                local x = card.T.x + card.T.w/2 - 100*((card.pinned and not card.ignore_pinned) and card.sort_id or 0)
+                if G.F_PORTRAIT and (self == G.jokers or self == G.consumeables) then
+                    local rows, scale = portrait_inventory_metrics(self)
+                    if rows > 1 then
+                        local row = math.max(0, math.min(rows-1, math.floor((card.T.y+card.T.h/2-self.T.y)/(G.CARD_H*scale+PORTRAIT_CONFIG.layout.inventory_row_gap))))
+                        x = x + row*self.T.w
+                    end
+                end
+                return x
+            end
+            return position(a) < position(b)
+        end)
     end   
     if self.config.type == 'consumeable'then
         for k, card in ipairs(self.cards) do
@@ -652,13 +671,23 @@ function CardArea:align_cards()
                     -- Lift the selected pack card up into the gap above the row so
                     -- its USE button has clear space to appear beneath it (reveal),
                     -- instead of overlapping the art or colliding with the panel.
-                    highlight_height = card.T.h * ((PORTRAIT_CONFIG and PORTRAIT_CONFIG.pack_highlight_lift) or 0.4)
+                    highlight_height = PORTRAIT_CONFIG.pack.highlight_lift
                 end
                 card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height + (not card.highlighted and (G.SETTINGS.reduced_motion and 0 or 1)*0.05*math.sin(2*1.666*G.TIMERS.REAL+card.T.x) or 0)
                 card.T.x = card.T.x + card.shadow_parrallax.x/30
             end
         end
-        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
+        if G.F_PORTRAIT and self == G.pack_cards and self.config.portrait_pack_columns then
+            for k, card in ipairs(self.cards) do
+                if not card.states.drag.is then
+                    local x,y = portrait_pack_slot(self,k)
+                    card.T.x,card.T.y = x+(self.card_w-card.T.w)/2,y-(card.highlighted and PORTRAIT_CONFIG.pack.highlight_lift or 0)
+                    card.T.r = 0
+                end
+            end
+        else
+            table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 < b.T.x + b.T.w/2 end)
+        end
     end   
     for k, card in ipairs(self.cards) do
         card.rank = k

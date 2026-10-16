@@ -145,8 +145,9 @@ function Card:set_base(card, initial)
 end
 
 function Card:set_sprites(_center, _front)
+    _front = _front or (_center and self.config.card and self.config.card.suit and self.config.card)
     if _front then 
-        local _atlas, _pos = get_front_spriteinfo(_front)
+        local _atlas, _pos = get_front_spriteinfo(_front, self)
         if self.children.front then
             self.children.front.atlas = _atlas
             self.children.front:set_sprite_pos(_pos)
@@ -218,6 +219,7 @@ function Card:set_sprites(_center, _front)
             self.children.back:set_role({major = self, role_type = 'Glued', draw_major = self})
         end
     end
+    CardSkins.refresh_back(self)
 end
 
 function Card:set_ability(center, initial, delay_sprites)
@@ -1168,7 +1170,8 @@ function Card:use_consumeable(area, copier)
             self:juice_up(0.8, 0.5)
             G.TAROT_INTERRUPT_PULSE = nil
             return true end }))
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0},
+            {level='+'..tostring(PortraitRunRules and PortraitRunRules.planet_level_amount(self,1) or 1)})
         delay(1.3)
         for k, v in pairs(G.GAME.hands) do
             level_up_hand(self, k, true)
@@ -1588,6 +1591,7 @@ function Card:check_use()
 end
 
 function Card:sell_card()
+    PortraitQOL.haptic('sell')
     G.CONTROLLER.locks.selling_card = true
     stop_use()
     local area = self.area
@@ -1713,6 +1717,7 @@ function Card:open()
                 inc_career_stat('c_shop_dollars_spent', self.cost)
                 self:juice_up()
             return true end }))
+            PortraitQOL.haptic('buy')
             ease_dollars(-self.cost) 
        else
            delay(0.2)
@@ -1842,6 +1847,7 @@ function Card:redeem()
                         config = {align="bm", offset = {x=0,y=0},parent = self}
                     }
             return true end }))
+        PortraitQOL.haptic('buy')
         ease_dollars(-self.cost)
         inc_career_stat('c_shop_dollars_spent', self.cost)
         inc_career_stat('c_vouchers_bought', 1)
@@ -1889,12 +1895,12 @@ function Card:apply_to_run(center)
     end
     if center_table.name == 'Tarot Merchant' or center_table.name == 'Tarot Tycoon' then
         G.E_MANAGER:add_event(Event({func = function()
-            G.GAME.tarot_rate = 4*center_table.extra
+            G.GAME.tarot_rate = 4*center_table.extra*(PortraitRunRules and PortraitRunRules.factor('frequent_tarot',2) or 1)
             return true end }))
     end
     if center_table.name == 'Planet Merchant' or center_table.name == 'Planet Tycoon' then
         G.E_MANAGER:add_event(Event({func = function()
-            G.GAME.planet_rate = 4*center_table.extra
+            G.GAME.planet_rate = 4*center_table.extra*(PortraitRunRules and PortraitRunRules.factor('frequent_planet',2) or 1)
             return true end }))
     end
     if center_table.name == 'Hone' or center_table.name == 'Glow Up' then
@@ -2003,11 +2009,11 @@ function Card:explode(dissolve_colours, explode_time_fac)
         blockable = false,
         func = (function()
                 if self.juice then 
-                    percent = (G.TIMERS.TOTAL - start_time)/explode_time
+                    percent = (G.TIMERS.TOTAL - start_time)*PortraitQOL.speed()/explode_time
                     self.juice.r = 0.05*(math.sin(5*G.TIMERS.TOTAL) + math.cos(0.33 + 41.15332*G.TIMERS.TOTAL) + math.cos(67.12*G.TIMERS.TOTAL))*percent
                     self.juice.scale = percent*0.15
                 end
-                if G.TIMERS.TOTAL - start_time > 1.5*explode_time then return true end
+                if (G.TIMERS.TOTAL - start_time)*PortraitQOL.speed() > 1.5*explode_time then return true end
             end)
     }))
     G.E_MANAGER:add_event(Event({
@@ -4288,37 +4294,8 @@ function Card:align_h_popup()
                     -0.05
 
         if G.F_PORTRAIT then
-            local room_w = G.ROOM and G.ROOM.T and G.ROOM.T.w or 20
-            local room_h = G.ROOM and G.ROOM.T and G.ROOM.T.h or 20
-            local card_cx = self.T.x + self.T.w / 2
-            local card_cy = self.T.y + self.T.h / 2
-            -- Margin large enough for typical popup half-width (~2 tiles) so the tooltip stays inside the screen
-            local edge_margin = 2.5
-
-            -- The popup sits clear of the card by a fixed gap. A thumb resting on
-            -- the card covers a good deal around it, and a tooltip printed right
-            -- against the card edge ends up under the hand that opened it. The gap
-            -- is a constant rather than something measured off the touch point, so
-            -- the tooltip holds its place instead of sliding about while you hold
-            -- (#44). Tune it with PORTRAIT_CONFIG.tooltip_card_gap.
-            local touch_gap = (PORTRAIT_CONFIG and PORTRAIT_CONFIG.tooltip_card_gap) or 0.9
-
-            if card_cy > room_h * 0.55 then
-                popup_direction = 'tm'
-                offset_y_tm = (focused_ui and -0.15 or -0.2) - touch_gap
-            else
-                popup_direction = 'bm'
-                offset_y_bm = (focused_ui and 0.15 or 0.2) + touch_gap
-            end
-
-            -- Push popup back into screen when card is near edges (room_w/2 is screen center)
-            if card_cx < edge_margin then
-                offset_x = edge_margin - card_cx + 0.2
-            elseif card_cx > room_w - edge_margin then
-                offset_x = (room_w - edge_margin) - card_cx - 0.2
-            else
-                offset_x = 0
-            end
+            popup_direction=self.T.y+self.T.h/2>G.ROOM.T.h/2 and 'tm' or 'bm'
+            offset_x=0;offset_y_tm=0;offset_y_bm=0
         end
 
         return {
@@ -4331,6 +4308,7 @@ function Card:align_h_popup()
             lr_clamp = nil,
             can_drag = G.F_PORTRAIT and false or nil,
             snap_to_fit = G.F_PORTRAIT and true or nil,
+            portrait_gap = G.F_PORTRAIT and PORTRAIT_CONFIG.tooltip_card_gap or nil,
             offset = {
                 x = offset_x,
                 y = focused_ui and (
@@ -4380,7 +4358,13 @@ function Card:juice_up(scale, rot_amount)
     Moveable.juice_up(self, scale, rot_amt)
 end
 
+function Card:is_portrait_consumable_focus()
+    return G.F_PORTRAIT and self.area == G.consumeables and self.highlighted and
+        self.states.visible and self.area.states.visible and not G.OVERLAY_MENU and not G.OVERLAY_TUTORIAL
+end
+
 function Card:draw(layer)
+    if self:is_portrait_consumable_focus() and G.portrait_foreground_card ~= self then return end
     layer = layer or 'both'
 
     self.hover_tilt = 1
@@ -4653,6 +4637,7 @@ function Card:release(dragged)
 end 
 
 function Card:highlight(is_higlighted)
+    if G.hand and self.area == G.hand and self.highlighted ~= is_higlighted then PortraitQOL.haptic(is_higlighted and 'select' or 'deselect') end
     self.highlighted = is_higlighted
     if self.ability.consumeable or self.ability.set == 'Joker' or (self.area and self.area == G.pack_cards) then
         if self.highlighted and self.area and self.area.config.type ~= 'shop' then
@@ -4661,7 +4646,7 @@ function Card:highlight(is_higlighted)
             -- revealed beneath the card when it lifts on highlight (see the
             -- pack_highlight_lift in CardArea:align_cards). Placed 'bm' (below)
             -- so it never covers the art or collides with the pack panel.
-            local pack_use = G.F_PORTRAIT and self.ability.consumeable and self.area == G.pack_cards
+            local pack_use = G.F_PORTRAIT and self.area == G.pack_cards
             local is_tray = (self.area == G.jokers) or (self.area == G.consumeables)
             local tray_off = {x = x_off - 0.4, y = 0}
             local tray_align = 'cr'
@@ -4691,6 +4676,13 @@ function Card:highlight(is_higlighted)
                         {x=0,y=0.65},
                     parent =self}
             }
+            if G.F_PORTRAIT and self.area == G.consumeables then
+                local draw = self.children.use_button.draw
+                self.children.use_button.draw = function(box, ...)
+                    if self:is_portrait_consumable_focus() and G.portrait_foreground_actions ~= box then return end
+                    return draw(box, ...)
+                end
+            end
         elseif self.children.use_button then
             self.children.use_button:remove()
             self.children.use_button = nil
@@ -4754,6 +4746,7 @@ function Card:save()
 end
 
 function Card:load(cardTable, other_card)
+    self.portrait_dimensions = nil
     local scale = 1
     self.config = {}
     self.config.center_key = cardTable.save_fields.center

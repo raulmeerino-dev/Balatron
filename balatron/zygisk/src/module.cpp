@@ -1,4 +1,4 @@
-// Balatro Portrait — Zygisk module.
+// Balatrón — Zygisk module.
 // Injects portrait Lua (luaL_loadbuffer swap) + forces portrait orientation
 // (Android_JNI_SetOrientation -> JNI setRequestedOrientation(1)) into Balatro.
 #include <cstring>

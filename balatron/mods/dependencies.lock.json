@@ -1,0 +1,12 @@
+{
+  "Steamodded": {
+    "tag": "1.0.0-beta-1224a",
+    "sha256": "1506c6912f344c95bec5c17a18a9641b0a8c4d28cee565b823f6744cb9ddd2e4",
+    "url": "https://github.com/Steamodded/smods/archive/refs/tags/1.0.0-beta-1224a.zip"
+  },
+  "Lovely": {
+    "version": "0.10.0",
+    "ios_shell_sha256": "14d4c378d19c6f190af163d32fdd27b34932628b5fd5a6816e8c5db578ef5fde",
+    "windows_qa_sha256": "7f481f984ab8ee633c90ce18220c88a2da8f93ca86b6c3e3ff70a725c05807ab"
+  }
+}
