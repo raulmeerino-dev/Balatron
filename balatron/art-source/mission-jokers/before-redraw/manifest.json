@@ -1,0 +1,98 @@
+[
+  {
+    "path": "MODS/RISK JOKERS/assets/1x/scorched_earth.png",
+    "size": [
+      71,
+      95
+    ],
+    "sha256": "9838e07fd1a1fc9e8030a330ba501b40006e54e143e939d1489c0f9cda5530ad"
+  },
+  {
+    "path": "MODS/RISK JOKERS/assets/2x/scorched_earth.png",
+    "size": [
+      142,
+      190
+    ],
+    "sha256": "45be70ae3ede01a08521eaeb719df14442d1a9f42ae1a6c74ff65d28a30ec289"
+  },
+  {
+    "path": "MODS/RISK JOKERS/assets/1x/powder_keg.png",
+    "size": [
+      71,
+      95
+    ],
+    "sha256": "d82b47f5d1770e29133eb40a07338887025c29e7e8fd4396ca67c5758924c331"
+  },
+  {
+    "path": "MODS/RISK JOKERS/assets/2x/powder_keg.png",
+    "size": [
+      142,
+      190
+    ],
+    "sha256": "eb43a8337b146652080b35cb1b27b8c8ef5c4e8a86d55f87efd67c9711740c93"
+  },
+  {
+    "path": "MODS/Compound Interest/assets/1x/graft.png",
+    "size": [
+      71,
+      95
+    ],
+    "sha256": "fa6b3401050f88ee633212c3e22a3c16c503fdc105e3f40f54b5a118b78786bc"
+  },
+  {
+    "path": "MODS/Compound Interest/assets/2x/graft.png",
+    "size": [
+      142,
+      190
+    ],
+    "sha256": "953d74e22d240b47424f8c9691dcb01f0f3ab81fbfa59e1d177fac49ae9e9218"
+  },
+  {
+    "path": "MODS/Compound Interest/assets/1x/intermission.png",
+    "size": [
+      71,
+      95
+    ],
+    "sha256": "cd3888764ac649a735653c062741b41a1cf115eaf13b20df15e57fdce54ffef6"
+  },
+  {
+    "path": "MODS/Compound Interest/assets/2x/intermission.png",
+    "size": [
+      142,
+      190
+    ],
+    "sha256": "979c1bb52993a4d70baf5b3b2a382ac3fd5a00224cd5ea5e9b7a46cd16a1f832"
+  },
+  {
+    "path": "MODS/UPG JOKERS/assets/1x/wayfinder.png",
+    "size": [
+      213,
+      95
+    ],
+    "sha256": "fe8c54c3454424257f14ea62aebdb32ff1e1cae43ed9d3e1674b73173fc5742e"
+  },
+  {
+    "path": "MODS/UPG JOKERS/assets/2x/wayfinder.png",
+    "size": [
+      426,
+      190
+    ],
+    "sha256": "a96b795b093c535fc1bb0a0ad6b7f7a94b392663cb531ebd8c044fcd792a5eea"
+  },
+  {
+    "path": "MODS/UPG JOKERS/assets/1x/orrery.png",
+    "size": [
+      213,
+      95
+    ],
+    "sha256": "b0c823d626e7897dd3a27d89fd0635fd19a9836fc3f7060088adb8e843491978"
+  },
+  {
+    "path": "MODS/UPG JOKERS/assets/2x/orrery.png",
+    "size": [
+      426,
+      190
+    ],
+    "sha256": "4ac9c6cd869c91bbda2e77e5cba48ba9639fc2511ff0ec83a4d52cf842db65ae"
+  }
+]

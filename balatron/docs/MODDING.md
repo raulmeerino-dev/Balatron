@@ -1,6 +1,6 @@
 # Mod Support
 
-Balatro Portrait Mobile has two Android paths. They use different package names,
+Balatrón has two Android paths. They use different package names,
 so their mod folders are different.
 
 ## Path A: Rootless APK builder

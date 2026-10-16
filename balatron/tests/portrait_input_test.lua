@@ -1,3 +1,4 @@
+package.path='src/?.lua;'..package.path
 dofile('src/portrait_config.lua')
 local f = assert(io.open('src/main.lua', 'rb'))
 local source = f:read('*a'); f:close()
@@ -6,7 +7,7 @@ local last = assert(source:find('function love.mousereleased', first, true))
 local swipe = assert(loadstring(source:sub(first, last-1) .. '\nreturn _check_swipe_gesture'))()
 local now, played, discarded = 1, 0, 0
 love = {timer = {getTime = function() return now end},
-    graphics = {getHeight = function() return 844 end},
+    graphics = {getHeight = function() return 844 end,getWidth=function() return 393 end},
     system = {getOS = function() return 'iOS' end}, window = {}}
 local function reset()
     now, played, discarded = 1, 0, 0

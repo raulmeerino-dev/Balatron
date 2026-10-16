@@ -1,0 +1,1996 @@
+{
+  "title": "Horizontes — Expansión horizontal 1.1",
+  "status": "IMPLEMENTADO — VALIDACIÓN DIRIGIDA COMPLETADA",
+  "roster": {
+    "jokers": {
+      "total_unique_centers": 194,
+      "vanilla": 150,
+      "extra": 21,
+      "doubles": 4,
+      "risk": 9,
+      "upg_families": 5,
+      "fusion": 5,
+      "notes": "Cada familia UPG es un centro registrado con estado de etapa, no tres Jokers. Los 12 Jokers de expansión48 ya están incluidos. Los 25 centros incj se reparten en 21 Extra y cuatro Doubles."
+    },
+    "mutations": {
+      "total": 99,
+      "base": 19,
+      "run_rules": 49,
+      "earlier_expansion": 11,
+      "expansion48": 20
+    },
+    "contracts": {
+      "total": 17,
+      "base": 7,
+      "expansion48": 10,
+      "notes": "Los anteriores grupos propuestos no aparecen como registros adicionales en Contracts/main.lua."
+    },
+    "contraband": {
+      "total": 16,
+      "base": 10,
+      "expansion48": 6
+    },
+    "challenges": {
+      "total": 21,
+      "vanilla": 20,
+      "custom": 1,
+      "existing_custom": "c_incj_wake_up_neo",
+      "notes": "El Challenge TEST está comentado. WAKE UP, NEO ya está implementado con Options anclado y ocupando plaza."
+    },
+    "boss_blinds": {
+      "total": 28,
+      "vanilla": 28,
+      "custom": 0,
+      "ordinary": 23,
+      "showdown": 5,
+      "notes": "Hay 30 centros Blind contando Small y Big."
+    },
+    "vouchers": {
+      "total": 32,
+      "vanilla": 32,
+      "custom": 0,
+      "base_upgrade_pairs": 16
+    },
+    "tags": {
+      "total": 24,
+      "vanilla": 24,
+      "custom": 0
+    },
+    "booster_packs": {
+      "registered_centers": 33,
+      "vanilla_centers": 32,
+      "vanilla_families": 5,
+      "custom_centers": 1,
+      "custom_families": 1,
+      "existing_custom": "p_pg_roulette",
+      "notes": "Variantes gráficas/tamaños no equivalen a familias. Roulette es un Booster real de $20, ocho premios fijados, uno ganado, reroll pagado de $10."
+    },
+    "playable_decks": {
+      "total": 15,
+      "vanilla": 15,
+      "custom": 0,
+      "notes": "b_challenge es el centro auxiliar número 16, no un deck seleccionable normal. Las skins no son Decks jugables."
+    },
+    "sources": [
+      "balatron/src/game.lua:263",
+      "balatron/src/game.lua:302",
+      "balatron/src/game.lua:403",
+      "balatron/src/challenges.lua",
+      "MODS/Compound Interest/main.lua",
+      "MODS/Compound Interest/expansion48.lua",
+      "MODS/RISK JOKERS/main.lua",
+      "MODS/RISK JOKERS/mission_jokers.lua",
+      "MODS/UPG JOKERS/main.lua",
+      "MODS/UPG JOKERS/core/evolution.lua:100",
+      "MODS/Joker Fusion/recipes.lua",
+      "MODS/Deck Mutations/main.lua:10",
+      "MODS/Contracts/main.lua:5",
+      "MODS/Events/black_market/contraband.lua",
+      "MODS/Gameplay Core/roulette.lua:220"
+    ]
+  },
+  "audit": {
+    "saturated": [
+      {
+        "space": "Bonificaciones numéricas de puntuación",
+        "covered_by": [
+          "Jokers vanilla por palo/rango/poker hand",
+          "Risk de XMult con desgaste, deuda o autodestrucción",
+          "UPG Metamorphosis y Bottomless",
+          "Mutations empowered_jokers/empowered_cards/boosted_chips/boosted_mult/strong_editions/strong_enhancements"
+        ],
+        "reject": "Cambiar Chips por Mult, cifras, rareza o palo no crea una regla nueva."
+      },
+      {
+        "space": "Descuentos y acceso a tienda",
+        "covered_by": [
+          "Clearance Sale/Liquidation",
+          "Reroll Surplus/Glut",
+          "Overstock/Plus",
+          "Tarot/Planet Merchant y Tycoon",
+          "Mutations discounts/cheap_reroll/more_shop/cheap_jokers/cheap_consumables/free_reroll/frequent_tarot/frequent_planet/frequent_spectral"
+        ],
+        "reject": "Voucher que solo abarate, amplíe una fila o suba frecuencias ya cubiertas."
+      },
+      {
+        "space": "Tamaño de recursos",
+        "covered_by": [
+          "Grabber/Nacho Tong",
+          "Wasteful/Recyclomancy",
+          "Crystal Ball/Antimatter",
+          "Paint Brush/Palette",
+          "Red/Blue/Black/Painted Decks",
+          "Mutations deep_pockets/second_chance/loose_hands/bigger_pockets/joker_habitat/consumable_exchange"
+        ],
+        "reject": "Nuevo Deck definido únicamente por intercambiar +1 mano, descarte o slot."
+      },
+      {
+        "space": "Interés y dinero por victoria",
+        "covered_by": [
+          "Seed Money/Money Tree",
+          "To the Moon",
+          "Green/Yellow Deck",
+          "Midas",
+          "Mutations interest_rate/double_interest/ante_money/boss_dividend/quick_blind/extra_reward/inflation"
+        ],
+        "reject": "Otro interés, pago fijo o cashout multiplicado sin decisión distinta."
+      },
+      {
+        "space": "Packs: oferta, elecciones y aplazamiento",
+        "covered_by": [
+          "Mutations large_packs/cheap_packs/frequent_packs/second_pick/pack_refund",
+          "M03 Carousel",
+          "M09 Rain Check",
+          "M20 Takeaway",
+          "vanilla Tags de packs",
+          "Roulette"
+        ],
+        "reject": "Voucher o Tag de más opciones, elección adicional, almacenar pack, pack genérico premium o reroll de fila."
+      },
+      {
+        "space": "Planets y niveles",
+        "covered_by": [
+          "Telescope/Observatory",
+          "Orbital Tag",
+          "Black Hole",
+          "UPG Orrery",
+          "Mutations orbital_echo/double_planets/M07 Decanting"
+        ],
+        "reject": "Otro nivel al usar Planets o traslado de niveles presentado como Voucher."
+      },
+      {
+        "space": "Ediciones, sellos y Enhancements",
+        "covered_by": [
+          "Tarot y Spectral originales",
+          "Hone/Glow Up",
+          "Edition Tags",
+          "Stolen Negative/Marked Card",
+          "Mutations strong_seals/seal_relay/enhanced_genetics/frequent_negative/shiny_market/M01 False Bottom"
+        ],
+        "reject": "Consumibles Seal nuevos, aplicación duplicada de efectos vanilla o probabilidad de Edition con otra cifra."
+      },
+      {
+        "space": "Probabilidad",
+        "covered_by": [
+          "Oops! All 6s",
+          "Lucky/Glass vanilla",
+          "Loaded Dice",
+          "Mutations lucky_deck/fortune",
+          "J12 Broken Record"
+        ],
+        "reject": "Otro multiplicador de suerte o repetición del mismo azar por otra etiqueta."
+      },
+      {
+        "space": "Control de mazo",
+        "covered_by": [
+          "Death/Cryptid/Hanged Man/Immolate/Strength/Sigil/Ouija",
+          "J01 Spyglass",
+          "J02 Backstage",
+          "J05 Thumbtack",
+          "J08 Castling",
+          "B03 Proof of Life",
+          "B05 Turnover",
+          "M02 Workbench/M08 Bloodline/deck_pruning"
+        ],
+        "reject": "Reserva de cartas, reordenación superior, intercambio de rangos, resurrección o intercambio de pilas equivalentes."
+      },
+      {
+        "space": "Retriggers y orden de scoring",
+        "covered_by": [
+          "Mime/Hack/Sock and Buskin/Seltzer/Dusk/Hanging Chad/Red Seal",
+          "UPG Wayfinder",
+          "J04 Between the Lines",
+          "J09 Lightning Rod",
+          "M10 Reverse Gravity/M17 Counterpoint/M05 Open Interpretation"
+        ],
+        "reject": "Otro retrigger condicional o inversión de orden que reproduzca estos sistemas."
+      },
+      {
+        "space": "Contracts y custom premium",
+        "covered_by": [
+          "Mutations contracts_plus/frequent_contracts/contract_shortcut/M13 Stay of Execution/M14 Escrow",
+          "J11 Promissory Note",
+          "M15 Spare Parts",
+          "B01 Dismantling Order",
+          "B04 Forged Diploma",
+          "J10 Last Performance"
+        ],
+        "reject": "Voucher de premio ampliado, reintento, repetir premio, sustituto de receta o evolución inmediata."
+      },
+      {
+        "space": "Manipulación de oferta y Tags",
+        "covered_by": [
+          "Bribe",
+          "Inside Information",
+          "Stolen Tag",
+          "Counterfeit Voucher",
+          "M11 Blacklist/M12 One-Night Engagement/M18 Left Luggage/M19 Molting/M06 Two-Way Ticket",
+          "J07 Barterer",
+          "Boss/Voucher/Double/Coupon/D6/Top-up Tags"
+        ],
+        "reject": "Copiar seleccionar Boss, reservar siguiente tienda, obtener Voucher, almacenar Tag o alquilar/intercambiar Joker."
+      }
+    ],
+    "existing_overlaps_to_report_only": [
+      "Orbital Echo y la primera etapa de Orrery comparten el nivel extra para una mano de nivel bajo al usar Planets; no extender ese mismo disparador a otro Voucher.",
+      "Varias Mutations de descuento, slots y tasas ya se solapan intencionadamente con Vouchers vanilla. No se propone cambiar contenido previo.",
+      "C08 Administrative Silence ya apaga los Jokers durante una ciega; una Boss que solo debuffe todos los Jokers repetiría esa regla y sería demasiado binaria.",
+      "Stolen Negative, Forgery, Bribe y Counterfeit Voucher reutilizan sistemas vanilla con nueva adquisición/selección. No convertir su efecto exacto en una nueva Tag sin otra decisión."
+    ],
+    "gaps_to_explore_not_approved_effects": [
+      "Challenges que exijan jugar bajo una regla custom existente: el nuevo contenido es el escenario y su condición de victoria, no un duplicado del Joker obligado.",
+      "Bosses temporales con counterplay posicional o de planificación visible, que no se limiten a debuff general, prohibir una mano o elevar target.",
+      "Compromisos entre tiendas y Blinds: precio de una decisión actual que cambia opciones futuras, sin repetir préstamos de manos, alquiler, reserva de packs o reserva de tienda.",
+      "Vouchers que cambien relaciones entre elecciones o elegibilidad de una transacción, en lugar de dar más cantidad, probabilidad o dinero.",
+      "Packs con contrato de selección real: composición y elecciones relacionadas entre sí, usando cartas existentes y un resultado que no equivalga a Buffoon/Arcana/Spectral premium.",
+      "Decks con un invariante de run que afecte al modo de construir y jugar el mazo, acompañado de coste claro; no una Mutation inicial vendida como Deck."
+    ]
+  },
+  "feedback": [
+    {
+      "event": "Mejora ordinaria o premio menor",
+      "level": 1,
+      "feedback": "Juice local, sonido nativo suave; sin cartel central ni vibración adicional.",
+      "hook": "Punto de aceptación real del objeto; conservar card_eval_status_text/materialize existentes.",
+      "dedupe": "Solo la transacción propietaria emite feedback; nunca cada calculate, retrigger o reconstrucción de UI."
+    },
+    {
+      "event": "Nuevo récord de mano",
+      "level": 2,
+      "feedback": "Conservar el dock y destello breve existentes. Agrupar actualizaciones y reemplazar el valor, sin acumular banners.",
+      "hook": "S.record después del resultado real, mediante F.record.",
+      "dedupe": "portrait_record_feedback_hand existente; nunca recalcular récord desde FX.",
+      "exceptional": "Nivel 3 solo para el primer récord que supere al menos x10 el récord de una run anterior del mismo ámbito; no para el primer récord vacío del perfil."
+    },
+    {
+      "event": "Overkill x10 a menos de x100",
+      "level": 1,
+      "feedback": "Mantener fila de caja, pulse y breve sonido; x50 puede reforzar el mismo elemento sin nuevo cartel.",
+      "hook": "F.overkill sobre fila bonus_round_eval.",
+      "dedupe": "Una celebración por recibo Ante/round."
+    },
+    {
+      "event": "Overkill x100 o superior",
+      "level": 2,
+      "feedback": "Pop del ratio y ráfaga local más marcada, sin retrasar Cobrar.",
+      "hook": "F.overkill y categoría ya calculada por S.evaluate.",
+      "exceptional": "Nivel 3 en el primer OBLITERATED x1000 de la run; los siguientes usan nivel 2.",
+      "dedupe": "Persistir hito mostrado dentro del recibo/estado de run; no generar un nuevo pago ni cambio de target."
+    },
+    {
+      "event": "Fusion completada",
+      "level": 2,
+      "feedback": "Mantener materialize oro/rojo y FUSION; añadir haptic fusion ya definido y partículas locales si no hay otro hito mayor.",
+      "hook": "F.animate, después de F.fuse y su save.",
+      "dedupe": "ID de transacción/fusion_history; no disparar por add_to_deck, carga, Collection o copia."
+    },
+    {
+      "event": "UPG evoluciona",
+      "level": 2,
+      "feedback": "Conservar secuencia UPG existente; solo armonizar prioridad/volumen con otros hitos.",
+      "hook": "E.upgrade y A.play; una sola etiqueta.",
+      "exceptional": "La primera forma final natural de la run puede usar nivel 3 con reveal propio de 0,9 s; evoluciones mediante consumible y formas finales posteriores usan nivel 2.",
+      "dedupe": "Identidad física y etapa de destino; gameplay ya comprometido antes del reveal."
+    },
+    {
+      "event": "Contract completado",
+      "level": 2,
+      "feedback": "Conservar resultado y papel dissolve; no sumar popup desde exp48_contract_result. Varias completadas en el mismo evento comparten un solo sonido/haptic fuerte.",
+      "hook": "C.inspect(a,true), tomando a.uid; C.result_event solo informa lógica.",
+      "dedupe": "feedback_shown en el resultado autoritativo y su cola persistida; reapertura muestra estado estático."
+    },
+    {
+      "event": "Challenge completado por primera vez",
+      "level": 3,
+      "feedback": "Insignia y partículas dentro de la pantalla de victoria nativa, una breve fase de presentación y sonido win existente.",
+      "hook": "win_game captura si completed[id] era falso; create_UIBox_win muestra metadato del logro.",
+      "dedupe": "Challenge ID y primera victoria por perfil; ganar repetido usa victoria normal. Nunca otro modal por delante."
+    },
+    {
+      "event": "Unlock raro",
+      "level": 2,
+      "feedback": "Destacar arte dentro del overlay nativo de menú. El unlock de un Deck excepcional puede llegar a nivel 3 una vez; varios unlocks quedan en la misma cola.",
+      "hook": "create_unlock_overlay(key,presentation) y recibo de perfil ya existente.",
+      "dedupe": "(profile,id), visto al cerrar, sin aviso durante scoring; Unlock All suprime todos."
+    },
+    {
+      "event": "Boss custom derrotada",
+      "level": 2,
+      "feedback": "Juice del chip, breve texto en resumen y haptic boss ya existente. Si coincide con récord/Overkill mayor, mantener solo el chip.",
+      "hook": "Resultado real de Blind derrotada, identificada por su centro; nunca Blind.disable ni solo alcanzar target con Extra Time activo.",
+      "dedupe": "Token de Blind de la run; sin cola modal."
+    },
+    {
+      "event": "Legendary adquirido o premio excepcional",
+      "level": 3,
+      "feedback": "Materialize nativo de la carta, sonido timpani y foco local; reducir a nivel 2 si la presentación de origen ya lo ha celebrado.",
+      "hook": "Commit de reclamación efectiva, no generación de opciones ni preview.",
+      "dedupe": "ID de recibo/origen; Roulette, Fusion, recompensa Contract y pack son propietarios excluyentes del reveal. Máximo una presentación premium fuerte por Ante."
+    }
+  ],
+  "feedback_policy": {
+    "level_1": "0,15–0,35 s local; no banner ni pausa.",
+    "level_2": "0,6–1,0 s de texto/juice/partículas dentro de un área segura; eventos no bloqueantes.",
+    "level_3": "0,9–1,2 s de presentación propia dentro del resultado ya existente. Pausa visual máxima de 0,15 s solo en secuencias/overlays que ya poseen el control; no retrasar cashout ni cálculo.",
+    "priority": "Challenge/Legendary/primer final UPG > primer OBLITERATED/record excepcional > Fusion/Contract/Boss > feedback ordinario.",
+    "anti_spam": "Un solo foco fuerte simultáneo; fusionar hitos del mismo resultado en el contenedor ganador, degradar secundarios a juice local. Separación mínima de 1,5 s entre feedback nivel 2; nivel 3 máximo una vez por Blind y con límites de cada evento. No encolar una ráfaga atrasada de avisos.",
+    "implementation_shape": "Extender portrait_reward_fx como composición y arbitraje visual mínimo; no crear un segundo motor de premios, lógica de hitos o cola persistente de animaciones.",
+    "accessibility": "Reutilizar G.SETTINGS.reduced_motion, PortraitQOL.duration y PortraitQOL.haptic. Reduced Motion elimina compresión, shake, flashes y partículas; conserva texto estático. Haptics OFF/LOW/NORMAL intacto. Nunca vibración por cada retrigger.",
+    "mobile": "Usar dock HUD, carta/chip propietario o panel de resultado. can_collide=false para elementos informativos; no robar tap, long press ni drag. Respetar safe area y restaurar controles si desaparece carta/overlay.",
+    "assets": "Reutilizar shaders dissolve/foil, Particles, DynaText, attention_text, start_materialize, juice_up y sonidos nativos. Nuevos assets solo para contenido e insignias justificadas; ninguna nueva colección de efectos."
+  },
+  "challenges": [
+    {
+      "id": "CH01",
+      "key": "c_hz_blast_furnace",
+      "name": {
+        "es": "Alto horno",
+        "en": "Blast Furnace"
+      },
+      "effect": "Solo funcionan los Jokers Fusion. Empiezas con Abstract Joker y Misprint.",
+      "unlock": "Gana una run en la que hayas realizado dos recetas Fusion distintas.",
+      "nearest": [
+        {
+          "name": "Jokerless",
+          "difference": "Permite una plantilla de Fusion construida a partir de componentes reales; no elimina todos los Jokers."
+        },
+        {
+          "name": "Bram Poker",
+          "difference": "La adquisición sigue abierta; los componentes tienen una función previa a activarse."
+        },
+        {
+          "name": "Spare Parts / Piezas intercambiables",
+          "difference": "No cambia recetas ni concede sustitutos; exige utilizar la Fusion existente."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Challenge.jokers",
+        "SMODS.debuff_card con fuente propia",
+        "PortraitFusion.can/fuse; resultado nativo"
+      ],
+      "details": [
+        "Debuff completo solo para Jokers no Fusion; pueden comprarse, venderse y consumirse como componentes.",
+        "Los dos componentes iniciales no son Eternal ni quedan anclados. Glitch debe estar habilitado.",
+        "No vender Fusion directamente ni copiar recetas. El resultado deja de tener el debuff de este Challenge; los debuffs de Boss permanecen."
+      ],
+      "art": "Horno negro y dos naipes que entran para formar una pieza púrpura.",
+      "requires": [
+        "Joker Fusion",
+        "recipe glitch"
+      ]
+    },
+    {
+      "id": "CH02",
+      "key": "c_hz_blood_debt",
+      "name": {
+        "es": "Deuda de sangre",
+        "en": "Blood Debt"
+      },
+      "effect": "Empiezas con $12 y Greed anclado. Si acabas una mano con dinero negativo, pierdes la run.",
+      "unlock": "Gana una run llevando Greed en las tres últimas Boss Blinds sin terminar ninguna mano de esas tres con deuda.",
+      "nearest": [
+        {
+          "name": "WAKE UP, NEO",
+          "difference": "Reutiliza la protección física de la instancia inicial; la condición central es solvencia después de puntuar."
+        },
+        {
+          "name": "Loan Shark",
+          "difference": "No reduce XMult por impago al final de la ciega: la deuda al terminar cada mano causa derrota."
+        },
+        {
+          "name": "Rich get Richer",
+          "difference": "No limita Chips al saldo; permite gastar y recuperar dinero durante una mano."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Challenge modifiers.dollars/jokers",
+        "Anclaje por X.id como Neo",
+        "Final de mano tras dinero y scoring nativos, antes de comprobar victoria"
+      ],
+      "details": [
+        "Usa Greed real y su coste del snapshot ($2 por mano con configuración actual), sin copiar su efecto.",
+        "Comprobar saldo después de todas las ganancias de esa mano y una vez por jugada; también si ya alcanzó el objetivo.",
+        "Solo la instancia inicial queda anclada y sin Negative; no impedir debuffs nativos. Crédito disponible no equivale a dinero: saldo <0 pierde.",
+        "La derrota usa el flujo Game Over nativo."
+      ],
+      "art": "Monedero carmesí cosido a un naipe con hilo rojo.",
+      "requires": [
+        "RISK JOKERS",
+        "greed"
+      ]
+    },
+    {
+      "id": "CH03",
+      "key": "c_hz_payment_in_kind",
+      "name": {
+        "es": "Pago en especie",
+        "en": "Payment in Kind"
+      },
+      "effect": "Las compras de tienda son gratis, pero cada compra destruye una carta aleatoria de tu baraja. Los rerolls se pagan normalmente.",
+      "unlock": "Gana una run destruyendo al menos 15 cartas y terminando con 30 cartas o menos.",
+      "nearest": [
+        {
+          "name": "Inflation",
+          "difference": "Cambia el recurso de cada compra, no aumenta su precio monetario."
+        },
+        {
+          "name": "Scorched Earth",
+          "difference": "Destruye al comprar una carta aleatoria del deck, no las cartas que puntúan; puedes limitar tu consumo."
+        },
+        {
+          "name": "Barterer / Mercachifle",
+          "difference": "No intercambia Jokers ni compara rarezas: pagar con tu baraja es obligatorio en todas las compras."
+        }
+      ],
+      "native_hooks": [
+        "Card.set_cost y transacción nativa de compra",
+        "SMODS.destroy_cards / contexto remove_playing_cards",
+        "RNG pseudorandom_element con clave hz_payment y contador guardado"
+      ],
+      "details": [
+        "Incluye tiendas normales y Black Market, Vouchers y compra de Booster; abrirlo solo cobra una carta, no cada elección.",
+        "No cobra premios, generación de Jokers, Fusions entre cartas propias ni rerolls. Una compra de componente externo para Fusion sí cuenta una vez.",
+        "Muestrear únicamente cartas destruibles; no permitir la compra si no hay víctima válida o eliminaría la última carta del deck.",
+        "Preparar víctima/compra como transacción única y guardada; no destruir al previsualizar ni al fallar capacidad. Precio monetario real $0: no inventar gasto para misiones/reembolsos."
+      ],
+      "art": "Etiqueta de precio cortada de una carta, con una tijera de cobre.",
+      "requires": []
+    },
+    {
+      "id": "CH04",
+      "key": "c_hz_oath",
+      "name": {
+        "es": "Juramento",
+        "en": "Oath"
+      },
+      "effect": "Completa al menos un Contract en cada Ante. Al comenzar el Ante recibes una oferta de Contracts; si terminas su Boss sin completar ninguno, pierdes.",
+      "unlock": "Completa cuatro Contracts distintos antes de acabar Ante 6 y gana esa run.",
+      "nearest": [
+        {
+          "name": "Fully Booked / Agenda llena",
+          "difference": "Garantiza una oportunidad y exige completar una cuota; no cambia la probabilidad normal de ofertas."
+        },
+        {
+          "name": "Stay of Execution / Cláusula suspensiva",
+          "difference": "No reintenta ni altera plazos/recompensas; la cuota del Ante es un objetivo aparte."
+        },
+        {
+          "name": "Promissory Note / Letra de cambio",
+          "difference": "No modifica premios; cualquier Contract realmente completado puede cumplir la cuota."
+        }
+      ],
+      "native_hooks": [
+        "PortraitContracts catálogo/accept/event/result_event existentes",
+        "Oferta persistida mediante UI nativa de Contracts",
+        "Comprobar cuota tras resultados del Boss antes de victoria/avance"
+      ],
+      "details": [
+        "Oferta de hasta tres Contracts nativos distintos y habilitados. Incluir siempre No Safety Net como opción realizable sin RNG especial; si está desactivado, Clean Hands solo si su objetivo configurado cabe en las tres ciegas.",
+        "No ofrecer plazos posteriores a este Ante, requisitos de dos Bosses ni objetivos que dependen de adquirir piezas raras. La garantía necesita al menos una de las dos opciones seguras habilitada; de otro modo no se puede iniciar este Challenge.",
+        "Completar cualquiera durante el Ante cuenta una vez; reclamar el premio no es necesario. Los premios llenos quedan en la cola normal.",
+        "Los reintentos de Cláusula suspensiva siguen funcionando, pero no prorrogan la cuota del Challenge. Guardar contador y oferta por Ante."
+      ],
+      "art": "Una firma roja bajo un sello de lacre y una espada fina.",
+      "requires": [
+        "Contracts",
+        "No Safety Net o Clean Hands elegible"
+      ]
+    },
+    {
+      "id": "CH05",
+      "key": "c_hz_made_to_order",
+      "name": {
+        "es": "Por encargo",
+        "en": "Made to Order"
+      },
+      "effect": "Los Jokers que obtienes no funcionan hasta el comienzo del siguiente Ante.",
+      "unlock": "Gana una run sin comprar ni crear ningún Joker desde el inicio de Ante 6.",
+      "nearest": [
+        {
+          "name": "Typecast",
+          "difference": "No fija Eternal ni slots: cada adquisición tiene una espera y sigue pudiendo venderse."
+        },
+        {
+          "name": "One-Night Engagement / Función de noche",
+          "difference": "No alquila ni destruye Jokers; la propiedad es permanente y se demora su activación."
+        },
+        {
+          "name": "Administrative Silence / Silencio administrativo",
+          "difference": "No apaga toda la plantilla durante una ciega; conserva los veteranos activos y hace planificar fichajes."
+        }
+      ],
+      "native_hooks": [
+        "Card.add_to_deck, nuevo X.id",
+        "SMODS.debuff_card fuente hz_made_to_order",
+        "Transición real de Ante"
+      ],
+      "details": [
+        "Cada nuevo Joker recibe activation_ante=current_ante+1; copias y resultados Fusion son adquisiciones nuevas. Reload no reinicia la espera.",
+        "La evolución de un UPG existente conserva identidad y fecha; no la trata como compra nueva.",
+        "Durante la espera se anulan efectos/passivos del Joker con debuff nativo; Negative conserva la contribución nativa de capacidad.",
+        "Los Jokers de tienda y previews no reciben fecha hasta entrar en la colección poseída."
+      ],
+      "art": "Un naipe envuelto en papel postal con reloj de arena.",
+      "requires": []
+    },
+    {
+      "id": "CH06",
+      "key": "c_hz_carry_on",
+      "name": {
+        "es": "Equipaje de mano",
+        "en": "Carry-on"
+      },
+      "effect": "Jokers y consumibles comparten un límite de cinco espacios. Las cartas Negative no ocupan espacio.",
+      "unlock": "Gana una run usando al menos 12 consumibles de tres familias distintas.",
+      "nearest": [
+        {
+          "name": "Jokerless",
+          "difference": "No prohíbe Jokers; permite decidir continuamente cómo repartir cinco espacios."
+        },
+        {
+          "name": "Travelling Alchemist / Alquimista viajero",
+          "difference": "No cambia permanentemente slots de una zona por otra; el mismo espacio puede servir alternativamente a cualquier tipo."
+        },
+        {
+          "name": "Painted Deck",
+          "difference": "No intercambia tamaño de mano por slots; restringe conjuntamente dos inventarios."
+        }
+      ],
+      "native_hooks": [
+        "CardArea/SMODS límites y buffers nativos",
+        "G.jokers + G.consumeables ocupación conjunta",
+        "Validación de compra/generación/claim"
+      ],
+      "details": [
+        "Ambas áreas siguen siendo nativas; el límite conjunto comienza en 5. Cada aumento nativo de capacidad de cualquiera de ellas aumenta el límite conjunto en esa cantidad.",
+        "Negative usa su contribución real de capacidad y cuesta 0 neto; no ignorar límites ni quitar su edición. No contar dos veces su bonus.",
+        "Se aplica a compras, packs, Judgement, Riff-raff, recompensas y copias; reserva de buffers y premios pendientes usa el mismo cálculo.",
+        "Usar o vender consumibles libera capacidad; no expulsar cartas al reducir capacidad por venta de un Joker pasivo. Gestionar exceso como vanilla y bloquear nuevas entradas."
+      ],
+      "art": "Maleta pequeña entreabierta con un Joker y una botella violeta.",
+      "requires": []
+    },
+    {
+      "id": "CH07",
+      "key": "c_hz_blind_date",
+      "name": {
+        "es": "A ciegas",
+        "en": "Blind Date"
+      },
+      "effect": "Las ofertas de tienda ocultan su identidad hasta comprarlas. Solo puedes ver su tipo, rareza y precio.",
+      "unlock": "Completa el Challenge vanilla X-ray Vision.",
+      "nearest": [
+        {
+          "name": "X-ray Vision",
+          "difference": "Oculta decisiones de adquisición, no cartas robadas ni la información de la mano."
+        },
+        {
+          "name": "Amber Acorn",
+          "difference": "No mezcla tu plantilla ni dificulta identificar Jokers ya poseídos."
+        },
+        {
+          "name": "Inside Information / Información privilegiada",
+          "difference": "No renueva ni congela una tienda; todas sus ofertas conservan el roll original aunque estén ocultas."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Challenge.calculate / stock de tienda",
+        "Sprites/back y tooltip temporal para ofertas ocultas",
+        "Compra nativa revela antes de efectos de adquisición"
+      ],
+      "details": [
+        "Incluye tiendas normales y Black Market. Consumibles solo muestran su familia; Boosters la familia y precio, no contenidos futuros.",
+        "No ocultar información de cartas poseídas ni del contenido de un pack comprado. Rerolls mantienen costes y RNG nativos.",
+        "Long press muestra datos permitidos y regla del Challenge. No filtrar identidad por iconos contextuales de Fusion o compra-y-uso; un consumible oculto se compra para un slot antes de usarlo.",
+        "Recargar no revela, sustituye ni vuelve a generar las ofertas."
+      ],
+      "art": "Un antifaz negro colocado sobre una etiqueta dorada de tienda.",
+      "requires": []
+    },
+    {
+      "id": "CH08",
+      "key": "c_hz_dress_rehearsal",
+      "name": {
+        "es": "Ensayo general",
+        "en": "Dress Rehearsal"
+      },
+      "effect": "La habilidad del Boss de cada Ante también se aplica a sus ciegas pequeña y grande.",
+      "unlock": "Gana una run sin desactivar ni cambiar ningún Boss y derrota al menos seis Bosses distintos.",
+      "nearest": [
+        {
+          "name": "Heavyweight / Peso pesado",
+          "difference": "Propaga una regla jugable, no aumenta indiscriminadamente todos los objetivos."
+        },
+        {
+          "name": "The Pillar",
+          "difference": "No se limita a recordar cartas previas: el Boss anunciado determina el problema de las tres peleas."
+        },
+        {
+          "name": "Boss Blind normal",
+          "difference": "Se ensaya su habilidad antes del encuentro real, manteniendo identidad y economía de Small/Big."
+        }
+      ],
+      "native_hooks": [
+        "Blind callbacks nativos mediante delegado al Boss anunciado",
+        "Blind.effect separado por pelea",
+        "get_type/round_resets.blind_states/receipts conservan slot nativo"
+      ],
+      "details": [
+        "La sombra no cuenta como Boss: conserva objetivo base, pago, Tags, tipo, Overkill y clasificación de Contracts de Small/Big.",
+        "Reiniciar el estado de habilidad al entrar en cada pelea y restaurarlo al salir/desactivar. Derrotar sombra no incrementa bosses_used, récords ni logros de Boss.",
+        "Wall y Violet Vessel no tienen habilidad aparte del objetivo: esas sombras no multiplican la puntuación requerida. No fabricarles otra habilidad.",
+        "La regla se fija al seleccionar la ciega. Bribe/Director's Cut posterior cambia solo futuras peleas; el Boss ya desactivado durante una sombra no queda desactivado en la pelea real.",
+        "La delegación debe incluir Bosses custom habilitados y dejar sus estados dentro de la pelea correspondiente."
+      ],
+      "art": "Un telón gris con dos siluetas de fichas y una tercera ficha roja.",
+      "requires": []
+    }
+  ],
+  "bosses": [
+    {
+      "id": "BS01",
+      "key": "bl_hz_broom",
+      "name": {
+        "es": "La Escoba",
+        "en": "The Broom"
+      },
+      "effect": "Cada descarte descarta toda tu mano.",
+      "ante_min": 2,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Derrota cinco Boss Blinds distintos.",
+      "nearest": [
+        {
+          "name": "The Hook",
+          "difference": "No descarta al jugar ni elige dos al azar; convierte tu decisión de descartar en una renovación completa."
+        },
+        {
+          "name": "The Water",
+          "difference": "Conserva tus descartes y todas sus activaciones; modifica su alcance."
+        },
+        {
+          "name": "The Serpent",
+          "difference": "No cambia cuántas cartas robas después: usa el robo normal hasta el tamaño de mano."
+        }
+      ],
+      "native_hooks": [
+        "G.FUNCS.discard_cards_from_highlighted",
+        "SMODS before_discard/discard nativos",
+        "Blind.disable/defeat"
+      ],
+      "details": [
+        "Solo descartes manuales pagados; The Hook y otros descartes forzados conservan sus reglas.",
+        "Descartar todas las cartas elegibles aunque excedan cinco: no simular varios descartes ni gastar varias cargas. La previsualización debe resaltarlas todas.",
+        "Purple Seal, Burnt Joker, Graft y Contracts reciben un único descarte real con todas sus cartas; la protección existente se respeta."
+      ],
+      "counterplay": "Jugar cartas valiosas antes de renovar la mano; decidir entre guardar Steel/Gold y buscar una mano nueva.",
+      "art": "Chip verde grisáceo, escoba diagonal blanca.",
+      "requires": []
+    },
+    {
+      "id": "BS02",
+      "key": "bl_hz_comb",
+      "name": {
+        "es": "El Peine",
+        "en": "The Comb"
+      },
+      "effect": "Las cartas jugadas puntúan de menor a mayor rango.",
+      "ante_min": 3,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Gana un Boss de Ante 6 o superior con cuatro o más cartas que puntúan en su mano ganadora.",
+      "nearest": [
+        {
+          "name": "Amber Acorn",
+          "difference": "Ordena cartas jugables de forma conocida; no oculta ni mezcla Jokers."
+        },
+        {
+          "name": "Reverse Gravity / Gravedad inversa",
+          "difference": "Solo cambia el orden dentro de la fase jugada, no el orden entre cartas mantenidas y jugadas."
+        },
+        {
+          "name": "Hanging Chad / Lightning Rod",
+          "difference": "No añade ni redirige activaciones; cambia qué carta ocupa cada lugar de puntuación."
+        }
+      ],
+      "native_hooks": [
+        "Lista scoring_hand al comenzar la fase jugada",
+        "Orden de SMODS.score_card; sin reevaluar efectos",
+        "Tooltip y previsualización de orden"
+      ],
+      "details": [
+        "Orden 2–A; cartas sin rango al final. Empates conservan su posición de juego; clasificación de poker hand no cambia.",
+        "No ordenar la mano mantenida ni mutar rangos. J09 usa la primera carta de este orden efectivo; retriggers siguen a su carta.",
+        "Gravedad inversa sigue adelantando la fase mantenida. Los efectos de posición de carta deben consultar un único orden efectivo coherente."
+      ],
+      "counterplay": "Llevar una carta pequeña como primera activación, ajustar mejoras por rango o elegir menos cartas que puntúan.",
+      "art": "Chip azul pizarra, peine dentado en escalera.",
+      "requires": []
+    },
+    {
+      "id": "BS03",
+      "key": "bl_hz_mute",
+      "name": {
+        "es": "La Sordina",
+        "en": "The Mute"
+      },
+      "effect": "Las cartas jugables no pueden repetirse.",
+      "ante_min": 4,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Gana un Boss repitiendo una misma carta al menos cuatro veces en su mano ganadora.",
+      "nearest": [
+        {
+          "name": "The Plant",
+          "difference": "No anula figuras ni sus efectos iniciales; elimina únicamente activaciones adicionales."
+        },
+        {
+          "name": "Lightning Rod / Pararrayos",
+          "difference": "No redistribuye repeticiones: no existe una repetición adicional que transferir."
+        },
+        {
+          "name": "Broken Record / Disco rayado",
+          "difference": "No fija resultados aleatorios: las primeras activaciones conservan su RNG nativo."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.calculate_repetitions sobre cartas jugables",
+        "No afectar repeticiones de Joker",
+        "Blind.disable restaura cálculo nativo"
+      ],
+      "details": [
+        "Incluye cartas jugadas, mantenidas y kickers virtuales de J04; Red Seal/Mime/Hack/Dusk siguen presentes pero no añaden activaciones de carta.",
+        "Conservar la evaluación inicial completa, dinero, ediciones y efectos de Joker; Blueprint/Brainstorm siguen copiando efectos que no sean retriggers de playing cards.",
+        "No evaluar una segunda vez las fuentes; abortar sus repeticiones a la salida de la fase nativa y vaciar transferencias J09 para esa jugada."
+      ],
+      "counterplay": "Sustituir temporalmente fuentes de repetición por bonus de una sola activación; reforzar niveles o desactivar el Boss.",
+      "art": "Chip malva oscuro, campana con almohadilla plateada.",
+      "requires": []
+    },
+    {
+      "id": "BS04",
+      "key": "bl_hz_lacquer",
+      "name": {
+        "es": "La Laca",
+        "en": "The Lacquer"
+      },
+      "effect": "Las ediciones no aportan fichas ni Mult.",
+      "ante_min": 3,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Posee simultáneamente Foil, Holographic y Polychrome y gana un Boss de Ante 4 o superior.",
+      "nearest": [
+        {
+          "name": "Varnish / Barniz",
+          "difference": "No es una mejora de Editions: bloquea solo su contribución de puntuación durante la pelea."
+        },
+        {
+          "name": "Crimson Heart",
+          "difference": "No anula el efecto completo de un Joker ni elige uno al azar."
+        },
+        {
+          "name": "The Flint",
+          "difference": "No modifica el valor base de la mano: la capa bloqueada es la edición de cartas/Jokers."
+        }
+      ],
+      "native_hooks": [
+        "Evaluación nativa de Edition de playing cards y Jokers",
+        "SMODS.calculate_effect filtro por origen Edition",
+        "Blind.disable/defeat"
+      ],
+      "details": [
+        "Incluye Foil/Holographic/Polychrome y componentes de Chips/Mult de Editions compatibles. No borra la edición ni sus metadatos.",
+        "Negative conserva slots; efectos no relacionados con scoring se conservan. Enhancements, Seals y efecto propio del Joker siguen activos.",
+        "No filtrar un bonus solo por parecerse a +50 Chips; filtrar por su origen de edición."
+      ],
+      "counterplay": "Mantener mejoras y sellos, comprar Jokers por su efecto propio y evitar depender de Polychrome como único multiplicador.",
+      "art": "Chip blanco crema con grieta de laca violeta.",
+      "requires": []
+    },
+    {
+      "id": "BS05",
+      "key": "bl_hz_vault",
+      "name": {
+        "es": "La Caja Fuerte",
+        "en": "The Vault"
+      },
+      "effect": "Aparta tu dinero al entrar; lo recuperas al ganar.",
+      "ante_min": 4,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Derrota un Boss de Ante 4 o superior con al menos $75.",
+      "nearest": [
+        {
+          "name": "The Ox",
+          "difference": "Retiene temporalmente el saldo positivo inicial; no lo destruye al jugar un tipo de mano."
+        },
+        {
+          "name": "Tithe / Diezmo",
+          "difference": "No convierte ganancias en score; el dinero que generas durante la pelea sigue siendo dinero."
+        },
+        {
+          "name": "Escrow / Fondo de garantía",
+          "difference": "No apuesta ni duplica una recompensa de Contract; custodia dinero que ya poseías."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Blind.set_blind",
+        "Blind.effect.escrow/restored",
+        "Blind.disable/defeat y ease_dollars nativos"
+      ],
+      "details": [
+        "Retener max(0,dollars) una sola vez; una deuda inicial permanece y nunca se convierte en depósito negativo.",
+        "Devolver exactamente lo retenido al ganar o desactivar, antes de cashout/interés; restauración idempotente y guardada.",
+        "Ganancias/gastos durante la pelea permanecen; Bull/Bootstraps leen saldo disponible. No tratar devolución como ganancia de habilidad ni activar Diezmo.",
+        "El dinero retenido se ve en tooltip del Boss; sale de saldo disponible, no de la capacidad de crédito."
+      ],
+      "counterplay": "Gastar antes de entrar, generar dinero durante la pelea o preparar scoring independiente del saldo.",
+      "art": "Chip cobre oscuro, puerta circular de caja fuerte.",
+      "requires": []
+    },
+    {
+      "id": "BS06",
+      "key": "bl_hz_hinge",
+      "name": {
+        "es": "La Bisagra",
+        "en": "The Hinge"
+      },
+      "effect": "Los Dobles alternan de modo tras cada mano y no se pueden cambiar manualmente.",
+      "ante_min": 3,
+      "showdown": false,
+      "mult": 2,
+      "dollars": 5,
+      "unlock": "Gana una run utilizando ambos modos de un mismo Joker Double durante una Boss Blind.",
+      "nearest": [
+        {
+          "name": "Options",
+          "difference": "Conserva la generación de dos efectos; el Boss obliga a alternar qué modo se utiliza."
+        },
+        {
+          "name": "Amber Acorn",
+          "difference": "No oculta ni cambia posiciones; las próximas modalidades se conocen y se puede planificar."
+        },
+        {
+          "name": "Pendulum / Péndulo",
+          "difference": "No crea un tercer modo ni banco propio: fuerza el ciclo A/B del Joker existente."
+        }
+      ],
+      "native_hooks": [
+        "Compound Interest options.can_switch y options.sync",
+        "Evento after real una vez por mano",
+        "card.ability.extra.selected persistente"
+      ],
+      "details": [
+        "Pool solo con módulo Doubles habilitado y al menos un Double poseído en el momento de generar Boss. Ante mínimo explícito en in_pool.",
+        "Mantener modo al entrar; tras cada mano, incluida una mano anulada, alternar A/B de cada Double poseído una sola vez. No alternar por retrigger/Blueprint.",
+        "Options renueva sus efectos nativos para la siguiente mano y conserva el modo forzado; no vuelve a lanzar su RNG.",
+        "Al desactivar se recupera control manual; el modo actual no se revierte. Si se venden todos los Doubles, la ciega continúa válida."
+      ],
+      "counterplay": "Elegir modo antes de seleccionar el Boss, planificar una mano de preparación y conservar dinero/Chips para el siguiente modo.",
+      "art": "Chip rojo y azul, bisagra metálica de dos hojas.",
+      "requires": [
+        "Compound Interest / Doubles"
+      ]
+    }
+  ],
+  "vouchers": [
+    {
+      "id": "VX01",
+      "key": "v_hz_letter_opener",
+      "name": "Abrecartas",
+      "name_en": "Letter Opener",
+      "tier": "base",
+      "upgrade": "VX02",
+      "cost": 10,
+      "effect": "Una vez por Booster vanilla abierto, paga $3 para sustituir una opción todavía no elegida. Conservas las elecciones restantes.",
+      "effect_en": "Once per opened vanilla Booster, pay $3 to replace one unchosen option. Keep your remaining picks.",
+      "strategy": "Descartar una oferta concreta sin perder las opciones útiles ni comprar otro pack.",
+      "unlock": "Elige cartas en cinco packs de al menos tres familias distintas en una run y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Take cards from five packs spanning at least three families in one run, then defeat an Ante 6+ Boss.",
+      "requires": [],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Carousel / Carrusel",
+          "difference": "Rerrollea sobres cerrados en tienda, no el contenido de uno abierto."
+        },
+        {
+          "name": "Piñata",
+          "difference": "Añade candidatos sin retirar ninguno; aquí pagas para renunciar a una opción visible."
+        },
+        {
+          "name": "Reroll Surplus",
+          "difference": "Abarata rerolls de la tienda; no actúa dentro de un pack."
+        }
+      ],
+      "rules": [
+        "Solo Arcana, Celestial, Standard, Spectral y Buffoon nativos; excluye Roulette y las cuatro familias de estructura especial nuevas.",
+        "Se elige primero el objetivo y se confirma su precio; el pago y el reemplazo quedan fijados juntos. Reemplazo mediante el create_card nativo del mismo centro, sin forzar rareza/Edition/Seal.",
+        "No vuelve a activar garantías por índice: conservar el índice original; Telescope solo mantiene su garantía si se sustituye su primera posición.",
+        "Una acción compartida por pack entre VX01/VX02; no una por elección. Respeta el tamaño/elecciones modificado por Mutations."
+      ],
+      "hooks": [
+        "SMODS.Voucher.redeem",
+        "SMODS.OPENED_BOOSTER.ability",
+        "Booster.create_card",
+        "G.pack_cards",
+        "freeze_pack/open_pack"
+      ],
+      "art": "Pequeño abrecartas de marfil cortando una esquina; mismo motivo central que Guillotina."
+    },
+    {
+      "id": "VX02",
+      "key": "v_hz_guillotine",
+      "name": "Guillotina",
+      "name_en": "Guillotine",
+      "tier": "upgrade",
+      "base": "VX01",
+      "cost": 10,
+      "effect": "Abrecartas también permite sustituir todas las opciones restantes del pack por $5. Elige uno de los dos servicios una vez por pack.",
+      "effect_en": "Letter Opener can also replace every remaining pack option for $5. Use either service once per pack.",
+      "strategy": "Escoger entre conservar un núcleo de opciones y pagar un cambio total del contenido sobrante.",
+      "unlock": "Con Abrecartas, sustituye opciones en tres familias de pack diferentes y gana la run.",
+      "unlock_en": "With Letter Opener, replace options in three different pack families and win the run.",
+      "requires": [
+        "v_hz_letter_opener"
+      ],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Abrecartas",
+          "difference": "Añade una modalidad de barrido al mismo servicio; es una mejora deliberada de su pareja."
+        },
+        {
+          "name": "Carousel / Carrusel",
+          "difference": "No sustituye los sobres de la tienda ni concede nuevos sobres."
+        },
+        {
+          "name": "Second Pick",
+          "difference": "No da premios adicionales: mantiene exactamente las elecciones que quedaban."
+        }
+      ],
+      "rules": [
+        "Mismas familias y restricciones que VX01. Nunca regenera cartas ya adquiridas.",
+        "Guardar en una transacción todos los reemplazos antes de mostrarlos. Elegir barrido consume también la acción individual."
+      ],
+      "hooks": [
+        "SMODS.Voucher.requires",
+        "servicio de VX01",
+        "Booster.create_card"
+      ],
+      "art": "Guillotina de papel de latón con la misma hoja de VX01 ampliada."
+    },
+    {
+      "id": "VX03",
+      "key": "v_hz_alembic",
+      "name": "Alambique",
+      "name_en": "Alembic",
+      "tier": "base",
+      "upgrade": "VX04",
+      "cost": 10,
+      "effect": "Una vez por tienda, entrega dos Tarot o dos Planet propios y $2 para elegir otro consumible de esa clase entre tres.",
+      "effect_en": "Once per shop, trade two owned Tarot cards or two owned Planet cards and $2 for one of three cards of that set.",
+      "strategy": "Convertir consumibles que no sirven a la build en una selección útil, sacrificando cantidad y dinero.",
+      "unlock": "Usa seis Tarot o Planet de identidades distintas en una sola tienda, y gana después una ciega de Ante 6 o superior.",
+      "unlock_en": "Use six distinct Tarot or Planet cards in a single shop, then defeat an Ante 6+ Blind.",
+      "requires": [],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Forgery",
+          "difference": "Duplica un consumible que conservas; Alambique destruye dos identidades entregadas y entrega una distinta."
+        },
+        {
+          "name": "The Emperor / The High Priestess",
+          "difference": "Crean dos consumibles al usarlos; esta operación no usa consumibles ni activa sus efectos."
+        },
+        {
+          "name": "Travelling Alchemist",
+          "difference": "Intercambia capacidad de slots; no permite transformar el inventario."
+        }
+      ],
+      "rules": [
+        "Los dos ingredientes pueden tener nombres diferentes, pero ambos deben ser Tarot o ambos Planet. No acepta Contraband ni Spectral.",
+        "Candidatos diferentes entre sí y de las identidades entregadas, pool nativo elegible y visible, soulable=false. Si no existen candidatos válidos, el servicio no cobra ni consume.",
+        "No cuenta como venta ni uso: no activa Fool, Constellation, Fortune Teller ni premios por vender. Conserva las reglas normales de adquisición del resultado.",
+        "Seleccionar ingredientes y pagar fija las tres opciones y retira los ingredientes de manera atómica; no permite cancelar después para explorar otros sorteos. No conserva Edition de los ingredientes."
+      ],
+      "hooks": [
+        "SMODS.Voucher.redeem",
+        "P.normal_shop",
+        "P.pool",
+        "SMODS.create_card",
+        "C.queue_reward o recibo compartido equivalente"
+      ],
+      "art": "Alambique de cobre destilando dos cartas en una gota."
+    },
+    {
+      "id": "VX04",
+      "key": "v_hz_crucible",
+      "name": "Crisol",
+      "name_en": "Crucible",
+      "tier": "upgrade",
+      "base": "VX03",
+      "cost": 10,
+      "effect": "Alambique acepta también un Tarot y un Planet juntos. Una de sus tres opciones será siempre una Spectral normal.",
+      "effect_en": "Alembic also accepts one Tarot plus one Planet. One of its three options is always a normal Spectral card.",
+      "strategy": "Conservar consumibles baratos para abrir una ruta de transformación hacia Spectral, con dos cartas y una tasa como coste real.",
+      "unlock": "Con Alambique, completa tres intercambios en una run y vence un Boss de Ante 8 o superior.",
+      "unlock_en": "With Alembic, complete three exchanges in one run and defeat an Ante 8+ Boss.",
+      "requires": [
+        "v_hz_alembic"
+      ],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Alambique",
+          "difference": "Amplía ingredientes y añade una salida Spectral a la misma transacción; no crea un segundo servicio acumulable."
+        },
+        {
+          "name": "Omen Globe",
+          "difference": "Introduce Spectral aleatoriamente en Arcana; Crisol requiere sacrificar inventario concreto y pagar."
+        },
+        {
+          "name": "Séance",
+          "difference": "Genera Spectral por Straight Flush; aquí no existe condición de scoring ni generación gratuita."
+        }
+      ],
+      "rules": [
+        "Mismo límite de una operación por tienda y misma tasa de $2. Con dos ingredientes de una clase: dos candidatos de esa clase y una Spectral. Con ingredientes mixtos: un Tarot, un Planet y una Spectral.",
+        "Spectral del pool ordinario elegible: nunca The Soul ni Black Hole por esta garantía. Se entrega la carta real al inventario, sin usarla ni aplicar Seals automáticamente.",
+        "Si una clase no tiene candidatos, solo ofrecer las restantes, con un mínimo de una salida válida antes de cobrar."
+      ],
+      "hooks": [
+        "SMODS.Voucher.requires",
+        "servicio de VX03",
+        "pool Spectral nativo"
+      ],
+      "art": "El recipiente de VX03 se convierte en un crisol violeta con una única gota espectral."
+    },
+    {
+      "id": "VX05",
+      "key": "v_hz_sewing_kit",
+      "name": "Costurero",
+      "name_en": "Sewing Kit",
+      "tier": "base",
+      "upgrade": "VX06",
+      "cost": 10,
+      "effect": "Una vez por tienda, paga $6 para trasladar Foil, Holographic o Polychrome de un Joker propio a otro propio sin Edition.",
+      "effect_en": "Once per shop, pay $6 to move Foil, Holographic or Polychrome from one owned Joker to an uneditioned owned Joker.",
+      "strategy": "Retirar una pieza de la build sin perder su acabado, a cambio de quitarle realmente la Edition al donante.",
+      "unlock": "Vende tres Jokers con Editions distintas entre Foil, Holographic y Polychrome durante una run y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Sell Jokers carrying Foil, Holographic and Polychrome in one run, then defeat an Ante 6+ Boss.",
+      "requires": [],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Aura",
+          "difference": "Crea una Edition aleatoria; aquí no se tira ni se crea una Edition nueva: desaparece del donante."
+        },
+        {
+          "name": "Hot Merchandise",
+          "difference": "Ofrece un Joker nuevo con Edition; Costurero solo redistribuye dos ejemplares ya propios."
+        },
+        {
+          "name": "Ankh",
+          "difference": "Copia un Joker y destruye otros; aquí se conservan ambos centros y sus estados."
+        }
+      ],
+      "rules": [
+        "Negative excluida de origen y destino; no cambia límites de slots. El receptor debe no tener Edition.",
+        "Excluir ejemplares en prórroga de Last Performance, cesiones y objetivos inmóviles de Challenge. No permite usar un mismo ID como origen/destino.",
+        "Guardar ambos IDs y la Edition; validar y cobrar una vez, quitar en origen y aplicar en destino con set_edition nativo. Ningún cambio de ability/UPG/progreso/Sticker."
+      ],
+      "hooks": [
+        "SMODS.Voucher.redeem",
+        "Card:set_edition",
+        "X.id",
+        "P.normal_shop"
+      ],
+      "art": "Costurero con aguja y tres retales azul, magenta y arcoíris."
+    },
+    {
+      "id": "VX06",
+      "key": "v_hz_haute_couture",
+      "name": "Alta costura",
+      "name_en": "Haute Couture",
+      "tier": "upgrade",
+      "base": "VX05",
+      "cost": 10,
+      "effect": "Costurero también puede trasladar esas Editions entre playing cards y Jokers propios.",
+      "effect_en": "Sewing Kit can also move those Editions between owned playing cards and Jokers.",
+      "strategy": "Elegir si una Edition existente pertenece al motor de Jokers o a una carta repetible del mazo.",
+      "unlock": "Con Costurero, traslada dos Editions distintas en una run y vence después un Boss de Ante 8 o superior.",
+      "unlock_en": "With Sewing Kit, move two different Editions in one run, then defeat an Ante 8+ Boss.",
+      "requires": [
+        "v_hz_sewing_kit"
+      ],
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "similar": [
+        {
+          "name": "Costurero",
+          "difference": "Amplía los destinos del mismo servicio hacia el mazo, sin añadir usos ni duplicar la Edition."
+        },
+        {
+          "name": "Standard Pack",
+          "difference": "Añade una carta física completa aleatoria; aquí no se añade ninguna carta al mazo."
+        },
+        {
+          "name": "Bloodline / Linaje",
+          "difference": "Propaga cambios entre descendientes; este servicio decide qué identidad pierde y cuál recibe una Edition existente."
+        }
+      ],
+      "rules": [
+        "Misma tasa $6 y uso compartido con VX05. Se puede mover Joker→playing card, playing card→Joker y entre playing cards.",
+        "Valen cartas propias del mazo que puedan ser modificadas; no previews ni cartas aún en tienda/pack. Excluir pares del mismo linaje para que la propagación no reponga la Edition en el origen.",
+        "Para linajes diferentes, cada set_edition conserva la propagación normal de Bloodline: retirar del linaje donante y aplicar al receptor. Mostrar los afectados antes de confirmar."
+      ],
+      "hooks": [
+        "SMODS.Voucher.requires",
+        "servicio VX05",
+        "G.playing_cards",
+        "Card:set_edition"
+      ],
+      "art": "Maniquí elegante con la misma aguja y retales del Costurero."
+    },
+    {
+      "id": "VX07",
+      "key": "v_hz_second_opinion",
+      "name": "Segunda opinión",
+      "name_en": "Second Opinion",
+      "tier": "base",
+      "upgrade": "VX08",
+      "cost": 10,
+      "effect": "Una vez por oferta de Contract, paga $3 para sustituirla por un Contract distinto y elegible.",
+      "effect_en": "Once per Contract offer, pay $3 to replace it with a different eligible Contract.",
+      "strategy": "Gastar dinero para buscar un objetivo compatible con la run, sin mejorar sus términos o recompensa.",
+      "unlock": "Completa cuatro Contracts distintos en una run sin fallar ninguno y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Complete four distinct Contracts in one run without failing one, then defeat an Ante 6+ Boss.",
+      "requires": [],
+      "dependencies": [
+        "portrait_horizons",
+        "Contracts habilitado en snapshot"
+      ],
+      "similar": [
+        {
+          "name": "Fully Booked",
+          "difference": "Aumenta cuántas veces aparece una oferta; no permite cambiar la identidad de una oferta concreta."
+        },
+        {
+          "name": "Express Contracts",
+          "difference": "Reduce objetivos y dinero; Segunda opinión conserva intactos los términos del Contract reemplazante."
+        },
+        {
+          "name": "Stay of Execution",
+          "difference": "Reintenta un Contract fallado ya aceptado; este servicio opera antes de asumir un compromiso."
+        }
+      ],
+      "rules": [
+        "Solo la oferta actual aún no aceptada. No afecta a Contracts activos, recompensas, plazos ni probabilidades de futuras ofertas.",
+        "Excluir la oferta sustituida, activos, bloqueados y desactivados. Si no queda alternativa, no cobrar. Conservar la misma oportunidad de oferta: no sortear otra vez la probabilidad de aparición.",
+        "El reemplazo y el pago se guardan juntos y el botón queda gastado incluso si se rechaza la nueva oferta; reload no devuelve la anterior."
+      ],
+      "hooks": [
+        "C.state().offer",
+        "C.offer_terms",
+        "pool elegible de C.shop",
+        "C.accept",
+        "P.checkpoint"
+      ],
+      "art": "Dos lentes sobre un contrato, una enfocada y otra apartada."
+    },
+    {
+      "id": "VX08",
+      "key": "v_hz_tender",
+      "name": "Licitación",
+      "name_en": "Tender",
+      "tier": "upgrade",
+      "base": "VX07",
+      "cost": 10,
+      "effect": "Al pagar Segunda opinión, compara dos Contracts alternativos y elige cuál sustituye a la oferta.",
+      "effect_en": "When paying for Second Opinion, compare two alternative Contracts and choose the replacement offer.",
+      "strategy": "Comparar compromisos completos antes de aceptar, en lugar de decidir únicamente sobre una oferta desconocida.",
+      "unlock": "Con Segunda opinión, completa tres Contracts obtenidos mediante sustitución en una run y gana la run.",
+      "unlock_en": "With Second Opinion, complete three replacement Contracts in one run and win the run.",
+      "requires": [
+        "v_hz_second_opinion"
+      ],
+      "dependencies": [
+        "portrait_horizons",
+        "Contracts habilitado en snapshot"
+      ],
+      "similar": [
+        {
+          "name": "Segunda opinión",
+          "difference": "Es su mejora de selección explícita: una tasa, una oportunidad y un único Contract aceptable."
+        },
+        {
+          "name": "Promissory Note",
+          "difference": "Permite escoger recompensa tras cumplir; Licitación compara objetivos/recompensas originales antes de aceptar."
+        },
+        {
+          "name": "Escrow",
+          "difference": "Apuesta premios de Contracts; aquí no se altera ni duplica el premio."
+        }
+      ],
+      "rules": [
+        "Sigue costando $3 y consume el único uso de la oferta. Dos identidades diferentes, y ambas distintas de la oferta original.",
+        "Si solo hay una alternativa válida, muestra una y lo avisa antes de pagar. Objetivo, plazo y recompensa se fijan y presentan completos; escoger no acepta todavía hasta el flujo normal de firma.",
+        "No añade capacidad de Contracts activos. No sustituye recompensas ya en cola."
+      ],
+      "hooks": [
+        "SMODS.Voucher.requires",
+        "servicio VX07",
+        "C.offer_terms",
+        "UI de oferta Contract existente"
+      ],
+      "art": "Las dos lentes se convierten en un atril con dos documentos sellados."
+    }
+  ],
+  "tags": [
+    {
+      "id": "TX01",
+      "key": "tag_hz_bookmark",
+      "name": "Marcador",
+      "name_en": "Bookmark",
+      "effect": "El próximo The Fool que uses puede recuperar uno de los últimos tres Tarot o Planet distintos usados, en lugar del último.",
+      "effect_en": "Your next The Fool may recreate one of your last three distinct used Tarot or Planet cards instead of only the last.",
+      "unlock": "Usa The Fool para recuperar tres Tarot o Planet distintos durante una run y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Use The Fool to recreate three distinct Tarot or Planet cards in one run, then defeat an Ante 6+ Boss.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "Próximo uso válido de c_fool; persiste hasta entonces.",
+      "similar": [
+        {
+          "name": "The Fool",
+          "difference": "Reutiliza su efecto nativo y amplía la elección temporal del objetivo; no entrega otro Fool ni una segunda copia."
+        },
+        {
+          "name": "Forgery",
+          "difference": "Copia un consumible actualmente poseído; Marcador consulta usos reales de cartas que ya pueden no existir."
+        },
+        {
+          "name": "Perkeo",
+          "difference": "Duplica inventario al salir de tienda; aquí hay que conseguir y gastar un Fool normal."
+        }
+      ],
+      "rules": [
+        "Historial de usos reales, sin Fool, sin ventas/reciclaje, sin duplicar retriggers. Retener tres keys distintas, cada uso mueve la key al principio.",
+        "Solo c_Fool: abrir su selector de destino antes del uso y luego reutilizar su creación normal, capacidad, coste de uso y triggers. El resultado no hereda Edition del consumible histórico.",
+        "No consumir el Tag si no se puede usar Fool. Varias cargas sirven para varios Fools, no para varios resultados en un solo uso."
+      ],
+      "hooks": [
+        "using_consumeable",
+        "c_fool can_use/use nativo con key de destino seleccionada",
+        "Tag.ability"
+      ],
+      "art": "Pestaña de libro y tres pequeños rectángulos de cartas."
+    },
+    {
+      "id": "TX02",
+      "key": "tag_hz_return_ticket",
+      "name": "Billete de vuelta",
+      "name_en": "Return Ticket",
+      "effect": "El último Joker que vendiste vuelve al expositor de la próxima tienda con su estado conservado. Debes comprarlo de nuevo.",
+      "effect_en": "Your last sold Joker returns to the next shop with its saved state. You must buy it back.",
+      "unlock": "Vende un Joker con valor de venta de $20 o más y vence después un Boss de Ante 6 o superior en esa run.",
+      "unlock_en": "Sell a Joker worth at least $20, then defeat an Ante 6+ Boss in that run.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "shop_final_pass de próxima tienda normal; congelar ejemplar al obtener el Tag.",
+      "similar": [
+        {
+          "name": "Proof of Life",
+          "difference": "Recupera playing cards destruidas gratis al usarlo; este Tag recupera un Joker vendido mediante una compra con precio."
+        },
+        {
+          "name": "Last Performance",
+          "difference": "Mantiene un Joker autodestruido temporalmente; aquí la venta terminó y el ejemplar vuelve como mercancía."
+        },
+        {
+          "name": "Barterer",
+          "difference": "Intercambia dos Jokers presentes; este Tag recupera un estado ya ausente y exige dinero."
+        }
+      ],
+      "rules": [
+        "Solo se ofrece como Skip Tag si existe un último Joker vendido válido. Guardar Card:save antes de vender y congelar esa referencia al ganar el Tag; una venta posterior no cambia el objetivo.",
+        "No clonar un ejemplar que aún existe, esté vendido por transición incompleta, sea cesión, Challenge anclado o prórroga. Dos Tags del mismo ejemplar no producen dos copias: el segundo espera otra venta válida o se muestra no elegible al duplicarse; se debe definir y comunicar esta espera como ausencia de ejemplar.",
+        "Precio fijo de recompra = max(precio base del centro, 2 * ingreso total real de aquella venta + 1). No hereda precio cero de Coupon. Una reducción Coupon posterior sí conserva su efecto nativo y consume un recurso separado.",
+        "Añade una plaza temporal al expositor, no al inventario. Se va al rerollear/salir igual que otro objeto; adquirirlo requiere capacidad normal y conserva su identidad histórica sin duplicarla."
+      ],
+      "hooks": [
+        "selling_card y transacción de venta",
+        "Card:save/load",
+        "shop_final_pass",
+        "create_shop_card_ui"
+      ],
+      "art": "Billete doblado con una flecha que vuelve a una máscara."
+    },
+    {
+      "id": "TX03",
+      "key": "tag_hz_mislabel",
+      "name": "Etiqueta cambiada",
+      "name_en": "Mislabel",
+      "effect": "En la próxima tienda puedes intercambiar una vez los precios de dos objetos del expositor principal.",
+      "effect_en": "In the next shop, swap the prices of two main-row items once.",
+      "unlock": "Compra un Joker por al menos $15 y un consumible por como máximo $3 en la misma tienda, y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Buy a Joker for at least $15 and a consumable for at most $3 in one shop, then defeat an Ante 6+ Boss.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "Acción durante la próxima tienda normal; expira al salir.",
+      "similar": [
+        {
+          "name": "Clearance Sale",
+          "difference": "Reduce todos los precios; aquí el precio bajo pasa a otro objeto y el primero se encarece."
+        },
+        {
+          "name": "Coupon Tag",
+          "difference": "Regala mercancía; Mislabel no crea descuento total si compras ambos objetos."
+        },
+        {
+          "name": "Barterer",
+          "difference": "Intercambia propiedad de Jokers; aquí cambia las etiquetas y aún hay que comprar."
+        }
+      ],
+      "rules": [
+        "Dos objetos diferentes de G.shop_jokers, sean Joker, consumible o playing card, con precio positivo y compra normal. Excluir Vouchers, Boosters y objetos gratis/Coupon.",
+        "Intercambiar los precios finales que se muestran, sin cambiar valor de venta. Cotizaciones fijadas hasta compra, reroll o salida; no aplicar dos veces descuentos. Coupon posterior puede convertirlas en gratis.",
+        "Las cargas duplicadas permiten operaciones separadas; cancelar selección no consume. Salir sin usar consume/expira la carga de esa visita."
+      ],
+      "hooks": [
+        "Tag shop_start/shop_final_pass",
+        "Card:set_cost",
+        "buy_from_shop",
+        "G.shop_jokers"
+      ],
+      "art": "Dos etiquetas de precio cruzadas con un hilo rojo."
+    },
+    {
+      "id": "TX04",
+      "key": "tag_hz_pantry",
+      "name": "Despensa",
+      "name_en": "Pantry",
+      "effect": "Restaura a su valor inicial el desgaste de uno de tus Jokers de comida elegibles.",
+      "effect_en": "Restore one eligible food Joker's worn-down resource to its starting value.",
+      "unlock": "Consume por completo tres Jokers de comida distintos en una run y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Fully exhaust three different food Jokers in one run, then defeat an Ante 6+ Boss.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "Selección al ganar el Tag, en un punto seguro entre ciegas; no entrar en pool sin objetivo desgastado.",
+      "similar": [
+        {
+          "name": "Last Meal",
+          "difference": "Un Fusion recupera su propio XMult al usar consumibles; Despensa repara una pieza nativa concreta y agota el Tag."
+        },
+        {
+          "name": "Last Performance",
+          "difference": "Aplaza retirada; Despensa no rescata Jokers ya agotados, en despedida o pendientes de destrucción."
+        },
+        {
+          "name": "Fake Diploma",
+          "difference": "Hace avanzar una etapa UPG; aquí no se evoluciona ni modifica progreso de ningún Joker."
+        }
+      ],
+      "rules": [
+        "Lista cerrada: Ice Cream (Chips restantes), Popcorn (Mult restante), Ramen (XMult restante), Turtle Bean (bonus de tamaño de mano restante) y Seltzer (usos restantes). No aplica a Gros Michel/Cavendish, Egg, Risk, Fusion ni escalables.",
+        "Restaurar solo el campo de desgaste al valor nativo inicial, nunca bajar un valor superior, tocar stickers o resetear historial. Turtle Bean aplica únicamente la diferencia correcta al tamaño de mano.",
+        "No seleccionar agotados, removed/getting_sliced, cesiones o Last Performance. Si desaparece el objetivo antes de elegir, mantener pendiente hasta una selección válida; múltiples cargas requieren objetivos todavía desgastados."
+      ],
+      "hooks": [
+        "Tag immediate",
+        "selector de CardArea existente",
+        "campos nativos de los cinco Jokers",
+        "Card:add_to_deck/remove_from_deck para delta correcto"
+      ],
+      "art": "Lata abierta con un helado y un pequeño frijol."
+    },
+    {
+      "id": "TX05",
+      "key": "tag_hz_topsy_turvy",
+      "name": "Vuelco",
+      "name_en": "Topsy-Turvy",
+      "effect": "En tu próxima mano, intercambia Chips y Mult después de las cartas y antes de activar los Jokers.",
+      "effect_en": "On your next hand, swap Chips and Mult after cards score and before Jokers activate.",
+      "unlock": "Vence un Boss de Ante 6 o superior con al menos 500 Chips y 100 Mult finales, sin XMult de Editions de Jokers.",
+      "unlock_en": "Defeat an Ante 6+ Boss with at least 500 final Chips and 100 final Mult, without XMult from Joker Editions.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "Una transacción antes de fase Joker de la siguiente mano real.",
+      "similar": [
+        {
+          "name": "Plasma Deck",
+          "difference": "Promedia y equilibra al final; el Tag permuta exactamente dos valores antes de los bonus de Jokers."
+        },
+        {
+          "name": "Counterpoint",
+          "difference": "Mezcla las bases de dos tipos de mano; aquí se intercambian los valores ya calculados por todas las cartas."
+        },
+        {
+          "name": "Pendulum",
+          "difference": "Almacena Chips de una mano sacrificada; Vuelco no guarda ni añade score, y no anula la mano."
+        }
+      ],
+      "rules": [
+        "Después de ambas fases de cartas jugadas/mantenidas, incluso con Reverse Gravity o Between the Lines; antes de joker_main y sus Editions.",
+        "Una sola permuta por carga y mano real. Si hay varios Tags Vuelco, gastar solo uno por mano; no anularse dos permutas entre sí.",
+        "Usar tipos numéricos existentes sin coerción, actualizar HUD con mod_chips/mod_mult nativos; Blueprint/retrigger no repiten la transacción."
+      ],
+      "hooks": [
+        "límite de fases en evaluate_play",
+        "mod_chips/mod_mult",
+        "SMODS.calculate_context",
+        "Tag.ability"
+      ],
+      "art": "Flechas azul y roja que intercambian una ficha y un aspa."
+    },
+    {
+      "id": "TX06",
+      "key": "tag_hz_interval",
+      "name": "Intermedio",
+      "name_en": "Interval",
+      "effect": "Visita una tienda adicional antes de elegir la siguiente ciega. No recibes pago de ronda ni avanzas el Ante.",
+      "effect_en": "Visit an extra shop before choosing the next Blind. Receive no round payout and do not advance the Ante.",
+      "unlock": "Vence un Boss de Ante 6 o superior sin comprar nada ni rerollear durante las tres tiendas anteriores.",
+      "unlock_en": "Defeat an Ante 6+ Boss without buying or rerolling in the previous three shops.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "new_blind_choice; visita extra con identidad propia persistida.",
+      "similar": [
+        {
+          "name": "D6 Tag",
+          "difference": "Modifica el reroll de una tienda que ya visitarías; aquí permite acceder a tienda antes de otra pelea."
+        },
+        {
+          "name": "Coupon Tag",
+          "difference": "Regala objetos existentes; aquí todo conserva su coste y no hay pago de ciega."
+        },
+        {
+          "name": "Inside Information",
+          "difference": "Inspecciona y reserva una tienda futura ordinaria; Intermedio crea una visita adicional sin consumir esa reserva."
+        }
+      ],
+      "rules": [
+        "No incrementa ronda, manos, Ante, Bosses vencidos ni contadores de victoria. Al salir retorna a las mismas blind choices con el skip ya realizado.",
+        "Se generan stock y reroll cost normales una vez. Hooks de entrada/salida y compras pertenecen a un visit_id nuevo; no repetir cashout ni C.win/C.result de la victoria anterior.",
+        "No generar ofertas de Mutations/Contracts ligadas a una nueva victoria inexistente. Contracts de duración tienda usan una frontera de visita real, no un token de victoria reciclado.",
+        "No consume la reserva de Inside Information para la siguiente tienda ordinaria. No reinicia otra vez eventos de inicio de Ante. Duplicados abren visitas seriales, nunca anidadas.",
+        "Los Tags que dicen próxima tienda normal esperan la tienda ordinaria: esta visita extra no secuestra efectos ya reservados, y esto aparece en tooltip secundario."
+      ],
+      "hooks": [
+        "Tag:new_blind_choice",
+        "G.STATES.SHOP",
+        "generación nativa de stock",
+        "G.FUNCS.toggle_shop",
+        "identidad de visita del módulo común"
+      ],
+      "art": "Telón pequeño abierto sobre un mostrador iluminado."
+    },
+    {
+      "id": "TX07",
+      "key": "tag_hz_procession",
+      "name": "Comitiva",
+      "name_en": "Procession",
+      "effect": "Puedes jugar hasta seis cartas a la vez durante la siguiente ciega que juegues.",
+      "effect_en": "You may play up to six cards at once during your next played Blind.",
+      "unlock": "Vence tres Boss consecutivos jugando exactamente cinco cartas en todas las manos de esas Bosses.",
+      "unlock_en": "Defeat three consecutive Bosses while playing exactly five cards in every hand of those Boss fights.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "round_start_bonus hasta fin de esa ciega.",
+      "similar": [
+        {
+          "name": "Juggle Tag",
+          "difference": "Aumenta cuántas cartas mantienes; Comitiva amplía únicamente cuántas puedes jugar juntas."
+        },
+        {
+          "name": "Four Fingers",
+          "difference": "Reduce requisitos de clasificar manos; aquí se conserva la clasificación nativa y se amplía selección."
+        },
+        {
+          "name": "Splash",
+          "difference": "Hace puntuar kickers; Comitiva no garantiza que la sexta carta puntúe, solo permite jugarla."
+        }
+      ],
+      "rules": [
+        "Elevar límite de play a max(límite actual,6), sin cambiar tamaño de mano, límite de descarte ni número de manos. Conservar/restaurar el delta exacto.",
+        "Clasificación y scoring normales: no inventar Six of a Kind. Seis cartas pueden aportar kickers y efectos compatibles; Splash conserva su función.",
+        "The Psychic sigue exigiendo exactamente cinco; otras Bosses conservan sus validaciones. Varias cargas se usan en ciegas sucesivas, no elevan a siete u ocho.",
+        "La selección por touch y Thumbtack deben usar el mismo límite; no parchear solo el número de cartas resaltadas."
+      ],
+      "hooks": [
+        "SMODS play limit",
+        "G.hand.config.highlighted_limit",
+        "validación nativa de play_cards_from_highlighted",
+        "round_start/end"
+      ],
+      "art": "Seis banderines de naipes avanzando en fila."
+    },
+    {
+      "id": "TX08",
+      "key": "tag_hz_xray",
+      "name": "Radiografía",
+      "name_en": "X-Ray",
+      "effect": "Los packs de la próxima tienda normal revelan su contenido fijado antes de comprarlos.",
+      "effect_en": "Packs in your next normal shop reveal their fixed contents before you buy them.",
+      "unlock": "Compra packs de cuatro familias distintas en una run, omite uno sin tomar nada y vence después un Boss de Ante 6 o superior.",
+      "unlock_en": "Buy packs from four different families in one run, skip one without taking anything, then defeat an Ante 6+ Boss.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "phase": "shop_start, vigente durante esa visita y sus nuevos packs por Carousel.",
+      "similar": [
+        {
+          "name": "Inside Information",
+          "difference": "Revela el stock de una tienda futura, no las cartas dentro de sobres cerrados."
+        },
+        {
+          "name": "Takeaway",
+          "difference": "Guarda un pack para abrirlo luego; Radiografía aporta información antes de comprar y no guarda ni regala el pack."
+        },
+        {
+          "name": "Telescope",
+          "difference": "Garantiza una oferta Planet concreta; Radiografía no altera ningún candidato ni garantía."
+        }
+      ],
+      "rules": [
+        "Cada pack visible obtiene una sola instantánea nativa; comprar abre exactamente esa instantánea. Mirar no añade RNG ni cambia el resultado.",
+        "Long press abre páginas de contenido como información, sin botones de adquirir. La apertura posterior conserva condiciones de slot y uso originales.",
+        "Roulette revela sus ocho premios fijados, pero no el futuro resultado de un giro aún no pagado. Los cuatro packs nuevos muestran sus candidatos y fases fijadas; en Escalada la suerte futura fijada también es información visible, una sinergia deliberada con el coste de saltar una ciega.",
+        "Se guardan payloads de packs en stock y el ID de visita; salir/reload no permite nuevos contenidos. No cambiar pools bloqueados ni no elegibles."
+      ],
+      "hooks": [
+        "Tag shop_start/shop_final_pass",
+        "freeze_pack",
+        "Card:save/load",
+        "long press de Booster",
+        "Roulette.generate sin spin"
+      ],
+      "art": "Sobre oscuro con tres huesos de naipe visibles en cian."
+    }
+  ],
+  "packs": [
+    {
+      "id": "PX01",
+      "key": "p_hz_montage",
+      "name": "Montaje",
+      "name_en": "Montage",
+      "cost": 6,
+      "weight": 0.45,
+      "sizes": [
+        "normal"
+      ],
+      "options": "3 cuerpos, después 3 acabados",
+      "choices": "1 playing card ensamblada",
+      "effect": "Escoge el rango y palo entre tres cuerpos; después elige entre tres acabados nativos para esa misma carta. Añade una sola carta al mazo.",
+      "effect_en": "Choose a rank and suit from three bodies, then one of three native finishes for that card. Add the single assembled playing card to your deck.",
+      "unlock": "Añade playing cards desde tres Standard Packs en una run y vence después un Boss de Ante 6 o superior con una de ellas en la mano ganadora.",
+      "unlock_en": "Add playing cards from three Standard Packs in one run, then beat an Ante 6+ Boss with one of them in the winning hand.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "strategy": "Separar la decisión de rango/palo de la combinación de Enhancement, Seal y Edition, en vez de aceptar un paquete indivisible aleatorio.",
+      "similar": [
+        {
+          "name": "Standard Pack",
+          "difference": "Ofrece cartas completas ya ensambladas; Montaje permite combinar un cuerpo elegido con un acabado elegido después."
+        },
+        {
+          "name": "Marked Card",
+          "difference": "Modifica una carta ya poseída con Enhancement; Montaje construye una nueva identidad y conserva solo propiedades nativas."
+        },
+        {
+          "name": "Death",
+          "difference": "Copia una carta existente; Montaje no toma propiedades de tu mazo ni copia identidades."
+        }
+      ],
+      "rules": [
+        "Fase cuerpo: tres bases nativas de rango/palo diferentes. Fase acabado: tres combinaciones generadas con las mismas reglas y tasas de Standard, renderizadas sobre el cuerpo escogido.",
+        "Los acabados pueden incluir Base o Enhancement, sello y Edition nativos elegibles. No fuerza Negative ni propiedades premium. Usar exactamente los generadores Standard, soulable=false para evitar desvíos de set.",
+        "Se fija una matriz de acabados por cuerpo y por unidad antes de mostrar cuerpos. No volver atrás para regenerar. No se entrega carta ni se dispara adding_card hasta terminar ambas fases.",
+        "Normal únicamente: dos decisiones ya definen su identidad; Jumbo/Mega no aportan un hueco adicional."
+      ],
+      "mutation_compat": {
+        "large_packs": "Añade candidatos tanto a cuerpos como a acabados de cada composición.",
+        "second_pick": "Añade una composición completa adicional, con cuerpo y acabado propios.",
+        "rain_check": "Añade composiciones completas. Abandonar a mitad de una composición no entrega cuerpo ni acabado y conserva la contabilidad nativa de elección base sin gastar.",
+        "takeaway": "Congelar toda la matriz de todas las composiciones en ability.hz_payload; abrirla más tarde no genera acabados nuevos."
+      },
+      "hooks": [
+        "SMODS.Booster.create_card/create_UIBox/update_pack",
+        "generador Standard nativo",
+        "carta adquirida por flujo Standard",
+        "payload multifase persistido"
+      ],
+      "art": "Sobre crema y azul con piezas de un naipe alineándose en tres capas."
+    },
+    {
+      "id": "PX02",
+      "key": "p_hz_pledge",
+      "name": "Prenda",
+      "name_en": "Pledge",
+      "cost": 4,
+      "weight": 0.3,
+      "sizes": [
+        "normal"
+      ],
+      "options": "3 Spectral, cada una vinculada a una carta física propia",
+      "choices": "1 intercambio completo",
+      "effect": "Cada Spectral ofrecida exige una carta concreta de tu mazo. Escoge una: destruye su prenda y recibe la Spectral real para usarla después.",
+      "effect_en": "Each offered Spectral asks for a specific card from your deck. Choose one: destroy its pledged card and take the real Spectral for later use.",
+      "unlock": "Destruye cinco playing cards distintas con consumibles durante una run y vence después un Boss de Ante 6 o superior con 40 cartas o menos.",
+      "unlock_en": "Destroy five distinct playing cards with consumables in one run, then defeat an Ante 6+ Boss with at most 40 cards.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "strategy": "Comparar valor del consumible con valor o carga de la carta concreta que exige; una prenda mala puede hacer atractivo un premio modesto.",
+      "similar": [
+        {
+          "name": "Spectral Pack",
+          "difference": "Permite usar una Spectral de inmediato; Prenda exige una pérdida visible específica y entrega el consumible al inventario."
+        },
+        {
+          "name": "Immolate",
+          "difference": "Destruye cartas al azar a cambio de dinero; aquí eliges entre contrapartidas completas y conocidas."
+        },
+        {
+          "name": "Trading Card",
+          "difference": "Destruye un descarte elegido por dinero; aquí la carta sacrificada está vinculada a una Spectral distinta y no se puede separar del premio."
+        }
+      ],
+      "rules": [
+        "Spectral del pool normal, distintas y sin The Soul/Black Hole. Cada una se empareja con un ID físico propio distinto, obtenido de cartas removibles no reservadas por transacciones.",
+        "Mostrar la prenda junto a su Spectral antes de cualquier selección. No aplicar el efecto de la Spectral al sacrificar ni producir Seal consumables.",
+        "La selección exige capacidad normal de consumible; si no hay espacio se ofrece gestión normal y no destruye nada todavía. Destrucción y entrega forman una sola transacción con contextos nativos de destrucción.",
+        "Un objetivo perdido después de congelar desactiva su pareja; no sortea otro ni entrega gratis la Spectral. Si no quedan pares válidos, permitir omitir con reglas normales.",
+        "No aparecer si no hay cartas propias elegibles o Spectral elegibles. No necesita Jumbo/Mega: los tamaños grandes solo regalarían más sacrificios/premios de la misma regla."
+      ],
+      "mutation_compat": {
+        "large_packs": "Añade pares Spectral/prenda candidatos; limitar a identidades elegibles disponibles sin duplicarlas dentro de la unidad.",
+        "second_pick": "Añade intercambios completos; tras cada uno se avanza a otra unidad fijada, validando que su prenda siga viva.",
+        "rain_check": "Una selección completa gasta una elección; no se sacrifica por una fase intermedia. Crédito nativo solo por elecciones base sin usar.",
+        "takeaway": "Congelar las keys Spectral y los IDs de prendas al comprar para llevar. Al abrir, validar supervivencia sin reemplazarlas por RNG."
+      },
+      "hooks": [
+        "SMODS.Booster",
+        "SMODS.destroy_cards",
+        "X.id/find",
+        "pools Spectral nativos",
+        "capacidad y recibos de consumibles existentes"
+      ],
+      "art": "Sobre vino oscuro cerrado con un imperdible y un naipe como garantía."
+    },
+    {
+      "id": "PX03",
+      "key": "p_hz_escalation",
+      "name": "Escalada",
+      "name_en": "Escalation",
+      "cost": 6,
+      "weight": 0.3,
+      "sizes": [
+        "normal"
+      ],
+      "options": "1 Common inicial; posible Uncommon; posible Rare",
+      "choices": "1 intento completo",
+      "effect": "Toma el Joker visible o arriesga perderlo para subir de rareza: 75% de llegar a Uncommon y después 50% de llegar a Rare.",
+      "effect_en": "Take the visible Joker or risk losing it to climb in rarity: 75% to reach Uncommon, then 50% to reach Rare.",
+      "unlock": "Gana una run habiendo comprado un Joker Common, un Uncommon y un Rare sin recibir un Joker Legendary.",
+      "unlock_en": "Win a run after buying a Common, Uncommon and Rare Joker without receiving a Legendary Joker.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "strategy": "Decidir si la pieza útil visible merece renunciar a una posibilidad de mayor rareza, aceptando perder todo el intento.",
+      "similar": [
+        {
+          "name": "Roulette",
+          "difference": "Resuelve un giro entre ocho premios equiprobables; Escalada te permite detenerte tras ver una oferta o apostar esa oferta concreta."
+        },
+        {
+          "name": "Buffoon Pack",
+          "difference": "Permite comparar opciones simultáneas sin perder todas por azar; aquí renunciar es irreversible y el siguiente escalón puede fallar."
+        },
+        {
+          "name": "Dealer's Choice",
+          "difference": "Garantiza elección entre Rare; Escalada empieza en Common, no alcanza Legendary y puede acabar sin premio."
+        }
+      ],
+      "rules": [
+        "Generar candidatos válidos de rareza exacta; no aceptar fallback Common como Rare. Generar también ambos resultados de riesgo al abrir y guardarlos junto al intento.",
+        "Tap en el Joker lo toma. Una carta de dorso marcada con el riesgo permite avanzar mediante tap; long press explica odds. Omitir nativo abandona, no se reutiliza silenciosamente como botón de apostar.",
+        "Arriesgar retira para siempre todas las opciones visibles de ese escalón. Fallo gasta el intento y entrega nada; éxito muestra el escalón siguiente. Rare solo permite tomar u omitir.",
+        "Ediciones/Stickers se generan por las reglas nativas ordinarias del centro y la run; sin Edition forzada, sin Legendary, Fusion resultante ni UPG avanzado fuera de su pool legal.",
+        "Si no hay pool válido de un escalón al generar, ese ascenso no se ofrece y queda explicado antes de comprar. Capacidad normal al tomar; no se puede apostar una adquisición ya cobrada.",
+        "Un Tag Radiografía puede revelar los resultados ya fijados: es una recompensa de información pagada con un skip, no un reroll gratuito."
+      ],
+      "mutation_compat": {
+        "large_packs": "Añade alternativas del mismo escalón, no más probabilidad de éxito ni más premios. Todas se renuncian al arriesgar.",
+        "second_pick": "Añade otro intento completo independiente que empieza en Common; no permite tomar Common y Rare del mismo intento.",
+        "rain_check": "Añade intentos completos. Un fallo es un intento gastado, por lo que no se reembolsa como elección sin usar. Omitir un intento sin reclamar/arriesgar sí conserva la contabilidad base nativa.",
+        "takeaway": "Guardar candidatos de los tres escalones, resultados de ambos riesgos y todas las unidades; reload no vuelve a tirar."
+      },
+      "hooks": [
+        "SMODS.Booster",
+        "P.pool por rareza exacta",
+        "pseudorandom con stream del pack",
+        "CardArea nativa para opción y dorso de riesgo",
+        "registro de elecciones usadas para Rain Check"
+      ],
+      "art": "Sobre de cobre con una escalera de tres peldaños y el último roto."
+    },
+    {
+      "id": "PX04",
+      "key": "p_hz_roadmap",
+      "name": "Hoja de ruta",
+      "name_en": "Roadmap",
+      "cost": 4,
+      "weight": 0.35,
+      "sizes": [
+        "normal"
+      ],
+      "options": "4 Tags nativas diferentes",
+      "choices": "1 plan: asignar una Tag a Small y otra a Big del próximo Ante",
+      "effect": "Escoge entre cuatro Tags cuáles ofrecerán Small y Big Blind en el próximo Ante. Solo las ganas si saltas esas ciegas.",
+      "effect_en": "Choose which of four Tags the next Ante's Small and Big Blinds will offer. You only earn them by skipping those Blinds.",
+      "unlock": "Gana una run saltando exactamente una ciega en al menos cinco Antes distintos.",
+      "unlock_en": "Win a run after skipping exactly one Blind in at least five different Antes.",
+      "dependencies": [
+        "portrait_horizons"
+      ],
+      "strategy": "Planificar dónde pagar el coste real de saltar una ciega; decidir qué recompensa merece perder cada combate y tienda futuros.",
+      "similar": [
+        {
+          "name": "Stolen Tag",
+          "difference": "Concede inmediatamente una Tag elegida; Hoja de ruta no concede Tags y aún exige el skip futuro."
+        },
+        {
+          "name": "Left Luggage",
+          "difference": "Guarda Tags que ya ganaste; este pack modifica dos oportunidades que aún puedes decidir no cobrar."
+        },
+        {
+          "name": "Double Tag",
+          "difference": "Duplica una recompensa ganada; Hoja de ruta solo sustituye las ofertas de dos ciegas."
+        }
+      ],
+      "rules": [
+        "Pool get_current_pool('Tag') filtrado por desbloqueo, bans y Mods activos; cuatro identidades distintas o todas las disponibles si hay menos, con un mínimo de dos para entrar en pool.",
+        "Primer tap elige Tag de Small; segundo elige una de las restantes para Big. No aplicar un plan parcial: solo tras ambas decisiones se guarda el par.",
+        "Plan en cola para la siguiente renovación de Ante causada por superar un Boss, no para un decremento de Hieroglyph/Petroglyph. Mantiene el número/identidad de ciegas y el Boss; sustituye únicamente sus Tags.",
+        "Orbital guarda su mano al generar el candidato. Double no se activa al planificar: solo cuando se gana saltando la ciega. No dispara contextos de Tag adquirido al escoger el pack.",
+        "Los planes múltiples se asignan a Antes sucesivos; no sobrescriben un plan anterior. Un final de run puede dejar planes sin cobrar.",
+        "Representar Tags existentes dentro del layout Booster mediante previews interactivos de sus chips y tooltips, no un ConsumableType ni consumibles ficticios."
+      ],
+      "mutation_compat": {
+        "large_packs": "Añade Tags candidatas distintas a cada plan.",
+        "second_pick": "Añade un plan completo de dos asignaciones para el siguiente Ante libre de la cola, nunca una sola Tag adicional gratis.",
+        "rain_check": "Añade planes completos. Abandonar tras la primera asignación descarta el plan parcial sin conceder ninguna Tag.",
+        "takeaway": "Guardar Tags y parámetros de cada plan al congelar; su Ante objetivo es el siguiente avance de Boss posterior a completar el plan al abrirlo."
+      },
+      "hooks": [
+        "SMODS.Booster.create_UIBox",
+        "Tag:get_uibox_table/generate_UI",
+        "get_current_pool('Tag')",
+        "creación nativa de round_resets.blind_tags",
+        "skip_blind nativo sin modificar entrega"
+      ],
+      "art": "Sobre verde y marfil con una bifurcación y dos insignias colgantes."
+    }
+  ],
+  "decks": [
+    {
+      "id": "DK01",
+      "key": "b_hz_relay",
+      "name": {
+        "es": "Baraja de Relevo",
+        "en": "Relay Deck"
+      },
+      "effect": "Empiezas con seis espacios de Joker. En cada ciega solo funcionan las posiciones impares o pares, alternándose en cada ciega jugada.",
+      "unlock": "Gana una run terminando las Bosses de Ante 6, 7 y 8 con al menos seis Jokers.",
+      "nearest": [
+        {
+          "name": "Black Deck",
+          "difference": "Seis espacios no significan seis efectos simultáneos; la compensación es una plantilla alternante, no perder una mano."
+        },
+        {
+          "name": "Crimson Heart",
+          "difference": "La selección es determinista, afecta a media plantilla y se prepara antes de entrar, no cambia al azar cada mano."
+        },
+        {
+          "name": "One-Night Engagement / Función de noche",
+          "difference": "No alquila ni elimina cartas; todos los Jokers siguen poseídos y vuelven a ser utilizables."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Back.apply; joker_slot=1",
+        "Setting blind antes de evaluar Jokers",
+        "SMODS.debuff_card por ID con fuente independiente"
+      ],
+      "details": [
+        "Primera ciega: posiciones 1/3/5; segunda: 2/4/6; repetir. Los skips no alternan. El orden al seleccionar la ciega fija los IDs activos hasta salir; arrastrar no cambia de equipo.",
+        "En tiendas todos vuelven a funcionar, salvo sus otros debuffs. No deshacer la restricción del deck al desactivar un Boss.",
+        "Un Joker creado durante la pelea recibe equipo según su posición de adquisición; esa asignación también queda fija. Fusion/copia es identidad nueva, no hereda libremente un puesto activo.",
+        "Negative y aumentos de slots son nativos: todas las posiciones adicionales siguen la paridad. El debuff conserva contribución de edición y aplica retirada/restauración nativa de pasivos.",
+        "Guardar paridad, token de pelea y mapa ID→activo; no recalcular equipos al recargar."
+      ],
+      "strategy": "Construir dos grupos autosuficientes y decidir en cada tienda qué piezas afrontarían la siguiente ciega; espacio extra a cambio de menos efectos simultáneos.",
+      "art": "Dos manos pasando un testigo blanco, diagonales azul y naranja."
+    },
+    {
+      "id": "DK02",
+      "key": "b_hz_per_diem",
+      "name": {
+        "es": "Baraja de Dietas",
+        "en": "Per Diem Deck"
+      },
+      "effect": "Tu dinero pasa a $20 al entrar en cada tienda y a $0 al salir.",
+      "unlock": "Gana una run gastando al menos $180 y terminando cada Boss con $5 o menos.",
+      "nearest": [
+        {
+          "name": "Yellow Deck",
+          "difference": "No es un importe inicial distinto; se pierde toda capacidad de ahorrar entre tiendas."
+        },
+        {
+          "name": "Green Deck",
+          "difference": "No recompensa recursos sobrantes ni sustituye interés por otro cashout; reinicia saldo por visita."
+        },
+        {
+          "name": "Advance Payment / Anticipo",
+          "difference": "No acumula $10 por Ante: dinero alto o bajo se reemplaza, con un límite temporal claro."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Back.apply",
+        "P.normal_shop + serial real de tienda",
+        "Salida definitiva de shop y transacción de saldo idempotente"
+      ],
+      "details": [
+        "Usa dollars real; no moneda nueva. El reset también sustituye deuda: Credit Card puede financiar compras en esa visita como sinergia explícita.",
+        "Cobrar cashout y resolver Contracts que lo observan antes de fijar $20. Ganar dinero dentro de la tienda puede superar $20 normalmente.",
+        "Black Market, abrir un pack o volver de un overlay no son otra visita: comparten el saldo de esa tienda.",
+        "Las ganancias durante una ciega funcionan normalmente hasta entrar en la siguiente tienda. Los tags/dinero recibidos fuera de tienda no reinician el presupuesto.",
+        "Guardar serial de entrada/salida para no regalar $20 por reload. Futuros compromisos, alquileres y manos hipotecadas no se perdonan."
+      ],
+      "strategy": "Planificar compras por visita y crear dinero utilizable dentro de tienda; renunciar a interés acumulado y reservas para oportunidades tardías.",
+      "art": "Sobre de dietas crema con dos monedas y una barra azul."
+    },
+    {
+      "id": "DK03",
+      "key": "b_hz_labyrinth",
+      "name": {
+        "es": "Baraja Laberinto",
+        "en": "Labyrinth Deck"
+      },
+      "effect": "Puedes jugar las tres ciegas de cada Ante en el orden que elijas. No puedes saltarlas.",
+      "unlock": "Gana una run sin saltar ciegas y gana Bosses con al menos cuatro tipos de mano distintos.",
+      "nearest": [
+        {
+          "name": "Two-Way Ticket / Entrada doble",
+          "difference": "No cambia cashout por Tags: los saltos están prohibidos y se juega cada ciega una vez."
+        },
+        {
+          "name": "Anaglyph Deck",
+          "difference": "No concede Tags ni modifica premios; su ventaja es elegir cuándo afrontar el Boss."
+        },
+        {
+          "name": "Bribe / Soborno",
+          "difference": "No cambia qué Boss toca: cambia en qué momento del Ante lo juegas."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Back",
+        "round_resets.blind_choices / blind_states y selección nativa",
+        "Cierre de Ante y condición de victoria nativos con guard de ruta"
+      ],
+      "details": [
+        "Las tres opciones pendientes se pueden seleccionar desde el inicio; cada victoria conserva su tienda normal.",
+        "Ante, reposición de Voucher, limpieza played_this_ante y nueva selección de ciegas ocurren solo cuando las tres están completadas.",
+        "El Boss cuenta como Boss real donde esté: paga, activa Rocket/Mutations/Contracts y conserva sus límites. Small/Big no se hacen pasar por Boss para cerrar el Ante.",
+        "Si el Boss de Ante final se derrota primero, la victoria de run queda pendiente hasta vencer las otras dos ciegas. No concederla anticipadamente.",
+        "Plazos 'siguiente Boss' siguen el siguiente Boss real; plazos 'este Ante' terminan al cerrar las tres ciegas, no por ver el icono Boss antes.",
+        "Guardar estado de ruta y victoria pendiente; no regenerar Boss, tag ni stock por volver a elegir pantalla."
+      ],
+      "strategy": "Afrontar un Boss temprano para obtener sus recompensas y Mutations antes, o comprar fuerza en Small/Big primero; se renuncia a todos los skips.",
+      "art": "Laberinto verde petróleo con tres fichas en sus extremos."
+    },
+    {
+      "id": "DK04",
+      "key": "b_hz_tides",
+      "name": {
+        "es": "Baraja de Mareas",
+        "en": "Tide Deck"
+      },
+      "effect": "Las cartas que puntúan suben un rango después de la mano. Las cartas descartadas bajan uno.",
+      "unlock": "Gana una run transformando al menos ocho cartas mediante Strength.",
+      "nearest": [
+        {
+          "name": "Strength",
+          "difference": "Usa el cambio de rango nativo, pero la acción de jugar/descartar conduce una circulación continua en dos sentidos; no genera ni usa Tarot gratis."
+        },
+        {
+          "name": "Castling / Enroque",
+          "difference": "No intercambia dos rangos conservando su reparto: cada acción cambia la composición del deck."
+        },
+        {
+          "name": "Erratic Deck",
+          "difference": "No aleatoriza al inicio: el jugador dirige cambios deterministas durante toda la run."
+        }
+      ],
+      "native_hooks": [
+        "SMODS.Back.calculate after/discard",
+        "SMODS.change_base sin cambiar palo",
+        "IDs físicos y familias Bloodline para una modificación por acción"
+      ],
+      "details": [
+        "Ciclo 2→3→…→K→A→2 al subir; inverso al bajar. Solo cartas que tienen rango; Stone/sin rango quedan fuera.",
+        "Subir tras terminar todos los retriggers, una vez por carta superviviente que realmente puntuó; no repetir por Blueprint ni retriggers.",
+        "Bajar una vez por carta realmente descartada, incluido descarte forzado; no por cartas simplemente movidas al descarte después de jugar.",
+        "Con Linaje, agrupar por familia y aplicar un único paso a toda la familia por acción, usando un snapshot previo: no avanzar dos veces porque puntuaron dos miembros.",
+        "Se conservan palo, mejoras, sellos, ediciones y bonus permanentes; native remove/destruction determina primero qué cartas sobreviven."
+      ],
+      "strategy": "Dirigir pares, escaleras y rangos de retrigger mediante juego y descarte; una combinación preparada deja de ser estable después de usarla.",
+      "art": "Dos olas turquesa y carmín girando alrededor de un As y un dos."
+    }
+  ],
+  "validation": {
+    "scope": "Motor real de escritorio con layout portrait, perfiles de QA aislados; pendiente validación física en iPhone, incluido long press.",
+    "checks": [
+      "Sintaxis Lua, manifiestos, rutas y assets 1x/2x",
+      "Packs y recompensas, save/load, capacidad y payloads RNG persistidos",
+      "Seis Bosses, ocho Challenges y cuatro reglas de Deck",
+      "Ocho Vouchers y ocho Tags, cadenas base/upgrade y tienda adicional",
+      "Mods ON/OFF, perfiles, Unlock All, pools y Collection",
+      "Presentación bloqueada ES/EN y aviso ganado al volver al menú, con deduplicación"
+    ],
+    "fixed": [
+      "Orden de instalación de hooks y preservación del segundo retorno de eval_card",
+      "Previsualizaciones sin alterar pools y sin ciclos de guardado",
+      "Transacciones de packs y recompensas sin consumo parcial ni duplicación",
+      "Transición de Intermedio sin bloqueo de eventos",
+      "Requisitos bloqueados de Boosters, Tags y Challenges en UI nativa"
+    ],
+    "ipa_generated": false,
+    "art_gallery": "horizontal-expansion-gallery.html"
+  }
+}

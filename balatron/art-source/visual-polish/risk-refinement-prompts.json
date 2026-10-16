@@ -1,0 +1,13 @@
+{
+  "tool": "built-in image_gen",
+  "prompts": [
+    {
+      "key": "greed",
+      "prompt": "Use case: precise-object-edit. Refine this SAME pixel-art Greed Joker card following the user's latest direction: Risk family should feel grotesque, reckless and sinister. Keep its composition, green overflowing purse, gold coins, crown, red and black jester hat, red border and vertical JOKER letters unchanged. Change the face into an exaggerated avaricious caricature: pointed crooked grin with a few uneven gold teeth, narrow malicious red eyes, hunched possessive fingers clutching the purse. Whimsical grotesque cartoon game art, not realism or gore. Preserve simple chunky readable pixel clusters at71x95 logical size, near-white paper WITHOUT yellow tint, transparent outside rounded corners. Same entire card fills frame; no margin, no detailed rendering, no new objects."
+    },
+    {
+      "key": "glass_cannon",
+      "prompt": "Use case: precise-object-edit. Refine this SAME Glass Cannon Joker card according to the user's latest Risk-family direction: grotesque, reckless, unstable and dangerous. Preserve the centered glass cannon silhouette, two blue wheels, small red flag, red border, pale near-white paper and vertical JOKER letters. Make the glass barrel a little grotesquely swollen and crooked, with several LARGE obvious jagged dark blue fractures and a few small loose glass shards just below the barrel. Its oversized uneven muzzle should suggest a sinister jagged grin only through its broken glass shape, NOT a separate character or face. A weapon about to shatter from its own excessive force. Do NOT show firing, explosions, people or injury. Restrained Balatro pixel cartoon, clear cyan/blue against near-white paper, no yellow tint, simple clusters at71x95 logical size, transparent corners, whole card fillsframe no margins. No realistic rendering or detailed effects."
+    }
+  ]
+}

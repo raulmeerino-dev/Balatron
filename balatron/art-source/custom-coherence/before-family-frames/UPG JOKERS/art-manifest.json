@@ -1,0 +1,68 @@
+{
+  "LARVA.png": {
+    "sha256": "2e8eacfe384d7bf32df27d1c6285aa619617271969096079c9614574bf3ef234",
+    "crop": [
+      73,
+      47,
+      1010,
+      1376
+    ],
+    "column": 0
+  },
+  "CHRYSALID.png": {
+    "sha256": "9f039e103b754f418de8ebcff83ec9197d95ad7c29d1d76489b7b4edc1421797",
+    "crop": [
+      73,
+      47,
+      1010,
+      1376
+    ],
+    "column": 1
+  },
+  "MOTH.png": {
+    "sha256": "056ce21d39f993ed7071635b82679ff25bc1379fe693823e627c3c1aac8a5a8a",
+    "crop": [
+      74,
+      47,
+      1010,
+      1377
+    ],
+    "column": 2
+  },
+  "BOTTOMLESS/Hungry.png": {
+    "source": "../../balatron/art-source/custom-coherence/bottomless.png",
+    "sha256": "86d9a00bf3b5fb03668f7555fc8d33c5adaf01f8fb9a39d79543ccbaf8c595e4",
+    "column": 0,
+    "atlas": "bottomless",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "3 equal columns; nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "BOTTOMLESS/Starving.png": {
+    "source": "../../balatron/art-source/custom-coherence/bottomless.png",
+    "sha256": "86d9a00bf3b5fb03668f7555fc8d33c5adaf01f8fb9a39d79543ccbaf8c595e4",
+    "column": 1,
+    "atlas": "bottomless",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "3 equal columns; nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "BOTTOMLESS/Devourer Joker_ Feast of Cards.png": {
+    "source": "../../balatron/art-source/custom-coherence/bottomless.png",
+    "sha256": "86d9a00bf3b5fb03668f7555fc8d33c5adaf01f8fb9a39d79543ccbaf8c595e4",
+    "column": 2,
+    "atlas": "bottomless",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "3 equal columns; nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "tool": "built-in image_gen",
+  "runtime": "Existing atlas positions and card IDs preserved; nearest-neighbour 1x raster, 2x pixel doubling.",
+  "prompts": [
+    {
+      "id": "glass_cannon",
+      "prompt": "Use case: style-transfer. Edit target image 1, style reference image 2 vanilla Balatro. Redesign the Glass Cannon Joker as a single production-ready portrait pixel-art playing card, full frame aspect 71:95. Clearly depict ONE delicate transparent pale cyan GLASS CANNON on two dark blue wheels, a tiny fracture in its barrel and a small red pennant. NO jester character. Very simple centered icon, bold crisp pixel clusters at logical 71x95 resolution, restrained 12-color palette, sparse dithering, light cool ivory/off-white paper, no yellow cast, subtle worn paper, thin dark red Risk-family border. Preserve vertical JOKER lettering on left and upside-down right, transparent outside rounded card corners. Match restrained flat whimsical vanilla game art, not realistic illustration. No elaborate lighting, no explosive scene, no gradients, no horror. Card nearly fills entire image, no outer margins or scene.",
+      "references": [
+        "MODS/RISK JOKERS/assets/2x/glass_cannon.png",
+        "balatron/qa/visual-polish/vanilla-jokers.png"
+      ]
+    },
+    {
+      "id": "greed",
+      "prompt": "Use case: style-transfer. Edit target image 1, style reference image 2 vanilla Balatro. Redesign Greed as a single production-ready portrait pixel-art Joker card full frame aspect71:95. ONE comic stout red-and-black jester head wearing a tiny tilted crown, hugging a large emerald green coin purse bursting with a few gold coins. Simple bold readable silhouette, humorous smug expression, not creepy. Distinct from Glass Cannon: NO cannon, no machinery, no dramatic crouching figure. Restrained flat 12-color palette, crisp large pixel clusters at logical71x95 resolution, sparse dithering, subtly aged near-white cool ivory paper with NO yellow cast. Thin dark red Risk-family border, vertical JOKER left and upside-down right. Transparent outside rounded corners. Vanilla Balatro-style, no realistic painting, no gradient, no 3D, no intricate detail, card fills frame no outer margins.",
+      "references": [
+        "MODS/RISK JOKERS/assets/2x/greed.png",
+        "balatron/qa/visual-polish/vanilla-jokers.png"
+      ]
+    },
+    {
+      "id": "contracts",
+      "prompt": "Use case: style-transfer. Image1 edit target CONTRACTS icon sprite ATLAS, image2 vanilla Balatro style reference. Produce ONE exact 4-column by2-row atlas, 2:1 aspect ratio, 8 equal square cells with no gutters, seven populated cells and bottom-right empty transparent. Keep exact row-major mapping and contract scroll/envelope theme, but redraw cleaner, calmer, simpler pixel-art at logical128x128 per cell, NOT detailed modern illustration. Each centered square sprite with restrained dark burgundy backing, near-white lightly aged parchment, a small discreet red wax seal and a large distinct central emblem. De-emphasize oversized dagger so icon dominates. Top row: 1 Clean Hands: fanned cards with a clear crossed-out discard arrow; 2 One Shot: one playing card with a single red target; 3 Monochrome: three identical black spade pips; 4 High Roller: purse with green banknotes and gold poker chips. Bottom row: 5 No Safety Net: crossed-out consumable bottle; 6 Execution: one torn playing card with two separated halves; 7 Debt Collector: receipt and stacked coins; 8 TRANSPARENT EMPTY. Shared square silhouette with rounded corners, transparent small exterior corners in each cell, no extra labels or readable words. Near-white paper NO yellow, legible chunky pixels, palette and flat shading like Balatro, restrained texture, no 3D, no gradients, no horror. Exactly aligned full cell placement, keep cell boundaries fixed.",
+      "references": [
+        "MODS/Contracts/assets/2x/contracts.png",
+        "balatron/qa/visual-polish/vanilla-jokers.png"
+      ]
+    },
+    {
+      "id": "russian_joker",
+      "prompt": "Use case: precise-object-edit. A minimal decorative BORDER COLOR correction to an existing fictional pixel-art game-card asset. First reference is the edit target. Preserve every interior pixel, all existing composition, typography, subject and objects without adding or dramatizing any action. Change only the thin outer grey card-outline to the dark red Risk-family outline shown by the second reference. This is solely UI asset maintenance of an already existing illustration; no new scene. Same portrait 71:95 proportions, rounded corners with transparent exterior, existing pixel style. Do not redraw the character or change the scene."
+    },
+    {
+      "id": "contraband",
+      "prompt": "Use case: style-transfer. Edit the referenced 4x2 Contraband card atlas. USER CORRECTION: these are sinister black-market goods, must be MUCH DARKER, ominous, illicit and unsettling, NOT cream-paper cute items. Retain simple Balatro pixel-art readability, flat crisp pixel clusters, restrained colors, not realistic or 3D. EXACT regular 4 columns x2 rows eight portrait card cells, no gutters/margins, overall aspect284:190. All cards charcoal-black slate paper, worn oxblood burgundy borders, deep grey shadows, striking but limited ivory, muted red and purple focal accents. Symbols occupy most central space and convey each meaning vividly: row1col1 Loaded Dice: two dirty ivory dice with suspicious red weighted metal plugs exposed, one red pip; row1col2 Counterfeit Voucher: torn grubby green voucher with a crooked red forged stamp and mismatched serial strips; row1col3 Marked Card: worn ace of spades with a sinister red eye secretly scratched into its back corner, large recognizable spade and red circle marking; row1col4 Inside Information: black dossier half open, ivory paper showing a red eye and heavily redacted black lines. Row2col1 Stolen Negative: ghostly inverted purple Joker card slipping from a black gloved hand, conspicuous minus seal; row2col2 Forgery: two identical pale mocking Joker-face cards beside a dripping red ink stamp (INK not blood); row2col3 Dealer's Choice: black-gloved dealer hand presenting three red-backed cards, one secretly tilted forward; row2col4 Hot Merchandise: iridescent stolen Joker card in a torn dark wrapper with small red heat wisps, purple/blue/gold focal glint. Keep distinct large silhouettes, sinister trickster faces on small cards but no gore. NO long titles, no labels, no gibberish, no excessive decoration, no parchment background. Transparent outside rounded card corners only. Uniform cell alignment, each card fills its cell. The entire mood should be a dangerous back-alley deal with cheated odds and stolen goods."
+    }
+  ]
+}

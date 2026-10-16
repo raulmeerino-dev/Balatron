@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout portrait · Verificación</title>
+<style>body{max-width:980px;margin:40px auto;padding:0 22px;background:#142725;color:#edf1e9;font:16px/1.5 system-ui}h1{font-size:28px}h2{font-size:20px;margin-top:30px}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:10px;border-bottom:1px solid #38504b}th{color:#e5c786}a{color:#e5c786}.shots{display:flex;gap:20px;flex-wrap:wrap}figure{margin:0;flex:1;min-width:220px}img{width:100%;height:auto;border-radius:8px}figcaption{font-size:14px}small{color:#b9cbc5}</style>
+<h1>Layout portrait: matriz de verificación</h1>
+<p>Una única medición y colocación sobre <code>UIBox.calculate_xywh</code> y <code>UIBox.fit_to_room</code>. Wrapping real, badges incluidos, cambio de lado y ajuste al área segura. Margen mínimo de 8 puntos; altura mínima del texto de 11 puntos.</p>
+<table>
+<tr><th>Dimensión</th><th>Cobertura</th></tr>
+<tr><td>Contenido</td><td>550 entradas registradas: 194 Jokers, consumibles, Vouchers, packs, Tags, Decks, Blinds, Mutations, Contracts y Contraband.</td></tr>
+<tr><td>Posición</td><td>Izquierda, centro, derecha, arriba, abajo y cuatro esquinas.</td></tr>
+<tr><td>Idiomas</td><td>ES y EN; textos cortos, largos, unlocks, múltiples badges, Doubles A/B, etapas UPG y Contracts completos.</td></tr>
+<tr><td>Geometría</td><td>10.874 comprobaciones por formato: 390×844 y 320×568, con áreas seguras simuladas. Solo el contenido sintético extremo requirió scroll.</td></tr>
+<tr><td>Contextos reales</td><td>Collection, tienda, partida, Booster y menús custom; capturas en ambos idiomas.</td></tr>
+<tr><td>Challenges</td><td>29 Challenges, resumen y tres pestañas, ES/EN: 232 paneles.</td></tr>
+<tr><td>Interacción</td><td>Long press, pequeño movimiento del dedo, liberación, scroll y cierre; cambio de área segura con el popup abierto.</td></tr>
+</table>
+<p><small>Verificado con el motor LÖVE y los mods reales en escritorio, simulando el layout iOS portrait. No es una validación en un iPhone físico. No se ha generado una IPA.</small></p>
+<h2>Capturas del juego</h2>
+<div class="shots">
+<figure><a href="../qa/popup-layout/contexts/es_ES_contract_details.png"><img src="../qa/popup-layout/contexts/es_ES_contract_details.png" alt="Panel de contrato en español"></a><figcaption>Contrato: objetivo, recompensa, fallo y progreso.</figcaption></figure>
+<figure><a href="../qa/popup-layout/contexts/es_ES_upg_stages.png"><img src="../qa/popup-layout/contexts/es_ES_upg_stages.png" alt="Vista de etapas UPG"></a><figcaption>UPG: vista de etapas con su scroll existente.</figcaption></figure>
+<figure><a href="../qa/popup-layout/contexts/en-us_playing_card.png"><img src="../qa/popup-layout/contexts/en-us_playing_card.png" alt="Playing card con Enhancement, Edition y Seal"></a><figcaption>Información secundaria integrada en la medición.</figcaption></figure>
+</div>
+<p><a href="../src/portrait_popup_layout.lua">Implementación común</a> · <a href="../qa/popup-layout/compact/result.txt">Matriz compacta</a> · <a href="../qa/popup-layout/contexts/result.txt">Contextos</a> · <a href="../qa/popup-layout/touch/result.txt">Interacción</a> · <a href="../qa/popup-layout/panels/result.txt">Paneles</a></p>
+</html>

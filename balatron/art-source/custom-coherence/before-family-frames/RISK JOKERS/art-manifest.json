@@ -1,0 +1,49 @@
+{
+  "russian_joker": {
+    "source": "../../balatron/art-source/visual-polish/russian_joker.png",
+    "sha256": "09c2d4c150276e4a9981d154e984a41222523049b7421c3a7e5a38cd3e86c6e2",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "crop": [
+      60,
+      58,
+      1020,
+      1332
+    ]
+  },
+  "greed": {
+    "source": "../../balatron/art-source/custom-coherence/greed.png",
+    "sha256": "2f59bf627597ec0698b21b80ee2a83f8758556835c2e47a6dfd900b8f83fc2b8",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "glass_cannon": {
+    "source": "../../balatron/art-source/visual-polish/glass_cannon.png",
+    "sha256": "27243bd7c2eb7c043c1dd2cf06e309e70dad194d6cd07d1f15b57d6192c92866",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/visual-polish/prompts.json",
+    "refinement_prompts": "../../balatron/art-source/visual-polish/risk-refinement-prompts.json"
+  },
+  "burning_fuse": {
+    "source": "../../balatron/art-source/custom-coherence/burning_fuse.png",
+    "sha256": "a033a8ea8d757689c0481d5763a0b097c8ff69ab0719f7884f88c2d17287011b",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  }
+}

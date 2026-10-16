@@ -1,0 +1,119 @@
+MUTACIONES — BALATRO PORTRAIT 1.1
+
+Resultado: 68 anteriores + 10 nuevas = 78. Antes había 17 con requisito; ahora hay 39 con requisito y 39 disponibles desde el inicio.
+14 existentes pasan a requerir desbloqueo, además de 8 de las nuevas. Reservas contra el Jefe y Reembolso de Packs son básicas.
+
+PROGRESIÓN Y COMPATIBILIDAD
+- Disponible en el pool no significa descubierta: las básicas se revelan al encontrarlas. Collection cuenta descubrimientos; Unlock All muestra 78/78.
+- El primer progreso en una mecánica revela sus mutaciones relacionadas aún bloqueadas. La pulsación larga muestra requisito y progreso, sin revelar su efecto.
+- Cumplir un requisito descubre y desbloquea permanentemente la mutación; el aviso principal espera al menú principal.
+- Los objetivos de una run se cumplen en una misma run. En el menú se conserva el mejor intento, identificado como tal; los objetivos de perfil son acumulados.
+- Se conservan descubrimientos, niveles conocidos, logros, avisos y recibos anteriores. Los desbloqueos ganados y las mutaciones realmente encontradas en perfiles antiguos se respetan.
+- Los antiguos permisos automáticos sin evidencia no eluden requisitos nuevos. Los logros históricos verificables también se reconocen al migrar.
+- Cargar niveles activos o una oferta no concede desbloqueos. Una oferta guardada no se vuelve a sortear: se retiran entradas no válidas sin reemplazarlas.
+- Cambiar ajustes afecta a futuras runs, como antes; no borra datos del perfil. Los pesos cero explícitos se respetan; las nuevas entradas tienen peso por defecto en partidas antiguas.
+- Unlock All marca todo descubierto, desbloqueado y notificado, vacía avisos pendientes y conserva el comportamiento masivo silencioso.
+
+NUEVAS MUTACIONES
+- Alquimista Viajero: +2 espacios de consumible, -1 espacio de Joker.
+- Eco Orbital: Usar un Planet también sube de nivel tu mano de póker visible de menor nivel.
+- Relevo de Sellos: Tu primer descarte de cada ciega copia su sello más a la izquierda a una carta sin sello del descarte.
+- Poda de Baraja: Tras cada jefe, destruye tu carta básica de menor rango sin sello ni edición.
+- Taller de Fusion: Cada Fusion completada añade un espacio de consumible durante la run.
+- Contratos Exprés: Los nuevos contratos exigen 1 menos de progreso (mínimo 1); sus premios monetarios bajan un 25%.
+- Crédito Clandestino: Usar Contraband reembolsa tu siguiente compra de Joker tras pagar (máximo un crédito).
+- Reserva de Descartes: Conserva hasta 2 descartes sin usar para la siguiente ciega.
+- Reservas contra el Jefe: +1 mano y descarte contra jefes; Small Blind y Big Blind pagan $1 menos.
+- Reembolso de Packs: Omitir un Booster Pack paga $2 por elección sin usar.
+
+EXISTENTES QUE AHORA REQUIEREN DESBLOQUEO
+Genética mejorada, Baraja afortunada, Jokers Potenciados, Ediciones Potentes, Sellos Potentes, Enhancements Potentes, Dinero por Ante, Spectral Frecuente, Contratos Frecuentes, Risk Frecuente, Fusion Frecuente, Dobles Frecuentes, Caos, Packs Frecuentes.
+
+REQUISITOS CENTRALIZADOS (39)
+Las indicaciones «en una run», «a la vez», «baraja», Ante y saldo son metas de una sola run; el resto de acumulados se guarda por perfil.
+- Hábitat de Jokers [requisito conservado; run]: Ten 5 Jokers a la vez.
+- Mercado Raro [requisito conservado; run]: Consigue un Joker Rare.
+- Mercado Brillante [requisito conservado; run]: Consigue 3 Jokers con Edition en una run.
+- Mercado Negro [requisito conservado; run]: Usa 3 Contraband en una run.
+- Negativos Frecuentes [requisito conservado; run]: Consigue un Joker Negative.
+- Packs Grandes [requisito conservado; run]: Abre 10 Booster Packs en una run.
+- Overkill Plus [requisito conservado; run]: Consigue un Overkill x100.
+- Contratos Plus [requisito conservado; run]: Completa 3 Contracts en una run.
+- Boss Débil [requisito conservado; perfil]: Derrota 8 Boss Blinds.
+- Sin Comunes [requisito conservado; perfil]: Gana una run.
+- Reroll Gratis [requisito conservado; run]: Haz 10 rerolls en una run.
+- Apuesta Alta [requisito conservado; run]: Llega al Ante 6.
+- Doble Interés [requisito conservado; run]: Gana $20 de interés en una run.
+- Venta con Beneficio [requisito conservado; perfil]: Vende 20 cartas u objetos.
+- Descarte Gratis [requisito conservado; run]: Usa 4 descartes en una Blind.
+- Segunda Elección [requisito conservado; perfil]: Abre 20 Booster Packs.
+- Fortuna [requisito conservado; perfil]: Activa 10 efectos probabilísticos con éxito.
+- Genética mejorada [nuevo requisito; run]: Ten 3 cartas mejoradas en la baraja.
+- Baraja afortunada [nuevo requisito; run]: Activa 3 efectos probabilísticos en una run.
+- Jokers Potenciados [nuevo requisito; run]: Llega al Ante 4.
+- Ediciones Potentes [nuevo requisito; perfil]: Consigue 5 Jokers con Edition.
+- Sellos Potentes [nuevo requisito; run]: Ten 3 cartas con sello en la baraja.
+- Enhancements Potentes [nuevo requisito; run]: Ten 6 cartas mejoradas en la baraja.
+- Dinero por Ante [nuevo requisito; run]: Ten $50 durante una run.
+- Spectral Frecuente [nuevo requisito; perfil]: Usa una carta Spectral.
+- Contratos Frecuentes [nuevo requisito; perfil]: Completa un Contract.
+- Risk Frecuente [nuevo requisito; perfil]: Consigue un Joker Risk.
+- Fusion Frecuente [nuevo requisito; perfil]: Realiza una Fusion.
+- Dobles Frecuentes [nuevo requisito; perfil]: Consigue un Joker Doble.
+- Caos [nuevo requisito; run]: Llega al Ante 8.
+- Packs Frecuentes [nuevo requisito; perfil]: Abre 8 Booster Packs.
+- Alquimista Viajero [nueva; run]: Usa 8 consumibles en una run.
+- Eco Orbital [nueva; perfil]: Usa 10 cartas Planet.
+- Relevo de Sellos [nueva; perfil]: Descarta 5 cartas con sello.
+- Poda de Baraja [nueva; perfil]: Destruye 6 cartas de juego.
+- Taller de Fusion [nueva; perfil]: Realiza 3 Fusions.
+- Contratos Exprés [nueva; perfil]: Completa 5 Contracts.
+- Crédito Clandestino [nueva; perfil]: Usa 5 Contraband.
+- Reserva de Descartes [nueva; run]: Termina ciegas con 6 descartes sobrantes en total en una run.
+
+AUDITORÍA DE LAS 68 ANTERIORES
+Jokers, slots y mercados: Hábitat de Jokers, Jokers Potenciados, Mercado Raro, Mercado Brillante, Venta Fácil, Más Tienda, Menos Tienda, Jokers Baratos, Negativos Frecuentes, Sin Comunes
+Scoring, palos y rangos: Corazones pesados, Picas afiladas, Sangre real, Bajos fondos, Tréboles firmes, Reserva de diamantes, As en la manga, Cartas Potenciadas, Mult Potenciado, Chips Potenciados, Primera Mano, Sobrecarga, Resonancia, Reacción en Cadena
+Baraja, mano, manos y descartes: Bolsillos profundos, Segunda oportunidad, Manos sueltas, Deck Ligero, Deck Pesado, Descarte Gratis, Caos
+Economía, tienda y rerolls: Tipo de interés, Rebajas, Inflación, Sin Interés, Reroll Barato, Reroll Gratis, Doble Interés, Venta con Beneficio, Dinero por Ante, Consumibles Baratos, Recompensa Extra, Ciega Rápida
+Packs y consumibles (Tarot, Planet, Spectral): Bolsillos más grandes, Tarot Frecuente, Planet Frecuente, Spectral Frecuente, Packs Grandes, Packs Baratos, Packs Frecuentes, Segunda Elección
+Editions, Seals, Enhancements y probabilidades: Genética mejorada, Baraja afortunada, Ediciones Potentes, Sellos Potentes, Enhancements Potentes, Fortuna
+Blinds y Boss: Dividendo del jefe, Boss Débil, Boss Fuerte, Apuesta Alta
+Sistemas custom: Mercado Negro, Overkill Plus, Contratos Plus, Contratos Frecuentes, Risk Frecuente, Fusion Frecuente, Dobles Frecuentes
+
+Diagnóstico: abundan bonus planos de puntuación, descuentos y multiplicadores de aparición. Hay poca manipulación de sellos/baraja, continuidad entre ciegas, uso de Planet y recompensas/reglas de Fusion, Contraband y Contracts. Las diez nuevas cubren esos huecos.
+
+DUPLICADOS DESCARTADOS
+- Otro bonus plano de fichas/multi: ya están Cartas Potenciadas, Chips/Mult Potenciado, bonus de palos y Primera Mano.
+- Otro descuento genérico o reroll gratuito: ya están Rebajas, baratos por familia, Reroll Barato y Reroll Gratis.
+- Más opciones/elecciones de pack: ya están Packs Grandes y Segunda Elección.
+- Otra mejora global de probabilidades: ya están Baraja afortunada y Fortuna.
+- Otra frecuencia doble de contenido custom: ya están Risk, Fusion, Dobles y Contratos Frecuentes.
+- Nuevas versiones I/II/III de bonus existentes: no añaden reglas distintas.
+Los solapamientos anteriores se han documentado y conservado, sin rebalancear efectos existentes.
+
+SPRITES
+10 sprites nuevos, sin sustituir ninguno anterior. RGBA 64x64 (1x) y 128x128 (2x), reducción/escalado nearest-neighbor y atlas nuevos con filtro nearest sin mipmaps.
+Referencias: large_packs, strong_seals y chaos. Iconos aislados, sin texto ni marco de Joker, con densidad y márgenes de la familia.
+Herramienta: image_gen integrada. Originales, prompts completos y preview: MODS/Deck Mutations/art-source/expansion/.
+
+PRUEBAS
+SUPERADAS:
+- Perfil nuevo: 78 entradas, 39 disponibles; Collection no revela sprites, nombres ni efectos no descubiertos.
+- Descubierta/bloqueada: progreso 1/5, candado y tooltip por long press; desbloqueada: sprite normal.
+- Recepción repetida del mismo evento sin duplicar progreso ni aviso; varias mutaciones desbloqueadas juntas.
+- Ofertas inmutables; rechazo de elecciones bloqueadas; cargar niveles/ofertas no concede desbloqueos.
+- Migración de perfil v1: conserva descubrimientos/logros, aplica nuevos requisitos y reconoce progreso histórico.
+- Nuevos efectos: intercambio de slots, Eco Orbital, Relevo de Sellos, reservas contra Boss, reserva de descartes, contratos con meta/recompensa correctas, Fusion real, devolución tras compra nativa, apertura/omisión de Arcana Pack y poda con destrucción nativa.
+- Poda que completa un contrato: guardar con la ventana abierta, cargar y completar la eliminación sin duplicar progreso ni premio.
+- Guardar/cargar efectos no duplica slots. Mods ON/OFF conserva perfil, descubrimientos y desbloqueos.
+- Cierre y reapertura real del proceso antes del aviso: notificación persistente, cola completa, Continue, sin repeticiones, perfiles independientes.
+- Unlock All nativo: 78/78, todos disponibles y sin avalancha de avisos.
+- Collection en español y lectura visual en portrait, tanto desconocidas como desbloqueadas; filtro nearest verificado en el atlas.
+- Sintaxis: 110 archivos Lua de MODS y 70 de fuentes compilados correctamente.
+- Bundle: los 20 PNG runtime y los cinco módulos nuevos se incluyen; originales de arte/prompts quedan fuera.
+
+Evidencia: qa/mutation_expansion-final/result.txt y qa/mutation_notices-final/result.txt, con capturas en esas mismas carpetas.
+Durante las pruebas se corrigió la persistencia de la poda interrumpida y se usó sort_id para las eliminaciones: el índice playing_card cambia al quitar cartas y no sirve como recibo estable.
+Entorno: LÖVE + Lovely + Steamodded del proyecto, fuentes definitivas, formato portrait 393x852 con safe area, perfiles aislados. No es una prueba física en iPhone.
+No se ha generado una IPA en esta tarea.

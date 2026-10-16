@@ -1,0 +1,98 @@
+[
+  {
+    "key": "burning_fuse",
+    "family": "risk",
+    "mod": "RISK JOKERS",
+    "file": "exec-651f0e76-bf23-499d-9a61-66070f585071.png"
+  },
+  {
+    "key": "greed",
+    "family": "risk",
+    "mod": "RISK JOKERS",
+    "file": "exec-aea9207c-3e3b-4c93-a673-ea98af85d17d.png"
+  },
+  {
+    "key": "glass_cannon",
+    "family": "risk",
+    "mod": "RISK JOKERS",
+    "file": "exec-ea78c323-efea-4230-b327-13fe0086ecc0.png"
+  },
+  {
+    "key": "russian_joker",
+    "family": "risk",
+    "mod": "RISK JOKERS",
+    "file": "exec-f9f70ace-f5d3-48f9-b40d-992bae50ccbb.png"
+  },
+  {
+    "key": "midas",
+    "family": "fusion",
+    "mod": "Joker Fusion",
+    "file": "exec-9b26061f-2931-4322-b2cd-953cbc58e001.png"
+  },
+  {
+    "key": "banana_cannon",
+    "family": "fusion",
+    "mod": "Joker Fusion",
+    "file": "exec-0e35e134-33b3-4678-93f5-f4dc34c283b7.png"
+  },
+  {
+    "key": "glitch",
+    "family": "fusion",
+    "mod": "Joker Fusion",
+    "file": "exec-f8a75790-981e-4ca6-b74e-14166ac13c83.png"
+  },
+  {
+    "key": "last_meal",
+    "family": "fusion",
+    "mod": "Joker Fusion",
+    "file": "exec-d19268ff-53d8-4a11-ba78-fb75d8374bf8.png"
+  },
+  {
+    "key": "larva",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "metamorphosis",
+    "column": 0,
+    "file": "exec-290404e7-d913-47c2-8e37-62bbc0a70c0b.png"
+  },
+  {
+    "key": "chrysalis",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "metamorphosis",
+    "column": 1,
+    "file": "exec-c40d26b9-5bd2-434f-94ee-f719f6ae50fd.png"
+  },
+  {
+    "key": "moth",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "metamorphosis",
+    "column": 2,
+    "file": "exec-4bfa4c79-b2e2-4ae9-a532-08f700d76791.png"
+  },
+  {
+    "key": "hungry",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "bottomless",
+    "column": 0,
+    "file": "exec-a83ecdc0-f260-4dac-b5bd-8f1fa1ae8d5c.png"
+  },
+  {
+    "key": "starving",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "bottomless",
+    "column": 1,
+    "file": "exec-8cfaffb0-4b9c-42ee-97c7-96a4955b1bde.png"
+  },
+  {
+    "key": "devourer",
+    "family": "upg",
+    "mod": "UPG JOKERS",
+    "atlas": "bottomless",
+    "column": 2,
+    "file": "exec-f1394ed1-d5d2-43d5-a98a-a51f8a9a990a.png"
+  }
+]

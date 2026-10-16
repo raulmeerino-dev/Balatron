@@ -1,6 +1,6 @@
 # iOS Build (EXPERIMENTAL)
 
-This personal fork builds **Balatro Portrait** with bundle identifier
+This personal fork builds **Balatrón** with bundle identifier
 `com.rulo3.balatro.portrait`. See [local instructions](../README-IOS-LOCAL.md)
 and [test evidence](../INFORME-PRUEBAS.md). The upstream device limitations below
 still apply. On this Windows checkout, run `BUILD-IOS.ps1` from the project root.
@@ -28,7 +28,7 @@ There is no Xcode and no macOS involved. The build:
    into `Payload/Balatro.app/`
 3. Locks `Info.plist` to portrait orientation, stamps the mod version and
    opts the app into the panel's full refresh rate
-4. Writes `balatro-portrait.ipa`
+4. Writes `balatron.ipa`
 
 Since v2.7.6 the window also asks for the screen's native scale. Without it
 iOS handed LOVE a drawable the size of the window in points and stretched it
@@ -46,7 +46,7 @@ python build.py --ios --skip-apk --keep-crt --no-readabletro --balatro "../Balat
 ```
 
 Or answer **yes** to "Build iOS .ipa?" during the interactive build.
-The output is `balatro-portrait.ipa` in the project root.
+The output is `balatron.ipa` in the project root.
 
 ### Mods
 
@@ -57,7 +57,7 @@ them (#45).
 
 Put mods where the
 [Steamodded mobile guide](https://docs.smods.dev/Installation/Installing%20Steamodded%20mobile/)
-says: open the **Files** app, go to **On My iPhone → Balatro Portrait → game → Mods**
+says: open the **Files** app, go to **On My iPhone → Balatrón → game → Mods**
 and drop `smods` in there. This fork uses a separate bundle ID. It starts with
 its own sandbox; updates must keep that ID and signing identity to retain saves.
 
@@ -74,7 +74,7 @@ You need a free Apple ID. Two common options:
 
 1. Install [Sideloadly](https://sideloadly.io/)
 2. Connect your iPhone/iPad via USB
-3. Drag `balatro-portrait.ipa` into Sideloadly
+3. Drag `balatron.ipa` into Sideloadly
 4. Enter your Apple ID and press **Start**
 5. On the device: **Settings → General → VPN & Device Management** → trust your
    developer certificate
@@ -83,7 +83,7 @@ You need a free Apple ID. Two common options:
 
 1. Install [AltServer](https://altstore.io/) on your computer and AltStore on
    your device
-2. Open the IPA with AltStore (**My Apps → + → balatro-portrait.ipa**)
+2. Open the IPA with AltStore (**My Apps → + → balatron.ipa**)
 
 ### The 7-day limit
 

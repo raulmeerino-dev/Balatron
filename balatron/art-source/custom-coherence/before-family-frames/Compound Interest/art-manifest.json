@@ -1,0 +1,30 @@
+{
+  "source_sha256": "14303370b0645048aabe0384d967a55ce9dc5448e956f66ac225cffa9ef2f482",
+  "source_size": [
+    1084,
+    1451
+  ],
+  "crop": [
+    73,
+    47,
+    1010,
+    1377
+  ],
+  "preserve_aspect": true,
+  "sprites": {
+    "1": {
+      "size": [
+        71,
+        95
+      ],
+      "sha256": "2807075a87f9bb4be09ea8bfa8a30c3e7ccdde250e7896022ba7b78f28c918db"
+    },
+    "2": {
+      "size": [
+        142,
+        190
+      ],
+      "sha256": "ffd3f01d94f8f6a484cf8b376ab039cab6de4fdd4c09b8d6335e983712cd55e3"
+    }
+  }
+}

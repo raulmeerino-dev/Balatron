@@ -1,0 +1,42 @@
+{
+  "midas": {
+    "source": "../../balatron/art-source/custom-coherence/midas.png",
+    "sha256": "22b905e69e61a53d5d831a34a0876b0ef023a033c182be1b8a752505d8153583",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "banana_cannon": {
+    "source": "../../balatron/art-source/custom-coherence/banana_cannon.png",
+    "sha256": "3ab32a9b33b1d80c61954bfb7ec210604ff019de5c62a4107926c1a458ee0b42",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "glitch": {
+    "source": "../../balatron/art-source/custom-coherence/glitch.png",
+    "sha256": "0add128821f5b4edcc293061c0fe197e26d41910b7769a57bf740facd9caf6ae",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  },
+  "last_meal": {
+    "source": "../../balatron/art-source/custom-coherence/last_meal.png",
+    "sha256": "46cde92d5b12f0d9647230ff2f4a4e7519437c502cf5abd0dca2666f703f3aee",
+    "cell": [
+      71,
+      95
+    ],
+    "fit": "nearest-neighbour 1x; exact pixel doubling for 2x",
+    "prompts": "../../balatron/art-source/custom-coherence/prompts.json"
+  }
+}

@@ -1,10 +1,63 @@
+# 2.8.1 — iOS Portrait RC1
+
+- Stabilize generation toggles, saved custom content and portrait mod list.
+- Localize QoL labels, separate touch controls and clean up evolution effects.
+- Preserve pinned Lovely/Steamodded, native iOS path normalization and approved art.
+
 # Changelog
 
-All notable changes to Balatro Portrait Mobile.
+All notable changes to Balatrón.
+
+## Personal iOS build — ios-portrait-7-ios-mod-path — 2026-10-06
+
+- Fix the on-device startup regression caused by `/private/var` versus `/var`
+  and trailing slashes in the Lovely/save directory comparison.
+- Normalize the known alias only on iOS; preserve POSIX case and reject truly
+  different containers or directories. Keep Windows separator/case compatibility.
+- Create/check Mods, verify bundled files through Lovely's native absolute path
+  and repair incomplete copies before marking installation complete.
+- Add installer regression tests and inspect the corrected source inside the IPA.
+
+## Personal iOS build — ios-portrait-6-background-cycle — 2026-10-06
+
+- Tint only the existing background colour uniforms through a smooth 240-second
+  palette cycle; preserve the original procedural shaders, waves and clocks.
+- Persist the Graphics colour-cycle option; Off keeps green with moving waves.
+- Update Compound Interest to the user's new coins/arrow artwork at 1x and 2x,
+  preserving its normal collection discovery and 1% eligible shop probability.
+- Validate palette continuity, foreground isolation, settings, assets and IPA.
+
+## Personal iOS build — ios-portrait-3-deck1 — 2026-10-06
+
+- Integrate Deck 1 from the user's updated final sheets: 52 playing cards and
+  their back, 4x RGBA atlases and editable individual sources with crop provenance.
+- Add the full-skin selector to Customize Deck, with live refresh, persisted
+  choice and preserved Default/collaboration preferences. Keep gameplay intact.
+- Preserve enhanced-card substrates, editions, seals and unrelated card types.
+- Correct the eight of clubs to eight central pips with explicit user approval.
+- Add asset, mapping, switching and restart checks; include the skin in IPA validation.
+
+## Personal iOS build — ios-portrait-2 — 2026-10-06
+
+- Replace the shell's cat icon with the user-supplied jester artwork, adapted
+  to an opaque full square. Supply 18 PNG variants and a source asset catalog;
+  package them with new iPhone/iPad icon references and remove old icon PNGs.
+- Validate icon sizes and actual bundle integration in the reproducible build.
+
+- Rebuild the run layout around top inventory, played cards, a larger central
+  hand, lateral deck, bottom HUD and fixed thumb actions inside the safe area.
+- Measure HUD/action height and adapt spacing and card dimensions to the viewport.
+  Widen the HUD and increase text and secondary touch targets.
+- Wrap crowded negative inventories into two rows; preserve card ordering,
+  reordering, selection and save capacity. Reflow shop/blind/payout panels.
+- Attenuate portrait CRT distortion, prefer local 2x textures on iOS and make
+  native canvas density explicit while keeping logical input coordinates.
+- Add geometry/negative-inventory checks and source-only desktop rendering at
+  2x/3x DPI, including all booster types and save restoration after restart.
 
 ## Personal iOS build — ios-portrait-1 — 2026-10-06
 
-- Separate Balatro Portrait identity (`com.rulo3.balatro.portrait`) for both iOS
+- Separate Balatrón identity (`com.rulo3.balatro.portrait`) for both iOS
   shells, portrait-only orientations, Files access and ProMotion opt-in.
 - Pin the Lovely shell SHA-256; deterministic ZIP ordering, timestamps and
   permissions; strip obsolete signing metadata and duplicate game archives.
@@ -728,7 +781,7 @@ Swipe Only mode, a full gesture overhaul, experimental iOS support, building dir
 
 **New: iOS build (EXPERIMENTAL, testers wanted):**
 
-- **`python build.py --ios` produces a sideloadable `balatro-portrait.ipa`** — no Xcode or macOS needed. The build downloads the prebuilt unsigned LÖVE iOS app shell from [balatro-apk-maker](https://github.com/blake502/balatro-apk-maker)'s Additional Tools (SHA-256 verified, contains no game data), inserts your locally built `Game.love` into `Payload/Balatro.app/`, locks `Info.plist` to portrait orientation, and stamps the mod version. Sideload with Sideloadly or AltStore — see [docs/IOS.md](docs/IOS.md) for the full guide and the list of things we need testers to verify. **Untested by the maintainer** (no iOS device) — please report results either way.
+- **`python build.py --ios` produces a sideloadable `balatron.ipa`** — no Xcode or macOS needed. The build downloads the prebuilt unsigned LÖVE iOS app shell from [balatro-apk-maker](https://github.com/blake502/balatro-apk-maker)'s Additional Tools (SHA-256 verified, contains no game data), inserts your locally built `Game.love` into `Payload/Balatro.app/`, locks `Info.plist` to portrait orientation, and stamps the mod version. Sideload with Sideloadly or AltStore — see [docs/IOS.md](docs/IOS.md) for the full guide and the list of things we need testers to verify. **Untested by the maintainer** (no iOS device) — please report results either way.
 - **iOS now gets the mobile feature flags.** `globals.lua` only set `F_MOBILE_UI`, `F_VERTICAL_SETTINGS`, `F_HAPTIC` etc. for Android; on iOS the game would have behaved like a desktop build. The engine code was already iOS-safe.
 - Lovely mod support remains Android-only (`liblovely.so`); the IPA is always vanilla.
 
@@ -1018,7 +1071,7 @@ Bug Fixes:
 ## [v1.7.0](https://github.com/ShaggyLorean/balatro-portrait-mobile/releases/tag/v1.7.0) - 2026-04-06
 
 ### Lovely Mod Support
-Balatro Portrait Mobile now supports the [Lovely](https://github.com/ethangreen-dev/lovely-injector) runtime Lua injector for loading mods on Android.
+Balatrón now supports the [Lovely](https://github.com/ethangreen-dev/lovely-injector) runtime Lua injector for loading mods on Android.
 
 > ⚠️ **Root Required**: Installing mods requires a **rooted Android device** (e.g. via [Magisk](https://github.com/topjohnwu/Magisk)). The mod directory is located in the root filesystem (`/data/user/0/`), which is not accessible without root privileges.
 
@@ -1184,3 +1237,22 @@ See the [README](https://github.com/ShaggyLorean/balatro-portrait-mobile#readme)
 ## [1.0a](https://github.com/ShaggyLorean/balatro-portrait-mobile/releases/tag/1.0a) - 2026-01-02
 
 First stable release with Left Stack Layout (Source Only).
+# Build personal ios-portrait-4-compound-interest — 2026-10-06
+
+- Nuevo Joker Interés compuesto, atlas propio 1x/2x, inglés y español.
+- X1 + 0,15 por ciega ganada; estado por carta, protección de doble cierre,
+  Blueprint/Brainstorm y copias; tirada del 1 % limitada a ofertas normales de Joker.
+- Steamodded beta-1224a fijado junto al Lovely 0.10.0 de la plantilla iOS.
+  Instalación temprana y puente para conservar HUD portrait y Deck 1.
+- Migración de partidas anteriores con copia intacta del checkpoint, incluidos
+  negativos, vales, capacidades y valores de puntuación.
+- Pruebas ejecutadas con el juego de escritorio y los cargadores reales;
+  instalación y tacto físico en iPhone todavía pendientes.
+# Build personal ios-portrait-5-compound-collection — 2026-10-06
+
+- Compound Interest 1.0.1: `unlocked=true`, `discovered=false`, visible en la
+  colección normal, sin `no_collection=true`.
+- Descubrimiento mediante la adquisición y persistencia nativas del juego;
+  no se reinician descubrimientos existentes ni se altera la elegibilidad del 1 %.
+- QA específico con tres procesos: perfil nuevo no descubierto, compra real,
+  reinicio y colección descubierta. Paginación mediante el control normal de UI.

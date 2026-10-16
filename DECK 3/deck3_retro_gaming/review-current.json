@@ -1,0 +1,181 @@
+{
+  "cards": [
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "2",
+      "key": "hearts_2",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 2 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '2' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: two bandaged anatomical hearts balancing on a bent needle; burgundy dungeon-brick halo and tear particles. EXACTLY 2 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 2 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_2.png",
+      "approved": true,
+      "count": 2
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "3",
+      "key": "hearts_3",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 3 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '3' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: three life hearts: one cracked above two stitched hearts; concentric pixel ripples and chalk-red floor tiles. EXACTLY 3 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 3 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_3.png",
+      "approved": true,
+      "count": 3
+    },
+    {
+      "deck": 3,
+      "key": "hearts_4",
+      "rank": "4",
+      "suit": "hearts",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_4.png",
+      "retry": 2,
+      "prompt": "Edit ONLY the two rank corner letters in this card. Replace the upper-left A by pixel-art digit 4, and lower-right inverted A by an inverted digit 4. Keep everything else EXACTLY unchanged: four main hearts, blank bottle label, paper, border, background, color, pixel art. The result must be FOUR OF HEARTS, not Ace. Output full original card same size.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_4.png",
+      "approved": true,
+      "count": 4
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "5",
+      "key": "hearts_5",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 5 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '5' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: five hearts: four corners and one middle around a tear-shaped puddle; crimson pixel splash frame. EXACTLY 5 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 5 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_5.png",
+      "approved": true,
+      "count": 5
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "6",
+      "key": "hearts_6",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 6 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '6' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: six hearts in three pairs suspended on surgical threads; alternating pale red curtain stripes. EXACTLY 6 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 6 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_6.png",
+      "approved": true,
+      "count": 6
+    },
+    {
+      "deck": 3,
+      "key": "hearts_7",
+      "rank": "7",
+      "suit": "hearts",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_7.png",
+      "retry": 1,
+      "prompt": "Edit ONLY the small heart emblem engraved on the pedestal at bottom center: remove that emblem and make that rectangular pedestal front plain stone with no symbol. Preserve all SEVEN large floating hearts and both 7-of-hearts corner indexes, every other detail unchanged. Seven main hearts total, no eighth heart on the pedestal. Same full card pixel-art.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_7.png",
+      "approved": true,
+      "count": 7
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "8",
+      "key": "hearts_8",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 8 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '8' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: eight hearts along a zigzag bandage path, four on each half; dim dungeon arch patterns. EXACTLY 8 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 8 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_8.png",
+      "approved": true,
+      "count": 8
+    },
+    {
+      "deck": 3,
+      "key": "hearts_9",
+      "suit": "hearts",
+      "rank": "9",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_9.png",
+      "retry": 1,
+      "prompt": "Precise edit: fix ONLY lower-right corner RANK glyph. Current lower-right glyph is wrong (an inverted 5). Replace with an EXACT 180-DEGREE ROTATED COPY OF THE UPPER-LEFT 9. Its closed bowl must be at the BOTTOM in normal image orientation, its tail extending upward on the LEFT like a 6. Keep the inverted heart suit above it untouched. Preserve exactly all nine central hearts, circular mechanism, frame, paper, upper-left 9 and all colors. No other changes. When card is rotated upside down, corner MUST read 9, not 5. Pixel-art.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_9.png",
+      "approved": true,
+      "count": 9
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "10",
+      "key": "hearts_10",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 10 OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '10' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: ten hearts in two vertical chains of five; retro dungeon staircase and scattered tear squares. EXACTLY 10 principal hearts visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 10 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_10.png",
+      "approved": true,
+      "count": 10
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "J",
+      "key": "hearts_J",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual J OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left 'J' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: a small grotesque tearful masked imp clutching a bandage spool; red pixel dungeon arches behind. Original court character, traditional playing-card hierarchy and strong silhouette, not giant pips; mirrored/reversible composition if suitable. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_J.png",
+      "approved": true,
+      "count": null
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "Q",
+      "key": "hearts_Q",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual Q OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left 'Q' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: a mysterious winged crimson martyr queen with tear-shaped halo; patterned burgundy curtains behind. Original court character, traditional playing-card hierarchy and strong silhouette, not giant pips; mirrored/reversible composition if suitable. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_Q.png",
+      "approved": true,
+      "count": null
+    },
+    {
+      "deck": 3,
+      "suit": "hearts",
+      "rank": "K",
+      "key": "hearts_K",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_12-1.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual K OF HEARTS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left 'K' + hearts suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: a towering ribcage demon final boss with stitched crown; pulsing blocky red chamber behind. Original court character, traditional playing-card hierarchy and strong silhouette, not giant pips; mirrored/reversible composition if suitable. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\hearts_K.png",
+      "approved": true,
+      "count": null
+    },
+    {
+      "deck": 3,
+      "suit": "diamonds",
+      "rank": "2",
+      "key": "diamonds_2",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_13-2.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 2 OF DIAMONDS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '2' + diamonds suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: two red rupee gems above an open empty chest; golden pixel sunbursts and temple floor tiles. EXACTLY 2 principal red rupee gems visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 2 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\diamonds_2.png",
+      "approved": true,
+      "count": 2
+    },
+    {
+      "deck": 3,
+      "suit": "diamonds",
+      "rank": "3",
+      "key": "diamonds_3",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_13-2.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 3 OF DIAMONDS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '3' + diamonds suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: three red rupee gems on three ascending stepping stones; pale gold cloud trails and adventure-map grid. EXACTLY 3 principal red rupee gems visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 3 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\diamonds_3.png",
+      "approved": true,
+      "count": 3
+    },
+    {
+      "deck": 3,
+      "suit": "diamonds",
+      "rank": "4",
+      "key": "diamonds_4",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_13-2.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 4 OF DIAMONDS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '4' + diamonds suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: four red rupee gems around a plain shield; yellow mosaic halo and ivy corners. EXACTLY 4 principal red rupee gems visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 4 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\diamonds_4.png",
+      "approved": false
+    },
+    {
+      "deck": 3,
+      "suit": "diamonds",
+      "rank": "5",
+      "key": "diamonds_5",
+      "ref": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\Imagen de ChatGPT 6 oct 2026, 18_58_13-2.png",
+      "prompt": "Use case: stylized-concept. Generate ONE individual 5 OF DIAMONDS playing card, Retro Gaming deck. Reference image: definitive Ace STYLE and FORMAT only, preserve cream aged paper, thin stepped dark border, visible chunky 8/16-bit pixel blocks, palette, index typography and placement. Full card flat front view, portrait 1024x1536, no surroundings. Upper left '5' + diamonds suit glyph, lower right same index ROTATED 180 degrees. No other text or numbers. Central art: five red rupee gems: four surrounding one center floating above a stone pedestal; soft gold magic rings. EXACTLY 5 principal red rupee gems visible, distinctly separated and easy to count. Corner tiny suit marks do not count. No extra motif-shaped decoration, no hidden/overlapping principal motifs. COUNT 5 before finishing. Lively playful thematic background INSIDE card, subordinate lighter or muted colors, keep cream index areas quiet; not a poster. Minimal confident pixel-art conceived in large blocks, restrained detail and dithering, readable tiny on iPhone. No realism, 3D, modern painting, logos or decorative text. Same frame/margins as Ace.",
+      "path": "C:\\Users\\rulo3\\Desktop\\BALATRO VERT\\DECK 3\\deck3_retro_gaming\\source\\diamonds_5.png",
+      "approved": false
+    }
+  ]
+}

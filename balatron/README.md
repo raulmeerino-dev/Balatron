@@ -1,4 +1,4 @@
-# Balatro Portrait Mobile
+# Balatrón
 
 **Personal iOS build:** see [README-IOS-LOCAL.md](README-IOS-LOCAL.md) for the
 tested local build command, app identity and [validation report](INFORME-PRUEBAS.md).
@@ -79,8 +79,8 @@ phone-only builds need Termux (F-Droid or GitHub build).
 Build a portrait APK on Windows, macOS, or Linux:
 
 ```sh
-git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git
-cd balatro-portrait-mobile
+git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git balatron
+cd balatron
 python build.py
 ```
 
@@ -116,11 +116,11 @@ APK straight from it. No PC copy of `Balatro.exe` or `Game.love` is needed.
 3. In Termux run `termux-setup-storage`, tap **Allow**, then paste:
 
 ```sh
-pkg update -y && pkg install -y git && rm -rf balatro-portrait-mobile && git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git && cd balatro-portrait-mobile && bash termux-build.sh --force
+pkg update -y && pkg install -y git && rm -rf balatron && git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git balatron && cd balatron && bash termux-build.sh --force
 ```
 
 The helper installs what it needs, asks about Readabletro and CRT, then builds
-and signs the APK. It is copied to `/sdcard/Download/balatro-portrait-mobile.apk`.
+and signs the APK. It is copied to `/sdcard/Download/balatron.apk`.
 
 Full guide: [docs/TERMUX.md](docs/TERMUX.md).
 
@@ -140,7 +140,7 @@ More details: [zygisk/README.md](zygisk/README.md).
 
 ## iOS (experimental, testers wanted)
 
-Build with `--ios`, then sideload `balatro-portrait.ipa` with
+Build with `--ios`, then sideload `balatron.ipa` with
 [Sideloadly](https://sideloadly.io/) or [AltStore](https://altstore.io/). Full
 guide: [docs/IOS.md](docs/IOS.md).
 

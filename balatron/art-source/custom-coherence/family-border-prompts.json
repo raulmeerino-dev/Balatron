@@ -1,0 +1,38 @@
+{
+  "tool": "built-in image_gen",
+  "specs": [
+    {
+      "id": "risk",
+      "grid": "ONE ROW of FOUR cards",
+      "color": "muted brick red #98433e",
+      "cols": 4,
+      "rows": 1,
+      "prompt": "Precise decorative frame edit of an EXISTING GAME SPRITE SHEET. Preserve all the illustrations, characters, objects, poses, backgrounds, lettering, pixel clusters and exact card order of the supplied sheet. Change ONLY the narrow OUTERMOST CARD BORDERS to a perfectly consistent family frame. This is stationery/layout cleanup, not a new scene or action. Do not reinterpret ANY depicted subject.\nGRID: ONE ROW of FOUR cards, equal71x95 logical-pixel cells, NO GAPS between cells and NO external margins. Preserve EXACT input grid arrangement and full sheet aspect ratio. Each complete cell must reach its slot boundaries.\nFRAME: every card in this sheet must use precisely the SAME geometric frame: identical outline thickness, inset, corners, color and size. A thin single muted brick red #98433e outline, 1 logical pixel thick, with 1 logical pixel neutral ivory inset, same subtle stepped rounded corners on every card. No double borders, no gold extra ornaments, no inconsistent edge strips. The frame must remain narrow to preserve all illustration content and vertical letters. Draw once and repeat IDENTICALLY for every cell. It is the family identifier. Keep artwork and background inside this narrow2pixel perimeter untouched.\nPreserve flat low resolution pixel-art look. No interpolation blur or additional details. OPAQUE PAPER remains solid foreground where present, not cutout, no haze, no missing interior alpha. Only tiny existing exterior rounded corner cutouts transparent. Keep dark interior panels DARK as in input. Keep neutral pale ivory paper NEUTRAL, not yellow. No title, caption, watermark or new objects. Output the edited sprite sheet only."
+    },
+    {
+      "id": "fusion",
+      "grid": "ONE ROW of FOUR cards",
+      "color": "antique gold #ad8b48",
+      "cols": 4,
+      "rows": 1,
+      "prompt": "Precise decorative frame edit of an EXISTING GAME SPRITE SHEET. Preserve all the illustrations, characters, objects, poses, backgrounds, lettering, pixel clusters and exact card order of the supplied sheet. Change ONLY the narrow OUTERMOST CARD BORDERS to a perfectly consistent family frame. This is stationery/layout cleanup, not a new scene or action. Do not reinterpret ANY depicted subject.\nGRID: ONE ROW of FOUR cards, equal71x95 logical-pixel cells, NO GAPS between cells and NO external margins. Preserve EXACT input grid arrangement and full sheet aspect ratio. Each complete cell must reach its slot boundaries.\nFRAME: every card in this sheet must use precisely the SAME geometric frame: identical outline thickness, inset, corners, color and size. A thin single antique gold #ad8b48 outline, 1 logical pixel thick, with 1 logical pixel neutral ivory inset, same subtle stepped rounded corners on every card. No double borders, no gold extra ornaments, no inconsistent edge strips. The frame must remain narrow to preserve all illustration content and vertical letters. Draw once and repeat IDENTICALLY for every cell. It is the family identifier. Keep artwork and background inside this narrow2pixel perimeter untouched.\nPreserve flat low resolution pixel-art look. No interpolation blur or additional details. OPAQUE PAPER remains solid foreground where present, not cutout, no haze, no missing interior alpha. Only tiny existing exterior rounded corner cutouts transparent. Keep dark interior panels DARK as in input. Keep neutral pale ivory paper NEUTRAL, not yellow. No title, caption, watermark or new objects. Output the edited sprite sheet only."
+    },
+    {
+      "id": "extra",
+      "grid": "THREE COLUMNS and TWO ROWS of SIX cards",
+      "color": "slate blue #526c82",
+      "cols": 3,
+      "rows": 2,
+      "prompt": "Precise decorative frame edit of an EXISTING GAME SPRITE SHEET. Preserve all the illustrations, characters, objects, poses, backgrounds, lettering, pixel clusters and exact card order of the supplied sheet. Change ONLY the narrow OUTERMOST CARD BORDERS to a perfectly consistent family frame. This is stationery/layout cleanup, not a new scene or action. Do not reinterpret ANY depicted subject.\nGRID: THREE COLUMNS and TWO ROWS of SIX cards, equal71x95 logical-pixel cells, NO GAPS between cells and NO external margins. Preserve EXACT input grid arrangement and full sheet aspect ratio. Each complete cell must reach its slot boundaries.\nFRAME: every card in this sheet must use precisely the SAME geometric frame: identical outline thickness, inset, corners, color and size. A thin single slate blue #526c82 outline, 1 logical pixel thick, with 1 logical pixel neutral ivory inset, same subtle stepped rounded corners on every card. No double borders, no gold extra ornaments, no inconsistent edge strips. The frame must remain narrow to preserve all illustration content and vertical letters. Draw once and repeat IDENTICALLY for every cell. It is the family identifier. Keep artwork and background inside this narrow2pixel perimeter untouched.\nPreserve flat low resolution pixel-art look. No interpolation blur or additional details. OPAQUE PAPER remains solid foreground where present, not cutout, no haze, no missing interior alpha. Only tiny existing exterior rounded corner cutouts transparent. Keep dark interior panels DARK as in input. Keep neutral pale ivory paper NEUTRAL, not yellow. No title, caption, watermark or new objects. Output the edited sprite sheet only."
+    },
+    {
+      "id": "upg",
+      "grid": "THREE COLUMNS and TWO ROWS of SIX cards",
+      "color": "muted violet #78608e",
+      "cols": 3,
+      "rows": 2,
+      "prompt": "Precise decorative frame edit of an EXISTING GAME SPRITE SHEET. Preserve all the illustrations, characters, objects, poses, backgrounds, lettering, pixel clusters and exact card order of the supplied sheet. Change ONLY the narrow OUTERMOST CARD BORDERS to a perfectly consistent family frame. This is stationery/layout cleanup, not a new scene or action. Do not reinterpret ANY depicted subject.\nGRID: THREE COLUMNS and TWO ROWS of SIX cards, equal71x95 logical-pixel cells, NO GAPS between cells and NO external margins. Preserve EXACT input grid arrangement and full sheet aspect ratio. Each complete cell must reach its slot boundaries.\nFRAME: every card in this sheet must use precisely the SAME geometric frame: identical outline thickness, inset, corners, color and size. A thin single muted violet #78608e outline, 1 logical pixel thick, with 1 logical pixel neutral ivory inset, same subtle stepped rounded corners on every card. No double borders, no gold extra ornaments, no inconsistent edge strips. The frame must remain narrow to preserve all illustration content and vertical letters. Draw once and repeat IDENTICALLY for every cell. It is the family identifier. Keep artwork and background inside this narrow2pixel perimeter untouched.\nPreserve flat low resolution pixel-art look. No interpolation blur or additional details. OPAQUE PAPER remains solid foreground where present, not cutout, no haze, no missing interior alpha. Only tiny existing exterior rounded corner cutouts transparent. Keep dark interior panels DARK as in input. Keep neutral pale ivory paper NEUTRAL, not yellow. No title, caption, watermark or new objects. Output the edited sprite sheet only."
+    }
+  ],
+  "processing": "Only grid slicing, nearest-neighbour sampling to 71x95 and exact pixel doubling for 2x. Borders and illustrations edited by image_gen."
+}

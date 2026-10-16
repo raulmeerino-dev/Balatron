@@ -1,0 +1,12 @@
+{
+  "tool": "built-in image_gen",
+  "cards": [
+    {
+      "deck": 2,
+      "key": "hearts_2",
+      "prompt": "Create ONE individual TWO OF HEARTS playing card for Occult Arcade. Reference image is the definitive Ace style reference, NOT edit target: preserve its antique cream paper, thin black stepped border, chunky visible pixel-art scale, crimson/black/old-gold palette, same upper-left rank+suit and inverted lower-right typography. Replace rank A with 2. Portrait full card flat front view, 1024x1536, no surrounding scene. Central composition: EXACTLY TWO large red heart silhouettes, one upper-left and one lower-right, connected by a single sinuous thorn vine and loose gold sutures. Separate readable hearts, no eye, no extra heart-shaped ornament. Corner suit marks excluded from the two central hearts. Distinct bold minimal arcane pixel art, no smooth modern illustration, no fine detail, no other text. Keep both indexes clearly separate from central art and ample cream margins. Count exactly two principal hearts.",
+      "count": 2,
+      "approved": true
+    }
+  ]
+}

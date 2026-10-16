@@ -1,0 +1,94 @@
+BALATRO PORTRAIT — ENTREGA FINAL
+
+MODIFICADORES
+68 en total: 51 disponibles inicialmente y 17 con requisito en perfiles nuevos.
+Los perfiles anteriores conservan el contenido al que ya tenían acceso.
+49 reglas nuevas en las dos ampliaciones: 36 de la primera lista y 13 de la última.
+
+Últimos 13 añadidos:
+Reroll Gratis, Apuesta Alta, Doble Interés, Jokers Baratos, Consumibles Baratos,
+Venta con Beneficio, Primera Mano, Descarte Gratis, Packs Frecuentes,
+Segunda Elección, Ciega Rápida, Fortuna y Recompensa Extra.
+Premio de Boss reutiliza Dividendo del jefe, actualizado a +$3.
+Mano Grande, Manos Extra, Descartes Extra, Hueco Extra, Bolsillos Grandes e
+Interés Alto reutilizan los modificadores equivalentes anteriores; se conserva
+la progresión existente del límite de interés, sin crear otra entrada casi igual.
+
+REQUISITOS
+Hábitat de Jokers (Hueco Extra): tener 5 Jokers simultáneamente.
+Mercado Raro: conseguir un Joker Rare.
+Mercado Brillante: conseguir 3 Jokers con Edition en una run.
+Mercado Negro: usar 3 Contraband en una run.
+Negativos Frecuentes: conseguir un Joker Negative.
+Packs Grandes: abrir 10 packs en una run.
+Overkill Plus: alcanzar Overkill x100.
+Contratos Plus: completar 3 contratos en una run.
+Boss Débil: derrotar 8 Boss Blinds, acumuladas por perfil.
+Sin Comunes: ganar una run.
+Reroll Gratis: hacer 10 rerolls en una run.
+Apuesta Alta: llegar al Ante 6.
+Doble Interés: ganar $20 de interés en una run.
+Venta con Beneficio: vender 20 cartas u objetos, acumulados por perfil.
+Descarte Gratis: usar 4 descartes en una Blind.
+Segunda Elección: abrir 20 packs, acumulados por perfil.
+Fortuna: activar con éxito 10 efectos probabilísticos, acumulados por perfil.
+
+ELECCIÓN Y AVISOS
+Tres iconos grandes alineados: toque para elegir, pulsación larga para detalle.
+Sin botones de elección adicionales; se bloquea el doble toque y se atenúan las
+otras opciones al elegir. Desbloquear algo no regenera una elección abierta.
+Collection mantiene bloqueados visibles con candado, requisito y progreso.
+Desbloqueo y aviso pendiente son estados distintos guardados por perfil.
+El aviso principal usa la cola, ventana, sonidos y Continuar del flujo vanilla.
+Solo aparece en el menú; confirmar Continuar lo marca visto. Cerrar antes de
+confirmar conserva el pendiente. Unlock All no añade una avalancha de avisos.
+
+ARTE Y CLASES
+Francotirador y Segundo plato: Extra, borde normal gris azulado.
+Préstamo usurero y Sobrecalentado: Risk, rojo.
+Fotocopiadora rota: Fusion, dorado; receta Blueprint + Joker normal conservada.
+Sobrecarga: modificador, tratamiento rojo existente.
+Resonancia y Reacción en cadena: modificadores, tratamiento dorado existente.
+Los ocho sprites están sustituidos. También se normalizaron papel, márgenes,
+marcos y JOKER lateral de 33 formas en 27 assets sin regenerar sus ilustraciones.
+Los 49 iconos nuevos y los 10 Contraband tienen assets definitivos 1x y 2x.
+
+CONTRABAND
+Ahora usa consumibles nativos: comprar, guardar, usar, vender y ocupar slots.
+Las elecciones se guardan; cancelar conserva la carta y no vuelve a sortearlas.
+Dados Cargados: probabilidad equivalente a dos intentos positivos compatibles,
+sin duplicar el evento ni el trigger; dura hasta finalizar el Ante.
+Vale Falsificado: elige entre hasta 3 Vouchers elegibles no poseídos.
+Carta Marcada: selecciona una carta y aplica mejora y sello permanentes.
+Información Privilegiada: genera la próxima tienda mediante el generador real,
+conserva ese stock y permite reservar una opción de esa misma tienda.
+Negativo Robado: aplica Negative a un Joker sin Edition; conserva sus stickers.
+Falsificación: copia otro consumible propio, excluyendo Contraband.
+Elección del Dealer: hasta 3 Rare elegibles; exige espacio para el elegido.
+Mercancía Caliente: hasta 3 Jokers con Edition garantizada; respeta los slots.
+Soborno, nuevo: elige otro Boss válido para el Ante antes de combatirlo.
+Etiqueta Robada, nueva: elige una Tag real elegible sin saltar la Blind.
+
+HUD
+Llamas vanilla ajustadas a los paneles de Chips/Mult, con clipping interior.
+Packs más grandes; escala idéntica con y sin contratos.
+Blind compacta con objetivo y ficha, información mediante pulsación larga.
+Contratos dinámicos sin fila vacía; baraja centrada con contador legible.
+Título de selección separado de las Blinds y récord en el lateral del score.
+Acciones del consumible seleccionado por encima de los Jokers.
+
+VALIDACIÓN
+Pruebas nativas LÖVE/Steamodded en viewport portrait 393x852 y perfiles aislados:
+toque/long press, bloqueo de doble elección, filtros de bloqueados, Unlock All,
+migración de perfil, Mods OFF, ES/EN, save/load sin reaplicar bonus,
+descarte gratis una vez, mano real, packs con opciones/elecciones adicionales,
+compra/uso/cancelación/slots de Contraband y recuperación de elección pendiente.
+Dos procesos independientes verificaron avisos persistentes, cola múltiple,
+confirmación sin repetición y separación de perfiles.
+Revisión visual de Collection Extra/UPG/Risk/Fusion/Dobles, packs y HUD.
+Sintaxis: 100 archivos Lua de mods y 70 de fuentes compilados correctamente.
+
+EN IPHONE
+Pendiente la instalación y prueba física: pulsación larga, áreas seguras,
+fluidez de las llamas, suspensión/reanudación y retorno al menú con avisos.
+Las comprobaciones de escritorio no sustituyen esa validación física.

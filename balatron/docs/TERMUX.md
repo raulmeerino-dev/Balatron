@@ -33,7 +33,7 @@ Tap **Allow** when Android asks for storage access.
 5. Paste this build command:
 
 ```sh
-pkg update -y && pkg install -y git && rm -rf balatro-portrait-mobile && git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git && cd balatro-portrait-mobile && bash termux-build.sh --force
+pkg update -y && pkg install -y git && rm -rf balatron && git clone https://github.com/ShaggyLorean/balatro-portrait-mobile.git balatron && cd balatron && bash termux-build.sh --force
 ```
 
 The helper installs missing Python/Java packages, asks whether to apply
@@ -41,7 +41,7 @@ Readabletro and the CRT-disable patch, runs `build.py`, downloads the Android
 build tools it needs, builds the portrait APK, signs it, and copies it to:
 
 ```text
-/sdcard/Download/balatro-portrait-mobile.apk
+/sdcard/Download/balatron.apk
 ```
 
 Open that APK from your file manager and install it.
