@@ -2,8 +2,9 @@
 
 ## Fuente de estado
 
-Este resumen parte del commit `aed3f9b` y registra la auditoría de mods iniciada
-el 26-10-2026. No se ejecutó build, suite ni partida. La revisión cubrió los
+Este resumen registra la auditoría de mods del 26-10-2026, iniciada desde
+`aed3f9b` y publicada en el commit `90534ec`. No se ejecutó build, suite ni
+partida. La revisión cubrió los
 manifiestos de nueve mods, dependencias declaradas, builder, catálogo Expansion48
 y documentación relacionada. Los informes de juego son evidencia histórica, no
 una revalidación ejecutada durante esta auditoría.
@@ -11,9 +12,9 @@ una revalidación ejecutada durante esta auditoría.
 ## Rama, commit y cambios locales
 
 - Rama: `main`; la auditoría comenzó en `aed3f9b` (HEAD y `origin/main`
-  coincidían). `9ab04cb` contiene la publicación principal; el árbol de código
-  previo llega a `2cbc19e` (16-10-2026). Los cambios actuales de documentación
-  y el manifiesto Events aún deben revisarse/confirmarse.
+  coincidían) y sus cambios se guardaron en `90534ec` (`docs(mods): audit package
+  organization and dependencies`). `9ab04cb` contiene la publicación principal;
+  el árbol de código previo llega a `2cbc19e` (16-10-2026).
 - El checkout estaba limpio antes de esta auditoría. Los cambios de mods ya
   están en `9ab04cb`; no se compilaron ni validaron en juego durante esta tarea.
 - Remoto: `origin` → `https://github.com/raulmeerino-dev/Balatron.git`.
@@ -80,8 +81,8 @@ una revalidación ejecutada durante esta auditoría.
   observados están protegidos en el código revisado.
 - Comprobaciones focalizadas: JSON válido en nueve manifiestos, IDs únicos,
   dependencias resolubles y `git diff --check`. No se ejecutó Lua, juego, suite,
-  build ni prueba física. La consulta GitHub falló por conectividad, por lo que
-  el estado remoto de estos nuevos cambios no se comprobó.
+  build ni prueba física. La consulta `gh repo view` falló por conectividad, pero
+  `git push origin main` confirmó el fast-forward de `aed3f9b` a `90534ec`.
 
 ### Qué parecen estar haciendo los diffs (inferencia por código, no por chat)
 
