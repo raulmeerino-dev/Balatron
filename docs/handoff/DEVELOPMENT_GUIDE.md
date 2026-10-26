@@ -3,11 +3,13 @@
 ## Antes de editar
 
 1. Leer raíz `AGENTS.md` y este directorio `docs/handoff/`.
-2. Ejecutar `git status --short`; los 11 cambios recientes en `MODS/` ya están
+2. Ejecutar `git status --short`; los cambios recientes en `MODS/` están
    confirmados en `9ab04cb` pero siguen sin validación de juego. Preservar el
    checkout alternativo de `local-archive/alternate-checkouts/` y no integrarlo
    salvo que el usuario lo pida.
-3. Leer documentación específica: `balatron/README-IOS-LOCAL.md`,
+3. Para cambios de mods, leer también `MODS/README.md` y
+   `docs/handoff/MOD_CATALOG.md`. Leer documentación específica:
+   `balatron/README-IOS-LOCAL.md`,
    `INFORME-PRUEBAS.md`, `CHANGELOG.md`, `mods/README.md` o README del mod.
 4. Determinar cuál archivo es fuente definitiva. Para los mods locales, raíz
    `MODS/` es el origen que empaqueta el build; no editar solo un artefacto

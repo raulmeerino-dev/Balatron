@@ -46,6 +46,8 @@ decidas distribuir una versión. No se recompila una IPA sin petición explícit
 - [Cambios acumulados](balatron/CHANGELOG.md).
 - [Validaciones y limitaciones de las pruebas](balatron/INFORME-PRUEBAS.md).
 - [Integración de mods](balatron/mods/README.md).
+- [Organización de mods locales](MODS/README.md) y
+  [catálogo de contenido](docs/handoff/MOD_CATALOG.md).
 - [Instrucciones de trabajo](AGENTS.md).
 
 Run Info conserva sus pestañas y mecánicas. Su ancho se obtiene del viewport y

@@ -11,6 +11,7 @@
   "version": "1.0.0",
   "priority": 120,
   "dependencies": [
-    "Steamodded (>=1.0.0~BETA-1224a)"
+    "Steamodded (>=1.0.0~BETA-1224a)",
+    "portrait_gameplay (>=1.0.0)"
   ]
 }

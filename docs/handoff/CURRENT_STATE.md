@@ -2,28 +2,26 @@
 
 ## Fuente de estado
 
-Este resumen refleja el árbol reorganizado y la publicación sincronizada en
-GitHub el 26-10-2026. No se ejecutó build, suite ni prueba de juego. Se leyeron
-estado/diffs de Git, se revisó el staging y se verificó por API la privacidad, el
-HEAD remoto, la presencia del catálogo y la ausencia de IPA/copias en el árbol
-remoto. Los informes de juego son evidencia histórica, no una revalidación
-ejecutada durante esta transferencia.
+Este resumen parte del commit `aed3f9b` y registra la auditoría de mods iniciada
+el 26-10-2026. No se ejecutó build, suite ni partida. La revisión cubrió los
+manifiestos de nueve mods, dependencias declaradas, builder, catálogo Expansion48
+y documentación relacionada. Los informes de juego son evidencia histórica, no
+una revalidación ejecutada durante esta auditoría.
 
 ## Rama, commit y cambios locales
 
-- Rama: `main`; al comenzar esta reorganización local, HEAD y `origin/main`
-  coincidían en `70b2321`. `9ab04cb` contiene la preparación/publicación
-  principal; el árbol de código previo llega a `2cbc19e` (16-10-2026). Los
-  cambios de documentación y organización de esta revisión se guardan en el
-  commit siguiente de `main`.
-- El checkout estaba limpio antes de esta revisión. Los 11 diffs de `MODS/`
-  descritos abajo se incluyeron en `9ab04cb`; no se compilaron ni validaron en
-  juego como parte de la subida.
+- Rama: `main`; la auditoría comenzó en `aed3f9b` (HEAD y `origin/main`
+  coincidían). `9ab04cb` contiene la publicación principal; el árbol de código
+  previo llega a `2cbc19e` (16-10-2026). Los cambios actuales de documentación
+  y el manifiesto Events aún deben revisarse/confirmarse.
+- El checkout estaba limpio antes de esta auditoría. Los cambios de mods ya
+  están en `9ab04cb`; no se compilaron ni validaron en juego durante esta tarea.
 - Remoto: `origin` → `https://github.com/raulmeerino-dev/Balatron.git`.
-  Repositorio verificado como **privado**. `main` remoto y HEAD local coincidían
-  en `70b2321a853ea16a855954c5bd92761d594294c1` antes de esta revisión; el archivo
-  `docs/handoff/MOD_CATALOG.md` se comprobó presente en GitHub. La CLI quedó
-  autenticada como `raulmeerino-dev`.
+  Tras la petición explícita del usuario, el estado **público** se verificó en
+  la sesión de publicación anterior. No se pudo repetir la consulta de GitHub
+  API durante esta auditoría porque `gh` reportó un error de conexión a
+  `api.github.com`; confirmar al recuperar conexión. El remoto local apunta a
+  `https://github.com/raulmeerino-dev/Balatron.git`.
 - `local-archive/alternate-checkouts/balatro-portrait-mobile-codex-test-20261017/`
   es otro checkout Git en el mismo HEAD `2cbc19e`. El usuario decidió conservarlo
   aparte y excluirlo del repo principal. Se movió intacto bajo `local-archive/`,
@@ -57,7 +55,33 @@ ejecutada durante esta transferencia.
   distinguir fuente activa, builds ignoradas y checkouts históricos.
 - Se generó este handoff en `docs/handoff/`, se amplió `AGENTS.md` y se ajustaron
   `README.md`, `.gitignore` y `builds/README.md` para documentar la publicación
-  privada y la exclusión de artefactos.
+  y la exclusión de artefactos.
+
+## Auditoría de mods (26-10-2026)
+
+- Se confirmó la separación física/técnica/conceptual de nueve paquetes en
+  `balatron/build.py::_bundled_mods()` y sus `mod.json`. Se creó `MODS/README.md`
+  como mapa operativo y se amplió `docs/handoff/MOD_CATALOG.md`.
+- **Problema confirmado y corregido:** `MODS/Events/` llama directamente a
+  Gameplay Core (`PortraitGameplay` desde la UI de consumibles y al cargar
+  Expansion48), pero `MODS/Events/mod.json` solo declaraba Steamodded. Ahora
+  declara también `portrait_gameplay (>=1.0.0)`. El análisis estático encontró
+  nueve IDs de paquete únicos y ninguna dependencia no resuelta.
+- `Gameplay Core` registra `p_pg_roulette`; no es solo infraestructura.
+- `Compound Interest` ya tiene nombre visible de paquete `Extra Jokers`. Se
+  conservaron carpeta `Compound Interest/`, ID `incremental_joker`, prefijo
+  `incj`, Joker `j_incj_compound_interest`, configuración Doubles y estructura
+  de progreso. No hizo falta renombrar objetos.
+- `MODS/Black Market/` es arte conceptual sin `mod.json`; el contenido ejecutable
+  Black Market/Dealer/Contraband es propiedad de `Events`.
+- **Riesgo no confirmado:** varios mods encadenan wrappers de `create_toggle`; el
+  load-order podría volver frágil esa composición. No se reprodujo un fallo y no
+  se refactorizó. Los accesos opcionales Events→RunRules/Risk/UPG/Fusion
+  observados están protegidos en el código revisado.
+- Comprobaciones focalizadas: JSON válido en nueve manifiestos, IDs únicos,
+  dependencias resolubles y `git diff --check`. No se ejecutó Lua, juego, suite,
+  build ni prueba física. La consulta GitHub falló por conectividad, por lo que
+  el estado remoto de estos nuevos cambios no se comprobó.
 
 ### Qué parecen estar haciendo los diffs (inferencia por código, no por chat)
 

@@ -17,23 +17,35 @@ y `en-us` son la referencia textual exacta.
   dependencias; el mod propietario registra sus sprites.
 - Desbloqueado no significa garantizado en tienda: aún aplican pool, rareza,
   peso, bans, configuración y requisitos de la run.
-- Este listado describe el checkout fuente, incluidos los diffs locales sin
-  confirmar. No demuestra que la última IPA contenga esos diffs ni que todo se
-  haya probado en iPhone. Ver `CURRENT_STATE.md`.
+- Este listado describe las fuentes del checkout. Que un cambio esté en Git no
+  demuestra que la última IPA lo contenga ni que todo se haya probado en iPhone.
+  Ver `CURRENT_STATE.md`.
 
 ## Paquetes activos
 
-| Carpeta | Contenido principal |
-| --- | --- |
-| `MODS/Compound Interest/` | Interés compuesto, Jokers adicionales, Doubles, misiones y Jokers expansion48. |
-| `MODS/UPG JOKERS/` | Jokers evolucionables, rareza/configuración y progreso de etapas. |
-| `MODS/RISK JOKERS/` | Rareza RISK, Jokers con trade-offs y misiones. |
-| `MODS/Joker Fusion/` | Recetas, cartas resultado, colección, historial y FX. |
-| `MODS/Deck Mutations/` | Modificadores de run, progresión y UI de Mutations. |
-| `MODS/Contracts/` | Contracts de run, condiciones, recompensas y progreso. |
-| `MODS/Events/` | Framework Events, tienda Black Market, Dealer y Contraband. |
-| `MODS/Horizons/` | Bosses, Challenges, Vouchers, Tags, Packs y Decks. |
-| `MODS/Gameplay Core/` | APIs compartidas para gameplay/UI/tracking; sin coleccionables propios. |
+| Carpeta / identidad | Categoría visible o rol | Contenido / responsabilidad |
+| --- | --- | --- |
+| `MODS/Compound Interest/` · `incremental_joker` · `incj` | Extra Jokers | Joker Interés compuesto conserva su nombre/ID; incluye Jokers adicionales, Doubles, misiones y Jokers expansion48. |
+| `MODS/UPG JOKERS/` · `upgraded_jokers` · `upg` | UPG Jokers | Jokers evolucionables y progreso de etapas. |
+| `MODS/RISK JOKERS/` · `risk_jokers` · `risk` | Risk Jokers | Rareza RISK, Jokers con trade-offs y misiones. |
+| `MODS/Joker Fusion/` · `joker_fusion` · `fuse` | Fusion Jokers | Recetas, resultados, colección, historial y FX. |
+| `MODS/Deck Mutations/` · `deck_mutations` · `dm` | Mutations | Modificadores de run, progresión y UI. |
+| `MODS/Contracts/` · `contracts` · `ct` | Contracts | Condiciones, recompensas y progreso de Contracts. |
+| `MODS/Events/` · `portrait_events` · `evt` | Contraband / Black Market / Dealer | Framework Events, tienda, Dealer y Contraband. |
+| `MODS/Horizons/` · `portrait_horizons` · `hz` | Expansión por categorías nativas | Bosses, Challenges, Vouchers, Tags, Packs, Decks y demás objetos registrados en catálogo. |
+| `MODS/Gameplay Core/` · `portrait_gameplay` · `pg` | Infraestructura compartida + Booster | APIs compartidas y Booster Roulette `p_pg_roulette`. |
+
+La guía [`MODS/README.md`](../../MODS/README.md) describe por separado la ruta
+física, la identidad SMODS, las categorías conceptuales y el propietario. Los
+paquetes se identificaron leyendo cada `mod.json` y la lista explícita de
+`balatron/build.py::_bundled_mods()`.
+
+`MODS/Gameplay Core/` también registra el Booster `p_pg_roulette` en
+`roulette.lua`; no debe describirse como infraestructura sin contenido propio.
+`MODS/Events/mod.json` declara `portrait_gameplay (>=1.0.0)`, ya que Events llama
+a `PortraitGameplay` desde `black_market/consumable_ui.lua` y carga su módulo
+Expansion48. La dependencia directa faltaba antes de la auditoría; no se
+cambiaron mecánicas ni datos persistentes.
 
 ## Jokers: Compound Interest / Extra Jokers
 
@@ -414,6 +426,7 @@ Antes de afirmar un unlock o editar sprite, comprobar estas fuentes:
   carpeta de origen.
 
 El catálogo describe lo que está en fuente; no se volvió a ejecutar una partida
-para confirmar cada efecto. En particular, los 11 cambios locales sin confirmar
-pueden ser posteriores a los logs/IPA citados en los informes. No prometer que
-la build entregada los incluye hasta comprobar su contenido.
+para confirmar cada efecto. Los cambios recientes de mods descritos en
+`CURRENT_STATE.md` están confirmados en Git, pero no se revalidaron en juego ni
+se empaquetaron en una IPA durante esta auditoría. No prometer que una build
+entregada los incluye hasta comprobar su contenido.

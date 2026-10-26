@@ -23,6 +23,10 @@
 - Los cambios de mods raíz se empaquetan desde `../MODS/` al ejecutar
   `balatron/build.py`; copiar manualmente un mod al árbol integrado puede dejar
   fuentes divergentes. Revisar `balatron/mods/README.md` y el flujo de build.
+- Antes de cambiar un mod, consultar también `MODS/README.md` y
+  `docs/handoff/MOD_CATALOG.md` para distinguir paquete, propietario, categoría,
+  assets y claves persistentes. Mantener las rutas/IDs/keys salvo migración
+  explícita y verificada.
 - No dar por validado el funcionamiento en iPhone basándose en QA de escritorio,
   fixtures o empaquetado. La instalación y pruebas en hardware siguen pendientes.
 - No incluir credenciales ni secretos en documentación. Actualizar la

@@ -8,19 +8,20 @@ que no están disponibles.
 1. El repo principal está publicado en GitHub. Preservar las instrucciones de
    `AGENTS.md`, revisar `git status` antes de editar y mantener `local-archive/`
    fuera de Git.
-2. Revisar los diffs de los 11 cambios de mods ya confirmados en `9ab04cb`. La
-   línea aparente incluye persistencia/preview
-   de «Marked Card», aviso de unlock de Horizons, ajustes de Compound Interest y
-   Deck Mutations. Confirmar el objetivo con el usuario si no está claro en la
-   propia lógica antes de cambiar semántica. El checkout alternativo está en
+2. La estructura de paquetes, propiedad y dependencias se auditó estáticamente
+   en esta revisión. Para continuar con mecánicas, leer los diffs de mods de
+   `9ab04cb`: «Marked Card», aviso de unlock de Horizons, Compound Interest y
+   Deck Mutations siguen sin validación en juego. El checkout alternativo está en
    `local-archive/alternate-checkouts/balatro-portrait-mobile-codex-test-20261017/`;
    no integrarlo sin nueva instrucción del usuario.
 3. Comparar `MODS/` con el contenido de mods que empaqueta `balatron/build.py` y
    verificar que `balatron/src/assets/`/atlas no es una copia divergente que
    necesite sincronización. No empaquetar IPA para este chequeo.
-4. Aplicar comprobaciones acotadas permitidas: sintaxis de archivos Lua tocados,
-   rutas/localizaciones/assets y coherencia del uso de `cb_choices`, checkpoint
-   y callback `apply`. Seguir `AGENTS.md`; no lanzar pruebas largas.
+4. La auditoría encontró y corrigió la dependencia declarada de Events→Gameplay
+   Core. La comprobación estática de manifiestos confirma 9 IDs únicos y
+   dependencias resolubles. Queda verificar carga efectiva con el loader/juego
+   cuando haya una sesión de gameplay autorizada; seguir `AGENTS.md`, sin IPA ni
+   suites largas.
 
 ## P1 — cerrar funcionalidad de mods en curso
 
@@ -66,6 +67,8 @@ solo si hace falta para una elección de diseño.
 
 - Los P1 dependen de revisar la intención y compatibilidad de cambios de mods
   ya confirmados, no de un diff local pendiente.
+- La verificación de carga efectiva de la dependencia Events→Core necesita
+  ejecutar el loader/juego; JSON y referencias estáticas no prueban runtime.
 - La prueba P2 depende de un dispositivo iOS y firma/instalación del usuario;
   el repositorio no certifica hardware.
 - P3 es opcional y no bloquea desarrollo de mods.

@@ -34,6 +34,8 @@ en este handoff. No se encontró historial conversacional anterior recuperable.
 | Normalizar alias `/private/var`→`/var` solo en iOS, quitar barras finales, conservar semántica POSIX. | Corregir ruta real observada sin aceptar directorios diferentes ni cambiar mayúsculas POSIX. | Diff/changelog ios-portrait-7. |
 | Guardados incompatibles se preservan; migración antigua guarda copia binaria. | No perder progreso si la migración o incompatibilidad falla. | `portrait_save_migration.lua`, `mods/README.md`. |
 | Actualizar contenido de mods sin sustituir IDs/callbacks originales si se puede integrar con SMODS. | Mantener compatibilidad del juego y guardado estándar; revisión técnica requerida por cambio. | Convenciones dispersas en `MODS/` y `balatron/mods/README.md`. |
+| Mantener categorías de contenido separadas conceptualmente de paquetes físicos/IDs SMODS. | Evita dividir módulos de forma arbitraria y perder ownership o referencias. Compound Interest se muestra como Extra Jokers sin cambiar carpeta/ID; Horizons mantiene un paquete con objetos nativos. | Solicitud de auditoría del usuario y manifiestos revisados; `MODS/README.md`. |
+| Declarar dependencias directas en `mod.json`, sin confiar solo en prioridad de carga. | El loader debe conocer las APIs requeridas por el código consumidor. | Auditoría: Events llama a Gameplay Core directamente; dependencia añadida en `MODS/Events/mod.json`. |
 
 ## Problemas históricos que no deben repetirse
 
@@ -58,6 +60,14 @@ en este handoff. No se encontró historial conversacional anterior recuperable.
   `local-archive/` e ignorados; mantenerlos separados salvo petición explícita.
 
 ## Alternativas y decisiones no recuperables
+
+La petición de auditoría del 26-10-2026 especifica explícitamente mantener el
+Joker Interés compuesto y los IDs/guardados, presentar su paquete como Extra
+Jokers, mantener Horizons como un paquete con categorías nativas y evitar
+movimientos que rompan propiedad. Se verificó en fuente que Compound Interest ya
+usa `display_name`/`name` = `Extra Jokers`; por ello se conservó la ruta técnica.
+La dependencia Events→Gameplay Core fue una corrección estática pequeña, no un
+cambio de balance.
 
 Los documentos sí mencionan alternativas de shell iOS (`--ios-vanilla` vs shell
 Lovely), Steamodded optativo en algunas rutas Android, coordenadas codificadas

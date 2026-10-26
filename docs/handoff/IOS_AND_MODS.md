@@ -46,6 +46,11 @@ localización y ficheros de lógica/UI. Consultar sus READMEs y manifiestos ante
 de editar. Copias de mods bajo `balatron/src/assets/` son recursos integrados,
 no siempre fuente de lógica.
 
+Para identificar qué carpeta pertenece a cada ID de Steamodded, qué categoría
+representa y qué estado conserva, usa `MODS/README.md` y
+`docs/handoff/MOD_CATALOG.md`. Gameplay Core registra también Roulette. Events
+declara ahora su dependencia directa de Gameplay Core en `mod.json`.
+
 El flujo personal registra Steamodded 1.0.0-beta-1224a en
 `balatron/mods/Steamodded/` y Lovely 0.10.0 enlazado en shell. `portrait_mods.lua`
 preinstala mods antes del arranque/loader y el instalador debe reparar copias
