@@ -2,18 +2,25 @@
 
 ## Fuente de estado
 
-Este resumen refleja el árbol inspeccionado el 26-10-2026. No se ejecutó build,
-suite, ni prueba de juego. Se leyeron estado/diffs de Git y documentación que ya
-estaba guardada. Los informes históricos son evidencia documental, no una
-revalidación ejecutada durante esta transferencia.
+Este resumen refleja el árbol inspeccionado el 26-10-2026 y la publicación en
+GitHub de ese día. No se ejecutó build, suite ni prueba de juego. Se leyeron
+estado/diffs de Git, se revisó el staging y se verificó por API la privacidad, el
+HEAD remoto y la presencia del catálogo. Los informes de juego son evidencia
+histórica, no una revalidación ejecutada durante esta transferencia.
 
 ## Rama, commit y cambios locales
 
-- Rama: `main`; HEAD `2cbc19e` (`docs(project): preserve deck artwork, checks
-  and local delivery guide`, 16-10-2026).
-- El checkout principal tiene **11 archivos modificados sin confirmar** bajo
-  `MODS/`, con 72 inserciones y 31 eliminaciones en el diff inspeccionado.
-  **No revertir, limpiar ni sobrescribirlos.**
+- Rama: `main`; HEAD publicado `9ab04cb` (`docs(handoff): prepare private
+  GitHub transfer`). El padre inmediato es `2cbc19e` (`docs(project): preserve
+  deck artwork, checks and local delivery guide`, 16-10-2026).
+- En el momento de la comprobación posterior al push, `git status --short` no
+  mostró cambios locales. Los 11 diffs de `MODS/` descritos abajo se incluyeron
+  en `9ab04cb`; no se compilaron ni validaron en juego como parte de la subida.
+- Remoto: `origin` → `https://github.com/raulmeerino-dev/Balatron.git`.
+  Repositorio verificado como **privado**. `main` remoto y HEAD local coincidían
+  en `9ab04cbd2bab9791cb06fd349bf11d377b7547be`; el archivo
+  `docs/handoff/MOD_CATALOG.md` se comprobó presente en GitHub. La CLI quedó
+  autenticada como `raulmeerino-dev`.
 - También existe `balatro-portrait-mobile-codex-test-20261017/`, otro checkout
   Git en el mismo HEAD `2cbc19e`. El usuario decidió conservarlo aparte y
   excluirlo del repo principal. Se añadió a `.gitignore`; no borrarlo ni
@@ -25,14 +32,12 @@ revalidación ejecutada durante esta transferencia.
   `balatron/src/engine/ui.lua`, `balatron/src/portrait_config.lua`,
   `balatron/src/portrait_popup_layout.lua` y dos QA fixtures. No se integraron al
   checkout principal porque el usuario pidió mantenerlo separado.
-- No hay remoto configurado. `gh auth status` indicó que no hay sesión de GitHub.
-  El usuario autorizó crear un repo privado nuevo `Balatron`; falta completar
-  `gh auth login` antes de publicar.
 - Las diez IPA que estaban sueltas en la raíz se ordenaron bajo
   `builds/archive/root-ipa-history/`, conservando sus nombres. Siguen excluidas
   por `.gitignore`; no se generó ni recompiló ninguna.
-- Se generó este handoff en `docs/handoff/` y se amplió `AGENTS.md`; eso es el
-  único cambio intencional de documentación de esta solicitud.
+- Se generó este handoff en `docs/handoff/`, se amplió `AGENTS.md` y se ajustaron
+  `README.md`, `.gitignore` y `builds/README.md` para documentar la publicación
+  privada y la exclusión de artefactos.
 
 ### Qué parecen estar haciendo los diffs (inferencia por código, no por chat)
 
@@ -48,9 +53,9 @@ revalidación ejecutada durante esta transferencia.
   `MODS/Deck Mutations/notifications.lua` y `unlocks.lua`: cambios de opciones,
   precisión y avisos/desbloqueos. Revisar el diff para entender intención antes
   de continuar; no hay requisito conversacional recuperable.
-- Estos cambios de `MODS/` no están incorporados a una build verificada hasta
-  demostrarlo. No se debe usar una IPA existente como evidencia de que los
-  contiene.
+- Estos cambios de `MODS/` se publicaron en el commit, pero no se incorporaron a
+  una build verificada durante esta sesión. No se debe usar una IPA existente
+  como evidencia de que los contiene.
 
 ## Funcionalidad implementada y verificada según registros
 
@@ -79,10 +84,11 @@ probar ahora.** El informe principal es `balatron/INFORME-PRUEBAS.md`.
   efectivo y persistencia en hardware siguen pendientes según los documentos.
 - **Decks 2 y 3:** assets de diseño existen, pero README local declara que siguen
   como trabajo pendiente; no están demostrados como opciones integradas.
-- **Modificaciones uncommitted:** status y compatibilidad guardado/preview de
-  «Marked Card», UI de Horizons y cambios vecinos no están comprobados.
-- **Build actual desde HEAD + diffs:** no se sabe si reproduce exactamente la
-  última IPA. La carpeta `releases/README.md` habla de una IPA del 16-10 con
+- **Cambios recientes de mods ahora confirmados:** estado y compatibilidad de
+  guardado/preview de «Marked Card», UI de Horizons y cambios vecinos no están
+  comprobados en juego.
+- **Build actual desde HEAD:** no se sabe si reproduce exactamente la última IPA.
+  La carpeta `releases/README.md` habla de una IPA del 16-10 con
   83 comprobaciones, pero el binario/checksum deben verificarse en el checkout.
 - **Revisiones/documentación no sincronizadas:** `balatron/README-IOS-LOCAL.md`
   anuncia `ios-portrait-rc2-ui`; `balatron/src/portrait_config.lua` tiene
@@ -99,16 +105,13 @@ probar ahora.** El informe principal es `balatron/INFORME-PRUEBAS.md`.
 
 ## Pendiente general conocido
 
-1. Autenticar GitHub, revisar el staging explícito, confirmar los cambios
-   autorizados y publicar el checkout principal en el repo privado `Balatron`.
-   No añadir el checkout de pruebas ni binarios IPA.
-2. Completar pruebas en dispositivo iOS real, empezando por arranque limpio y
+1. Completar pruebas en dispositivo iOS real, empezando por arranque limpio y
    safe areas/ciclo de vida, luego interacciones, guardado y sesión larga.
-3. Revisar y concluir los diffs locales de `MODS/`; comparar con cambios de la
+2. Revisar y concluir los cambios recientes de `MODS/`; comparar con cambios de la
    carpeta test solo si el usuario revoca la instrucción de mantenerla aparte.
-4. Mantener comprobación de integración en fuentes: sintaxis, rutas, assets,
+3. Mantener comprobación de integración en fuentes: sintaxis, rutas, assets,
    staging desde `MODS/` y referencias. No hacer una build IPA salvo petición.
-5. Diseñar e integrar Deck 2/3 solo si el usuario decide retomar esos proyectos.
+4. Diseñar e integrar Deck 2/3 solo si el usuario decide retomar esos proyectos.
 
 ## Información que no se pudo recuperar
 
