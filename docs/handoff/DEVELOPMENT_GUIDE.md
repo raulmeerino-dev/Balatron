@@ -3,8 +3,10 @@
 ## Antes de editar
 
 1. Leer raíz `AGENTS.md` y este directorio `docs/handoff/`.
-2. Ejecutar `git status --short`; preservar los 11 cambios actuales en `MODS/`
-   y `balatro-portrait-mobile-codex-test-20261017/` hasta averiguar su intención.
+2. Ejecutar `git status --short`; los 11 cambios recientes en `MODS/` ya están
+   confirmados en `9ab04cb` pero siguen sin validación de juego. Preservar el
+   checkout alternativo de `local-archive/alternate-checkouts/` y no integrarlo
+   salvo que el usuario lo pida.
 3. Leer documentación específica: `balatron/README-IOS-LOCAL.md`,
    `INFORME-PRUEBAS.md`, `CHANGELOG.md`, `mods/README.md` o README del mod.
 4. Determinar cuál archivo es fuente definitiva. Para los mods locales, raíz
@@ -92,7 +94,8 @@ focalizada de archivos tocados cuando sea posible.
 ## No hacer
 
 - No generar/recompilar IPA sin la frase exacta «Genera la IPA».
-- No limpiar/revertir cambios preexistentes ni retirar carpetas untracked.
+- No limpiar/revertir cambios preexistentes ni borrar o integrar el material de
+  `local-archive/` sin petición explícita.
 - No reportar que una simulación de viewport demuestra compatibilidad física.
 - No incluir passwords, certificados, tokens, saves personales o datos del
   usuario en documentación/commits.

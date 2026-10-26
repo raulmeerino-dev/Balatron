@@ -16,9 +16,11 @@ esos números siguen siendo los de una nueva build.
 
 ## Procedencia y certeza
 
-- **Verificable en archivos/historial Git:** commit actual al preparar esta nota
-  `2cbc19e` (16-10-2026), historial local, contenido de `balatron/`, README,
-  informes, scripts y diffs sin confirmar.
+- **Verificable en archivos/historial Git:** el código se publicó en `main`; el
+  commit de referencia previo a este ajuste local es `70b2321`, con publicación
+  inicial en `9ab04cb` y árbol base `2cbc19e` (16-10-2026). El repositorio
+  contiene `balatron/`, README, informes y scripts. Los cambios recientes de
+  MODS están confirmados en Git, aunque no revalidados en juego en esta sesión.
 - **Documentado en el proyecto, no revalidado en este handoff:** resultados de
   QA y builds descritos en `balatron/INFORME-PRUEBAS.md`, `CHANGELOG.md` y
   `releases/README.md`.
@@ -81,12 +83,15 @@ Los detalles y knobs están en `balatron/README-IOS-LOCAL.md` y
 | `balatron/qa/`, `validation-output/` | Capturas, perfiles aislados e informes generados; ignorados/no fuente. No asumir que existen en otra máquina. |
 | `MODS/` | Fuentes definitivas de los mods locales. El build desde `balatron/` las incorpora mediante rutas relativas. |
 | `DECK1/`, `DECK 2/`, `DECK 3/` | Arte fuente, iteraciones y documentos de mazos; el grado de integración es distinto por mazo. |
-| `Balatro/` | Copia local del juego original si el usuario la conserva; está ignorada/no distribuida. |
 | `releases/` | Ubicación de entrega fuera de Git; README indica la última IPA y checksum, pero revisar disponibilidad real. |
-| `builds/`, `portrait/`, `BALATRON-ORGANIZADO/`, `balatron-v*`/IPA raíz | Material histórico, pruebas, o entregas duplicadas. No son automáticamente la fuente activa. |
-| `balatro-portrait-mobile-codex-test-20261017/` | Árbol sin seguimiento observado en este checkout. No se verificó su propósito ni debe confundirse con fuente oficial. |
+| `builds/` | IPA locales e historial de builds; los binarios no se suben a Git. |
+| `local-archive/` | Checkouts alternativos preservados localmente e ignorados por el repo principal. No son la fuente activa. |
+| `Balatro/` | Copia local del juego original, ignorada y no distribuida. |
 
-El repositorio exterior es el Git activo (`main`, commit `2cbc19e`). `balatron/`
+El repositorio exterior es el Git activo (`main`), publicado como repo privado
+`raulmeerino-dev/Balatron`. Al comenzar la organización local, `main` apuntaba a
+`70b2321`; el commit siguiente registra solo documentación y organización local.
+`balatron/`
 es un subárbol versionado dentro de ese repo; no se ha tratado como submódulo.
 
 ## Dependencias y requisitos

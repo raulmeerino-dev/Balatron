@@ -53,8 +53,9 @@ en este handoff. No se encontró historial conversacional anterior recuperable.
   de cartas.** La geometría se adapta por inventario actual y controla filas.
 - **No usar tests/harnesses que reemplacen código de producción en el paquete.**
   Los hooks de QA descritos viven en `qa/*/test.love`, no en la IPA final.
-- **No limpiar el árbol de trabajo para “empezar limpio”.** El status actual
-  tiene diffs locales y árbol untracked cuya conservación es obligatoria.
+- **No limpiar ni integrar copias locales para “empezar limpio”.** El checkout
+  alternativo y otra copia con su propio `.git` están preservados bajo
+  `local-archive/` e ignorados; mantenerlos separados salvo petición explícita.
 
 ## Alternativas y decisiones no recuperables
 

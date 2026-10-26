@@ -13,8 +13,10 @@ responsive de Run Info para el viewport del iPhone 14 Pro.
 | [`DECK1/`](DECK1/) | Arte fuente del primer mazo. |
 | [`DECK 2/`](DECK%202/) | Arte y trabajo del segundo mazo. |
 | [`DECK 3/`](DECK%203/) | Arte y trabajo del tercer mazo. |
+| `Balatro/` | Instalación/copia local del juego original; ignorada y no distribuida. |
 | `builds/` | IPA locales e historial de builds; los binarios se excluyen de Git. |
 | `releases/` | Notas y checksum de la entrega registrada. |
+| `local-archive/` | Checkouts Git alternativos conservados localmente y excluidos de Git. |
 
 Las carpetas mantienen sus rutas originales: `balatron/build.py` carga los mods
 desde `../MODS/`. Los sprites y atlas integrados están en `balatron/assets/`,

@@ -3,14 +3,18 @@
 Prioridades sugeridas según el estado comprobable, no preferencias conversacionales
 que no están disponibles.
 
-## P0 — preservar y entender el árbol activo
+## P0 — preservar y verificar el árbol activo
 
-1. No limpiar el árbol. Revisar `git status` y mantener los diffs actuales en
-   `MODS/` y el directorio untracked `balatro-portrait-mobile-codex-test-20261017/`.
-2. Leer los diffs de los 11 mods. La línea aparente incluye persistencia/preview
+1. El repo principal está publicado en GitHub. Preservar las instrucciones de
+   `AGENTS.md`, revisar `git status` antes de editar y mantener `local-archive/`
+   fuera de Git.
+2. Revisar los diffs de los 11 cambios de mods ya confirmados en `9ab04cb`. La
+   línea aparente incluye persistencia/preview
    de «Marked Card», aviso de unlock de Horizons, ajustes de Compound Interest y
    Deck Mutations. Confirmar el objetivo con el usuario si no está claro en la
-   propia lógica antes de cambiar semántica.
+   propia lógica antes de cambiar semántica. El checkout alternativo está en
+   `local-archive/alternate-checkouts/balatro-portrait-mobile-codex-test-20261017/`;
+   no integrarlo sin nueva instrucción del usuario.
 3. Comparar `MODS/` con el contenido de mods que empaqueta `balatron/build.py` y
    verificar que `balatron/src/assets/`/atlas no es una copia divergente que
    necesite sincronización. No empaquetar IPA para este chequeo.
@@ -60,7 +64,8 @@ solo si hace falta para una elección de diseño.
 
 ## Dependencias
 
-- Los P1 dependen de confirmar la intención del trabajo sin confirmar.
+- Los P1 dependen de revisar la intención y compatibilidad de cambios de mods
+  ya confirmados, no de un diff local pendiente.
 - La prueba P2 depende de un dispositivo iOS y firma/instalación del usuario;
   el repositorio no certifica hardware.
 - P3 es opcional y no bloquea desarrollo de mods.

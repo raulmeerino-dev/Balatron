@@ -7,6 +7,8 @@
 - El proyecto principal de iOS está en `balatron/`; las fuentes de mods locales
   que consume su build están en `MODS/`. No editar copias de prueba o entregas
   antiguas salvo petición explícita.
+- `local-archive/` guarda checkouts alternativos locales y está excluido de Git.
+  No trabajar desde ahí ni integrar/borrar su contenido salvo petición explícita.
 - Implementar cambios directamente en fuentes y assets definitivos.
 - No generar ni recompilar la IPA salvo petición explícita «Genera la IPA».
 - Comprobar solo sintaxis, referencias, rutas, assets e integración evidente.
@@ -30,7 +32,7 @@
 ## Documentación de continuidad
 
 - `docs/handoff/PROJECT_OVERVIEW.md`: mapa, arquitectura, toolchain y adaptación.
-- `docs/handoff/CURRENT_STATE.md`: base verificada, trabajo local sin confirmar,
+- `docs/handoff/CURRENT_STATE.md`: estado publicado, organización local,
   incertidumbres y próximos pasos.
 - `docs/handoff/DECISIONS.md`: decisiones documentadas y motivos conocidos.
 - `docs/handoff/IOS_AND_MODS.md`: particularidades de iOS, portrait y mods.
