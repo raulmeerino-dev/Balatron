@@ -144,9 +144,14 @@ return function(I)
     end
     local click,hover=Card.click,Card.hover
     function Card:click(...)
-        if not owned(self) then return click(self,...) end
+        -- Outside the mode-switch window (shop, overlays, scoring locks, etc.)
+        -- Doubles retain the complete native click/selection behavior.
+        if not owned(self) or not O.can_switch(self) then return click(self,...) end
         local g=self._options_gesture;self._options_gesture=nil
-        if g and (g.moved or g.held or (g.elapsed or love.timer.getTime()-g.time)>=O.hold_time) then return end
+        -- A drag belongs to CardArea, and a long press has already selected
+        -- the card below so the native sell button remains available.
+        if g and g.moved then return click(self,...) end
+        if g and (g.held or (g.elapsed or love.timer.getTime()-g.time)>=O.hold_time) then return end
         return O.toggle(self)
     end
     function Card:hover(...)
@@ -166,8 +171,9 @@ return function(I)
         if g and not g.held and not g.moved and owned(self) and G.CONTROLLER.is_cursor_down
             and G.CONTROLLER.cursor_down.target==self and love.timer.getTime()-g.time>=O.hold_time then
             g.held=true
-            -- Keep the native Sell button available via selection on hold.
-            if not self.highlighted and O.can_switch(self) then click(self) end
+            -- Select through the native highlight path, which creates the
+            -- ordinary Use/Sell controls for Joker cards in the tray.
+            if not self.highlighted and O.can_switch(self) then self:highlight(true) end
             hover(self)
         end
         return result

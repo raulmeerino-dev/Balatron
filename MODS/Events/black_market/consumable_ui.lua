@@ -48,6 +48,16 @@ return function(B,C)
         if id=='fake_diploma' then
             local target=C.resolve(source,choice)
             if target then nodes[#nodes+1]=PortraitGameplay.text((target.ability.extra.stage or 1)..' → '..((target.ability.extra.stage or 1)+1),0.32) end
+        elseif id=='marked_card' then
+            local target=C.resolve(source,choice)
+            local shown=area.cards[1]
+            if target and shown then
+                shown:set_ability(G.P_CENTERS[choice.enhancement]);shown:set_seal(choice.seal,true)
+                nodes[#nodes+1]=PortraitGameplay.text(localize{type='name_text',set='Enhanced',key=choice.enhancement},0.28)
+                nodes[#nodes+1]=PortraitGameplay.text(localize{type='name_text',set='Other',key=choice.seal},0.28)
+                nodes[#nodes+1]=PortraitGameplay.text((G.SETTINGS.language or ''):sub(1,2)=='es'
+                    and 'Resultado (conserva la edición)' or 'Result (Edition is preserved)',0.25)
+            end
         elseif id=='stain_remover' then
             local target=C.resolve(source,choice);local stickers={}
             if target then for _,key in ipairs({'eternal','rental','perishable'}) do if target.ability[key] then stickers[#stickers+1]=key end end end

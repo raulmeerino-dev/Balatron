@@ -1,5 +1,11 @@
 return function(I)
-    local P=PortraitGameplay
+    -- Extra Jokers can be evaluated before Gameplay Core assigns its shared
+    -- API, even though the mod dependency is declared. Resolve it when a
+    -- Joker runs so we do not retain a nil load-time snapshot.
+    local function gameplay()
+        return assert(PortraitGameplay,
+            'Extra Jokers requires Gameplay Core before calculating precision Jokers')
+    end
     local function register(def)
         SMODS.Atlas{key=def.key,path=def.key..'.png',px=71,py=95}
         def.atlas=def.key;def.pos={x=0,y=0}
@@ -13,6 +19,7 @@ return function(I)
         loc_vars=function(_,q,card) return {vars={card.ability.extra.xmult}} end,
         calculate=function(_,card,c)
             if card.debuff then return end
+            local P=gameplay()
             local s=card.ability.extra
             if c.joker_main then return {x_mult=s.xmult} end
             if card.area==G.jokers and not card.getting_sliced and P.won(c) and P.once(s,'last_win',P.token()) then
@@ -26,6 +33,7 @@ return function(I)
     register{key='second_course',rarity=2,cost=6,config={extra={counts={}}},
         calculate=function(_,card,c)
             if card.debuff then return end
+            local P=gameplay()
             local s=card.ability.extra
             if c.before and P.real(c) and card.area==G.jokers then
                 local blind=P.token()

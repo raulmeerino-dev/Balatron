@@ -32,15 +32,20 @@ return function(U,M)
                         return valid
                     end,
                     definition=function()
-                        local sprite=M.icon(id,3.2).config.object
+                        local sprite=M.icon(id,1.8).config.object
                         sprite:juice_up(0.3,0.3)
                         local es=(G.SETTINGS.language or ''):sub(1,2)=='es'
-                        return create_UIBox_card_unlock(nil,{
-                            heading=es and 'Modificador' or 'Modifier',sprite=sprite,
-                            description={n=G.UIT.R,config={align='cm',padding=0.16,maxw=7},nodes={
-                                {n=G.UIT.T,config={text=localize('k_dm_'..id),scale=0.55,colour=G.C.UI.TEXT_DARK}}
-                            }}
-                        })
+                        local requirement=U.requirements[id]
+                        local condition=requirement and requirement[es and 4 or 5]
+                        local nodes={{n=G.UIT.T,config={text=localize('k_dm_'..id),scale=0.5,colour=G.C.UI.TEXT_DARK}}}
+                        if condition and condition~='' then
+                            nodes[#nodes+1]={n=G.UIT.R,config={align='cm',padding=0.08},nodes={{n=G.UIT.T,config={text=es and 'Misión cumplida' or 'Mission complete',scale=0.28,colour=G.C.UI.TEXT_DARK}}}}
+                            for _,line in ipairs(require('portrait_tooltips').wrap({condition},6.2,0.28)) do
+                                nodes[#nodes+1]={n=G.UIT.R,config={align='cm'},nodes={{n=G.UIT.T,config={text=line,scale=0.28,colour=G.C.UI.TEXT_DARK}}}}
+                            end
+                        end
+                        return create_UIBox_card_unlock(nil,{heading=es and 'Modificador' or 'Modifier',sprite=sprite,
+                            description={n=G.UIT.R,config={align='cm',padding=0.16,maxw=7},nodes=nodes}})
                     end,
                     shown=function(box) box.dm_unlock_notice={profile=profile,id=id} end,
                 })

@@ -34,15 +34,6 @@ return function(P,M,order)
         p.unlocked[id]=true;p.discovered[id]=true
         if not quiet then p.pending_notifications[#p.pending_notifications+1]=id else p.seen_notifications[id]=true end
         save()
-        if not quiet and G.STAGE==G.STAGES.RUN then
-            G.E_MANAGER:add_event(Event{blocking=false,blockable=false,func=function()
-                local es=(G.SETTINGS.language or ''):sub(1,2)=='es'
-                attention_text{text=(es and 'MODIFICADOR DESBLOQUEADO' or 'MODIFIER UNLOCKED')..'\n'..localize('k_dm_'..id),
-                    scale=0.32,hold=1.5,major=G.HUD,align='tm',offset={x=0,y=-0.5}}
-                if M.feedback then card_eval_status_text(G.deck,'extra',nil,nil,nil,M.feedback({id},'',G.C.GOLD,0.7)) end
-                play_sound('highlight1',1.1,0.5);return true
-            end})
-        end
     end
     function U.check()
         local p,r=U.profile(),U.run();if not p then return end

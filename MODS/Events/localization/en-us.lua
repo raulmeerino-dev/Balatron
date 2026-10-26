@@ -8,7 +8,7 @@ return {
         cb_evt_alibi={name="Alibi",text={"Choose a previously played hand type","Jokers ignore its earlier uses","until the end of this Ante"}},
         cb_evt_loaded_dice={name="Loaded Dice",text={"{C:attention}Lucky cards{} and {C:attention}Wheel of Fortune","check twice; either success counts","Until the {C:attention}end of this Ante"}},
         cb_evt_counterfeit_voucher={name="Counterfeit Voucher",text={"Choose {C:attention}1{} of up to {C:attention}3 eligible Vouchers","you do not own"}},
-        cb_evt_marked_card={name="Marked Card",text={"Choose a playing card from your deck","Add a random {C:attention}Enhancement","and a random {C:attention}Seal"}},
+        cb_evt_marked_card={name="Marked Card",text={"Choose a playing card","Replace its Enhancement and Seal","with the shown random results","Its Edition is preserved"}},
         cb_evt_inside_information={name="Inside Information",text={"Preview the {C:attention}next shop","Reserve {C:attention}1{} of its items"}},
         cb_evt_stolen_negative={name="Stolen Negative",text={"Choose an editionless Joker","Give it {C:dark_edition}Negative"}},
         cb_evt_forgery={name="Forgery",text={"Copy another owned {C:attention}consumable","Cannot copy {C:attention}Contraband","Uses the slot this card releases"}},

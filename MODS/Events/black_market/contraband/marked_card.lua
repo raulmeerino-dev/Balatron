@@ -5,9 +5,8 @@ return function(B,C)
   for _,key in ipairs(get_current_pool('Seal')) do if key~='UNAVAILABLE' then return true end end
   return false
  end,
- apply=function(source,target)
-  local enhancement=SMODS.poll_enhancement{key='evt_cb_marked',guaranteed=true,options=B.pool('Enhanced')}
-  local seal=SMODS.poll_seal{key='evt_cb_marked',guaranteed=true}
-  target:set_ability(G.P_CENTERS[enhancement]);target:set_seal(seal,true);target:juice_up()
+ apply=function(source,target,choice)
+  assert(choice and choice.enhancement and choice.seal,'Marked Card requires its saved Enhancement and Seal choice')
+  target:set_ability(G.P_CENTERS[choice.enhancement]);target:set_seal(choice.seal,true);target:juice_up()
  end})
 end

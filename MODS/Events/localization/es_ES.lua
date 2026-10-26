@@ -8,7 +8,7 @@ return {
         cb_evt_alibi={name="Coartada",text={"Elige un tipo de mano ya jugado","Los Jokers ignoran sus usos previos","hasta terminar esta apuesta inicial"}},
         cb_evt_loaded_dice={name="Dados Cargados",text={"Cartas {C:attention}de la suerte{} y {C:attention}La Rueda","comprueban dos veces; basta un éxito","Hasta el {C:attention}final de este Ante"}},
         cb_evt_counterfeit_voucher={name="Vale Falsificado",text={"Elige {C:attention}1{} de hasta {C:attention}3 vales válidos","que aún no poseas"}},
-        cb_evt_marked_card={name="Carta Marcada",text={"Elige una carta de tu baraja","Aplica una {C:attention}mejora{} y un {C:attention}sello","aleatorios permanentes"}},
+        cb_evt_marked_card={name="Carta Marcada",text={"Elige una carta de tu baraja","Sustituye su mejora y sello","por los resultados aleatorios mostrados","Conserva su edición"}},
         cb_evt_inside_information={name="Información Privilegiada",text={"Previsualiza la {C:attention}próxima tienda","Reserva {C:attention}1{} de sus objetos"}},
         cb_evt_stolen_negative={name="Negativo Robado",text={"Elige un comodín sin edición","Aplica {C:dark_edition}Negativo"}},
         cb_evt_forgery={name="Falsificación",text={"Copia otro {C:attention}consumible{} propio","No puede copiar {C:attention}Contraband","Usa el hueco que deja esta carta"}},

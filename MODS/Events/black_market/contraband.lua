@@ -162,6 +162,20 @@ return function(B)
     function C.prepare(card)
         local def=C.entries[C.id(card)]
         if def.targets then
+            if def.id=='marked_card' then
+                if not card.ability.cb_choices then
+                    local choices={}
+                    for _,target in ipairs(C.targets(def.id,card)) do
+                        choices[#choices+1]={sort_id=target.sort_id,playing_card=target.playing_card,
+                            enhancement=SMODS.poll_enhancement{key='evt_cb_marked',guaranteed=true,options=B.pool('Enhanced')},
+                            seal=SMODS.poll_seal{key='evt_cb_marked',guaranteed=true}}
+                    end
+                    card.ability.cb_choices=choices
+                    card.ability.cb_choices_ante=G.GAME.round_resets.ante
+                    B.checkpoint()
+                end
+                return card.ability.cb_choices
+            end
             local out={}
             for _,target in ipairs(C.targets(def.id,card)) do out[#out+1]={sort_id=target.sort_id,playing_card=target.playing_card} end
             return out
@@ -194,7 +208,7 @@ return function(B)
         local choice=card.ability.cb_selected
         local target=def.targets and C.resolve(card,choice) or choice
         assert(not (def.targets or def.choices) or target,'Contraband use requires confirmed choice')
-        if def.apply(card,target)==false then return false end
+        if def.apply(card,target,choice)==false then return false end
         card.ability.cb_applied=true;
         if PortraitModifierUnlocks then PortraitModifierUnlocks.record('contraband',1,'card:'..tostring(card.sort_id)) end
         if PortraitRunRules then PortraitRunRules.contraband_used() end

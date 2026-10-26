@@ -21,8 +21,16 @@ return function(H)
  X.notice_definition=function(id)
   if not H.meta[id] then return old and old(id) end
   local d=H.meta[id]
-  return create_UIBox_generic_options{back_func='exit_overlay_menu',contents={
-   H.P.text(H.text('DESBLOQUEADO','UNLOCKED'),0.48),H.icon(id,2,true),H.P.text(H.text(d.name,d.name_en),0.42)}}
+  local description={n=G.UIT.R,config={align='cm',padding=0.12,maxw=7},nodes={}}
+  description.nodes[#description.nodes+1]=H.P.text(H.text('Misión cumplida','MISSION COMPLETE'),0.3)
+  for _,line in ipairs(H.lines(H.text(d.unlock,d.unlock_en or d.unlock),38)) do
+   description.nodes[#description.nodes+1]=H.P.text(line,0.28)
+  end
+  local heading=d.category=='packs' and H.text('Sobre desbloqueado','Booster Unlocked')
+   or d.category=='contracts' and H.text('Contrato desbloqueado','Contract Unlocked')
+   or d.category=='contraband' and H.text('Contrabando desbloqueado','Contraband Unlocked')
+   or H.text('Contenido desbloqueado','Content Unlocked')
+  return create_UIBox_card_unlock(nil,{heading=heading,sprite=H.icon(id,1.8,true),description=description})
  end
  H.installers[#H.installers+1]=function()
   -- Booster localization belongs to Other in SMODS, including its unlock text.
