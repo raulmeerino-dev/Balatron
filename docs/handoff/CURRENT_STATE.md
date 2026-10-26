@@ -109,8 +109,8 @@ revalidación ejecutada durante estas auditorías.
   optimizaciones de vida útil de texturas requieren pruebas de
   compatibilidad/runtime y no se aplicaron.
 - El `.ipa` y `Game.love` locales se inspeccionaron en solo lectura. No se generó
-  ni recompiló IPA; no se realizó perfil de memoria en iPhone. El nuevo cambio de
-  builder y el informe gráfico requieren push si aún no se publicaron.
+  ni recompiló IPA; no se realizó perfil de memoria en iPhone. El cambio del
+  builder y el informe gráfico se publicaron en `origin/main`, commit `bd11fc8`.
 
 ## Auditoría general de mods (26-10-2026)
 
