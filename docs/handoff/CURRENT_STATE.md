@@ -2,12 +2,11 @@
 
 ## Fuente de estado
 
-Este resumen registra la auditoría de mods del 26-10-2026, iniciada desde
-`aed3f9b` y publicada en el commit `90534ec`. No se ejecutó build, suite ni
-partida. La revisión cubrió los
-manifiestos de nueve mods, dependencias declaradas, builder, catálogo Expansion48
-y documentación relacionada. Los informes de juego son evidencia histórica, no
-una revalidación ejecutada durante esta auditoría.
+Este resumen registra las auditorías estáticas de mods y gráficos del
+26-10-2026. La auditoría de mods comenzó en `aed3f9b` y se publicó en `90534ec`;
+la auditoría gráfica comenzó desde el estado posterior `ed05079`. No se ejecutó
+build, suite ni partida. Los informes de juego son evidencia histórica, no una
+revalidación ejecutada durante estas auditorías.
 
 ## Rama, commit y cambios locales
 
@@ -83,6 +82,58 @@ una revalidación ejecutada durante esta auditoría.
   dependencias resolubles y `git diff --check`. No se ejecutó Lua, juego, suite,
   build ni prueba física. La consulta `gh repo view` falló por conectividad, pero
   `git push origin main` confirmó el fast-forward de `aed3f9b` a `90534ec`.
+
+## Auditoría gráfica (26-10-2026)
+
+- El informe detallado es `docs/handoff/GRAPHICS_AUDIT.md`; se añadió también a
+  `AGENTS.md` y al README. Se inventariaron recursos runtime, arte fuente,
+  `card_skins.lua`, el sistema Atlas de Steamodded y el empaquetado de `build.py`.
+- Se confirmó que `MODS/Contracts/art-source/expansion/` y
+  `MODS/Joker Fusion/art-source/` no contienen rutas de sprite runtime. Sus
+  referencias estaban en manifests/prompts excluidos por el builder; los
+  registros usan las imágenes bajo `assets/{1x,2x}`. `build.py` ahora excluye
+  ambas carpetas de arte fuente sin borrar los originales.
+- Ahorro medido al quitar esas entradas del `Game.love` existente en una
+  simulación ZIP en memoria: 12.048.500 bytes (11,490 MiB); la estimación para la
+  entrada comprimida dentro de IPA es 12.051.094 bytes (11,493 MiB). La IPA
+  existente no se modificó: el ahorro solo llegará a una build futura.
+- No hay escalas 4x dentro de MODS; los pares 1x/2x (220 atlas por escala) y los
+  68 pares base duplican dimensiones exactamente. Deck 1 usa dpi=4; las cinco
+  skins parciales usan 2x.
+- A escala 2, la estimación corregida de texturas residentes es ~289,246 MiB con
+  mipmaps completos bajo RGBA8: se cuentan 65 texturas base a 2x y los dos logos
+  cargados siempre a 1x, más mods y skins. `balatro_alt.png` se conserva pero no
+  tiene referencia textual encontrada. No es una medición GPU.
+  `CardSkins.load_atlases()` carga todas las skins, no solo la seleccionada.
+  Steamodded también conserva `ImageData` junto a `Image`; las posibles
+  optimizaciones de vida útil de texturas requieren pruebas de
+  compatibilidad/runtime y no se aplicaron.
+- El `.ipa` y `Game.love` locales se inspeccionaron en solo lectura. No se generó
+  ni recompiló IPA; no se realizó perfil de memoria en iPhone. El nuevo cambio de
+  builder y el informe gráfico requieren push si aún no se publicaron.
+
+## Auditoría general de mods (26-10-2026)
+
+- Se leyó `AGENTS.md`, el handoff disponible, `MODS/README.md` y
+  `balatron/mods/README.md` antes de continuar la revisión. Se contrastaron los
+  nueve manifiestos activos, entrypoints, IDs, dependencias declaradas, módulos
+  Gameplay Core/Expansion48 y el catálogo de contenido.
+- Comprobación estática: nueve IDs únicos y todos los `main.lua` declarados
+  existen; las dependencias declaradas resuelven a los paquetes incluidos o a
+  Steamodded. Los 137 archivos Lua de `MODS/` compilan con el LuaJIT local.
+- Las pruebas focalizadas `tests/test_card_skin_assets.py` (3 casos) y
+  `tests/test_compound_interest_assets.py` (2 casos) pasaron. La prueba de
+  Compound se ejecutó con `PYTHONPATH=.` desde `balatron/`, como requiere su
+  import de `tools`.
+- No se encontró otro error estático confirmado que justificara mover registros,
+  alterar propietarios, renombrar IDs o tocar progreso. La dependencia directa
+  Events → Gameplay Core ya se había corregido en la auditoría de mods publicada
+  (`MODS/Events/mod.json`). No se alteraron mecánicas, RNG, probabilidades,
+  desbloqueos ni formatos de guardado en esta revisión.
+- Esto no acredita carga real en Steamodded ni compatibilidad de una partida. La
+  UI/guardado de Marked Card, los cambios de notificación de Horizons y otros
+  cambios recientes siguen pendientes de verificación en juego; véase
+  `NEXT_STEPS.md`.
 
 ### Qué parecen estar haciendo los diffs (inferencia por código, no por chat)
 

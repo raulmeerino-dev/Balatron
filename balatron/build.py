@@ -665,6 +665,14 @@ def _bundled_mods():
                 dirs[:] = [d for d in dirs if d != 'source']
             if name == 'contracts' and directory == folder:
                 dirs[:] = [d for d in dirs if d != 'NEW CONTRACTS SPRITES']
+                # Expansion concept art is source material referenced only by
+                # the excluded art manifests/prompts. Runtime atlases live under
+                # assets/{1x,2x}/expansion; do not ship the large originals.
+                dirs[:] = [d for d in dirs if d != 'art-source']
+            if name == 'joker_fusion' and directory == folder:
+                # Keep the high-resolution source illustration in the checkout;
+                # the registered atlas uses assets/{1x,2x}/broken_copier.png.
+                dirs[:] = [d for d in dirs if d != 'art-source']
             if name == 'incremental_joker' and directory == folder:
                 dirs[:] = [d for d in dirs if d != 'art-source']
             if name == 'deck_mutations' and directory == folder:

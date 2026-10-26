@@ -52,11 +52,22 @@ requiere IPA presente), pruebas Python de empaquetado, y scripts Lua de
 anteriores. Revisar la ayuda/encabezado de cada script antes de invocarlo. Por
 instrucción del proyecto, limitarse a sintaxis, referencias, rutas, assets e
 integración evidente; no ejecutar suites largas ni añadir herramientas sin
-petición. Esta transferencia no ejecutó pruebas.
+petición.
 
 Para sintaxis Lua, usar el LuaJIT disponible/local según scripts existentes; no
-asumir que `luac` está en PATH. Para validación de fuentes basta una comprobación
-focalizada de archivos tocados cuando sea posible.
+asumir que `luac` está en PATH. Desde `balatron/`, la auditoría del 26-10-2026
+comprobó todos los Lua de los mods con:
+
+```powershell
+python tools/lua_check.py ../MODS
+```
+
+También pasaron los checks existentes de assets `tests/test_card_skin_assets.py`
+y `tests/test_compound_interest_assets.py`; este último requiere
+`$env:PYTHONPATH='.'` en PowerShell para que encuentre `tools`. Son verificaciones
+de sintaxis/assets/paquete, no una partida, validación de guardados ni prueba en
+iPhone. Para cambios nuevos, basta la comprobación focalizada de archivos tocados
+cuando sea posible.
 
 ## Organización y convenciones observadas
 

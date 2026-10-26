@@ -44,6 +44,9 @@
 - `docs/handoff/NEXT_STEPS.md`: cola de continuación con prioridades.
 - `docs/handoff/MOD_CATALOG.md`: inventario de mods, Jokers, fusiones, contenido,
   desbloqueos y rutas de sprites.
+- `docs/handoff/GRAPHICS_AUDIT.md`: tamaños de recursos, escalas, atlas,
+  empaquetado y estimaciones de memoria; consultarlo antes de tocar sprites,
+  `card_skins.lua` o filtros gráficos del builder.
 - `balatron/README-IOS-LOCAL.md`, `balatron/INFORME-PRUEBAS.md`,
   `balatron/CHANGELOG.md` y `balatron/mods/README.md` contienen detalles y
   evidencia de las iteraciones previas; consultar antes de cambiar esos sistemas.
